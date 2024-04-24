@@ -15,7 +15,7 @@ export const options: NextAuthOptions = {
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials) {
-                const res = await fetch("http://localhost:4545/api/v1/auth/login", {
+                const res = await fetch("http://192.168.178.239:9001/api/v1/auth/login", {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export const options: NextAuthOptions = {
             const { user, account } = params;
             // if (account?.provider === 'github') {
             try {
-                const response = await fetch("http://localhost:4545/api/v1/auth/login", {
+                const response = await fetch("http://192.168.178.239:9001/api/v1/auth/login", {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json',
