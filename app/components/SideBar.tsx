@@ -4,7 +4,7 @@ import { MenuData } from '../type/MenuData';
 
 function SideBar({ ARTICLES, TAGS }: MenuData) {
 
-    // Function to filter articles based on tag_id and id
+    // Function to filter articles based on tag_id
     function filterArticlesByTagId(tagId: number) {
         return ARTICLES.filter(article => article.tag_id === tagId);
     }
@@ -13,7 +13,7 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
         <div className="drawer-side">
             <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
             {/* 4071f4 */}
-            <ul className="menu menu-dropdown-show bg-white p-4 w-80 min-h-full text-base-content overflow-auto">
+            <ul className="menu menu-dropdown-show p-4 w-80 min-h-full text-base-content overflow-auto">
                 <div className="pt-3 pb-5 pl-3 flex items-center">
                     <Image src={"https://www.kosign.com.kh/images/Vectors-Wrapper.svg"} alt="" width={140} height={100} />
                     {/* <span className="font-extrabold inline-flex text-base-content text-md md:text-xl font-Anton ml-2">
