@@ -12,9 +12,15 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "cover_auth": "url('../public/120382.jpg')",
       },
+      fontFamily: {
+        'Figtree': ['Figtree', 'sans-serif'],
+        'Anton': ['Anton', 'sans-serif'],
+        'Poppins': ['Poppins', 'sans-serif'],
+      }
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 };
 export default config;
