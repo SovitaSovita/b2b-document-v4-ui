@@ -21,7 +21,7 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                 </div>
                 {
                     TAGS.map((item, index) => (
-                        <li key={index}>
+                        <li key={index + 1}>
                             <details>
                                 <summary className="mt-1 font-medium">{item.title}</summary>
                                 <ul>

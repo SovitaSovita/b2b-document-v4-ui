@@ -8,14 +8,14 @@ function Breadcrumbs() {
         return pathname.replace(/^\//, '').split('/');
     }
 
-    console.log(pathname)
+    // console.log(formatPath("/joo"))
 
     return (
         <div className="text-sm breadcrumbs">
             <ul>
-                <li><a>Home</a></li>
-                <li><a>Documents</a></li>
-                <li>Add Document</li>
+                {formatPath(pathname).map((item, index) => (
+                    <li key={index} className="capitalize"><a>{item === "" ? "Home" : item}</a></li>
+                ))}
             </ul>
         </div>
     )
