@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import LeftDrawerCustom from './Profile/LeftDrawerCustom'
+import LeftDrawerCustom from './LeftDrawerCustom'
 
 const NavBarCustom = () => {
     return (

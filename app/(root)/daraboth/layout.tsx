@@ -1,4 +1,4 @@
-import NavBarCustom from '@/app/components/NavBarCustom';
+import NavBarCustom from '@/app/components/Profile/NavBarCustom';
 import * as React from 'react';
 
 const Layout = async (props: { children: React.ReactNode }) => {
