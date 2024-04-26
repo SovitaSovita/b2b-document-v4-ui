@@ -1,6 +1,10 @@
-import type { NextAuthOptions } from "next-auth";
+import { getServerSession, type NextAuthOptions } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
+
+export function auth() {
+    return getServerSession(options);
+}
 
 export const options: NextAuthOptions = {
     providers: [
@@ -23,6 +27,8 @@ export const options: NextAuthOptions = {
                     body: JSON.stringify(credentials)
                 })
                 const user = await res.json();
+
+                console.log("user :::::::::::::::::", user)
                 if (res.ok) {
                     return user;
                 }
@@ -55,8 +61,8 @@ export const options: NextAuthOptions = {
                         githubToken: account?.accessToken,
                     })
                 })
-                console.log("account", account)
-                console.log("user", user)
+                // console.log("account", account)
+                // console.log("user", user)
 
                 const logData = await response.json()
 
