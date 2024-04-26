@@ -10,19 +10,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
     - name: Get pusher's name
       id: get_pusher_name
       run: echo "::set-output name=name::$(git log -1 --format='%an')"
-
-    - name: Get commit message
-      id: get_commit_message
-      run: echo "::set-output name=message::$(git log -1 --format='%B')"
 
     - name: Send notification
       if: github.ref == 'refs/heads/main'
       run: |
         curl -X POST \
           -d "chatId=-4173491325" \
-          -d "message=[${{ steps.get_pusher_name.outputs.name }}] \nPushed new code to UI.\nMessage:${{ steps.get_commit_message.outputs.message }}.\nPlease pull." \
+          -d "message=[${{ steps.get_pusher_name.outputs.name }}] has pushed new code to branch main in UI. Please pull." \
           -H "Content-Type: application/x-www-form-urlencoded" \
           https://daraboth-personalai.vercel.app/telegram/daraboth/send-message
