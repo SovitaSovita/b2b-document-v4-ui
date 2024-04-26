@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 
 function page() {
-    const [credentials, setCredentials] = useState({ username: '', password: '', redirect: false, });
+    const [credentials, setCredentials] = useState({ userId: '', redirect: false, });
     const router = useRouter();
 
     const handleChange = (e: any) => {
@@ -77,17 +77,16 @@ function page() {
                     <form onSubmit={handleSubmit}>
                         <div className="mt-4">
                             <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200" htmlFor="LoggingEmailAddress">Username</label>
-                            <input name="username" onChange={handleChange} id="LoggingEmailAddress" className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300" type="text" />
+                            <input name="userId" onChange={handleChange} id="LoggingEmailAddress" className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300" type="text" />
                         </div>
 
-                        <div className="mt-4">
+                        {/* <div className="mt-4">
                             <div className="flex justify-between">
                                 <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200" htmlFor="loggingPassword">Password</label>
-                                {/* <a href="#" className="text-xs text-gray-500 dark:text-gray-300 hover:underline">Forget Password?</a> */}
                             </div>
 
                             <input name='password' onChange={handleChange} id="loggingPassword" className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300" type="password" />
-                        </div>
+                        </div> */}
 
                         <div className="mt-6">
                             <button type="submit" className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50">
