@@ -12,11 +12,11 @@ const ihttp = axios.create({
 async function requestInterceptor(config: InternalAxiosRequestConfig) {
   const idToken: any = await getSession();
 
-  console.log(idToken)
+  console.log(idToken.token)
   if (!idToken) {
     return Promise.reject("missing access token");
   }
-  config.headers["Authorization"] = `Bearer ${idToken?.token.access_token}`;
+  config.headers["Authorization"] = `Bearer ${idToken?.token}`;
   config.headers["Content-Type"] = "application/json";
   return config;
 }
