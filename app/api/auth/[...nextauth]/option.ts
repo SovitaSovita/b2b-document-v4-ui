@@ -67,11 +67,10 @@ export const options: NextAuthOptions = {
         CredentialsProvider({
             name: 'Credentials',
             credentials: {
-                username: { label: "Username", type: "text" },
-                password: { label: "Password", type: "password" }
+                userId: { label: "Username", type: "text" },
             },
             async authorize(credentials) {
-                const res = await fetch("http://localhost:4545/api/v1/auth/login", {
+                const res = await fetch("http://192.168.178.72:8000/api/v1/auth/send-otp", {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json',
@@ -80,7 +79,7 @@ export const options: NextAuthOptions = {
                 })
                 const user = await res.json();
 
-                // console.log("user :::::::::::::::::", user)
+                console.log("user :::::::::::::::::", user)
                 if (res.ok) {
                     return user;
                 }

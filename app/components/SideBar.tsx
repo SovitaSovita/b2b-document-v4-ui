@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image'
 import React, { useEffect } from 'react'
 import { MenuData } from '../type/MenuData';
@@ -12,10 +14,11 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
     }
 
     useEffect(() => {
+        //client side fetching
         sampleFetch().then((res) => {
-            console.log(res)
+            console.log("response :: ", res)
         })
-    })
+    }, []);
 
     return (
         <div className="drawer-side">
