@@ -23,7 +23,14 @@ const config: Config = {
   },
   plugins: [require("daisyui")],
   daisyui: {
-    themes: ["light", "dark", "cupcake"],
+    themes: [{
+      light: {
+        ...require("daisyui/src/theming/themes")["light"],
+        primary: "blue",
+        secondary: "teal",
+        // neutral: "#1f29371a"
+      },
+    }, "dark", "cupcake", "cyberpunk"],
   },
 };
 export default config;

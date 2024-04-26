@@ -30,7 +30,7 @@
 
 /* width */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 3px;
 }
 
 /* Track */
@@ -47,4 +47,11 @@
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #dddddd;
+}
+
+.css-o2c9dn {
+  display: flex;
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, rgba(224, 225, 226, 0) 0%, rgb(224, 225, 226) 49.52%, rgba(224, 225, 226, 0) 100%);
 }

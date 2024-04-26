@@ -4,8 +4,6 @@ import { useSession } from "next-auth/react";
 import SideContent from "../components/SideContent";
 import SideBar from "../components/SideBar";
 
-
-
 export default function Home() {
 
   const menudata = {
