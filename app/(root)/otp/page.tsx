@@ -19,7 +19,7 @@ const WelcomePage = () => {
       }
     };
 
-    fetchData();
+    fetchData(); 
   }, []);
 
   return (
