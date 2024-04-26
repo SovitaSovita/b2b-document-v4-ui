@@ -35,6 +35,8 @@ interface UserData {
     password: string;
     role: string;
     dept_id: string;
+    dep_name: string;
+    image: string;
     // Add other properties if available in your JSON response
 }
 
@@ -45,7 +47,7 @@ const UserListByDepartmentPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:4545/api/v1/user/list-by-department?dept_id=1');
+                const response = await fetch('http://localhost:4545/api/v1/user/list-by-department?dept_id=29');
                 if (!response.ok) {
                     throw new Error('Failed to fetch user list');
                 }
@@ -66,7 +68,10 @@ const UserListByDepartmentPage = () => {
     }, []);
 
     if (loading) {
-        return <p>Loading...</p>;
+        // return <p>Loading...</p>;
+        return <button className="btn">
+            <span className="loading loading-spinner">loading</span>
+        </button>
     }
 
     return (
@@ -80,37 +85,16 @@ const UserListByDepartmentPage = () => {
                         <th>Username</th>
                         <th>Role</th>
                         <th>Department</th>
+                        <th>Action</th>
                        
                     </tr>
                 </thead>
                 <tbody>
-                   
-                    {/* <tr>
-                        
-                        <td>
-                            <div className="flex items-center gap-3">
-                                <div className="avatar">
-                                    <div className="mask mask-squircle w-12 h-12">
-                                        <img src="/tailwind-css-component-profile-2@56w.png" alt="Avatar Tailwind CSS Component" />
-                                    </div>
-                                </div>
-                                <div>
-                                    <div className="font-bold">Hart Hagerty</div>
-                                    
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            Zemlak, Daniel and Leannon
-                        </td>
-                        <td>Purple</td>
-                        
-                    </tr> */}
                     {userList.map(user => (
                         <tr key={user.id}>
                             <td className="flex items-center gap-3">
                                 <div className="mask mask-squircle w-12 h-12">
-                                    <img src="/tailwind-css-component-profile-2@56w.png" alt="Avatar Tailwind CSS Component" />
+                                    <img src={user.image} alt="Avatar Tailwind CSS Component" />
                                 </div>
                                 <div>
                                     <div className="font-bold">{user.username}</div>
@@ -120,13 +104,11 @@ const UserListByDepartmentPage = () => {
                                 <span>{user.role}</span>
                             </td>
                             <td>
-                                {/* <span>{user.}</span> */}
+                                <span>{user.dep_name}</span>
                             </td>
 
                         </tr>
                     ))}
-                    
-                    
                 </tbody>
                 
                 
