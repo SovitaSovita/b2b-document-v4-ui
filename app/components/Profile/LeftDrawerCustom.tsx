@@ -1,9 +1,18 @@
+'use client'
+
 import React from "react";
 import Profile from "./Profile";
 import Link from "next/link";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 
 const LeftDrawerCustom = () => {
+
+  const { data: session, status } = useSession();
+
+  console.log("status : ", status);
+  console.log("session : ", session);
+
   return (
     <div className="drawer drawer-end">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -16,10 +25,7 @@ const LeftDrawerCustom = () => {
             className="btn btn-ghost btn-circle avatar"
           >
             <div className="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS Navbar component"
-                src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-              />
+              <Image src={session?.user.image ? session.user.image : session?.user.prfl_PHTG} alt="pf" width={140} height={100} loading="lazy" />
             </div>
           </div>
         </label>
@@ -32,7 +38,7 @@ const LeftDrawerCustom = () => {
         ></label>
         <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
           {/* Sidebar content here */}
-          <Profile />
+          <Profile userInfo={session?.user} />
           <li className="border shadow rounded-lg mb-5">
             <label className="swap swap-rotate">
               <input

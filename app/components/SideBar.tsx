@@ -14,10 +14,10 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
     }
 
     useEffect(() => {
-        //client side fetching
-        sampleFetch().then((res) => {
-            console.log("response :: ", res)
-        })
+        // //client side fetching
+        // sampleFetch().then((res) => {
+        //     console.log("response :: ", res)
+        // })
     }, []);
 
     return (
@@ -49,7 +49,7 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                                 <summary className="mt-1 font-medium">{item.title}</summary>
                                 <ul>
                                     {filterArticlesByTagId(item.id).map(item => (
-                                        <li><a className="text-[13px]">{item.title}</a></li>
+                                        <li key={item?.id}><a className="text-[13px]">{item?.title}</a></li>
                                     ))}
                                 </ul>
                             </details>
