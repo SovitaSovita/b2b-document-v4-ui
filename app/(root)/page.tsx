@@ -490,7 +490,7 @@ export default function Home() {
 
   const { data: session, status } = useSession();
 
-  console.log("user info (github) : ", session)
+  console.log("user info (google) : ", session)
 
   return (
     <>

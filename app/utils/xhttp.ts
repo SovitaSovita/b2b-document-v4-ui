@@ -5,8 +5,10 @@ import axios, {
 } from "axios";
 import { getSession } from "next-auth/react";
 
+export const API_BASE_URL = "http://192.168.178.239:8085";
+
 const ihttp = axios.create({
-  baseURL: "http://localhost:4545/api/v1",
+  baseURL: API_BASE_URL,
 });
 
 async function requestInterceptor(config: InternalAxiosRequestConfig) {

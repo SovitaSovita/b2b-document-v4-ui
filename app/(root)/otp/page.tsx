@@ -8,20 +8,21 @@ import GppGoodOutlinedIcon from "@mui/icons-material/GppGoodOutlined";
 export default function page() {
   const { data: session, status } = useSession();
 
-  console.log("status : ", status);
-  console.log("session : ", session);
+  // console.log("status : ", status);
+  // console.log("session : ", session);
 
   const router = useRouter();
 
   const handleSignIn = async (otpCode: string) => {
     const result = await signIn("credentials", {
       userId: "sovita",
-      otpCode: otpCode,
+      optCode: otpCode,
       redirect: false,
     });
 
+    console.log(result);
+
     if (result?.ok) {
-      alert();
       router.push("/");
     }
   };

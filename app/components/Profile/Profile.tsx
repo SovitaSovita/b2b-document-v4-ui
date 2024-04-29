@@ -1,6 +1,7 @@
+import Image from 'next/image'
 import React from 'react'
 
-const Profile = () => {
+const Profile = ({ userInfo }: { userInfo: any }) => {
     return (
         <div className='mb-5'>
             <div className=''>
@@ -9,12 +10,12 @@ const Profile = () => {
                         <div className='flex flex-row gap-4'>
                             <div className="avatar card-actions justify-start">
                                 <div className="w-12 rounded-full">
-                                    <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                    <Image src={userInfo?.image ? userInfo.image : userInfo?.prfl_PHTG} alt="pf" width={140} height={100} loading="lazy" />
                                 </div>
                             </div>
-                            <div className='flex flex-col justify-between'>
-                                <h3 className='font-bold'>Daraboth</h3>
-                                <h5 className='font-extralight'>Admin</h5>
+                            <div className='flex flex-col justify-center'>
+                                <h3 className='font-bold'>{userInfo?.name ?? userInfo?.flnm}</h3>
+                                <h5 className='font-extralight text-xs'>{userInfo?.jbcl_NM}</h5>
                             </div>
                         </div>
                         <div className="card-actions justify-end">
