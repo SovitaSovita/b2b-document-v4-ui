@@ -27,6 +27,7 @@ function page() {
             body: JSON.stringify(credentials)
         })
         const user = await res.json();
+        console.log(res);
         if (res.ok) {
             router.push('/otp')
         }
@@ -37,9 +38,9 @@ function page() {
     console.log("status : ", status);
     console.log("session : ", session);
 
-    // if (status === "authenticated") {
-    //     router.push('/otp')
-    // }
+    if (status === "authenticated") {
+        router.push('/')
+    }
 
 
     return (

@@ -15,7 +15,7 @@ export default function page() {
 
   const handleSignIn = async (otpCode: string) => {
     const result = await signIn("credentials", {
-      userId: "sovita",
+      userId: "chanvimean",
       optCode: otpCode,
       redirect: false,
     });
