@@ -1,5 +1,7 @@
 import React from 'react'
 import Breadcrumbs from './Breadcrumbs'
+import Page from '../(root)/vanda/page';
+
 import LeftDrawerCustom from './Profile/LeftDrawerCustom'
 
 function SideContent() {
@@ -17,7 +19,7 @@ function SideContent() {
             </div>
 
             <div className="border-2 rounded-lg border-dashed w-full h-full">
-
+                 <Page/>
             </div>
 
             <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">Open drawer</label>
@@ -25,4 +27,4 @@ function SideContent() {
     )
 }
 
-export default SideContent
+export default SideContent;
