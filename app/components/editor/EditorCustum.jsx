@@ -5,6 +5,8 @@ import React from 'react'
 export default function EditorCustum() {
   return (
     <>
+    
+      
       <Editor
          apiKey='ibgazhdpbf1641m9l0exn7y2y0pbcwbtlmz013z4uf1icb2e'
          init={{
@@ -21,9 +23,7 @@ export default function EditorCustum() {
         initialValue="Welcome to TinyMCE!"
       />
 
-      <button type='button'>
-        submit
-      </button>
+     
     </>
   )
 }
