@@ -1,33 +1,76 @@
-"use client"
-import { useEffect, useState } from 'react';
+"use client";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { PinInput, PinInputField } from "@chakra-ui/pin-input";
+import GppGoodOutlinedIcon from "@mui/icons-material/GppGoodOutlined";
 
-const WelcomePage = () => {
-  const [welcomeMessage, setWelcomeMessage] = useState<string>('');
+export default function page() {
+  const { data: session, status } = useSession();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://localhost:4545/api/v1/admin/welcome');
-        if (!response.ok) {
-          throw new Error('Failed to fetch welcome message');
-        }
-        const data = await response.text();
-        setWelcomeMessage(data);
-      } catch (error) {
-        console.error('Error fetching welcome message:', error);
-        setWelcomeMessage('Failed to fetch welcome message');
-      }
-    };
+  console.log("status : ", status);
+  console.log("session : ", session);
 
-    fetchData(); 
-  }, []);
+  const router = useRouter();
+
+  const handleSignIn = async (otpCode: string) => {
+    const result = await signIn("credentials", {
+      userId: "sovita",
+      otpCode: otpCode,
+      redirect: false,
+    });
+
+    if (result?.ok) {
+      alert();
+      router.push("/");
+    }
+  };
+
+  const [value, setValue] = React.useState("");
+
+  const handleChange = (value: string) => {
+    setValue(value);
+  };
+
+  const handleComplete = (value: string) => {
+    console.log(value);
+    handleSignIn(value);
+  };
 
   return (
-    <div>
-      <h1>Welcome Page</h1>
-      <p>{welcomeMessage}</p>
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="bg-white flex flex-col items-center rounded-lg shadow-lg p-6">
+        <div className="text-center flex justify-center flex-col items-center">
+          <GppGoodOutlinedIcon className="text-[60px] bg-primary text-white rounded-full mb-2 p-2" />
+          <h1 className="mb-6 font-semibold text-xl text-base-content">
+            Enter OTP Code
+          </h1>
+        </div>
+        <div>
+          <PinInput
+            value={value}
+            autoFocus={true}
+            onChange={handleChange}
+            onComplete={handleComplete}
+            placeholder=""
+          >
+            {[...Array(6)].map((_, index) => (
+              <PinInputField
+                key={index}
+                width={60}
+                textAlign="center"
+                rounded="4px"
+                padding="16px 5px"
+                border={"1px solid #bdc3c7"}
+                marginRight={3}
+              />
+            ))}
+          </PinInput>
+          <div className="form-control mt-6">
+            <button className="btn btn-primary">Verify</button>
+          </div>
+        </div>
+      </div>
     </div>
   );
-};
-
-export default WelcomePage;
+}

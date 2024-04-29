@@ -3,6 +3,7 @@ import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 
+const API_BASE_URL = process.env.API_BASE_URL as string;
 
 export function auth() {
     return getServerSession(options);
@@ -70,7 +71,7 @@ export const options: NextAuthOptions = {
                 userId: { label: "Username", type: "text" },
             },
             async authorize(credentials) {
-                const res = await fetch("http://192.168.178.72:8000/api/v1/auth/send-otp", {
+                const res = await fetch(`${API_BASE_URL}/api/v1/auth/send-otp`, {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json',
@@ -79,7 +80,7 @@ export const options: NextAuthOptions = {
                 })
                 const user = await res.json();
 
-                console.log("user :::::::::::::::::", user)
+                console.log(":::::::::::::::::", user)
                 if (res.ok) {
                     return user;
                 }
@@ -93,37 +94,34 @@ export const options: NextAuthOptions = {
         session,
         jwt,
         async signIn(params) {
-            const { user, account } = params;
-            if (account?.provider === 'google') {
+            console.log("params", params)
+            const { user, account, ...rest } = params;
+
+            console.log(" >>>>>> ", rest.credentials)
+
+            if (account?.provider === 'credentials') {
                 try {
-                    const response = await fetch("http://192.168.178.239:9001/api/v1/auth/login", {
+                    const res = await fetch(`${API_BASE_URL}/api/v1/auth/verify`, {
                         method: "POST",
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({
-                            username: "root",
-                            password: "root123",
-                            githubToken: account?.accessToken,
-                        })
+                        body: JSON.stringify({ userId: rest.credentials?.userId, otpCode: rest.credentials?.otpCode })
                     })
-                    // console.log("account", account)
-                    // console.log("user", user)
+                    const data = await res.json();
 
-                    const logData = await response.json()
-
-
-
-                    if (response?.status === 200) {
-                        console.log("log :: ", logData)
-                        return logData;
+                    console.log("data", data)
+                    if (res.ok) {
+                        return data;
                     }
+                    return null;
+
                 } catch (error) {
-                    console.error('Error exchanging GitHub credentials for token:', error);
+                    console.error('[Error] -> ', error);
                 }
             }
-            return true;
         },
+
     },
     pages: {
         signIn: "/auth/signin"

@@ -1,6 +1,7 @@
 'use client'
 
 import { signIn, useSession } from 'next-auth/react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 
@@ -21,7 +22,7 @@ function page() {
         console.log(result)
 
         if (result?.ok) {
-            router.push('/')
+            router.push('/otp')
         }
     };
 
@@ -30,12 +31,9 @@ function page() {
     console.log("status : ", status);
     console.log("session : ", session);
 
-    const [storeSession, setStoreSession] = useState();
-
-
-    if (status === "authenticated") {
-        router.push('/')
-    }
+    // if (status === "authenticated") {
+    //     router.push('/otp')
+    // }
 
 
     return (
@@ -45,12 +43,8 @@ function page() {
 
                 <div className="w-full px-6 py-8 md:px-8 lg:w-1/2">
                     <div className="flex justify-center mx-auto">
-                        <img className="w-auto h-7 sm:h-8" src="https://merakiui.com/images/logo.svg" alt="" />
+                    <Image src={"https://www.kosign.com.kh/images/Vectors-Wrapper.svg"} alt="" width={140} height={100} />
                     </div>
-
-                    <p className="mt-3 text-xl text-center text-gray-600 dark:text-gray-200">
-                        Welcome back!
-                    </p>
 
                     <a onClick={() => signIn('google')} href="#" className="flex items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg dark:border-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <div className="px-4 py-2">
@@ -98,7 +92,7 @@ function page() {
                     <div className="flex items-center justify-between mt-4">
                         <span className="w-1/5 border-b dark:border-gray-600 md:w-1/4"></span>
 
-                        <a href="#" className="text-xs text-gray-500 uppercase dark:text-gray-400 hover:underline">or sign up</a>
+                        <a href="#" className="text-xs text-gray-500 uppercase dark:text-gray-400 hover:underline"></a>
 
                         <span className="w-1/5 border-b dark:border-gray-600 md:w-1/4"></span>
                     </div>
