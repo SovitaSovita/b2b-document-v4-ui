@@ -98,8 +98,6 @@ export const options: NextAuthOptions = {
                     })
                 })
                 const data = await result.json();
-
-                console.log("hey data :: > ", data.payload);
                 const token = data.payload;
                 return {
                     id: token.id,
@@ -151,7 +149,6 @@ export const options: NextAuthOptions = {
     callbacks: {
         session,
         jwt,
-
     },
     pages: {
         signIn: "/auth/signin"
