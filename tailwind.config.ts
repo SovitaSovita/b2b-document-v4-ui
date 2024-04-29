@@ -30,7 +30,7 @@ const config: Config = {
         secondary: "teal",
         // neutral: "#1f29371a"
       },
-    }, "dark", "cupcake"],
+    }, "dark", "cupcake", "cyberpunk"],
   },
 };
 export default config;
