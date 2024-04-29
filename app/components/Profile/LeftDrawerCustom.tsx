@@ -60,10 +60,10 @@ const LeftDrawerCustom = () => {
             </label>
           </li>
           <li>
-            <Link href={"/daraboth/profile"}>Your profile</Link>
+            <Link href={"/profile"}>Your profile</Link>
           </li>
           <li>
-            <Link href={"/daraboth/manage"}>Manage User</Link>
+            <Link href={"/manage_users"}>Manage User</Link>
           </li>
           <li>
             <div
