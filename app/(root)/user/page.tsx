@@ -2,33 +2,6 @@
 
 import { useEffect, useState } from "react"
 
-// async function getData() {
-//     const res = await fetch('http://localhost:4545/api/v1/user/list-by-department?dept_id=1')
-
-
-//     if (!res.ok) {
-
-//         throw new Error('Failed to fetch data')
-//     }
-
-//     return res.json()
-
-// }
-
-// export default async function Page() {
-//     const data = await getData()
-//     console.log(data)
-
-//     return <main></main>
-// }
-
-
-
-
-
-
-
-
 interface UserData {
     id: number;
     username: string;
