@@ -1,15 +1,21 @@
 "use client";
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { DepartmentList } from '../type/DepartmentType';
+import { DepartmentList } from '@/app/type/DepartmentType';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { useRouter } from 'next/router';
+
 
 
 
 export default function Department() {
     const [departmentList, setDepartmentList] = useState<DepartmentList[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const router = useRouter();
+    const eidtdeptarment = () => {
+        router.push('/addDepartment');
+    }
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -63,7 +69,7 @@ export default function Department() {
                                             <th>{deptlst.dept_id}</th>
                                             <td>{deptlst.dept_name}</td>
                                             <td>
-                                                <FontAwesomeIcon icon={faEdit} style={{ width: '24px', height: '24px', marginRight: '10px' , fontSize :'2px'}} />
+                                                <FontAwesomeIcon icon={faEdit} style={{ width: '24px', height: '24px', marginRight: '10px'}} onClick={eidtdeptarment}/>
                                                 <FontAwesomeIcon icon={faTrashCan} style={{ width: '24px', height: '24px' }} />
                                             </td>
 
