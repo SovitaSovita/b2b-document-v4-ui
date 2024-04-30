@@ -78,14 +78,19 @@ function page() {
 
     const [open, setOpen] = React.useState(false);
     const handleOpenOTP = () => setOpen(true);
-    const handleCloseOTP = () => setOpen(false);
+    const handleCloseOTP = (event: any, reason: string) => {
+
+        if (reason && reason === "backdropClick")
+            return;
+
+        setOpen(false)
+    };
 
     const { data: session, status } = useSession();
 
     if (status === "authenticated") {
         router.push('/')
     }
-
 
 
 
@@ -159,7 +164,8 @@ function page() {
                 open={open}
                 onClose={handleCloseOTP}
                 aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description">
+                aria-describedby="modal-modal-description"
+            >
                 <Box sx={style}>
                     <div className="text-center flex justify-center flex-col items-center">
                         <GppGoodOutlinedIcon className="text-[60px] bg-primary text-white rounded-full mb-2 p-2" />
