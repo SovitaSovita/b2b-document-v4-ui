@@ -7,7 +7,11 @@ interface Props {
 }
 
 function Provider({ children }: Props) {
-    return <SessionProvider>{children}</SessionProvider>
+    return (
+        <SessionProvider>
+            {children}
+        </SessionProvider>
+    )
 }
 
 export default Provider
