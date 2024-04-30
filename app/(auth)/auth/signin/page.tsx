@@ -5,6 +5,10 @@ import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
+import { PinInput, PinInputField } from "@chakra-ui/pin-input";
+import GppGoodOutlinedIcon from "@mui/icons-material/GppGoodOutlined";
+import { Backdrop, Box, Button, Modal, Typography } from '@mui/material';
+import { RoundedCorner } from '@mui/icons-material';
 
 function page() {
 
@@ -27,19 +31,67 @@ function page() {
             body: JSON.stringify(credentials)
         })
         const user = await res.json();
+        console.log(res);
         if (res.ok) {
-            router.push('/otp')
+            localStorage.setItem("userId", credentials?.userId)
+            handleOpenOTP()
         }
+    };
+
+    //OTP code
+    const handleSignIn = async (otpCode: string) => {
+        const result = await signIn("credentials", {
+            userId: localStorage.getItem("userId"),
+            optCode: otpCode,
+            redirect: false,
+        });
+
+        console.log(result);
+
+        if (result?.ok) {
+            console.log("work");
+            router.push("/");
+        }
+    };
+
+    const [value, setValue] = React.useState("");
+
+    const handleChangeOTP = (value: string) => {
+        setValue(value);
+    };
+
+    const handleComplete = (value: string) => {
+        console.log(value);
+        handleSignIn(value);
+    };
+
+    const style = {
+        position: 'absolute' as 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        bgcolor: 'background.paper',
+        boxShadow: 24,
+        p: 4,
+        borderRadius: 2,
+    };
+
+    const [open, setOpen] = React.useState(false);
+    const handleOpenOTP = () => setOpen(true);
+    const handleCloseOTP = (event: any, reason: string) => {
+
+        if (reason && reason === "backdropClick")
+            return;
+
+        setOpen(false)
     };
 
     const { data: session, status } = useSession();
 
-    console.log("status : ", status);
-    console.log("session : ", session);
+    if (status === "authenticated") {
+        router.push('/')
+    }
 
-    // if (status === "authenticated") {
-    //     router.push('/otp')
-    // }
 
 
     return (
@@ -106,6 +158,44 @@ function page() {
                     </div>
                 </div>
             </div >
+
+            <Button onClick={handleOpenOTP}>Open modal</Button>
+            <Modal
+                open={open}
+                onClose={handleCloseOTP}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <div className="text-center flex justify-center flex-col items-center">
+                        <GppGoodOutlinedIcon className="text-[60px] bg-primary text-white rounded-full mb-2 p-2" />
+                        <h1 className="mb-6 font-semibold text-xl text-base-content">
+                            Enter OTP Code
+                        </h1>
+                    </div>
+                    <div>
+                        <PinInput
+                            value={value}
+                            autoFocus={true}
+                            onChange={handleChangeOTP}
+                            onComplete={handleComplete}
+                            placeholder=""
+                        >
+                            {[...Array(6)].map((_, index) => (
+                                <PinInputField
+                                    key={index}
+                                    width={60}
+                                    textAlign="center"
+                                    rounded="4px"
+                                    padding="16px 5px"
+                                    border={"1px solid #bdc3c7"}
+                                    marginRight={3}
+                                />
+                            ))}
+                        </PinInput>
+                    </div>
+                </Box>
+            </Modal>
         </>
 
     )
