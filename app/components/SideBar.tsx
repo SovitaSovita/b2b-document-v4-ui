@@ -109,4 +109,4 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
     )
 }
 
-export default SideBar
+export default SideBar 
