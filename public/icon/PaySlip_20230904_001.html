@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+	<link rel="stylesheet" href="https://www.wabooks.com/kh//css/cont_m_template.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+	
+	<script type="text/javascript">
+		var s = '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';
+		
+		$(function(){
+			// event click
+			$(".btn").click(function() {
+				load();
+			});
+			
+			// event enter
+			$(document).on('keypress',function(e) {
+				if(e.which == 13) {
+					load();
+				}
+			});
+			
+			function load(){
+				var s_dec = "";
+                // value from view input
+				var tempKey = $("#NATN_ID").val();
+				//remove blank space from khmer unicode 
+				var key = "";
+				for(var i = 0; i < tempKey.length ; i++){
+					var ascii = tempKey.charCodeAt(i);
+					// remove ascii key 8203
+					if(ascii != 8203){
+						key += tempKey[i];
+					}
+				}
+                // add end char "0" for full 32 characters
+				/* key = key.padEnd(32,"0"); // not work in ie*/
+				key = (key + "00000000000000000000000000000000").slice(0,32); // work in ie
+                // substring 16 characters
+				var ips = key.substring(0,16);
+                // encode to Base64 by Window.btoa
+				var encryptedBase64Key = btoa(ips);
+				// parse to CryptoJS Base64 
+        		var parsedBase64Key = CryptoJS.enc.Base64.parse(encryptedBase64Key);
+                var iv = parsedBase64Key;
+				try {
+                    // (TODO) Decrypt to s value data.
+					s_dec = CryptoJS.AES.decrypt( s, parsedBase64Key,{
+						mode: CryptoJS.mode.CBC,
+						padding: CryptoJS.pad.Pkcs7,
+						iv: iv
+					});	
+                    // If Decryption has failed, display Error text.
+					if ("" == s_dec) {	
+						$(".txt_err").show();
+						return;
+					}
+					
+					var decryptedText = s_dec.toString(CryptoJS.enc.Utf8);
+					$("#desdisp").html(decryptedText);	// Display to decrypted HTML tag.
+					$("#desdisp").parents(".cont_bg").show();
+				} catch(E) {
+					$(".txt_err").show();		// If Error occurred, display Error text.
+				}
+			}
+		});
+	</script>
+</head>
+<body style="width: 350px;margin: auto;position: relative;">
+
+	<!-- content-->
+	<div class="content">
+
+		<!-- 컨텐츠 영역 -->
+		<div class="m_cont">
+			<div class="cont_pd">
+				<!-- 급여명세서 확인 -->
+				<div class="p_login_bx">
+					<div class="p_login_tit">
+						<!-- 급여명세서 확인 -->
+						<h2>Pay Slip Confirmation</h2>
+					</div>
+					<div class="p_input_bx">
+						<p class="txt_ipt">
+							<!-- 주민번호(national ID) 숫자 9자리 -->
+							<input type="text" id="NATN_ID" placeholder="National ID(Passport number)" value="">
+						</p>
+						<!--비밀번호가 틀립니다. 다시 입력해주세요. -->
+						<p class="txt_err" style="display:none;">The password is incorrect. Please enter again.</p><!-- 에러 문구 -->
+						<div class="btn">
+							<!-- 확인 -->
+							<a>Confirm</a>
+						</div>
+					</div>
+				</div>
+				<!-- //급여명세서 확인 -->
+			</div>
+		</div>
+		<!-- //컨텐츠 영역 -->
+
+	</div>
+	<!-- //content-->
+	
+	<!-- content-->
+	<div class="cont_bg" style="display:none;">
+		<div class="cont_bg_in type2" id="desdisp">
+		</div>
+	</div>
+	<!-- //content-->	
+
+</body>
+</html>
