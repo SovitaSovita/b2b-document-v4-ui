@@ -5,8 +5,17 @@ import React, { useEffect } from 'react'
 import { MenuData } from '../type/MenuData';
 import BookmarksOutlinedIcon from '@mui/icons-material/BookmarksOutlined';
 import { sampleFetch } from '../service/sample';
+import { useState } from 'react';
+
+interface TagItem {
+    id: number;
+    title: string;
+}
 
 function SideBar({ ARTICLES, TAGS }: MenuData) {
+
+    const [options, setOptions] = useState([]);
+    const [articles, setArticles] = useState([]);
 
     // Function to filter articles based on tag_id
     function filterArticlesByTagId(tagId: number) {
@@ -14,11 +23,30 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
     }
 
     useEffect(() => {
-        // //client side fetching
-        // sampleFetch().then((res) => {
-        //     console.log("response :: ", res)
-        // })
+        const fetchData = async () => {
+            try {
+                const response = await fetch('http://localhost:4545/api/v1/DocTag/getTagByDepId?dept_id=1');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+                const responseData = await response.json();
+                if (responseData.error === false) {
+                    const data = responseData.rec;
+                    setOptions(data);
+                } else {
+                    console.error('Error in response:', responseData.message);
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData();
     }, []);
+
+    useEffect(() => {
+        const filteredArticles = ARTICLES.filter(article => options.some(option => option.id === article.tag_id));
+        setArticles(filteredArticles);
+    }, [options]);
 
     return (
         <div className="drawer-side">
@@ -30,6 +58,9 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                     {/* <span className="font-extrabold inline-flex text-base-content text-md md:text-xl font-Anton ml-2">
               B2B <span className="text-blue-700 ml-1">DOC</span></span> */}
                 </div>
+
+
+
                 <div className="css-o2c9dn mb-3"></div>
                 <li className='mb-2'>
                     <details>
@@ -42,7 +73,9 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                         </ul>
                     </details>
                 </li>
-                {
+
+
+                {/* {
                     TAGS.map((item, index) => (
                         <li key={index + 1}>
                             <details>
@@ -55,7 +88,22 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                             </details>
                         </li>
                     ))
-                }
+                } */}
+
+                {options.map((tag, index) => (
+                    <li key={index + 1}>
+                        <details>
+                            <summary className="mt-1 font-medium">{tag.title}</summary>
+                            <ul>
+                                {articles.filter(article => article.tag_id === tag.id).map(article => (
+                                    <li key={article.id}><a className="text-[13px]">{article.title}</a></li>
+                                ))}
+                            </ul>
+                        </details>
+                    </li>
+                ))}
+
+
             </ul>
         </div>
     )
