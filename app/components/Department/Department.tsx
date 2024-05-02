@@ -6,15 +6,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/router';
 
-
-
-
 export default function Department() {
     const [departmentList, setDepartmentList] = useState<DepartmentList[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const router = useRouter();
-    const eidtdeptarment = () => {
-        router.push('/addDepartment');
+    const [eidtdeptarment, setCurrentView] = useState('addDepartment');
+    const onCickEdit = () => {
+        // router.push('/addDepartment');
+        setCurrentView('addDepartment')
     }
     useEffect(() => {
         const fetchData = async () => {
@@ -49,7 +47,11 @@ export default function Department() {
             <div className="card w-96 bg-base-100 shadow-xl" style={{ left: '20px', top: '20px', border: '1px solid', width: '500px' }}>
                 <div className="card-body">
                     <h2 className="card-title">Department</h2>
-                    <input type="text" placeholder="Add Department" className="input input-bordered w-full max-w-l" />
+                        <input type="text" placeholder="Add Department" className="input input-bordered w-full max-w-l"/>
+                        <span>
+                        <button className="btn" style={{marginLeft : '350px' , position: 'absolute' , top: '67px' , right : '30px'}}>Button</button>
+                        </span>
+                        
 
                     <div className="overflow-x-auto">
                         <table className="table">
@@ -69,7 +71,7 @@ export default function Department() {
                                             <th>{deptlst.dept_id}</th>
                                             <td>{deptlst.dept_name}</td>
                                             <td>
-                                                <FontAwesomeIcon icon={faEdit} style={{ width: '24px', height: '24px', marginRight: '10px'}} onClick={eidtdeptarment}/>
+                                                <FontAwesomeIcon icon={faEdit} style={{ width: '24px', height: '24px', marginRight: '10px' }} onClick={onCickEdit} />
                                                 <FontAwesomeIcon icon={faTrashCan} style={{ width: '24px', height: '24px' }} />
                                             </td>
 

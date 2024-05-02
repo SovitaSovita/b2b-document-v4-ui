@@ -72,6 +72,9 @@ const LeftDrawerCustom = () => {
             <Link href={"/manage_users"}>Manage User</Link>
           </li>
           <li>
+            <Link href={"/department"}>Deparment</Link>
+          </li>
+          <li>
             <div
               role="button"
               onClick={async () => await signOut()}
