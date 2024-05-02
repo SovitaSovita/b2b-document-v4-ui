@@ -3,12 +3,20 @@ import { Editor } from '@tinymce/tinymce-react'
 import React from 'react'
 import 'semantic-ui-css/semantic.min.css'
 
+const mySelectComponent =() => {
+  const [selectedOption, setSelectedOption] = useState(options[0].value); // Set initial selected option
+
+  const handleChange = (event) => {
+    setSelectedOption(event.target.value);
+  }
+}
+
 export default function EditorCustum() {
   return (
     <>
     <form className="ui form">
           <div className="three fields">
-          <div class="field">
+          <div className="field">
               <label>Department</label>
               <select className="select select-info w-full max-w-xs">
                 <option disabled selected>Select language</option>
@@ -26,9 +34,9 @@ export default function EditorCustum() {
                 <option>Italian</option>
               </select>
             </div>
-            <div className="field" style={{width: "55px", display: "flex", alignSelf:"center", marginBottom: "-22px"}}>
+            <div className="field btn " style={{width: "55px", display: "flex", alignSelf:"center", marginBottom: "-22px"}}>
             <button className="btn">
-              Button
+              Add
             </button>
             </div>
             <div className="field required">
