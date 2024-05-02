@@ -1,45 +1,40 @@
 "use client"
 
 import { useEffect, useState } from "react";
-
 import { useSession } from 'next-auth/react';
-
 
 export default function UserTable() {
 
     const { data: session, status } = useSession();
-
     const [loading, setLoading] = useState<boolean>(true);
     const [users, setUsers] = useState([]);
-
+    
     console.log("status : ", status);
-    console.log("session : ", session);
+    console.log("session : ", session); // session user
 
+    useEffect(() => {
+        if (status === "authenticated") {
+            setLoading(false)
+        }
+    }, [status])
 
-
-    console.log({ session });
-
-
-
-    // if (loading) {
-    //     return (
-    //         <div className="flex justify-center items-center h-screen">
-    //             <span className="text-lg">Loading...</span>
-    //         </div>
-    //     );
-    // }
-
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <span className="text-lg">Loading...</span>
+            </div>
+        );
+    }
 
     return (
         <>
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto flex justify-center items-center">
                 <table className="table">
-                    {/* head */}
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>From</th>
-                            <th>Email</th>
+                            <th className="text-lg">Name</th>
+                            <th className="text-lg">Department</th>
+                            <th className="text-lg">Email</th>
                         </tr>
                     </thead>
                     <tbody>
