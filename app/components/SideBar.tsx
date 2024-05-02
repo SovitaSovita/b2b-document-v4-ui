@@ -44,7 +44,6 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
     }, []);
 
     useEffect(() => {
-        // Assuming ARTICLES is your array of articles fetched from somewhere
         const filteredArticles = ARTICLES.filter(article => options.some(option => option.id === article.tag_id));
         setArticles(filteredArticles);
     }, [options]);
@@ -60,12 +59,6 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
               B2B <span className="text-blue-700 ml-1">DOC</span></span> */}
                 </div>
 
-                {/* Tag */}
-                {/* <select className='select w-full max-w-xs border shadow font-semibold text-[15px]'>
-                    {options.map((option, index) => (
-                        <option key={index} value={option.id}>{option.title}</option>
-                    ))}
-                </select> */}
 
 
                 <div className="css-o2c9dn mb-3"></div>
