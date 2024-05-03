@@ -7,6 +7,7 @@ import { faEdit, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/router';
 import addDepartment from './addDepartment';
 import { url } from 'inspector';
+import LoadingCustom from '../Material/Loading';
 
 export default function Department() {
     const [departmentList, setDepartmentList] = useState<DepartmentList[]>([]);
@@ -41,25 +42,25 @@ export default function Department() {
     })
 
     if (loading) {
-        return <p>Loading.....</p>
+        return <LoadingCustom />
     }
     const addDepartment = async () => {
-      const dept_name = 'B2B';
-        console.log("nameDept",dept_name)
-        try{
-            const url =  await fetch('http://localhost:4545/api/v1/department/insertDepartment', {
+        const dept_name = 'B2B';
+        console.log("nameDept", dept_name)
+        try {
+            const url = await fetch('http://localhost:4545/api/v1/department/insertDepartment', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body : JSON.stringify({dept_name}),
+                body: JSON.stringify({ dept_name }),
             });
-           const data = await url.json();
-           console.log(data)
+            const data = await url.json();
+            console.log(data)
 
-        }catch(error){
+        } catch (error) {
             console.log(error)
 
         }
-        
+
     }
 
     return (

@@ -2,13 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { useSession } from 'next-auth/react';
+import { DeleteIcon, EditIcon } from "@/public/icon/TableIcon";
+import LoadingCustom from "../Material/Loading";
 
 export default function UserTable() {
 
     const { data: session, status } = useSession();
     const [loading, setLoading] = useState<boolean>(true);
     const [users, setUsers] = useState([]);
-    
+
     console.log("status : ", status);
     console.log("session : ", session); // session user
 
@@ -21,20 +23,21 @@ export default function UserTable() {
     if (loading) {
         return (
             <div className="flex justify-center items-center h-screen">
-                <span className="text-lg">Loading...</span>
+                <LoadingCustom />
             </div>
         );
     }
 
     return (
         <>
-            <div className="overflow-x-auto flex justify-center items-center">
+            <div className="overflow-x-auto flex justify-center items-center mt-14 px-24">
                 <table className="table">
                     <thead>
                         <tr>
-                            <th className="text-lg">Name</th>
-                            <th className="text-lg">Department</th>
-                            <th className="text-lg">Email</th>
+                            <th className="text-base">Name</th>
+                            <th className="text-base">Department</th>
+                            <th className="text-base">Email</th>
+                            <th className="text-base"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,7 +57,13 @@ export default function UserTable() {
                             </td>
                             <td>{session?.user.dvsn_NM}</td>
                             <td>{session?.user.eml}</td>
-                        </tr>   
+                            <td>
+                                <div className="flex items-center">
+                                    <EditIcon className="mr-3 cursor-pointer" />
+                                    <DeleteIcon className="cursor-pointer" />
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

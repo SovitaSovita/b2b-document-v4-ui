@@ -22,31 +22,31 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
         return ARTICLES.filter(article => article.tag_id === tagId);
     }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('http://localhost:4545/api/v1/DocTag/getTagByDepId?dept_id=1');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const responseData = await response.json();
-                if (responseData.error === false) {
-                    const data = responseData.rec;
-                    setOptions(data);
-                } else {
-                    console.error('Error in response:', responseData.message);
-                }
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-        fetchData();
-    }, []);
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const response = await fetch('http://localhost:4545/api/v1/DocTag/getTagByDepId?dept_id=1');
+    //             if (!response.ok) {
+    //                 throw new Error('Failed to fetch data');
+    //             }
+    //             const responseData = await response.json();
+    //             if (responseData.error === false) {
+    //                 const data = responseData.rec;
+    //                 setOptions(data);
+    //             } else {
+    //                 console.error('Error in response:', responseData.message);
+    //             }
+    //         } catch (error) {
+    //             console.error('Error fetching data:', error);
+    //         }
+    //     };
+    //     fetchData();
+    // }, []);
 
-    useEffect(() => {
-        const filteredArticles = ARTICLES.filter(article => options.some(option => option.id === article.tag_id));
-        setArticles(filteredArticles);
-    }, [options]);
+    // useEffect(() => {
+    //     const filteredArticles = ARTICLES.filter(article => options.some(option => option.id === article.tag_id));
+    //     setArticles(filteredArticles);
+    // }, [options]);
 
     return (
         <div className="drawer-side">
@@ -75,7 +75,7 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                 </li>
 
 
-                {/* {
+                {
                     TAGS.map((item, index) => (
                         <li key={index + 1}>
                             <details>
@@ -88,9 +88,9 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                             </details>
                         </li>
                     ))
-                } */}
+                }
 
-                {options.map((tag, index) => (
+                {/* {options.map((tag, index) => (
                     <li key={index + 1}>
                         <details>
                             <summary className="mt-1 font-medium">{tag.title}</summary>
@@ -101,7 +101,7 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                             </ul>
                         </details>
                     </li>
-                ))}
+                ))} */}
 
 
             </ul>
