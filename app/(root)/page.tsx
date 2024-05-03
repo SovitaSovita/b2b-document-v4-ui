@@ -488,7 +488,7 @@ export default function Home() {
   };
 
 
-  const { data: session, status } = useSession();
+  const { data: session, status }: { data: any, status: any } = useSession();
 
   console.log("user info (google) : ", session)
 

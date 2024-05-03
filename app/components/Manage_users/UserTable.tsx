@@ -7,7 +7,7 @@ import LoadingCustom from "../Material/Loading";
 
 export default function UserTable() {
 
-    const { data: session, status } = useSession();
+    const { data: session, status }: { data: any, status: any } = useSession();
     const [loading, setLoading] = useState<boolean>(true);
     const [users, setUsers] = useState([]);
 

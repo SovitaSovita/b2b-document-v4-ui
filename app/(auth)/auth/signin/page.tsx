@@ -1,6 +1,5 @@
 'use client'
 
-import { API_BASE_URL } from '@/app/utils/xhttp';
 import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -8,9 +7,8 @@ import React, { useState } from 'react'
 import { PinInput, PinInputField } from "@chakra-ui/pin-input";
 import GppGoodOutlinedIcon from "@mui/icons-material/GppGoodOutlined";
 import { Backdrop, Box, Button, Modal, Typography } from '@mui/material';
-import { RoundedCorner } from '@mui/icons-material';
 
-function page() {
+function Page() {
 
     const [credentials, setCredentials] = useState({ userId: '' });
     const router = useRouter();
@@ -21,7 +19,6 @@ function page() {
     };
 
     const handleSubmit = async (e: any) => {
-        console.log(credentials)
         e.preventDefault();
         const res = await fetch(`http://192.168.178.239:8085/api/v1/auth/send-otp`, {
             method: "POST",
@@ -86,7 +83,7 @@ function page() {
         setOpen(false)
     };
 
-    const { data: session, status } = useSession();
+    const { data: session, status }: { data: any, status: any } = useSession();
 
     if (status === "authenticated") {
         router.push('/')
@@ -201,4 +198,4 @@ function page() {
     )
 }
 
-export default page
+export default Page
