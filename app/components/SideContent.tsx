@@ -1,6 +1,6 @@
 import React from 'react'
 import Breadcrumbs from './Breadcrumbs'
-import Page from '../(root)/vanda/Page';
+import Page from '../(root)/vanda/page';
 
 import LeftDrawerCustom from './Profile/LeftDrawerCustom'
 
