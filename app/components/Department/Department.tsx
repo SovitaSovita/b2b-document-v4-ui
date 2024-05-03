@@ -7,58 +7,52 @@ import { faEdit, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/router';
 import addDepartment from './addDepartment';
 import { url } from 'inspector';
+import ihttp from '@/app/utils/xhttp';
 
 export default function Department() {
+    
+    const [dept_name , setDept_name ] = useState('');
     const [departmentList, setDepartmentList] = useState<DepartmentList[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [eidtdeptarment, setCurrentView] = useState('addDepartment');
-    const onCickEdit = () => {
-        // router.push('/addDepartment');
-        setCurrentView('addDepartment')
-    }
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchData = async() => {
             try {
-                const url = await fetch('http://localhost:4545/api/v1/department/AllDepartment');
-                if (!url.ok) {
-                    throw new Error('Failed to fetch Data');
-                }
-                const data = await url.json()
-                if (data.code === '200' && data.error === false && Array.isArray(data.rec)) {
-                    setDepartmentList(data.rec);
-                    setLoading(false);
-                } else {
-                    throw new Error('Data is not in the expected format')
-                }
+                const url = await ihttp.get('http://localhost:4545/api/v1/department/AllDepartment');
+                 setDepartmentList(url.data.rec)
+                // if (!url.ok) {
+                //     throw new Error('Failed to fetch Data');
+                // }
+                // const data = await url.json()
+                // if (data.code === '200' && data.error === false && Array.isArray(data.rec)) {
+                //     setDepartmentList(data.rec);
+                //     setLoading(false);
+                // } else {
+                //     throw new Error('Data is not in the expected format')
+                // }
 
             } catch (e) {
 
-                setLoading(false)
+                //setLoading(false)
 
             }
         };
         fetchData();
     })
 
-    if (loading) {
-        return <p>Loading.....</p>
-    }
+    // if (loading) {
+    //     return <p>Loading.....</p>
+    // }
     const addDepartment = async () => {
-      const dept_name = 'B2B';
-        console.log("nameDept",dept_name)
-        try{
-            const url =  await fetch('http://localhost:4545/api/v1/department/insertDepartment', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body : JSON.stringify({dept_name}),
-            });
-           const data = await url.json();
-           console.log(data)
-
-        }catch(error){
-            console.log(error)
+        const paramReq = {
+            dept_name  : (document.getElementById('deptName') as HTMLInputElement).value,
+            created_by : "Admin"
 
         }
+        const url = await ihttp.post('http://localhost:4545/api/v1/department/insertDepartment',paramReq)
+        console.log(url)
+    }
+    const removeDept = async() =>{
         
     }
 
@@ -67,7 +61,7 @@ export default function Department() {
             <div className="card w-96 bg-base-100 shadow-xl" style={{ left: '20px', top: '20px', border: '1px solid', width: '500px' }}>
                 <div className="card-body">
                     <h2 className="card-title">Department</h2>
-                    <input type="text" placeholder="Add Department" className="input input-bordered w-full max-w-l" />
+                    <input type="text" placeholder="Add Department" style={{width: '370px'}} id= "deptName" className="input input-bordered w-full max-w-l" />
                     <span>
                         <button className="btn" style={{ marginLeft: '350px', position: 'absolute', top: '67px', right: '30px' }} onClick={addDepartment}>Add</button>
                     </span>
@@ -91,8 +85,8 @@ export default function Department() {
                                             <th>{deptlst.dept_id}</th>
                                             <td>{deptlst.dept_name}</td>
                                             <td>
-                                                <FontAwesomeIcon icon={faEdit} style={{ width: '24px', height: '24px', marginRight: '10px' }} onClick={onCickEdit} />
-                                                <FontAwesomeIcon icon={faTrashCan} style={{ width: '24px', height: '24px' }} />
+                                                <FontAwesomeIcon icon={faEdit} style={{ width: '24px', height: '24px', marginRight: '10px' }} />
+                                                <FontAwesomeIcon icon={faTrashCan} style={{ width: '24px', height: '24px', cursor : 'pointer' }}  onClick={removeDept} />
                                             </td>
 
                                         </tr>
