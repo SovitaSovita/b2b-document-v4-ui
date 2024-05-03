@@ -59,6 +59,10 @@ export default function EditorCustum() {
             }}
             initialValue="Welcome to TinyMCE!"
           />
+          <div>
+            <input type="file" placeholder="You can't touch this" className="file-input file-input-bordered w-full max-w-xs" disabled />
+            <button className="btn btn-outline">Default</button>
+          </div>
       </form>
     
     </>
