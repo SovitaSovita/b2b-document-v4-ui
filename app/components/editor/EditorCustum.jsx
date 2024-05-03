@@ -1,46 +1,54 @@
 "use client"
+import { GetArticleById } from '@/app/service/ArticleService'
 import { Editor } from '@tinymce/tinymce-react'
-import React from 'react'
+import { useRouter } from 'next/navigation'
+import React, { useEffect } from 'react'
 import 'semantic-ui-css/semantic.min.css'
 
-const mySelectComponent =() => {
-  const [selectedOption, setSelectedOption] = useState(options[0].value); // Set initial selected option
 
-  const handleChange = (event) => {
-    setSelectedOption(event.target.value);
-  }
-}
 
 export default function EditorCustum() {
+
+  const mySelectComponent = () => {
+    const [selectedOption, setSelectedOption] = useState(options[0].value); // Set initial selected option
+  
+    useEffect(() => {
+      async function fetchData(){
+        
+      }
+    })
+  }
+
+  const router = useRouter();
+
   return (
     <>
-    <form className="ui form">
+      <div className='px-24 mt-14'>
+        <form className="ui form">
           <div className="three fields">
-          <div className="field">
+            <div className="field">
               <label>Department</label>
               <select className="select select-info w-full max-w-xs">
-                <option disabled selected>Select language</option>
-                <option>English</option>
-                <option>Japanese</option>
-                <option>Italian</option>
+                <option>B2B</option>
+                <option>Mobile</option>
+                <option>Infra</option>
               </select>
             </div>
             <div className="field">
-            <label>Main Title</label>
+              <label>Main Title</label>
               <select className="select select-info w-full max-w-xs">
-                <option disabled selected>Select language</option>
-                <option>English</option>
-                <option>Japanese</option>
-                <option>Italian</option>
+                <option>B2B</option>
+                <option>Mobile</option>
+                <option>Infra</option>
               </select>
             </div>
-            <div className="field btn " style={{width: "55px", display: "flex", alignSelf:"center", marginBottom: "-22px"}}>
-            <button className="btn">
-              Add
-            </button>
+            <div className="field btn " style={{ width: "55px", display: "flex", alignSelf: "center", marginBottom: "-22px" }}>
+              <button className="btn">
+                Add
+              </button>
             </div>
             <div className="field required">
-            <label>Sub Title</label>
+              <label>Sub Title</label>
               <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
             </div>
           </div>
@@ -55,16 +63,16 @@ export default function EditorCustum() {
                 { value: 'First.Name', title: 'First Name' },
                 { value: 'Email', title: 'Email' },
               ],
-              
+
             }}
             initialValue="Welcome to TinyMCE!"
           />
-          <div>
-            <input type="file" placeholder="You can't touch this" className="file-input file-input-bordered w-full max-w-xs" disabled />
-            <button className="btn btn-outline">Default</button>
-          </div>
-      </form>
-    
+        </form>
+        <div className='mt-14 flex justify-end'>
+          <button onClick={() => router.back()} className="btn btn-active btn-ghost mr-3">Cancel</button>
+          <button className="btn btn-active btn-success text-white">Save</button>
+        </div>
+      </div>
     </>
   )
 }

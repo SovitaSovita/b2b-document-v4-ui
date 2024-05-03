@@ -5,6 +5,9 @@ import { DepartmentList } from '@/app/type/DepartmentType';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/router';
+import addDepartment from './addDepartment';
+import { url } from 'inspector';
+import LoadingCustom from '../Material/Loading';
 
 export default function Department() {
     const [departmentList, setDepartmentList] = useState<DepartmentList[]>([]);
@@ -39,7 +42,25 @@ export default function Department() {
     })
 
     if (loading) {
-        return <p>Loading.....</p>
+        return <LoadingCustom />
+    }
+    const addDepartment = async () => {
+        const dept_name = 'B2B';
+        console.log("nameDept", dept_name)
+        try {
+            const url = await fetch('http://localhost:4545/api/v1/department/insertDepartment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ dept_name }),
+            });
+            const data = await url.json();
+            console.log(data)
+
+        } catch (error) {
+            console.log(error)
+
+        }
+
     }
 
     return (
@@ -47,11 +68,11 @@ export default function Department() {
             <div className="card w-96 bg-base-100 shadow-xl" style={{ left: '20px', top: '20px', border: '1px solid', width: '500px' }}>
                 <div className="card-body">
                     <h2 className="card-title">Department</h2>
-                        <input type="text" placeholder="Add Department" className="input input-bordered w-full max-w-l"/>
-                        <span>
-                        <button className="btn" style={{marginLeft : '350px' , position: 'absolute' , top: '67px' , right : '30px'}}>Button</button>
-                        </span>
-                        
+                    <input type="text" placeholder="Add Department" className="input input-bordered w-full max-w-l" />
+                    <span>
+                        <button className="btn" style={{ marginLeft: '350px', position: 'absolute', top: '67px', right: '30px' }} onClick={addDepartment}>Add</button>
+                    </span>
+
 
                     <div className="overflow-x-auto">
                         <table className="table">
