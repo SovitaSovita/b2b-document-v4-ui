@@ -1,15 +1,15 @@
 "use client"
 import { Editor } from '@tinymce/tinymce-react'
 import { useRouter } from 'next/navigation'
-import React from 'react'
+import React, { useState } from 'react'
 import 'semantic-ui-css/semantic.min.css'
 
 const mySelectComponent = () => {
-  const [selectedOption, setSelectedOption] = useState(options[0].value); // Set initial selected option
+  // const [selectedOption, setSelectedOption] = useState(options[0].value); // Set initial selected option
 
-  const handleChange = (event) => {
-    setSelectedOption(event.target.value);
-  }
+  // const handleChange = (event: any) => {
+  //   setSelectedOption(event.target.value);
+  // }
 }
 
 export default function EditorCustum() {

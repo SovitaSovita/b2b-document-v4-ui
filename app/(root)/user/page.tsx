@@ -1,6 +1,6 @@
 import AboutUser from "@/app/components/About/AboutUser"
 
-const page = () => {
+const Page = () => {
 
 
     return (
@@ -10,4 +10,4 @@ const page = () => {
     )
 }
 
-export default page;
+export default Page;

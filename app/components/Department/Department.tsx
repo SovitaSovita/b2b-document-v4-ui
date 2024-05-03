@@ -20,7 +20,7 @@ export default function Department() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const url = await fetch('http://localhost:4545/api/v1/department/AllDepartment');
+                const url = await fetch('http://192.168.178.239:4545/api/v1/department/AllDepartment');
                 if (!url.ok) {
                     throw new Error('Failed to fetch Data');
                 }
@@ -88,7 +88,7 @@ export default function Department() {
                             <tbody>
                                 {
                                     departmentList.map(deptlst => (
-                                        <tr>
+                                        <tr key={deptlst?.dept_id}>
                                             <th>{deptlst.dept_id}</th>
                                             <td>{deptlst.dept_name}</td>
                                             <td>

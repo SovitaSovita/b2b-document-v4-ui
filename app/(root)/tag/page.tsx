@@ -1,7 +1,7 @@
 import DocTag from "@/app/components/Tag/DocTag"
 
 
-const page = () => {
+const Page = () => {
 
     return (
         <>
@@ -10,4 +10,4 @@ const page = () => {
     )
 }
 
-export default page;
+export default Page;

@@ -5,7 +5,7 @@ import React from 'react'
 
 export default function AboutUser() {
 
-  const {data: session, status} = useSession();
+  const { data: session, status }: { data: any, status: any } = useSession();
   console.log({ session });
 
   return (
@@ -15,7 +15,7 @@ export default function AboutUser() {
           <figure>
             <img
               src={session?.user.image ? session.user.image : session?.user.prfl_PHTG} alt="pf" width={140} height={100} loading="lazy"
-              
+
             />
           </figure>
           <div className="card-body">
@@ -23,7 +23,7 @@ export default function AboutUser() {
               {session?.user.flnm}
             </h2>
             <p className="text-sm md:text-base lg:text-lg">{session?.user.eml}</p>
-            
+
           </div>
         </div>
       </div>
