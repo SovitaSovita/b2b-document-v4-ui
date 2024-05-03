@@ -14,7 +14,6 @@ const ihttp = axios.create({
 async function requestInterceptor(config: InternalAxiosRequestConfig) {
   const idToken: any = await getSession();
 
-  console.log(idToken.token)
   if (!idToken) {
     return Promise.reject("missing access token");
   }

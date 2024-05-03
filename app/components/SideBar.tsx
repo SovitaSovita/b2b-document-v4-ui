@@ -14,39 +14,14 @@ interface TagItem {
 
 function SideBar({ ARTICLES, TAGS }: MenuData) {
 
-    const [options, setOptions] = useState([]);
-    const [articles, setArticles] = useState([]);
-
     // Function to filter articles based on tag_id
     function filterArticlesByTagId(tagId: number) {
         return ARTICLES.filter(article => article.tag_id === tagId);
     }
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const response = await fetch('http://localhost:4545/api/v1/DocTag/getTagByDepId?dept_id=1');
-    //             if (!response.ok) {
-    //                 throw new Error('Failed to fetch data');
-    //             }
-    //             const responseData = await response.json();
-    //             if (responseData.error === false) {
-    //                 const data = responseData.rec;
-    //                 setOptions(data);
-    //             } else {
-    //                 console.error('Error in response:', responseData.message);
-    //             }
-    //         } catch (error) {
-    //             console.error('Error fetching data:', error);
-    //         }
-    //     };
-    //     fetchData();
-    // }, []);
-
-    // useEffect(() => {
-    //     const filteredArticles = ARTICLES.filter(article => options.some(option => option.id === article.tag_id));
-    //     setArticles(filteredArticles);
-    // }, [options]);
+    function handleViewArticle(id: number) {
+        console.log("ID :: ", id);
+    }
 
     return (
         <div className="drawer-side">
@@ -82,26 +57,13 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                                 <summary className="mt-1 font-medium">{item.title}</summary>
                                 <ul>
                                     {filterArticlesByTagId(item.id).map(item => (
-                                        <li key={item?.id}><a className="text-[13px]">{item?.title}</a></li>
+                                        <li key={item?.id} onClick={() => handleViewArticle(item.id)}><a className="text-[13px]">{item?.title}</a></li>
                                     ))}
                                 </ul>
                             </details>
                         </li>
                     ))
                 }
-
-                {/* {options.map((tag, index) => (
-                    <li key={index + 1}>
-                        <details>
-                            <summary className="mt-1 font-medium">{tag.title}</summary>
-                            <ul>
-                                {articles.filter(article => article.tag_id === tag.id).map(article => (
-                                    <li key={article.id}><a className="text-[13px]">{article.title}</a></li>
-                                ))}
-                            </ul>
-                        </details>
-                    </li>
-                ))} */}
 
 
             </ul>
