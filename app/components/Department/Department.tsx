@@ -7,56 +7,55 @@ import { faEdit, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/router';
 import addDepartment from './addDepartment';
 import { url } from 'inspector';
+import ihttp from '@/app/utils/xhttp';
+import { fetchData } from 'next-auth/client/_utils';
 
 export default function Department() {
-    
-    const [dept_name , setDept_name ] = useState('');
+
+    const [dept_name, setDept_name] = useState('');
     const [departmentList, setDepartmentList] = useState<DepartmentList[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [eidtdeptarment, setCurrentView] = useState('addDepartment');
-    useEffect(() => {
-        const fetchData = async() => {
+   
+        const fetchData = async () => {
             try {
-                const url = await fetch('http://localhost:4545/api/v1/department/AllDepartment');
-                if (!url.ok) {
-                    throw new Error('Failed to fetch Data');
-                }
-                const data = await url.json()
-                if (data.code === '200' && data.error === false && Array.isArray(data.rec)) {
-                    setDepartmentList(data.rec);
-                    setLoading(false);
-                } else {
-                    throw new Error('Data is not in the expected format')
-                }
-
+                const url = await ihttp.get('http://localhost:4545/api/v1/department/AllDepartment');
+                setDepartmentList(url.data.rec);
             } catch (e) {
-
                 //setLoading(false)
-
             }
         };
         fetchData();
-    })
 
-    if (loading) {
-        return <p>Loading.....</p>
-    }
-    const addDepartment = async () => {
-      const dept_name = 'B2B';
-        console.log("nameDept",dept_name)
-        try{
-            const url =  await fetch('http://localhost:4545/api/v1/department/insertDepartment', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body : JSON.stringify({dept_name}),
-            });
-           const data = await url.json();
-           console.log(data)
 
-        }catch(error){
+    
+    const addDepartment = async () => {    
+        
+        const  dept_name  = (document.getElementById('deptName') as HTMLInputElement).value;
+         const   created_by = 'Admin'
+        
+        try {
+            console.log(dept_name)
+            if(dept_name === ''){
+                alert("Department Can't be empty")
+                return;
+            }else{
+                const url = await ihttp.post('http://localhost:4545/api/v1/department/insertDepartment',{ dept_name , created_by })
+                fetchData();
+            }
+            
+        } catch (error) {
             console.log(error)
 
         }
+
+    }
+
+    // if (loading) {
+    //     return <p>Loading.....</p>
+    // }
+
+    const removeDept = async () => {
         
     }
 
@@ -65,7 +64,7 @@ export default function Department() {
             <div className="card w-96 bg-base-100 shadow-xl" style={{ left: '20px', top: '20px', border: '1px solid', width: '500px' }}>
                 <div className="card-body">
                     <h2 className="card-title">Department</h2>
-                    <input type="text" placeholder="Add Department" style={{width: '370px'}} id= "deptName" className="input input-bordered w-full max-w-l" />
+                    <input type="text" placeholder="Add Department" style={{ width: '370px' }} id="deptName" className="input input-bordered w-full max-w-l" />
                     <span>
                         <button className="btn" style={{ marginLeft: '350px', position: 'absolute', top: '67px', right: '30px' }} onClick={addDepartment}>Add</button>
                     </span>
@@ -90,7 +89,7 @@ export default function Department() {
                                             <td>{deptlst.dept_name}</td>
                                             <td>
                                                 <FontAwesomeIcon icon={faEdit} style={{ width: '24px', height: '24px', marginRight: '10px' }} />
-                                                <FontAwesomeIcon icon={faTrashCan} style={{ width: '24px', height: '24px', cursor : 'pointer' }}  onClick={removeDept} />
+                                                <FontAwesomeIcon icon={faTrashCan} style={{ width: '24px', height: '24px', cursor: 'pointer' }} onClick={removeDept} />
                                             </td>
 
                                         </tr>
