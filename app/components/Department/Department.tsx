@@ -7,7 +7,6 @@ import { faEdit, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/router';
 import addDepartment from './addDepartment';
 import { url } from 'inspector';
-import ihttp from '@/app/utils/xhttp';
 
 export default function Department() {
     
@@ -18,18 +17,17 @@ export default function Department() {
     useEffect(() => {
         const fetchData = async() => {
             try {
-                const url = await ihttp.get('http://localhost:4545/api/v1/department/AllDepartment');
-                 setDepartmentList(url.data.rec)
-                // if (!url.ok) {
-                //     throw new Error('Failed to fetch Data');
-                // }
-                // const data = await url.json()
-                // if (data.code === '200' && data.error === false && Array.isArray(data.rec)) {
-                //     setDepartmentList(data.rec);
-                //     setLoading(false);
-                // } else {
-                //     throw new Error('Data is not in the expected format')
-                // }
+                const url = await fetch('http://localhost:4545/api/v1/department/AllDepartment');
+                if (!url.ok) {
+                    throw new Error('Failed to fetch Data');
+                }
+                const data = await url.json()
+                if (data.code === '200' && data.error === false && Array.isArray(data.rec)) {
+                    setDepartmentList(data.rec);
+                    setLoading(false);
+                } else {
+                    throw new Error('Data is not in the expected format')
+                }
 
             } catch (e) {
 
@@ -40,19 +38,25 @@ export default function Department() {
         fetchData();
     })
 
-    // if (loading) {
-    //     return <p>Loading.....</p>
-    // }
+    if (loading) {
+        return <p>Loading.....</p>
+    }
     const addDepartment = async () => {
-        const paramReq = {
-            dept_name  : (document.getElementById('deptName') as HTMLInputElement).value,
-            created_by : "Admin"
+      const dept_name = 'B2B';
+        console.log("nameDept",dept_name)
+        try{
+            const url =  await fetch('http://localhost:4545/api/v1/department/insertDepartment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body : JSON.stringify({dept_name}),
+            });
+           const data = await url.json();
+           console.log(data)
+
+        }catch(error){
+            console.log(error)
 
         }
-        const url = await ihttp.post('http://localhost:4545/api/v1/department/insertDepartment',paramReq)
-        console.log(url)
-    }
-    const removeDept = async() =>{
         
     }
 
@@ -81,7 +85,7 @@ export default function Department() {
                             <tbody>
                                 {
                                     departmentList.map(deptlst => (
-                                        <tr>
+                                        <tr key={deptlst?.dept_id}>
                                             <th>{deptlst.dept_id}</th>
                                             <td>{deptlst.dept_name}</td>
                                             <td>

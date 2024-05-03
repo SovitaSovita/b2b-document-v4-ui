@@ -1,22 +1,27 @@
 "use client"
 import { Editor } from '@tinymce/tinymce-react'
-import React from 'react'
+import { useRouter } from 'next/navigation'
+import React, { useState } from 'react'
 import 'semantic-ui-css/semantic.min.css'
 
-const mySelectComponent =() => {
-  const [selectedOption, setSelectedOption] = useState(options[0].value); // Set initial selected option
+const mySelectComponent = () => {
+  // const [selectedOption, setSelectedOption] = useState(options[0].value); // Set initial selected option
 
-  const handleChange = (event) => {
-    setSelectedOption(event.target.value);
-  }
+  // const handleChange = (event: any) => {
+  //   setSelectedOption(event.target.value);
+  // }
 }
 
 export default function EditorCustum() {
+
+  const router = useRouter();
+
   return (
     <>
-    <form className="ui form">
+      <div className='px-24 mt-14'>
+        <form className="ui form">
           <div className="three fields">
-          <div className="field">
+            <div className="field">
               <label>Department</label>
               <select className="select select-info w-full max-w-xs">
                 <option disabled selected>Select language</option>
@@ -26,7 +31,7 @@ export default function EditorCustum() {
               </select>
             </div>
             <div className="field">
-            <label>Main Title</label>
+              <label>Main Title</label>
               <select className="select select-info w-full max-w-xs">
                 <option disabled selected>Select language</option>
                 <option>English</option>
@@ -34,13 +39,13 @@ export default function EditorCustum() {
                 <option>Italian</option>
               </select>
             </div>
-            <div className="field btn " style={{width: "55px", display: "flex", alignSelf:"center", marginBottom: "-22px"}}>
-            <button className="btn">
-              Add
-            </button>
+            <div className="field btn " style={{ width: "55px", display: "flex", alignSelf: "center", marginBottom: "-22px" }}>
+              <button className="btn">
+                Add
+              </button>
             </div>
             <div className="field required">
-            <label>Sub Title</label>
+              <label>Sub Title</label>
               <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
             </div>
           </div>
@@ -55,12 +60,16 @@ export default function EditorCustum() {
                 { value: 'First.Name', title: 'First Name' },
                 { value: 'Email', title: 'Email' },
               ],
-              
+
             }}
             initialValue="Welcome to TinyMCE!"
           />
-      </form>
-    
+        </form>
+        <div className='mt-14 flex justify-end'>
+          <button onClick={() => router.back()} className="btn btn-active btn-ghost mr-3">Cancel</button>
+          <button className="btn btn-active btn-success text-white">Save</button>
+        </div>
+      </div>
     </>
   )
 }

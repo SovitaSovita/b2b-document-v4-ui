@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { PinInput, PinInputField } from "@chakra-ui/pin-input";
 import GppGoodOutlinedIcon from "@mui/icons-material/GppGoodOutlined";
 
-export default function page() {
+export default function Page() {
 
   const router = useRouter();
 
@@ -23,7 +23,7 @@ export default function page() {
     }
   };
 
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = useState("");
 
   const handleChange = (value: string) => {
     setValue(value);

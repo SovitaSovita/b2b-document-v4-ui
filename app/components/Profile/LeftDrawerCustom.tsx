@@ -8,7 +8,7 @@ import Image from "next/image";
 
 const LeftDrawerCustom = () => {
 
-  const { data: session, status } = useSession();
+  const { data: session, status }: { data: any, status: any } = useSession();
 
   console.log("status : ", status);
   console.log("session : ", session);
