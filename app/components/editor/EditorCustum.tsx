@@ -1,18 +1,52 @@
 "use client"
+import { GetAllDepartmentId } from '@/app/service/DepartmentService'
+import { DepartmentList } from '@/app/type/DepartmentType'
+import ihttp from '@/app/utils/xhttp'
 import { Editor } from '@tinymce/tinymce-react'
+import { hasCustomGetInitialProps } from 'next/dist/build/utils'
 import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import React, { useEffect,useRef,useState } from 'react'
+
 import 'semantic-ui-css/semantic.min.css'
 
-const mySelectComponent = () => {
-  // const [selectedOption, setSelectedOption] = useState(options[0].value); // Set initial selected option
 
-  // const handleChange = (event: any) => {
-  //   setSelectedOption(event.target.value);
-  // }
-}
 
 export default function EditorCustum() {
+
+  const editorRef = useRef(null);
+  
+
+  const [departments, setDepartments] = useState([]);
+  const [selectedDepartment, setSelectedDepartment] = useState<DepartmentList[]>([]);
+    const fetchData = async () =>{
+      try {
+        const url = await ihttp.get('http://localhost:4545/api/v1/department/AllDepartment');
+        setSelectedDepartment(url.data.rec);
+      } catch (e) {
+        //setLoading(false)
+      }
+    };
+    fetchData();
+  
+  const addDepartment = async () =>{
+    const  dept_name  = (document.getElementById('deptName') as HTMLInputElement).value;
+         const   created_by = 'Admin'
+        
+        try {
+            console.log(dept_name)
+            if(dept_name === ''){
+                alert("Department Can't be empty")
+                return;
+            }else{
+                const url = await ihttp.post('http://localhost:4545/api/v1/department/insertDepartment',{ dept_name , created_by })
+                fetchData();
+            }
+            
+        } catch (error) {
+            console.log(error)
+
+        }
+  }
 
   const router = useRouter();
 
@@ -22,25 +56,26 @@ export default function EditorCustum() {
         <form className="ui form">
           <div className="three fields">
             <div className="field">
-              <label>Department</label>
-              <select className="select select-info w-full max-w-xs">
-                <option disabled selected>Select language</option>
-                <option>English</option>
-                <option>Japanese</option>
-                <option>Italian</option>
-              </select>
+                <label>Department</label>
+                <select className="select select-info w-full max-w-xs">
+                  {selectedDepartment.map(departments =>(
+                    <option key={departments.dept_id} value={departments.dept_id}>{departments.dept_id}</option>
+                    ))
+                  }
+                </select>
+                
             </div>
             <div className="field">
               <label>Main Title</label>
               <select className="select select-info w-full max-w-xs">
-                <option disabled selected>Select language</option>
-                <option>English</option>
-                <option>Japanese</option>
-                <option>Italian</option>
+                {selectedDepartment.map(departments =>(
+                    <option key={departments.dept_id} value={departments.dept_id}>{departments.dept_name}</option>
+                    ))
+                  }
               </select>
             </div>
             <div className="field btn " style={{ width: "55px", display: "flex", alignSelf: "center", marginBottom: "-22px" }}>
-              <button className="btn">
+              <button className="btn btn-active">
                 Add
               </button>
             </div>
@@ -51,18 +86,22 @@ export default function EditorCustum() {
           </div>
           <Editor
             apiKey='ibgazhdpbf1641m9l0exn7y2y0pbcwbtlmz013z4uf1icb2e'
+           // onInit={(_evt, editor) => editorRef.current = editor}
+            initialValue="<p>This is the initial content of the editor.</p>"
             init={{
-              plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
-              toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-              tinycomments_mode: 'embedded',
-              tinycomments_author: 'Author name',
-              mergetags_list: [
-                { value: 'First.Name', title: 'First Name' },
-                { value: 'Email', title: 'Email' },
+              height: 500,
+              menubar: false,
+              plugins: [
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
               ],
-
+              toolbar: 'undo redo | blocks | ' +
+                'bold italic forecolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | help',
+              content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
             }}
-            initialValue="Welcome to TinyMCE!"
           />
         </form>
         <div className='mt-14 flex justify-end'>
@@ -72,4 +111,5 @@ export default function EditorCustum() {
       </div>
     </>
   )
+
 }
