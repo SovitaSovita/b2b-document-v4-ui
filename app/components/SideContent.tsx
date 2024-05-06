@@ -3,8 +3,13 @@ import Breadcrumbs from './Breadcrumbs'
 import Page from '../(root)/vanda/page';
 
 import LeftDrawerCustom from './Profile/LeftDrawerCustom'
+import { useSelector } from 'react-redux';
+import { RootState } from '../service/Redux/store/store';
 
 function SideContent() {
+
+    const { article }: { article: any } = useSelector((state: RootState) => state?.article);
+    console.log("data's article >>>>>>>>>>>>", article);
 
     return (
         <div className="drawer-content flex flex-col items-center justify-center p-4">
@@ -23,7 +28,8 @@ function SideContent() {
 
             </div>
 
-            <div className="border-2 rounded-lg border-dashed w-full h-full">
+            <div className="border-2 rounded-lg border-dashed w-full h-full p-3">
+                <div dangerouslySetInnerHTML={{ __html: article?.content_body }} />
                 <Page />
             </div>
 

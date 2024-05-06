@@ -14,7 +14,7 @@ export default function Home() {
   })
 
   const transformApiResponse = (apiResponse: any) => {
-    const ARTICLES = apiResponse.map((item: any) => ({
+    const ARTICLES = apiResponse?.map((item: any) => ({
       id: item.id,
       tag_id: item.tag_id,
       title: item.title,
