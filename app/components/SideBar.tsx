@@ -6,6 +6,9 @@ import { MenuData } from '../type/MenuData';
 import BookmarksOutlinedIcon from '@mui/icons-material/BookmarksOutlined';
 import { sampleFetch } from '../service/sample';
 import { useState } from 'react';
+import { getArticleDetail } from '../service/MenuService';
+import { getArticle } from '../service/Redux/articleDetailSlice';
+import { useDispatch } from 'react-redux';
 
 interface TagItem {
     id: number;
@@ -14,13 +17,19 @@ interface TagItem {
 
 function SideBar({ ARTICLES, TAGS }: MenuData) {
 
+    const dispatch = useDispatch();
+
     // Function to filter articles based on tag_id
     function filterArticlesByTagId(tagId: number) {
         return ARTICLES.filter(article => article.tag_id === tagId);
     }
 
-    function handleViewArticle(id: number) {
+    function handleViewArticle(id: string) {
         console.log("ID :: ", id);
+        getArticleDetail(id).then((res) => {
+            console.log("res[0] >>", res[0]);
+            dispatch(getArticle(res[0]))
+        })
     }
 
     return (
@@ -57,7 +66,7 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                                 <summary className="mt-1 font-medium">{item.title}</summary>
                                 <ul>
                                     {filterArticlesByTagId(item.id).map(item => (
-                                        <li key={item?.id} onClick={() => handleViewArticle(item.id)}><a className="text-[13px]">{item?.title}</a></li>
+                                        <li key={item?.id} onClick={() => handleViewArticle(item.id.toString())}><a className="text-[13px]">{item?.title}</a></li>
                                     ))}
                                 </ul>
                             </details>

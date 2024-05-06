@@ -8,3 +8,13 @@ export const getMenuSidebar = async () => {
         return error;
     }
 }
+
+
+export const getArticleDetail = async (id: string) => {
+    try {
+        const response = await ihttp.get(`/articles/listById?id=${id}`);
+        return response.data?.rec;
+    } catch (error) {
+        return error;
+    }
+}
