@@ -25,9 +25,8 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
     }
 
     function handleViewArticle(id: string) {
-        console.log("ID :: ", id);
         getArticleDetail(id).then((res) => {
-            console.log("res[0] >>", res[0]);
+            console.log("res[0] >>", res);
             dispatch(getArticle(res[0]))
         })
     }
