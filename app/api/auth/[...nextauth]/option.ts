@@ -86,7 +86,7 @@ export const options: NextAuthOptions = {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
             async profile(profile) {
 
-                console.log("profile ?>>>>>", profile);
+                // console.log("profile ?>>>>>", profile);
 
                 const result = await fetch(`${API_BASE_URL}/api/v1/auth/social`, {
                     method: "POST",
@@ -94,7 +94,8 @@ export const options: NextAuthOptions = {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        userId: profile?.email
+                        gmail: profile?.email,
+                        appId: "2"
                     })
                 })
                 const data = await result.json();
@@ -119,6 +120,7 @@ export const options: NextAuthOptions = {
             credentials: {
                 userId: { label: "Username", type: "text" },
                 optCode: { label: "optCode", type: "text" },
+                appId: { label: "appId", type: "text" },
             },
             async authorize(credentials) {
 
@@ -134,7 +136,7 @@ export const options: NextAuthOptions = {
                 })
                 const data = await result.json();
 
-                console.log("data >> ", data);
+                // console.log("data >> ", data);
 
 
                 if (result.ok) {

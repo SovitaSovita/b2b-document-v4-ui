@@ -11,11 +11,14 @@ import Profile from './Profile/Profile';
 import ProfileDrawer from './Profile/ProfileDrawer';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import ReplyAllOutlinedIcon from '@mui/icons-material/ReplyAllOutlined';
+import LoadingCustom from './Material/Loading';
+import { useParams } from 'next/navigation';
 
 function SideContent() {
 
     const { article }: { article: any } = useSelector((state: RootState) => state?.article);
     const { data: session, status }: { data: any, status: any } = useSession();
+    const path = useParams();
 
     return (
         <div className="drawer-content flex flex-col items-center justify-center p-4">
@@ -69,7 +72,7 @@ function SideContent() {
                             <div
                                 role="button"
                                 onClick={async () => await signOut()}
-                                className="text-red-500 -z-10"
+                                className="text-red-500"
                             >
                                 Sign out
                             </div>
@@ -80,12 +83,20 @@ function SideContent() {
             </div>
 
             <div className="border-2 flex flex-col rounded-lg border-dashed w-full h-full p-4">
-                <div className='mb-4 self-end'>
-                    <FavoriteBorderOutlinedIcon className='mr-3     ' />
-                    <ReplyAllOutlinedIcon />
-                </div>
-                <div dangerouslySetInnerHTML={{ __html: article?.content_body }} />
-                <img src={article?.img_path} alt="content" width={500} className='mt-6 ml-6' />
+                {
+                    !article ? (<LoadingCustom />)
+                        : (
+                            <div className='self-end'>
+                                <div className='mb-4'>
+                                    <FavoriteBorderOutlinedIcon className='mr-3     ' />
+                                    <ReplyAllOutlinedIcon />
+                                </div>
+                                <div dangerouslySetInnerHTML={{ __html: article?.content_body }} />
+                            </div>
+                        )
+                }
+
+                {/* <img src={article?.img_path} alt="content" width={500} className='mt-6 ml-6' /> */}
                 <Page />
             </div>
 
