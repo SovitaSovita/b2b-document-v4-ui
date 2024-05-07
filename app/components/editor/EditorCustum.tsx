@@ -1,9 +1,7 @@
 "use client"
-import { AddArticleBy } from '@/app/service/ArticleService'
-import { GetAllDepartmentId } from '@/app/service/DepartmentService'
 import { DepartmentList } from '@/app/type/DepartmentType'
 import ihttp from '@/app/utils/xhttp'
-import { Editor } from '@tinymce/tinymce-react'
+import { Editor as TinyMCEEditor } from 'tinymce';
 import { hasCustomGetInitialProps } from 'next/dist/build/utils'
 import { useRouter } from 'next/navigation'
 import React, { useEffect,useRef,useState } from 'react'
@@ -13,8 +11,6 @@ import 'semantic-ui-css/semantic.min.css'
 
 
 export default function EditorCustum() {
-
-  const editorRef = useRef(null);
   
   const [addArticleToCart, setArticleToCart] = useState([]);
   const [departments, setDepartments] = useState([]);
@@ -49,7 +45,18 @@ export default function EditorCustum() {
         }
   }
 
+  const editorRef = useRef<TinyMCEEditor | null>(null);
+  const [content, setContent] = useState(
+    "This is the initial content of the editor."
+  );
 
+  const [text, setText] = useState();
+  const log = () => {
+    if (editorRef.current) {
+      console.log(editorRef.current.getContent());
+    }
+  };
+  
   const router = useRouter();
 
   return (
@@ -87,22 +94,34 @@ export default function EditorCustum() {
             </div>
           </div>
           <Editor
+
             apiKey='ibgazhdpbf1641m9l0exn7y2y0pbcwbtlmz013z4uf1icb2e'
-           // onInit={(_evt, editor) => editorRef.current = editor}
-            initialValue="<p>This is the initial content of the editor.</p>"
+            onEditorChange={onEditorChange}
+
+            value={content}
+            //onInit={(evt, editor) => editorRef.current = editor}
+            //initialValue="<p>This is the initial content of the editor.</p>"
             init={{
               height: 500,
               menubar: false,
               plugins: [
-                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
+                "mentions advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media paste code help wordcount",
               ],
-              toolbar: 'undo redo | blocks | ' +
-                'bold italic forecolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist outdent indent | ' +
-                'removeformat | help',
-              content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+              toolbar:
+                "undo redo | formatselect | " +
+                "bold italic backcolor | alignleft aligncenter " +
+                "alignright alignjustify | bullist numlist outdent indent | " +
+                "removeformat | emoticons| help",
+              content_style:
+                "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+              emoticons_append: {
+                custom_mind_explode: {
+                  keywords: ["brain", "mind", "explode", "blown"],
+                  char: "🤯",
+                },
+              },
             }}
           />
         </form>
@@ -113,5 +132,5 @@ export default function EditorCustum() {
       </div>
     </>
   )
-
+}
 }
