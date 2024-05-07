@@ -32,7 +32,7 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
     }
 
     return (
-        <div className="drawer-side">
+        <div className="drawer-side min-h-screen">
             <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
             {/* 4071f4 */}
             <ul className="menu menu-dropdown-show p-4 w-80 min-h-full text-base-content overflow-auto">
@@ -57,21 +57,24 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                     </details>
                 </li>
 
-
                 {
-                    TAGS.map((item, index) => (
-                        <li key={index + 1}>
-                            <details>
-                                <summary className="mt-1 font-medium">{item.title}</summary>
-                                <ul>
-                                    {filterArticlesByTagId(item.id).map(item => (
-                                        <li key={item?.id} onClick={() => handleViewArticle(item.id.toString())}><a className="text-[13px]">{item?.title}</a></li>
-                                    ))}
-                                </ul>
-                            </details>
-                        </li>
-                    ))
+                    TAGS.length >= 0 ?
+                        TAGS.map((item, index) => (
+                            <li key={index + 1}>
+                                <details>
+                                    <summary className="mt-1 font-medium">{item.title}</summary>
+                                    <ul>
+                                        {filterArticlesByTagId(item.id).map(item => (
+                                            <li key={item?.id} onClick={() => handleViewArticle(item.id.toString())}><a className="text-[13px]">{item?.title}</a></li>
+                                        ))}
+                                    </ul>
+                                </details>
+                            </li>
+                        )) : <div className='flex justify-center items-center mt-24'>
+                            <p>No Data Found</p>
+                        </div>
                 }
+
 
 
             </ul>
