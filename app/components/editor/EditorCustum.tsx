@@ -1,4 +1,5 @@
 "use client"
+import { AddArticleBy } from '@/app/service/ArticleService'
 import { GetAllDepartmentId } from '@/app/service/DepartmentService'
 import { DepartmentList } from '@/app/type/DepartmentType'
 import ihttp from '@/app/utils/xhttp'
@@ -15,7 +16,7 @@ export default function EditorCustum() {
 
   const editorRef = useRef(null);
   
-
+  const [addArticleToCart, setArticleToCart] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState<DepartmentList[]>([]);
     const fetchData = async () =>{
@@ -29,7 +30,7 @@ export default function EditorCustum() {
     fetchData();
   
   const addDepartment = async () =>{
-    const  dept_name  = (document.getElementById('deptName') as HTMLInputElement).value;
+    const  dept_name  = (document.getElementById('saveArticle') as HTMLInputElement).value;
          const   created_by = 'Admin'
         
         try {
@@ -47,6 +48,7 @@ export default function EditorCustum() {
 
         }
   }
+
 
   const router = useRouter();
 
@@ -75,7 +77,7 @@ export default function EditorCustum() {
               </select>
             </div>
             <div className="field btn " style={{ width: "55px", display: "flex", alignSelf: "center", marginBottom: "-22px" }}>
-              <button className="btn btn-active">
+              <button className="btn btn-active" id='addArticle'>
                 Add
               </button>
             </div>
@@ -106,7 +108,7 @@ export default function EditorCustum() {
         </form>
         <div className='mt-14 flex justify-end'>
           <button onClick={() => router.back()} className="btn btn-active btn-ghost mr-3">Cancel</button>
-          <button className="btn btn-active btn-success text-white">Save</button>
+          <button className="btn btn-active btn-success text-white" id='saveArticle'>Save</button>
         </div>
       </div>
     </>
