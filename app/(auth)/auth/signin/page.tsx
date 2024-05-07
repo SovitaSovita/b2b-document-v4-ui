@@ -20,7 +20,7 @@ function Page() {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        const res = await fetch(`http://192.168.178.239:8085/api/v1/auth/send-otp`, {
+        const res = await fetch(`http://192.168.178.72:8086/api/v1/auth/send-otp`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -40,6 +40,7 @@ function Page() {
         const result = await signIn("credentials", {
             userId: localStorage.getItem("userId"),
             optCode: otpCode,
+            appId: "2",
             redirect: false,
         });
 
