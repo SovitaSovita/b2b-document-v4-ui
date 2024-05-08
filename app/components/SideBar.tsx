@@ -9,13 +9,23 @@ import { useState } from 'react';
 import { getArticleDetail } from '../service/MenuService';
 import { getArticle } from '../service/Redux/articleDetailSlice';
 import { useDispatch } from 'react-redux';
+import { getFavorite } from '../service/Favourite';
+import { useSession } from 'next-auth/react';
+
 
 interface TagItem {
     id: number;
     title: string;
 }
 
+interface FavoriteItem {
+    user_id: number;
+}
+
 function SideBar({ ARTICLES, TAGS }: MenuData) {
+
+    const [favorites, setFavorites] = useState<any[]>([]);
+    const { data: session, status }: { data: any, status: any } = useSession();
 
     const dispatch = useDispatch();
 
@@ -31,6 +41,22 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
         })
     }
 
+    // Favorote
+    function handleViewFavorite(id: string) {
+        getFavorite(id).then((res) => {
+            console.log("Favorite response", res);
+            setFavorites(res);
+        })
+    }
+
+    useEffect(() => {
+        // if (session && session.user && session.user.userId) {
+            handleViewFavorite(session?.user?.userId);
+        // }
+    }, [session])
+
+    console.log(favorites)
+
     return (
         <div className="drawer-side">
             <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
@@ -42,8 +68,6 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
               B2B <span className="text-blue-700 ml-1">DOC</span></span> */}
                 </div>
 
-
-
                 <div className="css-o2c9dn mb-3"></div>
                 <li className='mb-2'>
                     <details>
@@ -52,7 +76,12 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                             Favorites
                         </summary>
                         <ul className='pt-1'>
-                            <li><a>test</a></li>
+                            {/* <li><a>test</a></li> */}
+                            {favorites.map((favorite, article_id) => (
+                                // <li key={index}><a>{favorite.title}</a></li>
+                                <li onClick={() => handleViewFavorite(favorite?.article_id)}><a className="text-[13px]">{favorite?.title}</a></li>
+                                
+                            ))}
                         </ul>
                     </details>
                 </li>
