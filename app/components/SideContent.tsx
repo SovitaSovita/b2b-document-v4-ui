@@ -13,6 +13,8 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import ReplyAllOutlinedIcon from '@mui/icons-material/ReplyAllOutlined';
 import LoadingCustom from './Material/Loading';
 import { useParams } from 'next/navigation';
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 function SideContent() {
 
@@ -88,8 +90,10 @@ function SideContent() {
                         : (
                             <div className='self-end'>
                                 <div className='mb-4'>
-                                    <FavoriteBorderOutlinedIcon className='mr-3     ' />
-                                    <ReplyAllOutlinedIcon />
+                                    <FavoriteBorderOutlinedIcon className='ml-3     ' />
+                                     <ReplyAllOutlinedIcon /> 
+                                     <DriveFileRenameOutlineIcon className='ml-8     '/>
+                                     <DeleteOutlineIcon />
                                 </div>
                                 <div dangerouslySetInnerHTML={{ __html: article?.content_body }} />
                             </div>
