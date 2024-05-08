@@ -28,7 +28,7 @@ function SideContent() {
     const { data: session, status }: { data: any, status: any } = useSession();
     const path = useParams();
 
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
 
 
@@ -78,9 +78,6 @@ function SideContent() {
                             <Link href={"/manage_users"}>Manage User</Link>
                         </li>
                         <li>
-                            <Link href={"/department"}>Deparment</Link>
-                        </li>
-                        <li>
                             <div
                                 role="button"
                                 onClick={async () => await signOut()}
@@ -100,7 +97,9 @@ function SideContent() {
                         : (
                             <div className='flex flex-col'>
                                 <div className='mb-4 flex items-center self-end'>
-                                    <FavoriteBorderOutlinedIcon className='mr-3     ' />
+                                    <div>
+                                        <FavoriteBorderOutlinedIcon className='mr-3' />
+                                    </div>
 
                                     {
                                         session?.user.userId === article?.username && <EditIcon />
@@ -124,7 +123,7 @@ function SideContent() {
             {/* <label htmlFor="my-drawer-2" className="btn btn-circle drawer-button lg:hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </label> */}
-            <SearchComponent handleOpen={handleOpen} open={open} setOpen={setOpen} />
+            <SearchComponent open={open} setOpen={setOpen} />
         </div>
     )
 }

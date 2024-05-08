@@ -1,14 +1,13 @@
 'use client'
 
 import Image from 'next/image'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { MenuData } from '../type/MenuData';
 import BookmarksOutlinedIcon from '@mui/icons-material/BookmarksOutlined';
-import { sampleFetch } from '../service/sample';
-import { useState } from 'react';
 import { getArticleDetail } from '../service/MenuService';
 import { getArticle } from '../service/Redux/articleDetailSlice';
 import { useDispatch } from 'react-redux';
+import Link from 'next/link';
 
 interface TagItem {
     id: number;
@@ -26,7 +25,7 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
 
     function handleViewArticle(id: string) {
         getArticleDetail(id).then((res) => {
-            console.log("res[0] >>", res);
+            // console.log("res[0] >>", res);
             dispatch(getArticle(res[0]))
         })
     }
@@ -37,7 +36,9 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
             {/* 4071f4 */}
             <ul className="menu menu-dropdown-show p-4 w-80 min-h-full text-base-content overflow-auto">
                 <div className="pt-3 pb-5 pl-3 flex justify-center items-center">
-                    <Image src={"https://www.kosign.com.kh/images/Vectors-Wrapper.svg"} alt="" width={140} height={100} />
+                    <div onClick={() => dispatch(getArticle({}))}>
+                        <Image src={"https://www.kosign.com.kh/images/Vectors-Wrapper.svg"} alt="" width={140} height={100} />
+                    </div>
                     {/* <span className="font-extrabold inline-flex text-base-content text-md md:text-xl font-Anton ml-2">
               B2B <span className="text-blue-700 ml-1">DOC</span></span> */}
                 </div>

@@ -29,7 +29,7 @@ async function responseInterceptor(value: AxiosResponse<any, any>) {
 }
 
 async function responseErrorInterceptor({ status, code, ...err }: AxiosError) {
-  const isNotWorkError = code == "ERR_NETWORK";
+  const isNotWorkError = code == "ERR_NETWORK"; //ERR_CONNECTION_REFUSED
   if (isNotWorkError) {
     try {
       //

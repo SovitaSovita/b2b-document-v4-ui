@@ -9,16 +9,7 @@ import { getArticleDetail } from '@/app/service/MenuService';
 import { getArticle } from '@/app/service/Redux/articleDetailSlice';
 import { useDispatch } from 'react-redux';
 
-const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    borderRadius: 20,
-    boxShadow: 24,
-};
-
-function SearchComponent({ handleOpen, open, setOpen }: any) {
+function SearchComponent({ open, setOpen }: any) {
 
     const [searchData, setSearchData] = useState([]);
     const dispatch = useDispatch()

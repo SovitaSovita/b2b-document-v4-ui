@@ -5,13 +5,14 @@ import Profile from "./Profile";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import NoProfileComponent from "./NoProfileComponent";
 
 const LeftDrawerCustom = ({ children }: { children: ReactNode }) => {
 
   const { data: session, status }: { data: any, status: any } = useSession();
 
-  console.log("status : ", status);
-  console.log("session : ", session);
+  // console.log("status : ", status);
+  // console.log("session : ", session);
 
   return (
     <div className="drawer drawer-end">
@@ -19,15 +20,25 @@ const LeftDrawerCustom = ({ children }: { children: ReactNode }) => {
       <div className="drawer-content">
         {/* Page content here */}
         <label htmlFor="my-drawer-4">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar"
-          >
-            <div className="w-10 rounded-full">
-              <Image src={session?.user.image ? session.user.image : session?.user.prfl_PHTG} alt="pf" width={140} height={100} loading="lazy" />
-            </div>
-          </div>
+
+          {/* Profile At Right Menu */}
+          {
+            session?.user.prfl_PHTG != "" ? (
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle avatar"
+              >
+                <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-1">
+                  <Image src={session?.user.image ? session.user.image : session?.user.prfl_PHTG} alt="pf" width={140} height={100} loading="lazy" />
+                </div>
+              </div>
+
+            ) : (
+              <NoProfileComponent username={session?.user?.flnm} />
+            )
+          }
+
         </label>
       </div>
       <div className="drawer-side">

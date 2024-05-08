@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react'
 import KeyboardReturnOutlinedIcon from '@mui/icons-material/KeyboardReturnOutlined';
+import NoProfileComponent from './NoProfileComponent';
 
 function ProfileDrawer({ userInfo }: { userInfo: any }) {
     return (
@@ -31,11 +32,18 @@ function ProfileDrawer({ userInfo }: { userInfo: any }) {
                     </label>
 
                     <div className='flex justify-center flex-col items-center'>
-                        <div className="avatar">
-                            <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                <img src={userInfo?.image ? userInfo.image : userInfo?.prfl_PHTG} />
-                            </div>
-                        </div>
+                        {
+                            userInfo?.prfl_PHTG != "" ? (
+                                <div className="avatar">
+                                    <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                        <img src={userInfo?.image ? userInfo.image : userInfo?.prfl_PHTG} />
+                                    </div>
+                                </div>
+                            ) : (
+                                <NoProfileComponent username={userInfo?.flnm} />
+                            )
+                        }
+
 
                         <h2 className="card-title mt-3">{userInfo?.name ?? userInfo?.flnm}</h2>
                         <p>{userInfo?.jbcl_NM}</p>
