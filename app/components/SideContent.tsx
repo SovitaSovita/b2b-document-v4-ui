@@ -35,6 +35,10 @@ function SideContent() {
         console.log("article id", article.id)
     };
 
+    // const addThisArticleToFavorite = {
+    //     userId: 
+    // }
+
 
 
 

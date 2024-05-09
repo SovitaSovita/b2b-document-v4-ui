@@ -32,7 +32,7 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
     // Function to filter articles based on tag_id
     function filterArticlesByTagId(tagId: number) {
         return ARTICLES.filter(article => article.tag_id === tagId);
-        console.log("Article Id", article.tag_id);
+        // console.log("Article Id", article.tag_id);
     }
 
     function handleViewArticle(id: string) {
@@ -54,9 +54,9 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
     }
 
     useEffect(() => {
-        // if (session && session.user && session.user.userId) {
+        
         handleViewFavorite(session?.user?.userId);
-        // }
+        
     }, [session])
 
     console.log(favorites)

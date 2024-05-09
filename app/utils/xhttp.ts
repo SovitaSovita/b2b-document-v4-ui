@@ -17,9 +17,6 @@ const ihttp = axios.create({
 async function requestInterceptor(config: InternalAxiosRequestConfig) {
 
   const idToken: any = await getSession();
-
-  console.log(">>>>>>>>: ", idToken);
-
   if (!idToken) {
     return Promise.reject("missing access token");
   }
@@ -33,11 +30,11 @@ async function responseInterceptor(value: AxiosResponse<any, any>) {
 }
 
 async function responseErrorInterceptor({ status, code, ...err }: AxiosError) {
-  const isNotWorkError = code == "ERR_NETWORK";
+  const isNotWorkError = code == "ERR_NETWORK"; //ERR_CONNECTION_REFUSED
   if (isNotWorkError) {
     try {
       //
-      window.location.pathname = "/error"
+      // window.location.pathname = "/error"
     } catch {
       /** in case called from server ignore client side function*/
     }
