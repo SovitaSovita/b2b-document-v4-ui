@@ -53,7 +53,7 @@ function TagComponent({ open, setOpen, user }: any) {
 
     return (
         <div>
-            <Modal
+            {/* <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
                 open={open}
@@ -79,7 +79,7 @@ function TagComponent({ open, setOpen, user }: any) {
                         </form>
                     </div>
                 </Fade>
-            </Modal>
+            </Modal> */}
         </div >
     )
 }

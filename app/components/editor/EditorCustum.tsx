@@ -8,7 +8,11 @@ import { useSession } from 'next-auth/react'
 import { hasCustomGetInitialProps } from 'next/dist/build/utils'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
-
+import {
+  Autocomplete,
+  AutocompleteSection,
+  AutocompleteItem
+} from "@nextui-org/autocomplete";
 import 'semantic-ui-css/semantic.min.css'
 
 
@@ -62,12 +66,40 @@ export default function EditorCustum() {
     })
   }
 
+  const animals = [
+    { label: "Cat", value: "cat", description: "The second most popular pet in the world" },
+    { label: "Dog", value: "dog", description: "The most popular pet in the world" },
+    { label: "Elephant", value: "elephant", description: "The largest land animal" },
+    { label: "Lion", value: "lion", description: "The king of the jungle" },
+    { label: "Tiger", value: "tiger", description: "The largest cat species" },
+    { label: "Giraffe", value: "giraffe", description: "The tallest land animal" },
+    {
+      label: "Dolphin",
+      value: "dolphin",
+      description: "A widely distributed and diverse group of aquatic mammals",
+    },
+    { label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds" },
+    { label: "Zebra", value: "zebra", description: "A several species of African equids" },
+    {
+      label: "Shark",
+      value: "shark",
+      description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
+    },
+    {
+      label: "Whale",
+      value: "whale",
+      description: "Diverse group of fully aquatic placental marine mammals",
+    },
+    { label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae" },
+    { label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile" },
+  ];
+
+
   return (
     <>
       <div className='px-24 mt-14'>
-        <form className="ui form">
-          <div className="three fields ">
-            {/* <div className="field required">
+        <form onSubmit={handleSave} className="ui form">
+          {/* <div className="field required">
               <label>Department</label>
               <select className="select select-info w-full max-w-xs">
                 {selectedDepartment.map(departments => (
@@ -77,7 +109,7 @@ export default function EditorCustum() {
               </select>
 
             </div> */}
-            {/* <div className="field required">
+          {/* <div className="field required">
               <label>Main Title</label>
               <select className="select select-info w-full max-w-xs">
                 {selectedDepartment.map(departments => (
@@ -86,6 +118,18 @@ export default function EditorCustum() {
                 }
               </select>
             </div> */}
+
+          <div className='flex'>
+            <Autocomplete
+              isRequired
+              label="Favorite Animal"
+              defaultItems={animals}
+              placeholder="Search an animal"
+              defaultSelectedKey="cat"
+              className="max-w-xs"
+            >
+              {(item) => <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>}
+            </Autocomplete>
             <div className="field required">
               <label>Sub Title</label>
               <input onChange={onchange} type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
@@ -117,12 +161,12 @@ export default function EditorCustum() {
             }}
 
           />
-        </form>
-        <div className='mt-14 flex justify-end'>
-          <button onClick={() => router.back()} className="btn btn-active btn-ghost mr-3">Cancel</button>
-          <button onClick={handleSave} className="btn btn-active btn-success text-white">Save</button>
-        </div>
-      </div>
+          <div className='mt-14 flex justify-end'>
+            <button onClick={() => router.back()} className="btn btn-active btn-ghost mr-3">Cancel</button>
+            <button type='submit' className="btn btn-active btn-success text-white">Save</button>
+          </div>
+        </form >
+      </div >
     </>
   )
 
