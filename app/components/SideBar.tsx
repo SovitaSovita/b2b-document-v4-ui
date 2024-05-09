@@ -54,9 +54,9 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
     }
 
     useEffect(() => {
-        
+
         handleViewFavorite(session?.user?.userId);
-        
+
     }, [session])
 
     console.log(favorites)

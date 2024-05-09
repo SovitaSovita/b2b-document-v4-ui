@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { FormEvent } from 'react'
 import Breadcrumbs from './Breadcrumbs'
 import Page from '../(root)/vanda/page';
 
@@ -10,13 +10,9 @@ import { signOut, useSession } from 'next-auth/react';
 import Profile from './Profile/Profile';
 import ProfileDrawer from './Profile/ProfileDrawer';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import ReplyAllOutlinedIcon from '@mui/icons-material/ReplyAllOutlined';
 import LoadingCustom from './Material/Loading';
 import { useParams } from 'next/navigation';
-import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import HomeContent from './HomeContent';
 import {
     TelegramIcon,
@@ -30,37 +26,29 @@ import TagComponent from './Modal/TagComponent';
 function SideContent() {
 
     const { article }: { article: any } = useSelector((state: RootState) => state?.article);
-    console.log("yuth", article.id)
     const { data: session, status }: { data: any, status: any } = useSession();
     const path = useParams();
 
-    // Handle click icon
-    const [isFavorite, setIsFavorite] = useState(false);
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
 
-
-    const addFavorite = () => {
-
-        setIsFavorite(!isFavorite);
-        console.log("user", session.user.userId);
-        console.log("department", session.user.dvsn_CD);
-        console.log("article id", article.id)
-    };
-
-    // const addThisArticleToFavorite = {
-    //     userId: 
-    // }
-
-
+    const [openTag, setOpenTag] = React.useState(false);
+    const handleOpenTag = () => setOpenTag(true);
 
 
     return (
         <div className="drawer-content flex flex-col items-center justify-center p-4">
             {/* Page content here */}
             <div className='flex justify-between w-full mb-3'>
-                <Breadcrumbs />
+                {/* <Breadcrumbs /> */}
+                <div data-tip="Create new" className='tooltip tooltip-left'>
+                    <div className='btn btn-ghost btn-circle' onClick={handleOpenTag}>
+                        <CreateNewFolderOutlinedIcon />
+                    </div>
+                </div>
 
                 <label className="input input-bordered flex items-center gap-2 bordered input-sm w-full max-w-xs">
-                    <input type="text" className="grow" placeholder="Search" />
+                    <input type="text" onClick={handleOpen} className="grow" placeholder="Search" />
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" /></svg>
                 </label>
 
@@ -99,9 +87,6 @@ function SideContent() {
                             <Link href={"/manage_users"}>Manage User</Link>
                         </li>
                         <li>
-                            <Link href={"/department"}>Deparment</Link>
-                        </li>
-                        <li>
                             <div
                                 role="button"
                                 onClick={async () => await signOut()}
@@ -115,54 +100,40 @@ function SideContent() {
 
             </div>
 
-            <div className="border-2 flex flex-col rounded-lg border-dashed w-full h-full p-4">
+            <div className="border-2 rounded-lg border-dashed w-full h-full p-4">
                 {
-                    !article ? (<LoadingCustom />)
+                    !article?.content_body ? (<HomeContent />)
                         : (
-                            <div className='self-end'>
-                                <div className='mb-4'>
-                                    <FavoriteBorderOutlinedIcon className='ml-3     ' />
-                                     <ReplyAllOutlinedIcon /> 
-                                     <DriveFileRenameOutlineIcon className='ml-8     '/>
-                                     <DeleteOutlineIcon />
                             <div className='flex flex-col'>
                                 <div className='mb-4 flex items-center self-end'>
                                     <div>
                                         <FavoriteBorderOutlinedIcon className='mr-3' />
                                     </div>
-                                    {/* <FavoriteBorderOutlinedIcon className='mr-3' onClick={addFavorite} style={{ cursor: 'pointer' }} />
-                                    <FavoriteIcon className='mr-3'/>
-                                    <ReplyAllOutlinedIcon style={{ cursor: 'pointer' }}/> */}
 
-                                    {!isFavorite && (
-                                        <FavoriteBorderOutlinedIcon
-                                            className='mr-3'
-                                            onClick={addFavorite}
-                                            style={{ cursor: 'pointer' }}
-                                        />
-                                    )}
-                                    {isFavorite && (
-                                        <FavoriteTwoToneIcon
-                                            className='mr-3'
-                                            onClick={addFavorite}
-                                            style={{ cursor: 'pointer' }}
-                                        />
-                                    )}
-                                    <ReplyAllOutlinedIcon style={{ cursor: 'pointer' }}/>
+                                    {
+                                        session?.user.userId === article?.username && <EditIcon />
+                                    }
+
+                                    <TelegramShareButton
+                                        url={'http://localhost:3000/'}
+                                    >
+                                        <ReplyAllOutlinedIcon className='ml-3' />
+                                    </TelegramShareButton>
                                 </div>
-                                <div dangerouslySetInnerHTML={{ __html: article?.content_body }} key={article?.id}/>
+                                <div dangerouslySetInnerHTML={{ __html: article?.content_body }} />
                             </div>
                         )
                 }
 
                 {/* <img src={article?.img_path} alt="content" width={500} className='mt-6 ml-6' /> */}
                 <Page />
-
             </div>
 
             {/* <label htmlFor="my-drawer-2" className="btn btn-circle drawer-button lg:hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </label> */}
+            <SearchComponent open={open} setOpen={setOpen} />
+            <TagComponent open={openTag} setOpen={setOpenTag} user={session?.user} />
         </div>
     )
 }
