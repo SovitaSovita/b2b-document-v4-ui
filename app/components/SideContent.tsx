@@ -121,19 +121,11 @@ function SideContent() {
                         : (
                             <div className='self-end'>
                                 <div className='mb-4'>
-                                    <FavoriteBorderOutlinedIcon className='ml-3     ' />
-                                     <ReplyAllOutlinedIcon /> 
-                                     <DriveFileRenameOutlineIcon className='ml-8     '/>
-                                     <DeleteOutlineIcon />
-                            <div className='flex flex-col'>
-                                <div className='mb-4 flex items-center self-end'>
-                                    <div>
-                                        <FavoriteBorderOutlinedIcon className='mr-3' />
-                                    </div>
                                     {/* <FavoriteBorderOutlinedIcon className='mr-3' onClick={addFavorite} style={{ cursor: 'pointer' }} />
                                     <FavoriteIcon className='mr-3'/>
                                     <ReplyAllOutlinedIcon style={{ cursor: 'pointer' }}/> */}
-
+                                    <EditIcon/>
+                                    <DriveFileRenameOutlineIcon/>
                                     {!isFavorite && (
                                         <FavoriteBorderOutlinedIcon
                                             className='mr-3'

@@ -5,8 +5,8 @@ import axios, {
 } from "axios";
 import { getSession } from "next-auth/react";
 
-export const API_BASE_URL = "http://localhost:4545/api/v1";
-// export const API_BASE_URL = "http://178.128.52.39:4545/api/v1";
+// export const API_BASE_URL = "http://localhost:4545/api/v1";
+export const API_BASE_URL = "http://178.128.52.39:4545/api/v1";
 
 //export const API_BASE_URL = "http://192.168.178.239:4545/api/v1";
 
