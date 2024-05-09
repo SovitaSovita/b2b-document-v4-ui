@@ -1,14 +1,13 @@
 'use client'
 
 import Image from 'next/image'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { MenuData } from '../type/MenuData';
 import BookmarksOutlinedIcon from '@mui/icons-material/BookmarksOutlined';
-import { sampleFetch } from '../service/sample';
-import { useState } from 'react';
 import { getArticleDetail } from '../service/MenuService';
 import { getArticle } from '../service/Redux/articleDetailSlice';
 import { useDispatch } from 'react-redux';
+
 
 interface TagItem {
     id: number;
@@ -26,25 +25,26 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
 
     function handleViewArticle(id: string) {
         getArticleDetail(id).then((res) => {
-            console.log("res[0] >>", res);
+            // console.log("res[0] >>", res);
             dispatch(getArticle(res[0]))
         })
     }
 
     return (
-        <div className="drawer-side">
+        <div className="drawer-side min-h-screen">
             <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
             {/* 4071f4 */}
-            <ul className="menu menu-dropdown-show p-4 w-80 min-h-full text-base-content overflow-auto">
-                <div className="pt-3 pb-5 pl-3 flex justify-center items-center">
-                    <Image src={"https://www.kosign.com.kh/images/Vectors-Wrapper.svg"} alt="" width={140} height={100} />
-                    {/* <span className="font-extrabold inline-flex text-base-content text-md md:text-xl font-Anton ml-2">
-              B2B <span className="text-blue-700 ml-1">DOC</span></span> */}
+            <div className="pt-6 px-6 flex flex-col">
+                <div className='flex justify-between items-center pb-5'>
+                    <div onClick={() => dispatch(getArticle({}))}>
+                        <Image src={"https://www.kosign.com.kh/images/Vectors-Wrapper.svg"} alt="" width={100} height={80} />
+                    </div>
                 </div>
-
-
-
                 <div className="css-o2c9dn mb-3"></div>
+
+            </div>
+
+            <ul className="menu menu-dropdown-show p-4 w-80 min-h-full text-base-content overflow-auto">
                 <li className='mb-2'>
                     <details>
                         <summary className="border shadow font-semibold text-[15px]">
@@ -57,21 +57,30 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                     </details>
                 </li>
 
+                {/* <label className="input input-bordered input-sm flex items-center gap-2 my-4">
+                    <input type="text" onChange={handleOnChange} className="grow" placeholder="Enter Tag Name" />
+                    <CancelOutlinedIcon className='text-[18px] text-gray-600' />
+                    <CheckCircleOutlineOutlinedIcon className='text-[18px] text-blue-600' />
+                </label> */}
 
                 {
-                    TAGS.map((item, index) => (
-                        <li key={index + 1}>
-                            <details>
-                                <summary className="mt-1 font-medium">{item.title}</summary>
-                                <ul>
-                                    {filterArticlesByTagId(item.id).map(item => (
-                                        <li key={item?.id} onClick={() => handleViewArticle(item.id.toString())}><a className="text-[13px]">{item?.title}</a></li>
-                                    ))}
-                                </ul>
-                            </details>
-                        </li>
-                    ))
+                    TAGS.length >= 0 ?
+                        TAGS.map((item, index) => (
+                            <li key={index + 1}>
+                                <details>
+                                    <summary className="mt-1 font-medium">{item.title}</summary>
+                                    <ul>
+                                        {filterArticlesByTagId(item.id).map(item => (
+                                            <li key={item?.id} onClick={() => handleViewArticle(item.id.toString())}><a className="text-[13px]">{item?.title}</a></li>
+                                        ))}
+                                    </ul>
+                                </details>
+                            </li>
+                        )) : <div className='flex justify-center items-center mt-24'>
+                            <p>No Data Found</p>
+                        </div>
                 }
+
 
 
             </ul>
