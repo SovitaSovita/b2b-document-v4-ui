@@ -22,8 +22,10 @@ import {
 } from 'next-share'
 import { EditIcon } from '@/public/icon/TableIcon';
 import SearchComponent from './Modal/SearchComponent';
+import { useRouter } from 'next/navigation';
 import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined';
 import TagComponent from './Modal/TagComponent';
+import { Button } from '@mui/material';
 
 function SideContent() {
 
@@ -37,8 +39,11 @@ function SideContent() {
     const [openTag, setOpenTag] = React.useState(false);
     const handleOpenTag = () => setOpenTag(true);
 
+    const router = useRouter();
 
     return (
+        
+
         <div className="drawer-content flex flex-col items-center justify-center p-4">
             {/* Page content here */}
             <div className='flex justify-between w-full mb-3'>
@@ -111,13 +116,13 @@ function SideContent() {
                                 <div className='mb-4 flex items-center justify-between'>
                                     {/* Left side icons */}
                                     <div className="flex items-center">
-                                        <div>
-                                            <DriveFileRenameOutlineIcon className='ml-5'/>
-                                        </div>
+                                        <Button variant="text" onClick={() => router.push("/vanda/article")} >
+                                            <DriveFileRenameOutlineIcon className='ml-3'/>
+                                        </Button>
                                            
-                                        <div>
-                                            <DeleteOutlineIcon className='ml-5'/>
-                                        </div>
+                                        <Button variant="text">
+                                            <DeleteOutlineIcon className='ml-3'/>
+                                        </Button>
                                     </div> 
                                      
                                     {/* Right side icons */}

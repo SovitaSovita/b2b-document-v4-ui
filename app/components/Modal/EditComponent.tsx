@@ -1,9 +1,13 @@
+
 import React from 'react'
 
-export default function EditComponent() {
+function EditComponent() {
+   
   return (
     <div>
       
     </div>
   )
 }
+
+export default EditComponent;
