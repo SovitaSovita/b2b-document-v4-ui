@@ -54,9 +54,9 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
     }
 
     useEffect(() => {
-        
+
         handleViewFavorite(session?.user?.userId);
-        
+
     }, [session])
 
     console.log(favorites)
@@ -84,9 +84,9 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                                 <li key={article_id} onClick={() => handleViewFavorite(favorite?.article_id)}><a className="text-[13px]">{favorite?.title}</a></li>
                             ))} */}
 
-                            {favorites.map((favorite, article_id) => (
+                            {/* {favorites.map((favorite, article_id) => (
                                 <li key={article_id} onClick={() => handleViewFavorite(favorite?.article_id)}><a className="text-[13px]">{favorite?.title}</a></li>
-                            ))}
+                            ))} */}
 
 
                         </ul>

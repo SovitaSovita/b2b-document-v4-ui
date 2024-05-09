@@ -1,34 +1,41 @@
 "use client"
 import { AddArticleBy } from '@/app/service/ArticleService'
 import { GetAllDepartmentId } from '@/app/service/DepartmentService'
+import { GetTagAndArticle } from '@/app/service/TagService'
 import { DepartmentList } from '@/app/type/DepartmentType'
 import ihttp from '@/app/utils/xhttp'
+import { Autocomplete, TextField } from '@mui/material'
 import { Editor } from '@tinymce/tinymce-react'
 import { useSession } from 'next-auth/react'
 import { hasCustomGetInitialProps } from 'next/dist/build/utils'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
-
-import 'semantic-ui-css/semantic.min.css'
+import CustomAlert from '../Material/CustomAlert'
 
 
 
 export default function EditorCustum() {
 
   const editorRef = useRef<any>(null);
-  const [dirty, setDirty] = useState(false);
-  const save = () => {
 
-  };
 
+  const [tagValue, setTagValue] = React.useState<TagType | any>();
+  const [inputValue, setInputValue] = React.useState('');
   const { data: session, status }: { data: any, status: any } = useSession();
+  const [isErrorAlert, setIsErrorAlert] = useState({
+    open: false,
+    type: "",
+    message: "",
+    duration: 1600,
+  });
 
+  const [isErrorInput, setIsErrorInput] = useState({
+    error: false,
+    label: "Enter Sub title",
+  });
 
-
-  const [addArticleToCart, setArticleToCart] = useState([]);
-  const [departments, setDepartments] = useState([]);
+  const [tagData, setTagData] = useState([]);
   const [title, setTitle] = useState("");
-  const [selectedDepartment, setSelectedDepartment] = useState<DepartmentList[]>([]);
 
 
   const router = useRouter();
@@ -36,11 +43,12 @@ export default function EditorCustum() {
   const onchange = (e: any) => {
     const value = e.target.value
     setTitle(value)
-    console.log(value);
   }
 
 
-  const handleSave = () => {
+  const handleSave = (e: any) => {
+
+    e.preventDefault();
 
     let content: string = "";
 
@@ -48,48 +56,109 @@ export default function EditorCustum() {
       content = editorRef.current.getContent();
     }
 
+    if (title === "") {
+      setIsErrorAlert({
+        ...isErrorAlert,
+        open: true,
+        type: "error",
+        message: "sub title cab't empty.",
+      });
+      setIsErrorInput({
+        error: true,
+        label: 'Enter Sub title',
+      })
+      return;
+    }
+
     const request = {
-      "tag_id": 28,
+      "tag_id": tagValue?.id,
       "title": title,
       "content_body": content,
       "file_article_id": "123",
       "status": 1
     }
-    console.log("rr >>", request);
 
-    AddArticleBy(request).then((res) => {
-      console.log("aaaaaa res >>", res);
+    AddArticleBy(request).then((res: any) => {
+      if (res.status == 200) {
+        setIsErrorAlert({
+          ...isErrorAlert,
+          open: true,
+          type: "success",
+          message: "Created Successfully.",
+        });
+        router.push("/")
+      }
+      else {
+        setIsErrorAlert({
+          ...isErrorAlert,
+          open: true,
+          type: "error",
+          message: "Something wrong...",
+        });
+
+      }
     })
   }
 
+  useEffect(() => {
+    console.log(parseInt(session?.user.dvsn_CD, 10));
+    if (session) {
+      GetTagAndArticle(parseInt(session?.user.dvsn_CD, 10)).then((res: any) => {
+        const updatedTagList = res?.data?.rec?.tagList.map((tag: any) => ({
+          ...tag,
+          label: tag.title,
+        }));
+
+        setTagData(updatedTagList)
+      })
+    }
+  }, [session])
+
   return (
     <>
+      <CustomAlert
+        open={isErrorAlert.open}
+        setOpen={(open: boolean) => {
+          setIsErrorAlert({ ...isErrorAlert, open });
+        }}
+        message={isErrorAlert.message}
+        type={isErrorAlert.type}
+        duration={isErrorAlert.duration}
+      />
       <div className='px-24 mt-14'>
-        <form className="ui form">
-          <div className="three fields ">
-            {/* <div className="field required">
-              <label>Department</label>
-              <select className="select select-info w-full max-w-xs">
-                {selectedDepartment.map(departments => (
-                  <option key={departments.dept_id} value={departments.dept_id}>{departments.dept_id}</option>
-                ))
-                }
-              </select>
-
-            </div> */}
-            {/* <div className="field required">
-              <label>Main Title</label>
-              <select className="select select-info w-full max-w-xs">
-                {selectedDepartment.map(departments => (
-                  <option key={departments.dept_id} value={departments.dept_id}>{departments.dept_name}</option>
-                ))
-                }
-              </select>
-            </div> */}
-            <div className="field required">
-              <label>Sub Title</label>
-              <input onChange={onchange} type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+        <form onSubmit={handleSave} className="ui form">
+          <div className='flex mb-4'>
+            <div className='flex items-center mr-8'>
+              <Autocomplete
+                value={tagValue}
+                onChange={(event: any, newValue: string | null) => {
+                  setTagValue(newValue);
+                }}
+                inputValue={inputValue}
+                onInputChange={(event, newInputValue) => {
+                  setInputValue(newInputValue);
+                }}
+                disablePortal
+                size="small"
+                id="combo-box-demo"
+                options={tagData}
+                sx={{ width: 300, mr: 2 }}
+                renderInput={(params) => <TextField {...params} label="Enter Tag name" />}
+              />
+              <button type='button' className="btn btn-active btn-primary btn-sm">Add New</button>
             </div>
+
+
+            <TextField
+              error={isErrorInput.error}
+              onChange={onchange}
+              id="outlined-basic"
+              size='small'
+              label={isErrorInput.label}
+              variant="outlined"
+              autoFocus
+            // helperText="Incorrect entry."
+            />
           </div>
           <Editor
             apiKey='ibgazhdpbf1641m9l0exn7y2y0pbcwbtlmz013z4uf1icb2e'
@@ -117,12 +186,12 @@ export default function EditorCustum() {
             }}
 
           />
-        </form>
-        <div className='mt-14 flex justify-end'>
-          <button onClick={() => router.back()} className="btn btn-active btn-ghost mr-3">Cancel</button>
-          <button onClick={handleSave} className="btn btn-active btn-success text-white">Save</button>
-        </div>
-      </div>
+          <div className='mt-8 flex justify-end'>
+            <button onClick={() => router.push("/")} className="btn btn-active btn-ghost mr-3">Cancel</button>
+            <button type='submit' className="btn btn-active btn-success text-white">Save</button>
+          </div>
+        </form >
+      </div >
     </>
   )
 
