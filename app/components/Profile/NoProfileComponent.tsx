@@ -1,24 +1,19 @@
 import React from 'react'
 
-function NoProfileComponent({ username }: any) {
+function NoProfileComponent({ username, size }: any) {
     const parts = username.split(" ");
 
-    // Initialize result string
     let result = "";
 
-    // Iterate over each part
-    parts.forEach(part => {
-        // Get the first letter of the part
+    parts.forEach((part: string) => {
         const firstLetter = part.charAt(0);
-
-        // Concatenate the first letter to the result
         result += firstLetter;
     });
 
     return (
         <div className="avatar placeholder">
-            <div className="bg-neutral text-neutral-content rounded-full w-10">
-                <span>{username}</span>
+            <div className={`bg-neutral text-neutral-content rounded-full ${size}`}>
+                <span>{result}</span>
             </div>
         </div>
     )

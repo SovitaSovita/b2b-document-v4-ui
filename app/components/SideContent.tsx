@@ -19,8 +19,9 @@ import {
     TelegramShareButton,
 } from 'next-share'
 import { EditIcon } from '@/public/icon/TableIcon';
-import { Button } from '@mui/material';
 import SearchComponent from './Modal/SearchComponent';
+import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined';
+import TagComponent from './Modal/TagComponent';
 
 function SideContent() {
 
@@ -31,12 +32,20 @@ function SideContent() {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
 
+    const [openTag, setOpenTag] = React.useState(false);
+    const handleOpenTag = () => setOpenTag(true);
+
 
     return (
         <div className="drawer-content flex flex-col items-center justify-center p-4">
             {/* Page content here */}
             <div className='flex justify-between w-full mb-3'>
-                <Breadcrumbs />
+                {/* <Breadcrumbs /> */}
+                <div data-tip="Create new" className='tooltip tooltip-left'>
+                    <div className='btn btn-ghost btn-circle' onClick={handleOpenTag}>
+                        <CreateNewFolderOutlinedIcon />
+                    </div>
+                </div>
 
                 <label className="input input-bordered flex items-center gap-2 bordered input-sm w-full max-w-xs">
                     <input type="text" onClick={handleOpen} className="grow" placeholder="Search" />
@@ -124,6 +133,7 @@ function SideContent() {
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </label> */}
             <SearchComponent open={open} setOpen={setOpen} />
+            <TagComponent open={openTag} setOpen={setOpenTag} user={session?.user} />
         </div>
     )
 }

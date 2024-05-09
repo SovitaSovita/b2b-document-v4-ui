@@ -35,7 +35,7 @@ const LeftDrawerCustom = ({ children }: { children: ReactNode }) => {
               </div>
 
             ) : (
-              <NoProfileComponent username={session?.user?.flnm} />
+              <NoProfileComponent username={session?.user?.flnm} size={"w-10"} />
             )
           }
 

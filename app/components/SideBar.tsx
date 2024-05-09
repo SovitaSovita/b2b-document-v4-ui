@@ -7,7 +7,7 @@ import BookmarksOutlinedIcon from '@mui/icons-material/BookmarksOutlined';
 import { getArticleDetail } from '../service/MenuService';
 import { getArticle } from '../service/Redux/articleDetailSlice';
 import { useDispatch } from 'react-redux';
-import Link from 'next/link';
+
 
 interface TagItem {
     id: number;
@@ -34,18 +34,17 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
         <div className="drawer-side min-h-screen">
             <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
             {/* 4071f4 */}
-            <ul className="menu menu-dropdown-show p-4 w-80 min-h-full text-base-content overflow-auto">
-                <div className="pt-3 pb-5 pl-3 flex justify-center items-center">
+            <div className="pt-6 px-6 flex flex-col">
+                <div className='flex justify-between items-center pb-5'>
                     <div onClick={() => dispatch(getArticle({}))}>
-                        <Image src={"https://www.kosign.com.kh/images/Vectors-Wrapper.svg"} alt="" width={140} height={100} />
+                        <Image src={"https://www.kosign.com.kh/images/Vectors-Wrapper.svg"} alt="" width={100} height={80} />
                     </div>
-                    {/* <span className="font-extrabold inline-flex text-base-content text-md md:text-xl font-Anton ml-2">
-              B2B <span className="text-blue-700 ml-1">DOC</span></span> */}
                 </div>
-
-
-
                 <div className="css-o2c9dn mb-3"></div>
+
+            </div>
+
+            <ul className="menu menu-dropdown-show p-4 w-80 min-h-full text-base-content overflow-auto">
                 <li className='mb-2'>
                     <details>
                         <summary className="border shadow font-semibold text-[15px]">
@@ -57,6 +56,12 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                         </ul>
                     </details>
                 </li>
+
+                {/* <label className="input input-bordered input-sm flex items-center gap-2 my-4">
+                    <input type="text" onChange={handleOnChange} className="grow" placeholder="Enter Tag Name" />
+                    <CancelOutlinedIcon className='text-[18px] text-gray-600' />
+                    <CheckCircleOutlineOutlinedIcon className='text-[18px] text-blue-600' />
+                </label> */}
 
                 {
                     TAGS.length >= 0 ?

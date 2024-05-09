@@ -21,9 +21,9 @@ export const ListArticleByDept_ID = async (dept_id: number) => {
     }
 }
 
-export const AddArticleBy = async (dept_id: number, title: string, content_body: string, file_article_id: string, status: number) => {
+export const AddArticleBy = async (request: object) => {
     try {
-        const response = await ihttp.post(`/articles/add?dept_id,title,content_body,file_article_id,status=${dept_id}`);
+        const response = await ihttp.post(`/articles/add`, request);
         console.log(response);
         return response;
     } catch (error) {

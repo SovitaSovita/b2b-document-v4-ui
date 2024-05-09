@@ -18,7 +18,7 @@ const Profile = ({ userInfo }: { userInfo: any }) => {
                                             <Image src={userInfo?.image ? userInfo.image : userInfo?.prfl_PHTG} alt="pf" width={140} height={100} loading="lazy" />
                                         </div>
                                     ) : (
-                                        <NoProfileComponent username={userInfo?.flnm} />
+                                        <NoProfileComponent username={userInfo?.flnm} size={"w-10"} />
                                     )
                                 }
                             </div>

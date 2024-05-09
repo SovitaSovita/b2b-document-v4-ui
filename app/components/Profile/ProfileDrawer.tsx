@@ -40,7 +40,7 @@ function ProfileDrawer({ userInfo }: { userInfo: any }) {
                                     </div>
                                 </div>
                             ) : (
-                                <NoProfileComponent username={userInfo?.flnm} />
+                                <NoProfileComponent username={userInfo?.flnm} size={"w-24"} />
                             )
                         }
 
