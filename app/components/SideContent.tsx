@@ -9,8 +9,10 @@ import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
 import Profile from './Profile/Profile';
 import ProfileDrawer from './Profile/ProfileDrawer';
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import ReplyAllOutlinedIcon from '@mui/icons-material/ReplyAllOutlined';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import LoadingCustom from './Material/Loading';
 import { useParams } from 'next/navigation';
 import HomeContent from './HomeContent';
@@ -105,23 +107,43 @@ function SideContent() {
                     !article?.content_body ? (<HomeContent />)
                         : (
                             <div className='flex flex-col'>
-                                <div className='mb-4 flex items-center self-end'>
-                                    <div>
-                                        <FavoriteBorderOutlinedIcon className='mr-3' />
-                                    </div>
 
-                                    {
-                                        session?.user.userId === article?.username && <EditIcon />
-                                    }
+                                <div className='mb-4 flex items-center justify-between'>
+                                    {/* Left side icons */}
+                                    <div className="flex items-center">
+                                        <div>
+                                            <DriveFileRenameOutlineIcon className='ml-5'/>
+                                        </div>
+                                           
+                                        <div>
+                                            <DeleteOutlineIcon className='ml-5'/>
+                                        </div>
+                                    </div> 
+                                     
+                                    {/* Right side icons */}
+                                    <div className="flex items-center">
+                                        <div>
+                                            <FavoriteBorderOutlinedIcon className='mr-3' />
+                                        </div>
 
-                                    <TelegramShareButton
-                                        url={'http://localhost:3000/'}
-                                    >
-                                        <ReplyAllOutlinedIcon className='ml-3' />
-                                    </TelegramShareButton>
+                                        {
+                                            session?.user.userId === article?.username && <EditIcon />
+                                        }
+
+                                        <TelegramShareButton
+                                            url={'http://localhost:3000/'}
+                                        >
+                                            <ReplyAllOutlinedIcon className='ml-3' />
+                                        </TelegramShareButton>
+                                    </div>  
                                 </div>
+                                
                                 <div dangerouslySetInnerHTML={{ __html: article?.content_body }} />
+
+                                
                             </div>
+
+                            
                         )
                 }
 
