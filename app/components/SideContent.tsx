@@ -127,7 +127,7 @@ function SideContent() {
                                         </div>
 
                                         {
-                                            session?.user.userId === article?.username && <EditIcon />
+                                            session?.user.userId === article?.username 
                                         }
 
                                         <TelegramShareButton
