@@ -19,7 +19,7 @@ export default function Department() {
    
         const fetchData = async () => {
             try {
-                const url = await ihttp.get('http://localhost:4545/api/v1/department/AllDepartment');
+                const url = await ihttp.get('http://192.168.178.72:8086/api/v1/department/AllDepartment');
                 setDepartmentList(url.data.rec);
             } catch (e) {
                 //setLoading(false)
@@ -29,27 +29,27 @@ export default function Department() {
 
 
     
-    const addDepartment = async () => {    
+    // const addDepartment = async () => {    
         
-        const  dept_name  = (document.getElementById('deptName') as HTMLInputElement).value;
-         const   created_by = 'Admin'
+    //     const  dept_name  = (document.getElementById('deptName') as HTMLInputElement).value;
+    //      const   created_by = 'Admin'
         
-        try {
-            console.log(dept_name)
-            if(dept_name === ''){
-                alert("Department Can't be empty")
-                return;
-            }else{
-                const url = await ihttp.post('http://localhost:4545/api/v1/department/insertDepartment',{ dept_name , created_by })
-                fetchData();
-            }
+    //     try {
+    //         console.log(dept_name)
+    //         if(dept_name === ''){
+    //             alert("Department Can't be empty")
+    //             return;
+    //         }else{
+    //             const url = await ihttp.post('http://localhost:4545/api/v1/department/insertDepartment',{ dept_name , created_by })
+    //             fetchData();
+    //         }
             
-        } catch (error) {
-            console.log(error)
+    //     } catch (error) {
+    //         console.log(error)
 
-        }
+    //     }
 
-    }
+    // }
 
     // if (loading) {
     //     return <p>Loading.....</p>

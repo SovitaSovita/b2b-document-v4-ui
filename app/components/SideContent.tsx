@@ -65,9 +65,9 @@ function SideContent() {
                         <li>
                             <Link href={"/manage_users"}>Manage User</Link>
                         </li>
-                        <li>
+                        {/* <li>
                             <Link href={"/department"}>Deparment</Link>
-                        </li>
+                        </li> */}
                         <li>
                             <div
                                 role="button"
