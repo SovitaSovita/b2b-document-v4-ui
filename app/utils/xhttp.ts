@@ -5,6 +5,7 @@ import axios, {
 } from "axios";
 import { getSession } from "next-auth/react";
 
+//export const API_BASE_URL = "http://localhost:4545/api/v1";
 export const API_BASE_URL = "http://178.128.52.39:4545/api/v1";
 
 //export const API_BASE_URL = "http://192.168.178.239:4545/api/v1";
@@ -16,9 +17,6 @@ const ihttp = axios.create({
 async function requestInterceptor(config: InternalAxiosRequestConfig) {
 
   const idToken: any = await getSession();
-
-  console.log(">>>>>>>>: ", idToken);
-
   if (!idToken) {
     return Promise.reject("missing access token");
   }
@@ -32,11 +30,11 @@ async function responseInterceptor(value: AxiosResponse<any, any>) {
 }
 
 async function responseErrorInterceptor({ status, code, ...err }: AxiosError) {
-  const isNotWorkError = code == "ERR_NETWORK";
+  const isNotWorkError = code == "ERR_NETWORK"; //ERR_CONNECTION_REFUSED
   if (isNotWorkError) {
     try {
       //
-      window.location.pathname = "/error"
+      // window.location.pathname = "/error"
     } catch {
       /** in case called from server ignore client side function*/
     }

@@ -2,7 +2,7 @@
 import { GetArticleById } from '@/app/service/ArticleService';
 import { useEffect, useState } from 'react';
 
-const WelcomePage = () => {
+const WelcomePage = ({}) => {
   const [welcomeMessage, setWelcomeMessage] = useState<string>('');
 
   useEffect(() => {

@@ -9,19 +9,30 @@ import { useState } from 'react';
 import { getArticleDetail } from '../service/MenuService';
 import { getArticle } from '../service/Redux/articleDetailSlice';
 import { useDispatch } from 'react-redux';
+import { getFavorite } from '../service/Favourite';
+import { useSession } from 'next-auth/react';
+
 
 interface TagItem {
     id: number;
     title: string;
 }
 
+interface FavoriteItem {
+    user_id: number;
+}
+
 function SideBar({ ARTICLES, TAGS }: MenuData) {
+
+    const [favorites, setFavorites] = useState<any[]>([]);
+    const { data: session, status }: { data: any, status: any } = useSession();
 
     const dispatch = useDispatch();
 
     // Function to filter articles based on tag_id
     function filterArticlesByTagId(tagId: number) {
         return ARTICLES.filter(article => article.tag_id === tagId);
+        // console.log("Article Id", article.tag_id);
     }
 
     function handleViewArticle(id: string) {
@@ -30,6 +41,25 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
             dispatch(getArticle(res[0]))
         })
     }
+
+    // Function to filter favorite
+
+
+    // Favorote
+    function handleViewFavorite(id: string) {
+        getFavorite(id).then((res) => {
+            console.log("Favorite response", res);
+            setFavorites(res);
+        })
+    }
+
+    useEffect(() => {
+        
+        handleViewFavorite(session?.user?.userId);
+        
+    }, [session])
+
+    console.log(favorites)
 
     return (
         <div className="drawer-side">
@@ -42,8 +72,6 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
               B2B <span className="text-blue-700 ml-1">DOC</span></span> */}
                 </div>
 
-
-
                 <div className="css-o2c9dn mb-3"></div>
                 <li className='mb-2'>
                     <details>
@@ -52,11 +80,18 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                             Favorites
                         </summary>
                         <ul className='pt-1'>
-                            <li><a>test</a></li>
+                            {/* {favorites.map((favorite, article_id) => (
+                                <li key={article_id} onClick={() => handleViewFavorite(favorite?.article_id)}><a className="text-[13px]">{favorite?.title}</a></li>
+                            ))} */}
+
+                            {favorites.map((favorite, article_id) => (
+                                <li key={article_id} onClick={() => handleViewFavorite(favorite?.article_id)}><a className="text-[13px]">{favorite?.title}</a></li>
+                            ))}
+
+
                         </ul>
                     </details>
                 </li>
-
 
                 {
                     TAGS.map((item, index) => (

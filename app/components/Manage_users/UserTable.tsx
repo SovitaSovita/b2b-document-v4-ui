@@ -10,6 +10,9 @@ export default function UserTable() {
     const { data: session, status }: { data: any, status: any } = useSession();
     const [loading, setLoading] = useState<boolean>(true);
     const [users, setUsers] = useState([]);
+    //
+    const [editMode, setEditMode] = useState<boolean>(false); // State to track edit mode
+    const [editEmail, setEditEmail] = useState<string>("");
 
     console.log("status : ", status);
     console.log("session : ", session); // session user
@@ -19,6 +22,27 @@ export default function UserTable() {
             setLoading(false)
         }
     }, [status])
+
+    // Handel edit click
+    const handleEdit = () => {
+        // Retrieve the old email data for editing
+        const oldEmail = session?.user.eml;
+        setEditEmail(oldEmail);
+        // Toggle edit mode
+        setEditMode(true);
+    }
+
+    // Function to handle input change
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        // Update the editEmail state
+        setEditEmail(e.target.value);
+    }
+
+    const handleSave = () => {
+        
+        setEditMode(false);
+    }
+
 
     if (loading) {
         return (
@@ -56,11 +80,29 @@ export default function UserTable() {
                                 </div>
                             </td>
                             <td>{session?.user.dvsn_NM}</td>
-                            <td>{session?.user.eml}</td>
+                            <td>
+                                {editMode ? (
+                                    <input
+                                        type="text"
+                                        value={editEmail}
+                                        onChange={handleChange}
+                                        className="border border-gray-300 rounded px-2 py-1"
+                                    />
+                                ) : (
+                                    session?.user.eml
+                                )}
+                            </td>
                             <td>
                                 <div className="flex items-center">
-                                    <EditIcon className="mr-3 cursor-pointer" />
-                                    <DeleteIcon className="cursor-pointer" />
+                                    {editMode ? (
+                                        <>
+                                            <button className="text-blue-600 mr-3" onClick={handleSave}>Save</button>
+                                            <button className="text-blue-600" onClick={() => setEditMode(false)}>Cancel</button>
+                                        </>
+                                    ) : (
+                                        <EditIcon className="mr-3 cursor-pointer" onClick={handleEdit} />
+                                    )}
+                                    {/* <DeleteIcon className="cursor-pointer" /> */}
                                 </div>
                             </td>
                         </tr>

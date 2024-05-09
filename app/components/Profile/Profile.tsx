@@ -1,7 +1,10 @@
 import Image from 'next/image'
 import React from 'react'
+import NoProfileComponent from './NoProfileComponent';
 
 const Profile = ({ userInfo }: { userInfo: any }) => {
+
+    console.log(userInfo);
     return (
         <div className='mb-5'>
             <div className=''>
@@ -9,9 +12,15 @@ const Profile = ({ userInfo }: { userInfo: any }) => {
                     <div className="flex flex-row justify-between">
                         <div className='flex flex-row gap-4'>
                             <div className="avatar card-actions justify-start">
-                                <div className="w-12 rounded-full">
-                                    <Image src={userInfo?.image ? userInfo.image : userInfo?.prfl_PHTG} alt="pf" width={140} height={100} loading="lazy" />
-                                </div>
+                                {
+                                    userInfo?.prfl_PHTG != "" ? (
+                                        <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-1">
+                                            <Image src={userInfo?.image ? userInfo.image : userInfo?.prfl_PHTG} alt="pf" width={140} height={100} loading="lazy" />
+                                        </div>
+                                    ) : (
+                                        <NoProfileComponent username={userInfo?.flnm} size={"w-10"} />
+                                    )
+                                }
                             </div>
                             <div className='flex flex-col justify-center'>
                                 <h3 className='font-bold'>{userInfo?.name ?? userInfo?.flnm}</h3>
