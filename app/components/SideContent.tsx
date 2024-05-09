@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Breadcrumbs from './Breadcrumbs'
 import Page from '../(root)/vanda/page';
 
@@ -10,6 +10,8 @@ import { signOut, useSession } from 'next-auth/react';
 import Profile from './Profile/Profile';
 import ProfileDrawer from './Profile/ProfileDrawer';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import ReplyAllOutlinedIcon from '@mui/icons-material/ReplyAllOutlined';
 import LoadingCustom from './Material/Loading';
 import { useParams } from 'next/navigation';
@@ -17,8 +19,24 @@ import { useParams } from 'next/navigation';
 function SideContent() {
 
     const { article }: { article: any } = useSelector((state: RootState) => state?.article);
+    console.log("yuth", article.id)
     const { data: session, status }: { data: any, status: any } = useSession();
     const path = useParams();
+
+    // Handle click icon
+    const [isFavorite, setIsFavorite] = useState(false);
+
+
+    const addFavorite = () => {
+
+        setIsFavorite(!isFavorite);
+        console.log("user", session.user.userId);
+        console.log("department", session.user.dvsn_CD);
+        console.log("article id", article.id)
+    };
+
+
+
 
     return (
         <div className="drawer-content flex flex-col items-center justify-center p-4">
@@ -88,16 +106,34 @@ function SideContent() {
                         : (
                             <div className='self-end'>
                                 <div className='mb-4'>
-                                    <FavoriteBorderOutlinedIcon className='mr-3     ' />
-                                    <ReplyAllOutlinedIcon />
+                                    {/* <FavoriteBorderOutlinedIcon className='mr-3' onClick={addFavorite} style={{ cursor: 'pointer' }} />
+                                    <FavoriteIcon className='mr-3'/>
+                                    <ReplyAllOutlinedIcon style={{ cursor: 'pointer' }}/> */}
+
+                                    {!isFavorite && (
+                                        <FavoriteBorderOutlinedIcon
+                                            className='mr-3'
+                                            onClick={addFavorite}
+                                            style={{ cursor: 'pointer' }}
+                                        />
+                                    )}
+                                    {isFavorite && (
+                                        <FavoriteTwoToneIcon
+                                            className='mr-3'
+                                            onClick={addFavorite}
+                                            style={{ cursor: 'pointer' }}
+                                        />
+                                    )}
+                                    <ReplyAllOutlinedIcon style={{ cursor: 'pointer' }}/>
                                 </div>
-                                <div dangerouslySetInnerHTML={{ __html: article?.content_body }} />
+                                <div dangerouslySetInnerHTML={{ __html: article?.content_body }} key={article?.id}/>
                             </div>
                         )
                 }
 
                 {/* <img src={article?.img_path} alt="content" width={500} className='mt-6 ml-6' /> */}
                 <Page />
+
             </div>
 
             {/* <label htmlFor="my-drawer-2" className="btn btn-circle drawer-button lg:hidden">

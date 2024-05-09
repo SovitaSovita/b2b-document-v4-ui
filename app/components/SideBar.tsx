@@ -32,6 +32,7 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
     // Function to filter articles based on tag_id
     function filterArticlesByTagId(tagId: number) {
         return ARTICLES.filter(article => article.tag_id === tagId);
+        console.log("Article Id", article.tag_id);
     }
 
     function handleViewArticle(id: string) {
@@ -40,6 +41,9 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
             dispatch(getArticle(res[0]))
         })
     }
+
+    // Function to filter favorite
+
 
     // Favorote
     function handleViewFavorite(id: string) {
@@ -51,7 +55,7 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
 
     useEffect(() => {
         // if (session && session.user && session.user.userId) {
-            handleViewFavorite(session?.user?.userId);
+        handleViewFavorite(session?.user?.userId);
         // }
     }, [session])
 
@@ -76,16 +80,18 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                             Favorites
                         </summary>
                         <ul className='pt-1'>
-                            {/* <li><a>test</a></li> */}
+                            {/* {favorites.map((favorite, article_id) => (
+                                <li key={article_id} onClick={() => handleViewFavorite(favorite?.article_id)}><a className="text-[13px]">{favorite?.title}</a></li>
+                            ))} */}
+
                             {favorites.map((favorite, article_id) => (
-                                // <li key={index}><a>{favorite.title}</a></li>
-                                <li onClick={() => handleViewFavorite(favorite?.article_id)}><a className="text-[13px]">{favorite?.title}</a></li>
-                                
+                                <li key={article_id} onClick={() => handleViewFavorite(favorite?.article_id)}><a className="text-[13px]">{favorite?.title}</a></li>
                             ))}
+
+
                         </ul>
                     </details>
                 </li>
-
 
                 {
                     TAGS.map((item, index) => (

@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     article: {},
+    favorite: {},
 }
 
 const articleSlice = createSlice({
@@ -12,6 +13,17 @@ const articleSlice = createSlice({
             state.article = action.payload
         },
     },
+})
+
+// Favorite
+const favoriteSlice = createSlice({
+    name: 'favorite',
+    initialState,
+    reducers: {
+        getFavorite(state, action) {
+            state.favorite = action.payload
+        }
+    }
 })
 
 export const { getArticle } = articleSlice.actions
