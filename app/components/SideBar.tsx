@@ -12,7 +12,8 @@ import { getArticle } from '../service/Redux/articleDetailSlice';
 import { useDispatch } from 'react-redux';
 
 import { useSession } from 'next-auth/react';
-
+import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined';
+import { fontGrid } from '@mui/material/styles/cssUtils';
 
 interface TagItem {
     id: number;
@@ -27,7 +28,11 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
 
     const [favorites, setFavorites] = useState<any[]>([]);
     const { data: session, status }: { data: any, status: any } = useSession();
+    //const handleOpenTag = () => setOpenTag(true);
 
+    const alertAPI = () => {
+        alert("hello")
+    }
     const dispatch = useDispatch();
 
     // Function to filter articles based on tag_id
@@ -94,18 +99,38 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
 
                 {
                     TAGS.map((item, index) => (
-                        <li key={index + 1}>
-                            <details>
-                                <summary className="mt-1 font-medium">{item.title}</summary>
-                                <ul>
-                                    {filterArticlesByTagId(item.id).map(item => (
-                                        <li key={item?.id} onClick={() => handleViewArticle(item.id.toString())}><a className="text-[13px]">{item?.title}</a></li>
-                                    ))}
-                                </ul>
-                            </details>
-                        </li>
+                        <span style={{ width: '160px', display: 'inline-flex' }}>
+                            <li key={index + 1} >
+
+                                <details>
+                                    <summary className="mt-1 font-medium" style={{ width: '180px' }}>{item.title}</summary>
+
+                                    <ul>
+                                        {filterArticlesByTagId(item.id).map(item => (
+                                            <li key={item?.id} onClick={() => handleViewArticle(item.id.toString())}><a className="text-[13px]">{item?.title}</a></li>
+                                        ))}
+                                    </ul>
+                                </details>
+
+                            </li>
+                            <li>
+                                <div className='btn btn-ghost btn-circle'>
+                                    <CreateNewFolderOutlinedIcon />
+                                </div>
+                            </li>
+                            <li>
+                                <div className='btn btn-ghost btn-circle'>
+                                    <CreateNewFolderOutlinedIcon />
+                                </div>
+                            </li>
+
+
+                        </span>
+
                     ))
+
                 }
+
 
 
             </ul>

@@ -9,8 +9,10 @@ import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
 import Profile from './Profile/Profile';
 import ProfileDrawer from './Profile/ProfileDrawer';
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import ReplyAllOutlinedIcon from '@mui/icons-material/ReplyAllOutlined';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import LoadingCustom from './Material/Loading';
 import { useParams } from 'next/navigation';
 import HomeContent from './HomeContent';
@@ -65,9 +67,9 @@ function SideContent() {
             <div className='flex justify-between w-full mb-3'>
                 {/* <Breadcrumbs /> */}
                 <div data-tip="Create new" className='tooltip tooltip-left'>
-                    <div className='btn btn-ghost btn-circle' onClick={handleOpenTag}>
+                    {/* <div className='btn btn-ghost btn-circle' onClick={handleOpenTag}>
                         <CreateNewFolderOutlinedIcon />
-                    </div>
+                    </div> */}
                 </div>
 
                 <label className="input input-bordered flex items-center gap-2 bordered input-sm w-full max-w-xs">
@@ -128,32 +130,43 @@ function SideContent() {
                     !article?.content_body ? (<HomeContent />)
                         : (
                             <div className='flex flex-col'>
-                                <div className='mb-4 flex items-center self-end'>
-                                    <div>
-                                        {/* <FavoriteBorderOutlinedIcon className='mr-3' style={{color: 'red'}}/> */}
-                                        {
-                                            article.id === 131 ? (
-                                                <FavoriteBorderOutlinedIcon className='mr-3' style={{ color: 'black', cursor: 'pointer' }} />
 
-                                            ) : (
-                                                <FavoriteBorderOutlinedIcon className='mr-3' style={{ color: 'red', cursor: 'pointer' }} />
-                                            )
+                                <div className='mb-4 flex items-center justify-between'>
+                                    {/* Left side icons */}
+                                    <div className="flex items-center">
+                                        <div>
+                                            <DriveFileRenameOutlineIcon className='ml-5'/>
+                                        </div>
+                                           
+                                        <div>
+                                            <DeleteOutlineIcon className='ml-5'/>
+                                        </div>
+                                    </div> 
+                                     
+                                    {/* Right side icons */}
+                                    <div className="flex items-center">
+                                        <div>
+                                            <FavoriteBorderOutlinedIcon className='mr-3' />
+                                        </div>
+
+                                        {
+                                            session?.user.userId === article?.username && <EditIcon />
                                         }
 
-                                    </div>
-
-                                    {
-                                        session?.user.userId === article?.username && <EditIcon />
-                                    }
-
-                                    <TelegramShareButton
-                                        url={'http://localhost:3000/'}
-                                    >
-                                        <ReplyAllOutlinedIcon className='ml-3' />
-                                    </TelegramShareButton>
+                                        <TelegramShareButton
+                                            url={'http://localhost:3000/'}
+                                        >
+                                            <ReplyAllOutlinedIcon className='ml-3' />
+                                        </TelegramShareButton>
+                                    </div>  
                                 </div>
+                                
                                 <div dangerouslySetInnerHTML={{ __html: article?.content_body }} />
+
+                                
                             </div>
+
+                            
                         )
                 }
 
