@@ -7,9 +7,10 @@ import BookmarksOutlinedIcon from '@mui/icons-material/BookmarksOutlined';
 import { sampleFetch } from '../service/sample';
 import { useState } from 'react';
 import { getArticleDetail } from '../service/MenuService';
+import { getFavorite } from '../service/Favourite';
 import { getArticle } from '../service/Redux/articleDetailSlice';
 import { useDispatch } from 'react-redux';
-import { getFavorite } from '../service/Favourite';
+
 import { useSession } from 'next-auth/react';
 
 
@@ -22,7 +23,7 @@ interface FavoriteItem {
     user_id: number;
 }
 
-function SideBar({ ARTICLES, TAGS }: MenuData) {
+function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
 
     const [favorites, setFavorites] = useState<any[]>([]);
     const { data: session, status }: { data: any, status: any } = useSession();
@@ -32,7 +33,6 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
     // Function to filter articles based on tag_id
     function filterArticlesByTagId(tagId: number) {
         return ARTICLES.filter(article => article.tag_id === tagId);
-        // console.log("Article Id", article.tag_id);
     }
 
     function handleViewArticle(id: string) {
@@ -42,9 +42,7 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
         })
     }
 
-    // Function to filter favorite
-
-
+    
     // Favorote
     function handleViewFavorite(id: string) {
         getFavorite(id).then((res) => {
@@ -56,10 +54,12 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
     useEffect(() => {
 
         handleViewFavorite(session?.user?.userId);
+        console.log("Get user", session?.user?.userId)
 
     }, [session])
 
     console.log(favorites)
+
 
     return (
         <div className="drawer-side">
@@ -73,6 +73,8 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                 </div>
 
                 <div className="css-o2c9dn mb-3"></div>
+
+                {/* Favorite */}
                 <li className='mb-2'>
                     <details>
                         <summary className="border shadow font-semibold text-[15px]">
@@ -80,15 +82,12 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                             Favorites
                         </summary>
                         <ul className='pt-1'>
-                            {/* {favorites.map((favorite, article_id) => (
-                                <li key={article_id} onClick={() => handleViewFavorite(favorite?.article_id)}><a className="text-[13px]">{favorite?.title}</a></li>
-                            ))} */}
-
-                            {favorites.map((favorite, article_id) => (
-                                <li key={article_id} onClick={() => handleViewFavorite(favorite?.article_id)}><a className="text-[13px]">{favorite?.title}</a></li>
+                            {favorites.map((item, index) => (
+                               
+                                <li key={index + 1} onClick={() => { console.log(item.article_id);  handleViewArticle(item?.article_id.toString()) }}>
+                                    <a className="text-[13px]">{item?.title}</a>
+                                </li>
                             ))}
-
-
                         </ul>
                     </details>
                 </li>

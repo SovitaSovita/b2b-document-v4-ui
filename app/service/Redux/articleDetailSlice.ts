@@ -12,6 +12,9 @@ const articleSlice = createSlice({
         getArticle(state, action) {
             state.article = action.payload
         },
+        // getArticleFavorite(state, action) {
+        //     state.article = action.payload
+        // }
     },
 })
 
@@ -26,5 +29,5 @@ const favoriteSlice = createSlice({
     }
 })
 
-export const { getArticle } = articleSlice.actions
+export const { getArticle, } = articleSlice.actions
 export default articleSlice.reducer

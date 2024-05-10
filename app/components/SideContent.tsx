@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 import Breadcrumbs from './Breadcrumbs'
 import Page from '../(root)/vanda/page';
 
@@ -22,6 +22,7 @@ import { EditIcon } from '@/public/icon/TableIcon';
 import SearchComponent from './Modal/SearchComponent';
 import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined';
 import TagComponent from './Modal/TagComponent';
+import { getFavorite, checkIsFavorite } from '../service/Favourite';
 
 function SideContent() {
 
@@ -34,6 +35,28 @@ function SideContent() {
 
     const [openTag, setOpenTag] = React.useState(false);
     const handleOpenTag = () => setOpenTag(true);
+
+    // Check if favorite
+    const [favorites, setFavorites] = useState();
+
+    function handleViewFavorite(user_id: string, article_id: number, dept_id: number) {
+        // checkIsFavorite(id).then((res) => {
+        //     console.log("Favorite response", res);
+        //     setFavorites(res);
+        // })
+        checkIsFavorite(user_id, article_id, dept_id).then((response) => {
+            console.log("Hello World", response)
+        })
+    }
+
+    useEffect(() => {
+
+        handleViewFavorite("sararuth", 131, 50);
+        console.log("Get user", session?.user?.userId)
+
+    }, [session])
+
+
 
 
     return (
@@ -83,9 +106,9 @@ function SideContent() {
                             </label>
                         </li>
                         <ProfileDrawer userInfo={session?.user} />
-                        <li>
+                        {/* <li>
                             <Link href={"/manage_users"}>Manage User</Link>
-                        </li>
+                        </li> */}
                         <li>
                             <div
                                 role="button"
@@ -107,7 +130,16 @@ function SideContent() {
                             <div className='flex flex-col'>
                                 <div className='mb-4 flex items-center self-end'>
                                     <div>
-                                        <FavoriteBorderOutlinedIcon className='mr-3' />
+                                        {/* <FavoriteBorderOutlinedIcon className='mr-3' style={{color: 'red'}}/> */}
+                                        {
+                                            article.id === 131 ? (
+                                                <FavoriteBorderOutlinedIcon className='mr-3' style={{ color: 'black', cursor: 'pointer' }} />
+
+                                            ) : (
+                                                <FavoriteBorderOutlinedIcon className='mr-3' style={{ color: 'red', cursor: 'pointer' }} />
+                                            )
+                                        }
+
                                     </div>
 
                                     {
