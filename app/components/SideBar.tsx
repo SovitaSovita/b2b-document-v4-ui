@@ -11,7 +11,8 @@ import { getArticle } from '../service/Redux/articleDetailSlice';
 import { useDispatch } from 'react-redux';
 import { getFavorite } from '../service/Favourite';
 import { useSession } from 'next-auth/react';
-
+import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined';
+import { fontGrid } from '@mui/material/styles/cssUtils';
 
 interface TagItem {
     id: number;
@@ -25,7 +26,11 @@ interface FavoriteItem {
 function SideBar({ ARTICLES, TAGS }: MenuData) {
     const [favorites, setFavorites] = useState<any[]>([]);
     const { data: session, status }: { data: any, status: any } = useSession();
+    //const handleOpenTag = () => setOpenTag(true);
 
+    const alertAPI = () => {
+        alert("hello")
+    }
     const dispatch = useDispatch();
 
     // Function to filter articles based on tag_id
@@ -109,6 +114,7 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                             <p>No Data Found</p>
                         </div>
                 }
+
 
 
             </ul>
