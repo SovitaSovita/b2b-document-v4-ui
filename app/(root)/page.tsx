@@ -7,13 +7,14 @@ import { useEffect, useState } from "react";
 import { getMenuSidebar } from "../service/MenuService";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../service/Redux/store/store";
-import { isReder } from "../service/Redux/articleDetailSlice";
+import { isRender } from "../service/Redux/articleDetailSlice";
+import { GetTagAndArticle } from "../service/TagService";
 
 export default function Home() {
 
   const [menudata, setMenudata] = useState({
-    ARTICLES: [],
-    TAGS: []
+    articleList: [],
+    tagList: []
   })
 
   const dispatch = useDispatch()
@@ -37,14 +38,13 @@ export default function Home() {
     };
   };
 
-  const reRederMenu = useSelector((state: RootState) => state?.article.isReder);
+  const reRederMenu = useSelector((state: RootState) => state?.article.isRender);
 
   useEffect(() => {
-    console.log("work again");
-    getMenuSidebar().then((res) => {
-      const transformedData: any = transformApiResponse(res);
-      setMenudata(transformedData);
-      dispatch(isReder(false));
+    GetTagAndArticle(50).then((res: any) => {
+      // const transformedData: any = transformApiResponse(res);
+      setMenudata(res?.data.rec);
+      dispatch(isRender(false));
     })
   }, [reRederMenu])
 
@@ -54,7 +54,7 @@ export default function Home() {
         <div className="drawer lg:drawer-open font-Figtree">
           <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
           <SideContent />
-          <SideBar ARTICLES={menudata.ARTICLES} TAGS={menudata.TAGS} />
+          <SideBar ARTICLES={menudata.articleList} TAGS={menudata.tagList} />
         </div>
       </div>
     </>

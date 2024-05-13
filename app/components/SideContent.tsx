@@ -26,7 +26,7 @@ import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutl
 import TagComponent from './Modal/TagComponent';
 import { deleteArticle } from '../service/ArticleService';
 import CustomAlert from './Material/CustomAlert';
-import { isReder } from '../service/Redux/articleDetailSlice';
+import { isRender } from '../service/Redux/articleDetailSlice';
 import AskToConfirmModal from './Modal/AskToConfirmModal';
 
 function SideContent() {
@@ -70,7 +70,7 @@ function SideContent() {
                     type: "success",
                     message: "Deleted Successfully.",
                 });
-                dispatch(isReder(true));
+                dispatch(isRender(true));
                 setOpenAskCf(false)
             }
             else {

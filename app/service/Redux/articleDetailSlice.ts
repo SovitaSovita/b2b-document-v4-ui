@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     article: {},
     favorite: {},
-    isReder: false
+    isRender: false
 }
 
 const articleSlice = createSlice({
@@ -13,11 +13,11 @@ const articleSlice = createSlice({
         getArticle(state, action) {
             state.article = action.payload
         },
-        isReder(state, action) {
-            state.isReder = action.payload
+        isRender(state, action) {
+            state.isRender = action.payload
         },
     },
 })
 
-export const { getArticle, isReder } = articleSlice.actions
+export const { getArticle, isRender } = articleSlice.actions
 export default articleSlice.reducer
