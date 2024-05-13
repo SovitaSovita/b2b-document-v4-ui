@@ -42,7 +42,7 @@ export default function Home() {
     })
   }, [])
 
-  const [favorites, setFavorites] = useState<any[]>([]);
+  const [favorites, setFavorites] = useState<any>([]);
 
 
   // Favorote
@@ -57,6 +57,7 @@ export default function Home() {
     // Get user_id
     handleViewFavorite(session?.user?.userId);
   }, [session])
+  
 
   return (
     <>

@@ -86,7 +86,7 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                             Favorites
                         </summary>
                         <ul className='pt-1'>
-                            {FAVORITE?.map((item, index) => (
+                            {FAVORITE?.map((item: any, index) => (
                                 <li key={index + 1} onClick={() => { console.log(item.article_id); handleViewArticle(item?.article_id.toString()) }}>
                                     <a className="text-[13px]">{item?.title}</a>
                                 </li>
