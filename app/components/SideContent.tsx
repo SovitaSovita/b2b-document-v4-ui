@@ -163,6 +163,11 @@ function SideContent() {
                             <div className='flex flex-col'>
 
                                 <div className='mb-4 flex items-center justify-between'>
+                                    {/* Left side icons */}
+                                    <div className="flex items-center">
+                                        
+                                    </div> 
+                                     
                                     {/* Right side icons */}
                                     <div className="flex items-center">
                                         <div>
@@ -178,7 +183,7 @@ function SideContent() {
                                         {
                                             session?.user.userId === article?.username && (
                                                 <div className='flex justify-between w-10'>
-                                                    <EditIcon />
+                                                    <EditIcon variant="text" onClick={() => router.push("/vanda/article")}/>
                                                     <DeleteIcon className="cursor-pointer" onClick={() => handleOpenAskCf(article?.id)} />
                                                 </div>
                                             )
