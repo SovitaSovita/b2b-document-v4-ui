@@ -13,6 +13,11 @@ import { getFavorite } from '../service/Favourite';
 import { useSession } from 'next-auth/react';
 import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined';
 import { fontGrid } from '@mui/material/styles/cssUtils';
+import EditorCustum from './editor/EditorCustum';
+import { DeleteIcon, EditIcon } from '@/public/icon/TableIcon';
+import UpdateTagComponent from './Modal/UpdateTagComponent';
+
+
 
 interface TagItem {
     id: number;
@@ -27,11 +32,10 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
 
     const [favorites, setFavorites] = useState<any[]>([]);
     const { data: session, status }: { data: any, status: any } = useSession();
-    //const handleOpenTag = () => setOpenTag(true);
+    const [openTag, setOpenTag] = React.useState(false);
+    const handleOpenTag = () => setOpenTag(true);
 
-    const alertAPI = () => {
-        alert("hello")
-    }
+    
     const dispatch = useDispatch();
 
     // Function to filter articles based on tag_id
@@ -116,14 +120,14 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                             </li>
                             <li>
                                 <div className='btn btn-ghost btn-circle'>
-                                    <CreateNewFolderOutlinedIcon />
+                                    <EditIcon />
                                 </div>
                             </li>
-                            <li>
+                             <li>  
                                 <div className='btn btn-ghost btn-circle'>
-                                    <CreateNewFolderOutlinedIcon />
+                                    <DeleteIcon />
                                 </div>
-                            </li>
+                            </li> 
 
 
                         </span>
@@ -135,6 +139,8 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
 
 
             </ul>
+            
+            <UpdateTagComponent/> 
         </div>
     )
 }
