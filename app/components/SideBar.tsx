@@ -7,13 +7,14 @@ import BookmarksOutlinedIcon from '@mui/icons-material/BookmarksOutlined';
 import { sampleFetch } from '../service/sample';
 import { useState } from 'react';
 import { getArticleDetail } from '../service/MenuService';
-import { getFavorite } from '../service/Favourite';
-import { getArticle } from '../service/Redux/articleDetailSlice';
+
+import { getArticle,getFavorite, isFavorite } from '../service/Redux/articleDetailSlice';
 import { useDispatch } from 'react-redux';
 
 import { useSession } from 'next-auth/react';
 import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined';
 import { fontGrid } from '@mui/material/styles/cssUtils';
+import { checkIsFavorite, getFavoriteDetail } from '../service/FavouriteService';
 
 interface TagItem {
     id: number;
@@ -26,8 +27,8 @@ interface FavoriteItem {
 
 function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
 
-    const [favorites, setFavorites] = useState<any[]>([]);
     const { data: session, status }: { data: any, status: any } = useSession();
+    const [isfavorite, setFavorites] = useState<boolean>(); 
     //const handleOpenTag = () => setOpenTag(true);
 
     const alertAPI = () => {
@@ -42,28 +43,26 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
 
     function handleViewArticle(id: string) {
         getArticleDetail(id).then((res) => {
-            console.log("res[0] >>", res);
+            // console.log("res[0] >>", res);
             dispatch(getArticle(res[0]))
         })
-    }
-
-    
-    // Favorote
-    function handleViewFavorite(id: string) {
-        getFavorite(id).then((res) => {
-            console.log("Favorite response", res);
-            setFavorites(res);
+        // favorite
+        checkIsFavorite(session.user.userId, parseInt(id, 10), session.user.dvsn_CD).then((data) => {
+            
+            if(data != null){
+                dispatch(isFavorite(true))
+            }
+            else{
+                dispatch(isFavorite(false))
+            }
+            
         })
+
+        
     }
+    
 
-    useEffect(() => {
-
-        handleViewFavorite(session?.user?.userId);
-        console.log("Get user", session?.user?.userId)
-
-    }, [session])
-
-    console.log(favorites)
+    console.log(FAVORITE)
 
 
     return (
@@ -87,9 +86,8 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                             Favorites
                         </summary>
                         <ul className='pt-1'>
-                            {favorites.map((item, index) => (
-                               
-                                <li key={index + 1} onClick={() => { console.log(item.article_id);  handleViewArticle(item?.article_id.toString()) }}>
+                            {FAVORITE?.map((item, index) => (
+                                <li key={index + 1} onClick={() => { console.log(item.article_id); handleViewArticle(item?.article_id.toString()) }}>
                                     <a className="text-[13px]">{item?.title}</a>
                                 </li>
                             ))}

@@ -5,8 +5,11 @@ import SideContent from "../components/SideContent";
 import SideBar from "../components/SideBar";
 import { useEffect, useState } from "react";
 import { getMenuSidebar } from "../service/MenuService";
+import { getFavoriteDetail } from "../service/FavouriteService";
 
 export default function Home() {
+
+  const { data: session, status }: { data: any, status: any } = useSession()
 
   const [menudata, setMenudata] = useState({
     ARTICLES: [],
@@ -39,13 +42,29 @@ export default function Home() {
     })
   }, [])
 
+  const [favorites, setFavorites] = useState<any[]>([]);
+
+
+  // Favorote
+  function handleViewFavorite(user_id: string) {
+    getFavoriteDetail(user_id).then((res) => {
+      console.log("Favorite response", res);
+      setFavorites(res);
+    })
+  }
+
+  useEffect(() => {
+    // Get user_id
+    handleViewFavorite(session?.user?.userId);
+  }, [session])
+
   return (
     <>
       <div className="">
         <div className="drawer lg:drawer-open font-Figtree">
           <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-          <SideContent />
-          <SideBar ARTICLES={menudata.ARTICLES} TAGS={menudata.TAGS} />
+          <SideContent FAVORITE={favorites} />
+          <SideBar ARTICLES={menudata.ARTICLES} TAGS={menudata.TAGS} FAVORITE={favorites} />
         </div>
       </div>
     </>
