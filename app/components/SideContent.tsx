@@ -1,9 +1,9 @@
-import React, { FormEvent } from 'react'
+import React, { FormEvent, useState } from 'react'
 import Breadcrumbs from './Breadcrumbs'
 import Page from '../(root)/vanda/page';
 
 import LeftDrawerCustom from './Profile/LeftDrawerCustom'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../service/Redux/store/store';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
@@ -20,22 +20,70 @@ import {
     TelegramIcon,
     TelegramShareButton,
 } from 'next-share'
-import { EditIcon } from '@/public/icon/TableIcon';
+import { DeleteIcon, EditIcon } from '@/public/icon/TableIcon';
 import SearchComponent from './Modal/SearchComponent';
 import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined';
 import TagComponent from './Modal/TagComponent';
+import { deleteArticle } from '../service/ArticleService';
+import CustomAlert from './Material/CustomAlert';
+import { isReder } from '../service/Redux/articleDetailSlice';
+import AskToConfirmModal from './Modal/AskToConfirmModal';
 
 function SideContent() {
 
     const { article }: { article: any } = useSelector((state: RootState) => state?.article);
     const { data: session, status }: { data: any, status: any } = useSession();
     const path = useParams();
+    const dispatch = useDispatch()
+
+    const [isErrorAlert, setIsErrorAlert] = React.useState({
+        open: false,
+        type: "",
+        message: "",
+        duration: 1600,
+    });
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
 
     const [openTag, setOpenTag] = React.useState(false);
     const handleOpenTag = () => setOpenTag(true);
+
+    const [openAskCf, setOpenAskCf] = React.useState(false);
+    const [articleId, setArticleId] = React.useState<number>();
+    const handleOpenAskCf = (id: number) => {
+        setOpenAskCf(true)
+        setArticleId(id)
+    };
+
+    const handleDeleteArticle: any = () => {
+
+        if (!articleId) {
+            alert("Article ID is wrong.")
+        }
+
+        deleteArticle(articleId!).then((res) => {
+            if (res.code == "200") {
+                setIsErrorAlert({
+                    ...isErrorAlert,
+                    open: true,
+                    type: "success",
+                    message: "Deleted Successfully.",
+                });
+                dispatch(isReder(true));
+                setOpenAskCf(false)
+            }
+            else {
+                setIsErrorAlert({
+                    ...isErrorAlert,
+                    open: true,
+                    type: "error",
+                    message: "fail deleted.",
+                });
+                setOpenAskCf(false)
+            }
+        })
+    }
 
 
     return (
@@ -126,15 +174,20 @@ function SideContent() {
                                             <FavoriteBorderOutlinedIcon className='mr-3' />
                                         </div>
 
-                                        {
-                                            session?.user.userId === article?.username && <EditIcon />
-                                        }
-
                                         <TelegramShareButton
                                             url={'http://localhost:3000/'}
                                         >
-                                            <ReplyAllOutlinedIcon className='ml-3' />
+                                            <ReplyAllOutlinedIcon className='mr-3' />
                                         </TelegramShareButton>
+
+                                        {
+                                            session?.user.userId === article?.username && (
+                                                <div className='flex justify-between w-10'>
+                                                    <EditIcon />
+                                                    <DeleteIcon className="cursor-pointer" onClick={() => handleOpenAskCf(article?.id)} />
+                                                </div>
+                                            )
+                                        }
                                     </div>
                                 </div>
 
@@ -154,8 +207,23 @@ function SideContent() {
             {/* <label htmlFor="my-drawer-2" className="btn btn-circle drawer-button lg:hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </label> */}
+            <CustomAlert
+                open={isErrorAlert.open}
+                setOpen={(open: boolean) => {
+                    setIsErrorAlert({ ...isErrorAlert, open });
+                }}
+                message={isErrorAlert.message}
+                type={isErrorAlert.type}
+                duration={isErrorAlert.duration}
+            />
+
             <SearchComponent open={open} setOpen={setOpen} />
             <TagComponent open={openTag} setOpen={setOpenTag} user={session?.user} />
+            <AskToConfirmModal
+                open={openAskCf}
+                setOpen={setOpenAskCf}
+                handleSubmitCallback={handleDeleteArticle}
+            />
         </div>
     )
 }

@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     article: {},
     favorite: {},
+    isReder: false
 }
 
 const articleSlice = createSlice({
@@ -12,19 +13,11 @@ const articleSlice = createSlice({
         getArticle(state, action) {
             state.article = action.payload
         },
+        isReder(state, action) {
+            state.isReder = action.payload
+        },
     },
 })
 
-// Favorite
-const favoriteSlice = createSlice({
-    name: 'favorite',
-    initialState,
-    reducers: {
-        getFavorite(state, action) {
-            state.favorite = action.payload
-        }
-    }
-})
-
-export const { getArticle } = articleSlice.actions
+export const { getArticle, isReder } = articleSlice.actions
 export default articleSlice.reducer

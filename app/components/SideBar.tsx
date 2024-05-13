@@ -37,7 +37,7 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
 
     // Function to filter articles based on tag_id
     function filterArticlesByTagId(tagId: number) {
-        return ARTICLES.filter(article => article.tag_id === tagId);
+        return ARTICLES?.filter(article => article.tag_id === tagId);
         // console.log("Article Id", article.tag_id);
     }
 
@@ -101,7 +101,7 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                 </li>
 
                 {
-                    TAGS.length > 0 ?
+                    TAGS?.length > 0 ?
                         TAGS.map((item, index) => (
                             <li key={index + 1}>
                                 <details>
