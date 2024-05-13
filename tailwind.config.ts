@@ -18,7 +18,10 @@ const config: Config = {
         'Figtree': ['Figtree', 'sans-serif'],
         'Anton': ['Anton', 'sans-serif'],
         'Poppins': ['Poppins', 'sans-serif'],
-      }
+      },
+      backgroundColor: {
+        "base-main": "rgb(246, 248, 252)",
+      },
     },
   },
   plugins: [require("daisyui")],

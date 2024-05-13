@@ -26,6 +26,8 @@ interface FavoriteItem {
 function SideBar({ ARTICLES, TAGS }: MenuData) {
     const [favorites, setFavorites] = useState<any[]>([]);
     const { data: session, status }: { data: any, status: any } = useSession();
+    const [activeItemId, setActiveItemId] = useState("");
+
     //const handleOpenTag = () => setOpenTag(true);
 
     const alertAPI = () => {
@@ -41,8 +43,9 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
 
     function handleViewArticle(id: string) {
         getArticleDetail(id).then((res) => {
-            console.log("res[0] >>", res);
+            // console.log("res[0] >>", res);
             dispatch(getArticle(res[0]))
+            setActiveItemId(id);
         })
     }
 
@@ -105,7 +108,9 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                                     <summary className="mt-1 font-medium">{item.title}</summary>
                                     <ul>
                                         {filterArticlesByTagId(item.id).map(item => (
-                                            <li key={item?.id} onClick={() => handleViewArticle(item.id.toString())}><a className="text-[13px]">{item?.title}</a></li>
+                                            <li key={item?.id} onClick={() => handleViewArticle(item.id.toString())}>
+                                                <a className={activeItemId === item.id.toString() ? "bg-base-200" : ""}>{item?.title}</a>
+                                            </li>
                                         ))}
                                     </ul>
                                 </details>

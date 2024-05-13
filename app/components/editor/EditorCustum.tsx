@@ -3,7 +3,7 @@ import { AddArticleBy } from '@/app/service/ArticleService'
 import { GetAllDepartmentId } from '@/app/service/DepartmentService'
 import { GetTagAndArticle } from '@/app/service/TagService'
 import { DepartmentList } from '@/app/type/DepartmentType'
-import ihttp from '@/app/utils/xhttp'
+import ihttp, { API_BASE_URL } from '@/app/utils/xhttp'
 import { Autocomplete, Popper, TextField } from '@mui/material'
 import { Editor } from '@tinymce/tinymce-react'
 import { useSession } from 'next-auth/react'
@@ -118,6 +118,26 @@ export default function EditorCustum() {
     }
   }, [session])
 
+  const handleImageUpload: any = (blobInfo: any) => {
+    return new Promise((resolve, reject) => {
+      const file = blobInfo.blob();
+      const formData = new FormData();
+      formData.append("imageFile", file, "filename.jpg");
+      fetch(`${API_BASE_URL}/files/upload_file?articleId=266`, {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          const imageURL = result?.payload?.thum_img_path;
+          resolve(imageURL);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
   return (
     <>
       <CustomAlert
@@ -182,8 +202,7 @@ export default function EditorCustum() {
                 'bold italic forecolor | alignleft aligncenter ' +
                 'alignright alignjustify | bullist numlist outdent indent | ' +
                 'removeformat | help',
-              images_upload_url: 'https://platform-dev.bizplay.co.kr/wecloud3/20240112_11705f40-a94c-42b0-82f7-76c3af9d8f96.jpg',
-              // images_upload_handler: 
+              images_upload_handler: handleImageUpload,
               content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
             }}
           />

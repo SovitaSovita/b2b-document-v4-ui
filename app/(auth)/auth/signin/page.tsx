@@ -44,10 +44,7 @@ function Page() {
             redirect: false,
         });
 
-        console.log(result);
-
         if (result?.ok) {
-            console.log("work");
             router.push("/");
         }
     };
