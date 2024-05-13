@@ -5,6 +5,9 @@ import SideContent from "../components/SideContent";
 import SideBar from "../components/SideBar";
 import { useEffect, useState } from "react";
 import { getMenuSidebar } from "../service/MenuService";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../service/Redux/store/store";
+import { isReder } from "../service/Redux/articleDetailSlice";
 
 export default function Home() {
 
@@ -12,6 +15,8 @@ export default function Home() {
     ARTICLES: [],
     TAGS: []
   })
+
+  const dispatch = useDispatch()
 
   const transformApiResponse = (apiResponse: any) => {
     const ARTICLES = apiResponse?.map((item: any) => ({
@@ -32,12 +37,16 @@ export default function Home() {
     };
   };
 
+  const reRederMenu = useSelector((state: RootState) => state?.article.isReder);
+
   useEffect(() => {
+    console.log("work again");
     getMenuSidebar().then((res) => {
       const transformedData: any = transformApiResponse(res);
       setMenudata(transformedData);
+      dispatch(isReder(false));
     })
-  }, [])
+  }, [reRederMenu])
 
   return (
     <>

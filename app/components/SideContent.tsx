@@ -1,9 +1,9 @@
-import React, { FormEvent } from 'react'
+import React, { FormEvent, useState } from 'react'
 import Breadcrumbs from './Breadcrumbs'
 import Page from '../(root)/vanda/page';
 
 import LeftDrawerCustom from './Profile/LeftDrawerCustom'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../service/Redux/store/store';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
@@ -20,18 +20,31 @@ import {
     TelegramIcon,
     TelegramShareButton,
 } from 'next-share'
-import { EditIcon } from '@/public/icon/TableIcon';
+import { DeleteIcon, EditIcon } from '@/public/icon/TableIcon';
 import SearchComponent from './Modal/SearchComponent';
 import { useRouter } from 'next/navigation';
 import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined';
 import TagComponent from './Modal/TagComponent';
+import { deleteArticle } from '../service/ArticleService';
+import CustomAlert from './Material/CustomAlert';
+import { isReder } from '../service/Redux/articleDetailSlice';
+import AskToConfirmModal from './Modal/AskToConfirmModal';
 import { Button } from '@mui/material';
+
 
 function SideContent() {
 
     const { article }: { article: any } = useSelector((state: RootState) => state?.article);
     const { data: session, status }: { data: any, status: any } = useSession();
     const path = useParams();
+    const dispatch = useDispatch()
+
+    const [isErrorAlert, setIsErrorAlert] = React.useState({
+        open: false,
+        type: "",
+        message: "",
+        duration: 1600,
+    });
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -40,6 +53,42 @@ function SideContent() {
     const handleOpenTag = () => setOpenTag(true);
 
     const router = useRouter();
+    const [openAskCf, setOpenAskCf] = React.useState(false);
+    const [articleId, setArticleId] = React.useState<number>();
+    const handleOpenAskCf = (id: number) => {
+        setOpenAskCf(true)
+        setArticleId(id)
+    };
+
+    const handleDeleteArticle: any = () => {
+
+        if (!articleId) {
+            alert("Article ID is wrong.")
+        }
+
+        deleteArticle(articleId!).then((res) => {
+            if (res.code == "200") {
+                setIsErrorAlert({
+                    ...isErrorAlert,
+                    open: true,
+                    type: "success",
+                    message: "Deleted Successfully.",
+                });
+                dispatch(isReder(true));
+                setOpenAskCf(false)
+            }
+            else {
+                setIsErrorAlert({
+                    ...isErrorAlert,
+                    open: true,
+                    type: "error",
+                    message: "fail deleted.",
+                });
+                setOpenAskCf(false)
+            }
+        })
+    }
+
 
     return (
         
@@ -54,8 +103,8 @@ function SideContent() {
                     </div> */}
                 </div>
 
-                <label className="input input-bordered flex items-center gap-2 bordered input-sm w-full max-w-xs">
-                    <input type="text" onClick={handleOpen} className="grow" placeholder="Search" />
+                <label className="input input-bordered flex items-center gap-2 bordered input-sm w-full max-w-[200px]">
+                    <input type="button" onClick={handleOpen} className="grow" value="Search" />
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" /></svg>
                 </label>
 
@@ -114,41 +163,35 @@ function SideContent() {
                             <div className='flex flex-col'>
 
                                 <div className='mb-4 flex items-center justify-between'>
-                                    {/* Left side icons */}
-                                    <div className="flex items-center">
-                                        <Button variant="text" onClick={() => router.push("/vanda/article")} >
-                                            <DriveFileRenameOutlineIcon className='ml-3'/>
-                                        </Button>
-                                           
-                                        <Button variant="text">
-                                            <DeleteOutlineIcon className='ml-3'/>
-                                        </Button>
-                                    </div> 
-                                     
                                     {/* Right side icons */}
                                     <div className="flex items-center">
                                         <div>
                                             <FavoriteBorderOutlinedIcon className='mr-3' />
                                         </div>
 
-                                        {
-                                            session?.user.userId === article?.username 
-                                        }
-
                                         <TelegramShareButton
                                             url={'http://localhost:3000/'}
                                         >
-                                            <ReplyAllOutlinedIcon className='ml-3' />
+                                            <ReplyAllOutlinedIcon className='mr-3' />
                                         </TelegramShareButton>
-                                    </div>  
+
+                                        {
+                                            session?.user.userId === article?.username && (
+                                                <div className='flex justify-between w-10'>
+                                                    <EditIcon />
+                                                    <DeleteIcon className="cursor-pointer" onClick={() => handleOpenAskCf(article?.id)} />
+                                                </div>
+                                            )
+                                        }
+                                    </div>
                                 </div>
-                                
+
                                 <div dangerouslySetInnerHTML={{ __html: article?.content_body }} />
 
-                                
+
                             </div>
 
-                            
+
                         )
                 }
 
@@ -159,8 +202,23 @@ function SideContent() {
             {/* <label htmlFor="my-drawer-2" className="btn btn-circle drawer-button lg:hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </label> */}
+            <CustomAlert
+                open={isErrorAlert.open}
+                setOpen={(open: boolean) => {
+                    setIsErrorAlert({ ...isErrorAlert, open });
+                }}
+                message={isErrorAlert.message}
+                type={isErrorAlert.type}
+                duration={isErrorAlert.duration}
+            />
+
             <SearchComponent open={open} setOpen={setOpen} />
             <TagComponent open={openTag} setOpen={setOpenTag} user={session?.user} />
+            <AskToConfirmModal
+                open={openAskCf}
+                setOpen={setOpenAskCf}
+                handleSubmitCallback={handleDeleteArticle}
+            />
         </div>
     )
 }

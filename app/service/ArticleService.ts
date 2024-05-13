@@ -41,3 +41,13 @@ export const searchArticle = async (title: string) => {
         return error;
     }
 }
+
+
+export const deleteArticle = async (articleId: number) => {
+    try {
+        const response = await ihttp.delete(`/articles/delete?articleId=${articleId}`);
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+}

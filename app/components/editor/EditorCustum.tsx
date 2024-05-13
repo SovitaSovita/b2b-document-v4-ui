@@ -3,8 +3,8 @@ import { AddArticleBy } from '@/app/service/ArticleService'
 import { GetAllDepartmentId } from '@/app/service/DepartmentService'
 import { GetTagAndArticle } from '@/app/service/TagService'
 import { DepartmentList } from '@/app/type/DepartmentType'
-import ihttp from '@/app/utils/xhttp'
-import { Autocomplete, TextField } from '@mui/material'
+import ihttp, { API_BASE_URL } from '@/app/utils/xhttp'
+import { Autocomplete, Popper, TextField } from '@mui/material'
 import { Editor } from '@tinymce/tinymce-react'
 import { useSession } from 'next-auth/react'
 import { hasCustomGetInitialProps } from 'next/dist/build/utils'
@@ -56,13 +56,17 @@ export default function EditorCustum() {
       content = editorRef.current.getContent();
     }
 
-    if (title === "") {
+    if (!tagValue) {
       setIsErrorAlert({
         ...isErrorAlert,
         open: true,
         type: "error",
-        message: "sub title cab't empty.",
+        message: "Tag name can't empty.",
       });
+      return;
+    }
+
+    if (title === "") {
       setIsErrorInput({
         error: true,
         label: 'Enter Sub title',
@@ -114,6 +118,26 @@ export default function EditorCustum() {
     }
   }, [session])
 
+  const handleImageUpload: any = (blobInfo: any) => {
+    return new Promise((resolve, reject) => {
+      const file = blobInfo.blob();
+      const formData = new FormData();
+      formData.append("imageFile", file, "filename.jpg");
+      fetch(`${API_BASE_URL}/files/upload_file?articleId=266`, {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          const imageURL = result?.payload?.thum_img_path;
+          resolve(imageURL);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
   return (
     <>
       <CustomAlert
@@ -161,7 +185,7 @@ export default function EditorCustum() {
             />
           </div>
           <Editor
-            apiKey='ibgazhdpbf1641m9l0exn7y2y0pbcwbtlmz013z4uf1icb2e'
+            apiKey='51cakyf7l011kd34r23bib5jrvh79lb520v82wpid72wq92n'
             onInit={(_evt, editor) => editorRef.current = editor}
             initialValue="<p>This is the initial content of the editor.</p>"
             init={{
@@ -169,9 +193,6 @@ export default function EditorCustum() {
               menu: {
                 insert: { title: 'Insert', items: 'insertfile' },
               },
-              file_picker_types: 'image',
-              insert_button_items: 'insertfile',
-              images_upload_credentials: true,
               plugins: [
                 'advlist', 'autolink', 'lists', 'list link image table wordcount', 'link', 'charmap', 'preview', 'file insert', 'image',
                 'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
@@ -181,10 +202,9 @@ export default function EditorCustum() {
                 'bold italic forecolor | alignleft aligncenter ' +
                 'alignright alignjustify | bullist numlist outdent indent | ' +
                 'removeformat | help',
-              images_file_types: 'jpg,svg,webp',
+              images_upload_handler: handleImageUpload,
               content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
             }}
-
           />
           <div className='mt-8 flex justify-end'>
             <button onClick={() => router.push("/")} className="btn btn-active btn-ghost mr-3">Cancel</button>
