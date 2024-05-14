@@ -92,9 +92,9 @@ function SideContent() {
             <div className='flex justify-between w-full mb-3'>
                 {/* <Breadcrumbs /> */}
                 <div data-tip="Create new" className='tooltip tooltip-left'>
-                     <div className='btn btn-ghost btn-circle' onClick={handleOpenTag}>
+                    <div className='btn btn-ghost btn-circle' onClick={handleOpenTag}>
                         <CreateNewFolderOutlinedIcon />
-                    </div> 
+                    </div>
                 </div>
 
                 <label className="input input-bordered flex items-center gap-2 bordered input-sm w-full max-w-[200px]">

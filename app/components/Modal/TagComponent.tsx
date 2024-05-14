@@ -9,13 +9,21 @@ import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import { SaveNewTag } from '@/app/service/TagService';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import CustomAlert from '../Material/CustomAlert';
+import { isRender } from '@/app/service/Redux/articleDetailSlice';
 
-function TagComponent({ open, setOpen, user }: any) {
+function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
 
     const dispatch = useDispatch()
-    const [inputVal, setInputVal] = useState("");
+    const [inputVal, setInputVal] = useState<string>();
     const router = useRouter()
     const { data: session, status }: { data: any, status: any } = useSession();
+    const [isErrorAlert, setIsErrorAlert] = useState({
+        open: false,
+        type: "",
+        message: "",
+        duration: 1600,
+    });
 
     const handleClose = () => {
         setOpen(false)
@@ -43,18 +51,47 @@ function TagComponent({ open, setOpen, user }: any) {
             }
             SaveNewTag(request).then((res: any) => {
                 setInputVal("")
+                setIsErrorAlert({
+                    ...isErrorAlert,
+                    open: true,
+                    type: "success",
+                    message: "Added Successfully.",
+                });
+                dispatch(isRender(true));
+                sendDataToParent({
+                    id: res?.data?.rec.id,
+                    label: res?.data?.rec.title,
+                    user_id: res?.data?.rec.user_name,
+                    status: 1,
+                    dept_id: res?.data?.rec.dept_id,
+                    create_date: Date.now(),
+                    modified_date: null,
+                })
                 handleClose();
-                alert("Success")
 
             })
         }
         else {
-            alert("Tag title can't b empty")
+            setIsErrorAlert({
+                ...isErrorAlert,
+                open: true,
+                type: "error",
+                message: "Input can not empty.",
+            });
         }
     }
 
     return (
         <div>
+            <CustomAlert
+                open={isErrorAlert.open}
+                setOpen={(open: boolean) => {
+                    setIsErrorAlert({ ...isErrorAlert, open });
+                }}
+                message={isErrorAlert.message}
+                type={isErrorAlert.type}
+                duration={isErrorAlert.duration}
+            />
             {/* The button to open modal */}
             {/* Put this part before </body> tag */}
             <Modal

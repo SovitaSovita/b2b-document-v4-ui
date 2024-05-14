@@ -11,6 +11,7 @@ import { hasCustomGetInitialProps } from 'next/dist/build/utils'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 import CustomAlert from '../Material/CustomAlert'
+import TagComponent from '../Modal/TagComponent'
 
 
 
@@ -37,19 +38,24 @@ export default function EditorCustum() {
   const [tagData, setTagData] = useState([]);
   const [title, setTitle] = useState("");
 
-
+  const [openTag, setOpenTag] = React.useState(false);
+  const handleOpenTag = () => {
+    setOpenTag(true);
+  }
   const router = useRouter();
 
   const onchange = (e: any) => {
     const value = e.target.value
     setTitle(value)
   }
+  const handleChildData = (dataFromChild: object) => {
+    setShowDefaultValue(true);
+    setTagValue(dataFromChild);
+  };
 
 
   const handleSave = (e: any) => {
-
     e.preventDefault();
-
     let content: string = "";
 
     if (editorRef.current) {
@@ -105,7 +111,6 @@ export default function EditorCustum() {
   }
 
   useEffect(() => {
-    console.log(parseInt(session?.user.dvsn_CD, 10));
     if (session) {
       GetTagAndArticle(parseInt(session?.user.dvsn_CD, 10)).then((res: any) => {
         const updatedTagList = res?.data?.rec?.tagList.map((tag: any) => ({
@@ -117,6 +122,8 @@ export default function EditorCustum() {
       })
     }
   }, [session])
+
+  const [showDefaultValue, setShowDefaultValue] = useState(false);
 
   const handleImageUpload: any = (blobInfo: any) => {
     return new Promise((resolve, reject) => {
@@ -154,7 +161,7 @@ export default function EditorCustum() {
           <div className='flex mb-4'>
             <div className='flex items-center mr-8'>
               <Autocomplete
-                value={tagValue}
+                value={showDefaultValue ? tagValue : null}
                 onChange={(event: any, newValue: string | null) => {
                   setTagValue(newValue);
                 }}
@@ -167,9 +174,9 @@ export default function EditorCustum() {
                 id="combo-box-demo"
                 options={tagData}
                 sx={{ width: 300, mr: 2 }}
-                renderInput={(params) => <TextField {...params} label="Enter Tag name" />}
+                renderInput={(params) => <TextField {...params} label="Search Tag name" />}
               />
-              <button type='button' className="btn btn-active btn-primary btn-sm">Add New</button>
+              <button type='button' onClick={handleOpenTag} className="btn btn-active btn-primary btn-sm">Add New</button>
             </div>
 
 
@@ -212,6 +219,8 @@ export default function EditorCustum() {
           </div>
         </form >
       </div >
+
+      <TagComponent open={openTag} setOpen={setOpenTag} user={session?.user} sendDataToParent={handleChildData} />
     </>
   )
 
