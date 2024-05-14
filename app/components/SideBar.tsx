@@ -13,6 +13,11 @@ import { getFavorite } from '../service/Favourite';
 import { useSession } from 'next-auth/react';
 import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined';
 import { fontGrid } from '@mui/material/styles/cssUtils';
+import EditorCustum from './editor/EditorCustum';
+import { DeleteIcon, EditIcon } from '@/public/icon/TableIcon';
+import UpdateTagComponent from './Modal/UpdateTagComponent';
+
+
 
 interface TagItem {
     id: number;
@@ -29,10 +34,10 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
     const [activeItemId, setActiveItemId] = useState("");
 
     //const handleOpenTag = () => setOpenTag(true);
+    const [openTag, setOpenTag] = React.useState(false);
+    const handleOpenTag = () => setOpenTag(true);
 
-    const alertAPI = () => {
-        alert("hello")
-    }
+
     const dispatch = useDispatch();
 
     // Function to filter articles based on tag_id
@@ -119,10 +124,9 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                             <p>No Data Found</p>
                         </div>
                 }
-
-
-
             </ul>
+
+            <UpdateTagComponent />
         </div>
     )
 }
