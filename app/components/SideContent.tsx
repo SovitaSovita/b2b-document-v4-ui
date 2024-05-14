@@ -28,10 +28,22 @@ import { deleteArticle } from '../service/ArticleService';
 import CustomAlert from './Material/CustomAlert';
 import { isRender } from '../service/Redux/articleDetailSlice';
 import AskToConfirmModal from './Modal/AskToConfirmModal';
+// import { getFavorite, checkIsFavorite } from '../service/Favourite';
+import ihttp from '../utils/xhttp';
+import { MenuData } from '../type/MenuData';
+import { addToFavorite } from '../service/FavouriteService';
+
+interface SideContentProps {
+    user_id: string;
+    article_id: number;
+    dept_id: number;
+}
 
 function SideContent() {
 
     const { article }: { article: any } = useSelector((state: RootState) => state?.article);
+    // Favorite
+    const isFavorite = useSelector((state: RootState) => state.article.isFavorite);
     const { data: session, status }: { data: any, status: any } = useSession();
     const path = useParams();
     const dispatch = useDispatch()
@@ -86,6 +98,36 @@ function SideContent() {
     }
 
 
+
+    // Check if favorite
+    // function checkUserIsFavorite(user_id: string, article_id: number, dept_id: number) {
+    //     checkIsFavorite(user_id, article_id, dept_id).then((response) => {
+    //         console.log("Hello World", response)
+    //     })
+    // }
+    // useEffect(() => {
+
+    //     checkUserIsFavorite("sararuth", 131, 50);
+
+    // }, [session])
+
+
+
+
+
+    // console.log("Log article", article);
+    // console.log("Log favorite", isFavorite);
+
+    const handleAddFavorite = (article_id: number) => {
+        addToFavorite({
+            "article_id": article_id,
+            "dept_id": 50,
+            "user_id": "sovita"
+        }).then((data) => {
+            console.log(data)
+        })
+    }
+
     return (
         <div className="drawer-content flex flex-col items-center justify-center p-4">
             {/* Page content here */}
@@ -133,9 +175,9 @@ function SideContent() {
                             </label>
                         </li>
                         <ProfileDrawer userInfo={session?.user} />
-                        <li>
+                        {/* <li>
                             <Link href={"/manage_users"}>Manage User</Link>
-                        </li>
+                        </li> */}
                         <li>
                             <div
                                 role="button"
@@ -155,7 +197,6 @@ function SideContent() {
                     !article?.content_body ? (<HomeContent />)
                         : (
                             <div className='flex flex-col'>
-
                                 <div className='mb-4 flex items-center justify-between'>
                                     {/* Left side icons */}
                                     <div className="flex items-center">
@@ -170,9 +211,19 @@ function SideContent() {
 
                                     {/* Right side icons */}
                                     <div className="flex items-center">
-                                        <div>
-                                            <FavoriteBorderOutlinedIcon className='mr-3' />
-                                        </div>
+                                        {/* Favorite */}
+                                        {/* <div>
+                                            <FavoriteBorderOutlinedIcon className='mr-3' style={{ cursor: 'pointer', color: 'red' }} />
+                                        </div> */}
+                                        {
+                                            isFavorite ? (
+                                                <FavoriteBorderOutlinedIcon className='mr-3' style={{ cursor: 'pointer', color: 'red' }} />
+                                            ) : (
+                                                <FavoriteBorderOutlinedIcon onClick={() => handleAddFavorite(article?.id)} className='mr-3' style={{ cursor: 'pointer', color: 'black' }} />
+                                            )
+                                        }
+
+
 
                                         <TelegramShareButton
                                             url={'http://localhost:3000/'}
