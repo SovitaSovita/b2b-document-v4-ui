@@ -100,29 +100,42 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                         </ul >
                     </details >
                 </li >
+ {
+                    TAGS.map((item, index) => (
+                        <span style={{ width: '160px', display: 'inline-flex' }}>
+                            <li key={index + 1} >
 
-                {
-                    TAGS?.length > 0 ?
-                        TAGS.map((item, index) => (
-                            <li key={index + 1}>
                                 <details>
-                                    <summary className="mt-1 font-medium">{item.title}</summary>
+                                    <summary id={{}}className="mt-1 font-medium" style={{ width: '180px' }}>{item.title}</summary>
+
                                     <ul>
                                         {filterArticlesByTagId(item.id).map(item => (
-                                            <li key={item?.id} onClick={() => handleViewArticle(item.id.toString())}>
-                                                <a className={activeItemId === item.id.toString() ? "bg-base-200" : ""}>{item?.title}</a>
-                                            </li>
+                                            <li key={item?.id} onClick={() => handleViewArticle(item.id.toString())}><a className="text-[13px]">{item?.title}</a></li>
                                         ))}
                                     </ul>
                                 </details>
+
                             </li>
-                        )) : <div className='flex justify-center items-center mt-24'>
-                            <p>No Data Found</p>
-                        </div>
+                            <li>
+                                <div className='btn btn-ghost btn-circle' onClick={handleOpenTag}>
+                                    <EditIcon />
+                                </div>
+                            </li>
+                             <li>  
+                                <div className='btn btn-ghost btn-circle'>
+                                    <DeleteIcon />
+                                </div>
+                            </li> 
+
+
+                        </span>
+
+                    ))
+
                 }
             </ul >
 
-            <UpdateTagComponent />
+            <UpdateTagComponent open={openTag} setOpen={setOpenTag} user={TAGS} />
         </div >
     )
 }
