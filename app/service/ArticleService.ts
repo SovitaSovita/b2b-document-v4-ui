@@ -51,3 +51,13 @@ export const deleteArticle = async (articleId: number) => {
         return error;
     }
 }
+
+export const UpdateArticle= async (request: object) => {
+    try {
+        const response = await ihttp.put(`/articles/updateArticle`, request)
+        return response;
+    } catch (error) {
+        return error;
+    }
+}
+

@@ -27,14 +27,24 @@ import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutl
 import TagComponent from './Modal/TagComponent';
 import { deleteArticle } from '../service/ArticleService';
 import CustomAlert from './Material/CustomAlert';
-import { isReder } from '../service/Redux/articleDetailSlice';
+import { isRender } from '../service/Redux/articleDetailSlice';
 import AskToConfirmModal from './Modal/AskToConfirmModal';
-import { Button } from '@mui/material';
+// import { getFavorite, checkIsFavorite } from '../service/Favourite';
+import ihttp from '../utils/xhttp';
+import { MenuData } from '../type/MenuData';
+import { addToFavorite } from '../service/FavouriteService';
 
+interface SideContentProps {
+    user_id: string;
+    article_id: number;
+    dept_id: number;
+}
 
 function SideContent() {
 
     const { article }: { article: any } = useSelector((state: RootState) => state?.article);
+    // Favorite
+    const isFavorite = useSelector((state: RootState) => state.article.isFavorite);
     const { data: session, status }: { data: any, status: any } = useSession();
     const path = useParams();
     const dispatch = useDispatch()
@@ -74,7 +84,7 @@ function SideContent() {
                     type: "success",
                     message: "Deleted Successfully.",
                 });
-                dispatch(isReder(true));
+                dispatch(isRender(true));
                 setOpenAskCf(false)
             }
             else {
@@ -89,6 +99,43 @@ function SideContent() {
         })
     }
 
+    const handleUpdateArticle: any = () => {
+        
+            
+    }
+
+
+
+
+
+    // Check if favorite
+    // function checkUserIsFavorite(user_id: string, article_id: number, dept_id: number) {
+    //     checkIsFavorite(user_id, article_id, dept_id).then((response) => {
+    //         console.log("Hello World", response)
+    //     })
+    // }
+    // useEffect(() => {
+
+    //     checkUserIsFavorite("sararuth", 131, 50);
+
+    // }, [session])
+
+
+
+
+
+    // console.log("Log article", article);
+    // console.log("Log favorite", isFavorite);
+
+    const handleAddFavorite = (article_id: number) => {
+        addToFavorite({
+            "article_id": article_id,
+            "dept_id": 50,
+            "user_id": "sovita"
+        }).then((data) => {
+            console.log(data)
+        })
+    }
 
     return (
         
@@ -98,9 +145,9 @@ function SideContent() {
             <div className='flex justify-between w-full mb-3'>
                 {/* <Breadcrumbs /> */}
                 <div data-tip="Create new" className='tooltip tooltip-left'>
-                     <div className='btn btn-ghost btn-circle' onClick={handleOpenTag}>
+                    <div className='btn btn-ghost btn-circle' onClick={handleOpenTag}>
                         <CreateNewFolderOutlinedIcon />
-                    </div> 
+                    </div>
                 </div>
 
                 <label className="input input-bordered flex items-center gap-2 bordered input-sm w-full max-w-[200px]">
@@ -139,9 +186,9 @@ function SideContent() {
                             </label>
                         </li>
                         <ProfileDrawer userInfo={session?.user} />
-                        <li>
+                        {/* <li>
                             <Link href={"/manage_users"}>Manage User</Link>
-                        </li>
+                        </li> */}
                         <li>
                             <div
                                 role="button"
@@ -161,7 +208,6 @@ function SideContent() {
                     !article?.content_body ? (<HomeContent />)
                         : (
                             <div className='flex flex-col'>
-
                                 <div className='mb-4 flex items-center justify-between'>
                                     {/* Left side icons */}
                                     <div className="flex items-center">
@@ -170,9 +216,19 @@ function SideContent() {
                                      
                                     {/* Right side icons */}
                                     <div className="flex items-center">
-                                        <div>
-                                            <FavoriteBorderOutlinedIcon className='mr-3' />
-                                        </div>
+                                        {/* Favorite */}
+                                        {/* <div>
+                                            <FavoriteBorderOutlinedIcon className='mr-3' style={{ cursor: 'pointer', color: 'red' }} />
+                                        </div> */}
+                                        {
+                                            isFavorite ? (
+                                                <FavoriteBorderOutlinedIcon className='mr-3' style={{ cursor: 'pointer', color: 'red' }} />
+                                            ) : (
+                                                <FavoriteBorderOutlinedIcon onClick={() => handleAddFavorite(article?.id)} className='mr-3' style={{ cursor: 'pointer', color: 'black' }} />
+                                            )
+                                        }
+
+
 
                                         <TelegramShareButton
                                             url={'http://localhost:3000/'}
@@ -183,7 +239,7 @@ function SideContent() {
                                         {
                                             session?.user.userId === article?.username && (
                                                 <div className='flex justify-between w-10'>
-                                                    <EditIcon variant="text" onClick={() => router.push("/vanda/article")}/>
+                                                    <EditIcon variant="text" onClick={() => router.push("/vanda/article")} />
                                                     <DeleteIcon className="cursor-pointer" onClick={() => handleOpenAskCf(article?.id)} />
                                                 </div>
                                             )

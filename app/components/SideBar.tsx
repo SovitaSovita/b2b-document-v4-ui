@@ -7,10 +7,17 @@ import BookmarksOutlinedIcon from '@mui/icons-material/BookmarksOutlined';
 import { sampleFetch } from '../service/sample';
 import { useState } from 'react';
 import { getArticleDetail } from '../service/MenuService';
-import { getArticle } from '../service/Redux/articleDetailSlice';
+
+import { getArticle, getFavorite, isFavorite } from '../service/Redux/articleDetailSlice';
 import { useDispatch } from 'react-redux';
-import { getFavorite } from '../service/Favourite';
+
 import { useSession } from 'next-auth/react';
+import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined';
+import { fontGrid } from '@mui/material/styles/cssUtils';
+import EditorCustum from './editor/EditorCustum';
+import { DeleteIcon, EditIcon } from '@/public/icon/TableIcon';
+import UpdateTagComponent from './Modal/UpdateTagComponent';
+import { checkIsFavorite, getFavoriteDetail } from '../service/FavouriteService';
 
 
 interface TagItem {
@@ -22,17 +29,21 @@ interface FavoriteItem {
     user_id: number;
 }
 
-function SideBar({ ARTICLES, TAGS }: MenuData) {
-
-    const [favorites, setFavorites] = useState<any[]>([]);
+function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
     const { data: session, status }: { data: any, status: any } = useSession();
+    const [activeItemId, setActiveItemId] = useState("");
+
+
+    //const handleOpenTag = () => setOpenTag(true);
+    const [openTag, setOpenTag] = React.useState(false);
+    const handleOpenTag = () => setOpenTag(true);
+
 
     const dispatch = useDispatch();
 
     // Function to filter articles based on tag_id
     function filterArticlesByTagId(tagId: number) {
         return ARTICLES.filter(article => article.tag_id === tagId);
-        // console.log("Article Id", article.tag_id);
     }
 
     function handleViewArticle(id: string) {
@@ -40,26 +51,24 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
             console.log("res[0] >>", res);
             dispatch(getArticle(res[0]))
         })
-    }
+        // favorite
+        checkIsFavorite(session.user.userId, parseInt(id, 10), session.user.dvsn_CD).then((data) => {
 
-    // Function to filter favorite
+            if (data != null) {
+                dispatch(isFavorite(true))
+            }
+            else {
+                dispatch(isFavorite(false))
+            }
 
-
-    // Favorote
-    function handleViewFavorite(id: string) {
-        getFavorite(id).then((res) => {
-            console.log("Favorite response", res);
-            setFavorites(res);
         })
+
+
     }
 
-    useEffect(() => {
 
-        handleViewFavorite(session?.user?.userId);
+    console.log(FAVORITE)
 
-    }, [session])
-
-    console.log(favorites)
 
     return (
         <div className="drawer-side">
@@ -73,6 +82,8 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                 </div>
 
                 <div className="css-o2c9dn mb-3"></div>
+
+                {/* Favorite */}
                 <li className='mb-2'>
                     <details>
                         <summary className="border shadow font-semibold text-[15px]">
@@ -80,37 +91,38 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                             Favorites
                         </summary>
                         <ul className='pt-1'>
-                            {/* {favorites.map((favorite, article_id) => (
-                                <li key={article_id} onClick={() => handleViewFavorite(favorite?.article_id)}><a className="text-[13px]">{favorite?.title}</a></li>
-                            ))} */}
-
-                            {/* {favorites.map((favorite, article_id) => (
-                                <li key={article_id} onClick={() => handleViewFavorite(favorite?.article_id)}><a className="text-[13px]">{favorite?.title}</a></li>
-                            ))} */}
-
-
-                        </ul>
-                    </details>
-                </li>
+                            {FAVORITE?.map((item: any, index) => (
+                                <li key={index + 1} onClick={() => { console.log(item.article_id); handleViewArticle(item?.article_id.toString()) }}>
+                                    <a className="text-[13px]">{item?.title}</a>
+                                </li>
+                            ))}
+                        </ul >
+                    </details >
+                </li >
 
                 {
-                    TAGS.map((item, index) => (
-                        <li key={index + 1}>
-                            <details>
-                                <summary className="mt-1 font-medium">{item.title}</summary>
-                                <ul>
-                                    {filterArticlesByTagId(item.id).map(item => (
-                                        <li key={item?.id} onClick={() => handleViewArticle(item.id.toString())}><a className="text-[13px]">{item?.title}</a></li>
-                                    ))}
-                                </ul>
-                            </details>
-                        </li>
-                    ))
+                    TAGS?.length > 0 ?
+                        TAGS.map((item, index) => (
+                            <li key={index + 1}>
+                                <details>
+                                    <summary className="mt-1 font-medium">{item.title}</summary>
+                                    <ul>
+                                        {filterArticlesByTagId(item.id).map(item => (
+                                            <li key={item?.id} onClick={() => handleViewArticle(item.id.toString())}>
+                                                <a className={activeItemId === item.id.toString() ? "bg-base-200" : ""}>{item?.title}</a>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </details>
+                            </li>
+                        )) : <div className='flex justify-center items-center mt-24'>
+                            <p>No Data Found</p>
+                        </div>
                 }
+            </ul >
 
-
-            </ul>
-        </div>
+            <UpdateTagComponent />
+        </div >
     )
 }
 
