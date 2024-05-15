@@ -11,8 +11,7 @@ import { getArticle } from '../service/Redux/articleDetailSlice';
 import { useDispatch } from 'react-redux';
 import { getFavorite } from '../service/Favourite';
 import { useSession } from 'next-auth/react';
-import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined';
-import { fontGrid } from '@mui/material/styles/cssUtils';
+
 
 interface TagItem {
     id: number;
@@ -24,28 +23,22 @@ interface FavoriteItem {
 }
 
 function SideBar({ ARTICLES, TAGS }: MenuData) {
+
     const [favorites, setFavorites] = useState<any[]>([]);
     const { data: session, status }: { data: any, status: any } = useSession();
-    const [activeItemId, setActiveItemId] = useState("");
 
-    //const handleOpenTag = () => setOpenTag(true);
-
-    const alertAPI = () => {
-        alert("hello")
-    }
     const dispatch = useDispatch();
 
     // Function to filter articles based on tag_id
     function filterArticlesByTagId(tagId: number) {
-        return ARTICLES?.filter(article => article.tag_id === tagId);
+        return ARTICLES.filter(article => article.tag_id === tagId);
         // console.log("Article Id", article.tag_id);
     }
 
     function handleViewArticle(id: string) {
         getArticleDetail(id).then((res) => {
-            // console.log("res[0] >>", res);
+            console.log("res[0] >>", res);
             dispatch(getArticle(res[0]))
-            setActiveItemId(id);
         })
     }
 
@@ -101,25 +94,19 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
                 </li>
 
                 {
-                    TAGS?.length > 0 ?
-                        TAGS.map((item, index) => (
-                            <li key={index + 1}>
-                                <details>
-                                    <summary className="mt-1 font-medium">{item.title}</summary>
-                                    <ul>
-                                        {filterArticlesByTagId(item.id).map(item => (
-                                            <li key={item?.id} onClick={() => handleViewArticle(item.id.toString())}>
-                                                <a className={activeItemId === item.id.toString() ? "bg-base-200" : ""}>{item?.title}</a>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </details>
-                            </li>
-                        )) : <div className='flex justify-center items-center mt-24'>
-                            <p>No Data Found</p>
-                        </div>
+                    TAGS.map((item, index) => (
+                        <li key={index + 1}>
+                            <details>
+                                <summary className="mt-1 font-medium">{item.title}</summary>
+                                <ul>
+                                    {filterArticlesByTagId(item.id).map(item => (
+                                        <li key={item?.id} onClick={() => handleViewArticle(item.id.toString())}><a className="text-[13px]">{item?.title}</a></li>
+                                    ))}
+                                </ul>
+                            </details>
+                        </li>
+                    ))
                 }
-
 
 
             </ul>

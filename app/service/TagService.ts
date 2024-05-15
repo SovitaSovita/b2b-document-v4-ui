@@ -8,11 +8,11 @@ export const SaveNewTag = async (request: object) => {
         return error;
     }
 }
-export const GetTagAndArticle = async (dep_id: number) => {
+export const UpdateTag = async (request: object) => {
     try {
-        const response = await ihttp.get(`/DocTag/listTagAndAtricle?dept_id=${dep_id}`);
+        const response = await ihttp.post(`DocTag/updateTag` , request)
         return response;
-    } catch (error) {
+    }catch(error){
         return error;
     }
 }
