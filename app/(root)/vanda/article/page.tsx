@@ -1,9 +1,9 @@
 import EditorCustum from '@/app/components/editor/EditorCustum';
 
-function Page () {
+function Page() {
   return (
     <>
-      <EditorCustum/>
+      <EditorCustum />
     </>
   )
 }

@@ -12,17 +12,18 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 import CustomAlert from '../Material/CustomAlert'
 import TagComponent from '../Modal/TagComponent'
+import { isRender } from '@/app/service/Redux/articleDetailSlice'
+import { useDispatch } from 'react-redux'
 
 
 
-export default function EditorCustum() {
+export default function EditorCustum({ handleClose, session }: any) {
 
   const editorRef = useRef<any>(null);
-
+  const dispatch = useDispatch()
 
   const [tagValue, setTagValue] = React.useState<TagType | any>();
   const [inputValue, setInputValue] = React.useState('');
-  const { data: session, status }: { data: any, status: any } = useSession();
   const [isErrorAlert, setIsErrorAlert] = useState({
     open: false,
     type: "",
@@ -96,7 +97,8 @@ export default function EditorCustum() {
           type: "success",
           message: "Created Successfully.",
         });
-        router.push("/")
+        dispatch(isRender(true))
+        handleClose();
       }
       else {
         setIsErrorAlert({
@@ -105,6 +107,7 @@ export default function EditorCustum() {
           type: "error",
           message: "Something wrong...",
         });
+        handleClose();
 
       }
     })
@@ -167,6 +170,7 @@ export default function EditorCustum() {
                 }}
                 inputValue={inputValue}
                 onInputChange={(event, newInputValue) => {
+                  setShowDefaultValue(true);
                   setInputValue(newInputValue);
                 }}
                 disablePortal
@@ -214,7 +218,7 @@ export default function EditorCustum() {
             }}
           />
           <div className='mt-8 flex justify-end'>
-            <button onClick={() => router.push("/")} className="btn btn-active btn-ghost mr-3">Cancel</button>
+            <button onClick={handleClose} className="btn btn-active btn-ghost mr-3">Cancel</button>
             <button type='submit' className="btn btn-active btn-success text-white">Save</button>
           </div>
         </form >

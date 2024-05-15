@@ -14,7 +14,7 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import ReplyAllOutlinedIcon from '@mui/icons-material/ReplyAllOutlined';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import LoadingCustom from './Material/Loading';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import HomeContent from './HomeContent';
 import {
     TelegramIcon,
@@ -32,6 +32,7 @@ import AskToConfirmModal from './Modal/AskToConfirmModal';
 import ihttp from '../utils/xhttp';
 import { MenuData } from '../type/MenuData';
 import { addToFavorite } from '../service/FavouriteService';
+import UpdateArticleModal from './Modal/UpdateArticleModal';
 
 interface SideContentProps {
     user_id: string;
@@ -42,6 +43,7 @@ interface SideContentProps {
 function SideContent() {
 
     const { article }: { article: any } = useSelector((state: RootState) => state?.article);
+    const router = useRouter();
     // Favorite
     const isFavorite = useSelector((state: RootState) => state.article.isFavorite);
     const { data: session, status }: { data: any, status: any } = useSession();
@@ -60,6 +62,9 @@ function SideContent() {
 
     const [openTag, setOpenTag] = React.useState(false);
     const handleOpenTag = () => setOpenTag(true);
+
+    const [openArticle, setOpenArticle] = React.useState(false);
+    const handleOpenArticle = () => setOpenArticle(true);
 
     const [openAskCf, setOpenAskCf] = React.useState(false);
     const [articleId, setArticleId] = React.useState<number>();
@@ -252,7 +257,16 @@ function SideContent() {
                 }
 
                 {/* <img src={article?.img_path} alt="content" width={500} className='mt-6 ml-6' /> */}
-                <Page />
+                <div>
+                    <div data-dial-init className="fixed end-6 bottom-6 group">
+                        <button type="button" onClick={handleOpenArticle} data-dial-toggle="speed-dial-menu-default" aria-controls="speed-dial-menu-default" aria-expanded="false" className="flex items-center justify-center text-white bg-blue-700 rounded-full w-14 h-14 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800" style={{ width: '2.5rem !important', height: '2.5rem !important' }}>
+                            <svg className="w-5 h-5 transition-transform group-hover:rotate-45" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
+                            </svg>
+                            <span className="sr-only">Open actions menu</span>
+                        </button>
+                    </div>
+                </div>
             </div>
 
             {/* <label htmlFor="my-drawer-2" className="btn btn-circle drawer-button lg:hidden">
@@ -275,6 +289,7 @@ function SideContent() {
                 setOpen={setOpenAskCf}
                 handleSubmitCallback={handleDeleteArticle}
             />
+            <UpdateArticleModal open={openArticle} setOpen={setOpenArticle} session={session} />
         </div>
     )
 }

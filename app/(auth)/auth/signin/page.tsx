@@ -20,7 +20,7 @@ function Page() {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        const res = await fetch(`http://178.128.52.39:8085/api/v1/auth/send-otp`, {
+        const res = await fetch(`http://192.168.178.72:8085/api/v1/auth/send-otp`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
