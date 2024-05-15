@@ -8,16 +8,19 @@ import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutli
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import { SaveNewTag } from '@/app/service/TagService';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 function TagComponent({ open, setOpen, user }: any) {
 
     const dispatch = useDispatch()
     const [inputVal, setInputVal] = useState("");
     const router = useRouter()
+    const { data: session, status }: { data: any, status: any } = useSession();
 
     const handleClose = () => {
         setOpen(false)
     };
+
 
     const onChange = (e: any) => {
         const inputData = e.target.value;
@@ -34,16 +37,15 @@ function TagComponent({ open, setOpen, user }: any) {
             const request = {
                 dept_id: parseInt(user?.dvsn_CD, 10),
                 title: inputVal,
-                user_id: 28, //sak user ID
+                user_name: session?.user.userId,
                 status: 1,
                 create_date: formattedDate
             }
-            // console.log("req >> ", request);
-
             SaveNewTag(request).then((res: any) => {
                 setInputVal("")
                 handleClose();
-                router.push("/vanda/article")
+                alert("Success")
+
             })
         }
         else {
@@ -53,6 +55,8 @@ function TagComponent({ open, setOpen, user }: any) {
 
     return (
         <div>
+            {/* The button to open modal */}
+            {/* Put this part before </body> tag */}
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
@@ -67,14 +71,14 @@ function TagComponent({ open, setOpen, user }: any) {
                 }}
             >
                 <Fade in={open}>
-                    <div className='w-1/3 bg-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg p-5 rounded-lg'>
+                    <div className='w-1/3 bg-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg p-6 rounded-lg'>
                         <form onSubmit={handleSubmit} className='flex flex-col justify-between items-center'>
                             <label className="input w-full input-bordered flex items-cent input-sm er gap-2">
                                 <input onChange={onChange} type="text" className="grow" placeholder="Enter new Tag name" />
                             </label>
                             <div className='self-end'>
                                 <button type='button' onClick={handleClose} className="btn btn-active mt-2 btn-sm">Cancel</button>
-                                <button type='submit' className="btn btn-active btn-primary ml-2 btn-sm">Save</button>
+                                <button type='submit' onClick={handleSubmit} className="btn btn-active btn-primary ml-2 btn-sm">Save</button>
                             </div>
                         </form>
                     </div>

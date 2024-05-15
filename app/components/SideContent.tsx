@@ -49,9 +49,9 @@ function SideContent() {
             <div className='flex justify-between w-full mb-3'>
                 {/* <Breadcrumbs /> */}
                 <div data-tip="Create new" className='tooltip tooltip-left'>
-                    <div className='btn btn-ghost btn-circle' onClick={handleOpenTag}>
+                     <div className='btn btn-ghost btn-circle' onClick={handleOpenTag}>
                         <CreateNewFolderOutlinedIcon />
-                    </div>
+                    </div> 
                 </div>
 
                 <label className="input input-bordered flex items-center gap-2 bordered input-sm w-full max-w-xs">
@@ -116,13 +116,13 @@ function SideContent() {
                                 <div className='mb-4 flex items-center justify-between'>
                                     {/* Left side icons */}
                                     <div className="flex items-center">
-                                        <Button variant="text" onClick={() => router.push("/vanda/article")} >
-                                            <DriveFileRenameOutlineIcon className='ml-3'/>
-                                        </Button>
+                                        <div>
+                                            <DriveFileRenameOutlineIcon className='ml-5'/>
+                                        </div>
                                            
-                                        <Button variant="text">
-                                            <DeleteOutlineIcon className='ml-3'/>
-                                        </Button>
+                                        <div>
+                                            <DeleteOutlineIcon className='ml-5'/>
+                                        </div>
                                     </div> 
                                      
                                     {/* Right side icons */}
@@ -132,7 +132,7 @@ function SideContent() {
                                         </div>
 
                                         {
-                                            session?.user.userId === article?.username 
+                                            session?.user.userId === article?.username && <EditIcon />
                                         }
 
                                         <TelegramShareButton

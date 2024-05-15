@@ -11,6 +11,12 @@ import { getArticle } from '../service/Redux/articleDetailSlice';
 import { useDispatch } from 'react-redux';
 import { getFavorite } from '../service/Favourite';
 import { useSession } from 'next-auth/react';
+import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined';
+import { fontGrid } from '@mui/material/styles/cssUtils';
+import EditorCustum from './editor/EditorCustum';
+import { DeleteIcon, EditIcon } from '@/public/icon/TableIcon';
+import UpdateTagComponent from './Modal/UpdateTagComponent';
+
 
 
 interface TagItem {
@@ -26,7 +32,10 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
 
     const [favorites, setFavorites] = useState<any[]>([]);
     const { data: session, status }: { data: any, status: any } = useSession();
+    const [openTag, setOpenTag] = React.useState(false);
+    const handleOpenTag = () => setOpenTag(true);
 
+    
     const dispatch = useDispatch();
 
     // Function to filter articles based on tag_id
@@ -95,21 +104,43 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
 
                 {
                     TAGS.map((item, index) => (
-                        <li key={index + 1}>
-                            <details>
-                                <summary className="mt-1 font-medium">{item.title}</summary>
-                                <ul>
-                                    {filterArticlesByTagId(item.id).map(item => (
-                                        <li key={item?.id} onClick={() => handleViewArticle(item.id.toString())}><a className="text-[13px]">{item?.title}</a></li>
-                                    ))}
-                                </ul>
-                            </details>
-                        </li>
+                        <span style={{ width: '160px', display: 'inline-flex' }}>
+                            <li key={index + 1} >
+
+                                <details>
+                                    <summary className="mt-1 font-medium" style={{ width: '180px' }}>{item.title}</summary>
+
+                                    <ul>
+                                        {filterArticlesByTagId(item.id).map(item => (
+                                            <li key={item?.id} onClick={() => handleViewArticle(item.id.toString())}><a className="text-[13px]">{item?.title}</a></li>
+                                        ))}
+                                    </ul>
+                                </details>
+
+                            </li>
+                            <li>
+                                <div className='btn btn-ghost btn-circle'>
+                                    <EditIcon />
+                                </div>
+                            </li>
+                             <li>  
+                                <div className='btn btn-ghost btn-circle'>
+                                    <DeleteIcon />
+                                </div>
+                            </li> 
+
+
+                        </span>
+
                     ))
+
                 }
 
 
+
             </ul>
+            
+            <UpdateTagComponent/> 
         </div>
     )
 }
