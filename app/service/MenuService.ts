@@ -18,3 +18,5 @@ export const getArticleDetail = async (id: string) => {
         return error;
     }
 }
+
+

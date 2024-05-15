@@ -18,12 +18,15 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@mui/icons-material": "^5.15.15",
     "@mui/material": "^5.15.15",
-    "@nextui-org/autocomplete": "^2.0.16",
     "@reduxjs/toolkit": "^2.2.3",
     "@tanstack/react-query": "^5.32.1",
     "@tinymce/tinymce-react": "^5.0.1",
     "axios": "^1.6.8",
+<<<<<<< HEAD
     "framer-motion": "^11.2.0",
+=======
+    "formik": "^2.4.6",
+>>>>>>> f1ec37acea1ee09320aba3f7924d4c2eae60e5d1
     "install": "^0.13.0",
     "next": "14.1.4",
     "next-auth": "^4.24.7",

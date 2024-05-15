@@ -1,9 +1,9 @@
-import React, { FormEvent } from 'react'
+import React, { FormEvent, useState } from 'react'
 import Breadcrumbs from './Breadcrumbs'
 import Page from '../(root)/vanda/page';
 
 import LeftDrawerCustom from './Profile/LeftDrawerCustom'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../service/Redux/store/store';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
@@ -14,22 +14,48 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import ReplyAllOutlinedIcon from '@mui/icons-material/ReplyAllOutlined';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import LoadingCustom from './Material/Loading';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import HomeContent from './HomeContent';
 import {
     TelegramIcon,
     TelegramShareButton,
 } from 'next-share'
-import { EditIcon } from '@/public/icon/TableIcon';
+import { DeleteIcon, EditIcon } from '@/public/icon/TableIcon';
 import SearchComponent from './Modal/SearchComponent';
 import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined';
 import TagComponent from './Modal/TagComponent';
+import { deleteArticle } from '../service/ArticleService';
+import CustomAlert from './Material/CustomAlert';
+import { isRender } from '../service/Redux/articleDetailSlice';
+import AskToConfirmModal from './Modal/AskToConfirmModal';
+// import { getFavorite, checkIsFavorite } from '../service/Favourite';
+import ihttp from '../utils/xhttp';
+import { MenuData } from '../type/MenuData';
+import { addToFavorite } from '../service/FavouriteService';
+import UpdateArticleModal from './Modal/UpdateArticleModal';
+
+interface SideContentProps {
+    user_id: string;
+    article_id: number;
+    dept_id: number;
+}
 
 function SideContent() {
 
     const { article }: { article: any } = useSelector((state: RootState) => state?.article);
+    const router = useRouter();
+    // Favorite
+    const isFavorite = useSelector((state: RootState) => state.article.isFavorite);
     const { data: session, status }: { data: any, status: any } = useSession();
     const path = useParams();
+    const dispatch = useDispatch()
+
+    const [isErrorAlert, setIsErrorAlert] = React.useState({
+        open: false,
+        type: "",
+        message: "",
+        duration: 1600,
+    });
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -37,6 +63,75 @@ function SideContent() {
     const [openTag, setOpenTag] = React.useState(false);
     const handleOpenTag = () => setOpenTag(true);
 
+    const [openArticle, setOpenArticle] = React.useState(false);
+    const handleOpenArticle = () => setOpenArticle(true);
+
+    const [openAskCf, setOpenAskCf] = React.useState(false);
+    const [articleId, setArticleId] = React.useState<number>();
+    const handleOpenAskCf = (id: number) => {
+        setOpenAskCf(true)
+        setArticleId(id)
+    };
+
+    const handleDeleteArticle: any = () => {
+
+        if (!articleId) {
+            alert("Article ID is wrong.")
+        }
+
+        deleteArticle(articleId!).then((res) => {
+            if (res.code == "200") {
+                setIsErrorAlert({
+                    ...isErrorAlert,
+                    open: true,
+                    type: "success",
+                    message: "Deleted Successfully.",
+                });
+                dispatch(isRender(true));
+                setOpenAskCf(false)
+            }
+            else {
+                setIsErrorAlert({
+                    ...isErrorAlert,
+                    open: true,
+                    type: "error",
+                    message: "fail deleted.",
+                });
+                setOpenAskCf(false)
+            }
+        })
+    }
+
+
+
+    // Check if favorite
+    // function checkUserIsFavorite(user_id: string, article_id: number, dept_id: number) {
+    //     checkIsFavorite(user_id, article_id, dept_id).then((response) => {
+    //         console.log("Hello World", response)
+    //     })
+    // }
+    // useEffect(() => {
+
+    //     checkUserIsFavorite("sararuth", 131, 50);
+
+    // }, [session])
+
+
+
+
+
+    // console.log("Log article", article);
+    // console.log("Log favorite", isFavorite);
+
+    const handleAddFavorite = (article_id: number) => {
+        addToFavorite({
+            "article_id": article_id,
+            "dept_id": 50,
+            "user_id": "sovita"
+        }).then((data) => {
+            console.log(data)
+        })
+    }
 
     return (
         <div className="drawer-content flex flex-col items-center justify-center p-4">
@@ -44,13 +139,13 @@ function SideContent() {
             <div className='flex justify-between w-full mb-3'>
                 {/* <Breadcrumbs /> */}
                 <div data-tip="Create new" className='tooltip tooltip-left'>
-                     <div className='btn btn-ghost btn-circle' onClick={handleOpenTag}>
+                    <div className='btn btn-ghost btn-circle' onClick={handleOpenTag}>
                         <CreateNewFolderOutlinedIcon />
-                    </div> 
+                    </div>
                 </div>
 
-                <label className="input input-bordered flex items-center gap-2 bordered input-sm w-full max-w-xs">
-                    <input type="text" onClick={handleOpen} className="grow" placeholder="Search" />
+                <label className="input input-bordered flex items-center gap-2 bordered input-sm w-full max-w-[200px]">
+                    <input type="button" onClick={handleOpen} className="grow" value="Search" />
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" /></svg>
                 </label>
 
@@ -85,9 +180,9 @@ function SideContent() {
                             </label>
                         </li>
                         <ProfileDrawer userInfo={session?.user} />
-                        <li>
+                        {/* <li>
                             <Link href={"/manage_users"}>Manage User</Link>
-                        </li>
+                        </li> */}
                         <li>
                             <div
                                 role="button"
@@ -107,55 +202,94 @@ function SideContent() {
                     !article?.content_body ? (<HomeContent />)
                         : (
                             <div className='flex flex-col'>
-
                                 <div className='mb-4 flex items-center justify-between'>
                                     {/* Left side icons */}
                                     <div className="flex items-center">
                                         <div>
-                                            <DriveFileRenameOutlineIcon className='ml-5'/>
-                                        </div>
-                                           
-                                        <div>
-                                            <DeleteOutlineIcon className='ml-5'/>
-                                        </div>
-                                    </div> 
-                                     
-                                    {/* Right side icons */}
-                                    <div className="flex items-center">
-                                        <div>
-                                            <FavoriteBorderOutlinedIcon className='mr-3' />
+                                            <DriveFileRenameOutlineIcon className='ml-5' />
                                         </div>
 
+                                        <div>
+                                            <DeleteOutlineIcon className='ml-5' />
+                                        </div>
+                                    </div>
+
+                                    {/* Right side icons */}
+                                    <div className="flex items-center">
+                                        {/* Favorite */}
+                                        {/* <div>
+                                            <FavoriteBorderOutlinedIcon className='mr-3' style={{ cursor: 'pointer', color: 'red' }} />
+                                        </div> */}
                                         {
-                                            session?.user.userId === article?.username && <EditIcon />
+                                            isFavorite ? (
+                                                <FavoriteBorderOutlinedIcon className='mr-3' style={{ cursor: 'pointer', color: 'red' }} />
+                                            ) : (
+                                                <FavoriteBorderOutlinedIcon onClick={() => handleAddFavorite(article?.id)} className='mr-3' style={{ cursor: 'pointer', color: 'black' }} />
+                                            )
                                         }
+
+
 
                                         <TelegramShareButton
                                             url={'http://localhost:3000/'}
                                         >
-                                            <ReplyAllOutlinedIcon className='ml-3' />
+                                            <ReplyAllOutlinedIcon className='mr-3' />
                                         </TelegramShareButton>
-                                    </div>  
+
+                                        {
+                                            session?.user.userId === article?.username && (
+                                                <div className='flex justify-between w-10'>
+                                                    <EditIcon />
+                                                    <DeleteIcon className="cursor-pointer" onClick={() => handleOpenAskCf(article?.id)} />
+                                                </div>
+                                            )
+                                        }
+                                    </div>
                                 </div>
-                                
+
                                 <div dangerouslySetInnerHTML={{ __html: article?.content_body }} />
 
-                                
+
                             </div>
 
-                            
+
                         )
                 }
 
                 {/* <img src={article?.img_path} alt="content" width={500} className='mt-6 ml-6' /> */}
-                <Page />
+                <div>
+                    <div data-dial-init className="fixed end-6 bottom-6 group">
+                        <button type="button" onClick={handleOpenArticle} data-dial-toggle="speed-dial-menu-default" aria-controls="speed-dial-menu-default" aria-expanded="false" className="flex items-center justify-center text-white bg-blue-700 rounded-full w-14 h-14 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800" style={{ width: '2.5rem !important', height: '2.5rem !important' }}>
+                            <svg className="w-5 h-5 transition-transform group-hover:rotate-45" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
+                            </svg>
+                            <span className="sr-only">Open actions menu</span>
+                        </button>
+                    </div>
+                </div>
             </div>
 
             {/* <label htmlFor="my-drawer-2" className="btn btn-circle drawer-button lg:hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </label> */}
+            <CustomAlert
+                open={isErrorAlert.open}
+                setOpen={(open: boolean) => {
+                    setIsErrorAlert({ ...isErrorAlert, open });
+                }}
+                message={isErrorAlert.message}
+                type={isErrorAlert.type}
+                duration={isErrorAlert.duration}
+            />
+
             <SearchComponent open={open} setOpen={setOpen} />
             <TagComponent open={openTag} setOpen={setOpenTag} user={session?.user} />
+            <AskToConfirmModal
+                open={openAskCf}
+                setOpen={setOpenAskCf}
+                handleSubmitCallback={handleDeleteArticle}
+            />
+            <UpdateArticleModal open={openArticle} setOpen={setOpenArticle} session={session} />
         </div>
     )
 }

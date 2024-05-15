@@ -15,6 +15,13 @@ export interface Article {
     status: number;
 }
 
+export interface Favorite {
+    id : number;
+    article_id : number;
+    dept_id : number;
+    user_id : string;
+}
+
 export interface Tag {
     id: number;
     title: string;
@@ -24,4 +31,5 @@ export interface Tag {
 export interface MenuData {
     ARTICLES: Article[];
     TAGS: Tag[];
+    FAVORITE: Favorite[];
 }
