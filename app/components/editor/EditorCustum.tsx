@@ -1,5 +1,5 @@
 "use client"
-import { AddArticleBy } from '@/app/service/ArticleService'
+import { AddArticleBy, UpdateArticle } from '@/app/service/ArticleService'
 import { GetAllDepartmentId } from '@/app/service/DepartmentService'
 import { GetTagAndArticle } from '@/app/service/TagService'
 import { DepartmentList } from '@/app/type/DepartmentType'
@@ -12,23 +12,28 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 import CustomAlert from '../Material/CustomAlert'
 import TagComponent from '../Modal/TagComponent'
+import { isRender } from '@/app/service/Redux/articleDetailSlice'
+import { useDispatch } from 'react-redux'
 
 
 
-export default function EditorCustum() {
+export default function EditorCustum({ handleClose, session, articleData }: any) {
 
   const editorRef = useRef<any>(null);
-
+  const dispatch = useDispatch()
 
   const [tagValue, setTagValue] = React.useState<TagType | any>();
   const [inputValue, setInputValue] = React.useState('');
-  const { data: session, status }: { data: any, status: any } = useSession();
   const [isErrorAlert, setIsErrorAlert] = useState({
     open: false,
     type: "",
     message: "",
     duration: 1600,
   });
+
+  const [isUpdateArticle, setIsUpdateArticle] = useState({
+    error : false,
+  })
 
   const [isErrorInput, setIsErrorInput] = useState({
     error: false,
@@ -69,7 +74,7 @@ export default function EditorCustum() {
         type: "error",
         message: "Tag name can't empty.",
       });
-      return;
+      // return;
     }
 
     if (title === "") {
@@ -77,7 +82,7 @@ export default function EditorCustum() {
         error: true,
         label: 'Enter Sub title',
       })
-      return;
+      // return;
     }
 
     const request = {
@@ -87,27 +92,40 @@ export default function EditorCustum() {
       "file_article_id": "123",
       "status": 1
     }
+    if(articleData== null){
+      AddArticleBy(request).then((res: any) => {
+        if (res.status == 200) {
+          setIsErrorAlert({
+            ...isErrorAlert,
+            open: true,
+            type: "success",
+            message: "Created Successfully.",
+          });
+          dispatch(isRender(true))
+          handleClose();
+        }
+        else {
+          setIsErrorAlert({
+            ...isErrorAlert,
+            open: true,
+            type: "error",
+            message: "Something wrong...",
+          });
+          handleClose();
+  
+        }
+      })
+    }
+    else{
+      UpdateArticle(request).then((rec:any)=>{
+        console.log("rec work",rec)
+        if(rec.status == 200){
 
-    AddArticleBy(request).then((res: any) => {
-      if (res.status == 200) {
-        setIsErrorAlert({
-          ...isErrorAlert,
-          open: true,
-          type: "success",
-          message: "Created Successfully.",
-        });
-        router.push("/")
-      }
-      else {
-        setIsErrorAlert({
-          ...isErrorAlert,
-          open: true,
-          type: "error",
-          message: "Something wrong...",
-        });
-
-      }
-    })
+        }
+      })
+      
+    }
+    
   }
 
  
@@ -168,28 +186,30 @@ export default function EditorCustum() {
                 onChange={(event: any, newValue: string | null) => {
                   setTagValue(newValue);
                 }}
+                // defaultValue={articleData?.tag_title}
                 inputValue={inputValue}
                 onInputChange={(event, newInputValue) => {
+                  setShowDefaultValue(true);
                   setInputValue(newInputValue);
                 }}
                 disablePortal
                 size="small"
                 id="combo-box-demo"
                 options={tagData}
-                getOptionLabel={(option) => option.title}
+                defaultValue={articleData?.tag_title}
                 sx={{ width: 300, mr: 2 }}
-                renderInput={(params) => <TextField {...params} label="Search Tag name" />}
+                renderInput={(params) => <TextField {...params} label="Search Tag name"  />}
               />
               </aside>
               
               <button type='button' onClick={handleOpenTag} className="btn btn-active btn-primary btn-sm">Add New</button>
             </div>
 
-
             <TextField
               error={isErrorInput.error}
               onChange={onchange}
               id="outlined-basic"
+              value={articleData?.title}
               size='small'
               label={isErrorInput.label}
               variant="outlined"
@@ -200,7 +220,7 @@ export default function EditorCustum() {
           <Editor
             apiKey='51cakyf7l011kd34r23bib5jrvh79lb520v82wpid72wq92n'
             onInit={(_evt, editor) => editorRef.current = editor}
-            initialValue="<p>This is the initial content of the editor.</p>"
+            initialValue= {articleData?.content_body}
             init={{
               height: 500,
               menu: {
@@ -220,7 +240,7 @@ export default function EditorCustum() {
             }}
           />
           <div className='mt-8 flex justify-end'>
-            <button onClick={() => router.push("/")} className="btn btn-active btn-ghost mr-3">Cancel</button>
+            <button onClick={handleClose} className="btn btn-active btn-ghost mr-3">Cancel</button>
             <button type='submit' className="btn btn-active btn-success text-white">Save</button>
           </div>
         </form >
