@@ -70,6 +70,10 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
 
     console.log(favorites)
 
+    function handleUpdate(){
+        alert();
+    }
+
     return (
         <div className="drawer-side">
             <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
@@ -119,7 +123,7 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
 
                             </li>
                             <li>
-                                <div className='btn btn-ghost btn-circle'>
+                                <div className='btn btn-ghost btn-circle' onClick={handleOpenTag}>
                                     <EditIcon />
                                 </div>
                             </li>
@@ -140,7 +144,7 @@ function SideBar({ ARTICLES, TAGS }: MenuData) {
 
             </ul>
             
-            <UpdateTagComponent/> 
+            <UpdateTagComponent open={openTag} setOpen={setOpenTag} user={session?.user} /> 
         </div>
     )
 }
