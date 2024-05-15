@@ -194,7 +194,6 @@ function SideContent() {
                         </li>
                     </LeftDrawerCustom>
                 </div>
-
             </div>
 
             <div className="border-2 rounded-lg border-dashed w-full h-full p-4">
