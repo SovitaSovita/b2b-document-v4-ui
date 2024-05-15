@@ -8,7 +8,6 @@ export const SaveNewTag = async (request: object) => {
         return error;
     }
 }
-
 export const GetTagAndArticle = async (dep_id: number) => {
     try {
         const response = await ihttp.get(`/DocTag/listTagAndAtricle?dept_id=${dep_id}`);

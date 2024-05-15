@@ -134,6 +134,8 @@ function SideContent() {
     }
 
     return (
+        
+
         <div className="drawer-content flex flex-col items-center justify-center p-4">
             {/* Page content here */}
             <div className='flex justify-between w-full mb-3'>

@@ -106,7 +106,7 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                             <li key={index + 1} >
 
                                 <details>
-                                    <summary id={{}}className="mt-1 font-medium" style={{ width: '180px' }}>{item.title}</summary>
+                                    <summary className="mt-1 font-medium" style={{ width: '180px' }}>{item.title}</summary>
 
                                     <ul>
                                         {filterArticlesByTagId(item.id).map(item => (
