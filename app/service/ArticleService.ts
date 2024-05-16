@@ -52,12 +52,13 @@ export const deleteArticle = async (articleId: number) => {
     }
 }
 
-export const UpdateArticle= async (request: object) => {
+export const UpdateArticle= async (input: object) => {
     try {
-        const response = await ihttp.put(`/articles/updateArticle`, request)
+        const response = await ihttp.put(`/articles/updateArticle`,input )
         return response;
     } catch (error) {
         return error;
     }
+    console.log('first input ??'+ input)
 }
 

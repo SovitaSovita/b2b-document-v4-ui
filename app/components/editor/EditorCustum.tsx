@@ -23,7 +23,8 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
   const dispatch = useDispatch()
 
   const [tagValue, setTagValue] = React.useState<TagType | any>();
-  const [inputValue, setInputValue] = React.useState('');
+  const [inputValue, setInputValue ] = React.useState('');
+  const [inputval,setInputVal] = useState();
   const [isErrorAlert, setIsErrorAlert] = useState({
     open: false,
     type: "",
@@ -32,7 +33,11 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
   });
 
   const [isUpdateArticle, setIsUpdateArticle] = useState({
+    open : false,
     error : false,
+    type :"",
+    message:"",
+    duration:1600,
   })
 
   const [isErrorInput, setIsErrorInput] = useState({
@@ -42,6 +47,10 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
 
   const [tagData, setTagData] = useState([]);
   const [title, setTitle] = useState("");
+
+  const [id,setId] = useState("");
+  const [userId,setuserId] = useState("");
+  const [deptId,setdeptId] = useState("");
 
   const [openTag, setOpenTag] = React.useState(false);
   const handleOpenTag = () => {
@@ -57,6 +66,13 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
     setShowDefaultValue(true);
     setTagValue(dataFromChild);
   };
+
+
+  useEffect(() =>{
+    setInputValue(articleData?.tag_title)
+    setInputVal(articleData?.title)
+
+  })
 
 
   const handleSave = (e: any) => {
@@ -92,6 +108,14 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
       "file_article_id": "123",
       "status": 1
     }
+    const input = {
+      "id" : id,
+      "title": title,
+      "content_body": content,
+      "user_id": userId,
+      "dept_id" : deptId,
+    }
+
     if(articleData== null){
       AddArticleBy(request).then((res: any) => {
         if (res.status == 200) {
@@ -117,10 +141,25 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
       })
     }
     else{
-      UpdateArticle(request).then((rec:any)=>{
+      UpdateArticle(input).then((rec:any)=>{
         console.log("rec work",rec)
         if(rec.status == 200){
-
+          setIsUpdateArticle({
+            ...isUpdateArticle,
+            open:true,
+            type:"success",
+            message: "Update article successfully",
+          });
+          dispatch(isRender(true))
+          handleClose();
+        }else{
+          setIsUpdateArticle({
+            ...isUpdateArticle,
+            open:true,
+            type:"error",
+            message: "Something went wrong. Can't update...",
+          })
+          handleClose();
         }
       })
       
@@ -196,7 +235,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
                 size="small"
                 id="combo-box-demo"
                 options={tagData}
-                defaultValue={articleData?.tag_title}
+                defaultValue={inputValue}
                 sx={{ width: 300, mr: 2 }}
                 renderInput={(params) => <TextField {...params} label="Search Tag name"  />}
               />
@@ -209,7 +248,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
               error={isErrorInput.error}
               onChange={onchange}
               id="outlined-basic"
-              value={articleData?.title}
+              value={inputval}
               size='small'
               label={isErrorInput.label}
               variant="outlined"
