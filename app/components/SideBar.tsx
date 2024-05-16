@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import React, { useEffect } from 'react'
 import { MenuData } from '../type/MenuData';
-import BookmarksOutlinedIcon from '@mui/icons-material/BookmarksOutlined';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { sampleFetch } from '../service/sample';
 import { useState } from 'react';
 import { getArticleDetail } from '../service/MenuService';
@@ -19,6 +19,7 @@ import { DeleteIcon, EditIcon } from '@/public/icon/TableIcon';
 import empty_folder from '../../public/icon/empty-folder.png'
 import UpdateTagComponent from './Modal/UpdateTagComponent';
 import { checkIsFavorite, getFavoriteDetail } from '../service/FavouriteService';
+import logoDocument from "../../public/icon/Document.png"
 
 
 interface TagItem {
@@ -77,19 +78,23 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
             <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
             {/* 4071f4 */}
             <ul className="menu menu-dropdown-show p-4 w-80 bg-primary min-h-full text-base-content overflow-auto">
-                <div className="pt-3 pb-5 pl-3 flex justify-center items-center">
-                    <Image src={"https://www.kosign.com.kh/images/Vectors-Wrapper.svg"} alt="" width={140} height={100} />
-                    {/* <span className="font-extrabold inline-flex text-base-content text-md md:text-xl font-Anton ml-2">
-              B2B <span className="text-blue-700 ml-1">DOC</span></span> */}
+                <div className="p-2 bg-base-100 border rounded-lg">
+                    <div className='flex items-center'>
+                        <Image src={logoDocument} alt="" width={40} />
+                        <span className="inline-flex tracking-widest flex-col font-semibold text-gray-600 text-md font-Poppin ml-2">
+                            <span>DOCUMENT</span>
+                            <span className='text-xs font-thin'>v4.0</span>
+                        </span>
+                    </div>
                 </div>
 
-                <div className="css-o2c9dn mb-3"></div>
+                <div className="css-o2c9dn my-6"></div>
 
                 {/* Favorite */}
                 <li className='mb-2'>
                     <details>
-                        <summary className="border shadow font-semibold text-[15px]">
-                            <BookmarksOutlinedIcon />
+                        <summary className="border bg-base-100 font-semibold text-[15px] font-mono">
+                            <FavoriteBorderOutlinedIcon className='text-[18px]' />
                             Favorites
                         </summary>
                         <ul className='pt-1'>
@@ -107,13 +112,17 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                         TAGS.map((item, index) => (
                             <li key={index + 1}>
                                 <details>
-                                    <summary className="mt-1 font-medium">{item.title}</summary>
+                                    <summary className="mt-1 font-medium hover:bg-base-100">{item.title}</summary>
                                     <ul>
                                         {
                                             filterArticlesByTagId(item.id).length > 0 ?
                                                 filterArticlesByTagId(item.id).map(item => (
                                                     <li key={item?.id} onClick={() => handleViewArticle(item.id.toString())}>
-                                                        <a className={activeItemId === item.id.toString() ? "bg-secondary text-neutral mt-2" : "mt-2"}>{item?.title}</a>
+                                                        <a className={activeItemId === item.id.toString()
+                                                            ? "hover:bg-base-100 bg-base-100 border-r-4 border-secondary rounded-none mt-2"
+                                                            : "hover:bg-base-100 hover:border-l-4 border-secondary rounded-none transition-all mt-2"}>
+                                                            {item?.title}
+                                                        </a>
                                                     </li>
                                                 )) : (
                                                     <div className='cursor-default flex flex-col justify-center items-center'>

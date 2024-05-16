@@ -10,6 +10,7 @@ import { RootState } from "../service/Redux/store/store";
 import { isRender } from "../service/Redux/articleDetailSlice";
 import { GetTagAndArticle } from "../service/TagService";
 import { getFavoriteDetail } from "../service/FavouriteService";
+import LoadingCustom from "../components/Material/Loading";
 
 export default function Home() {
 
@@ -21,33 +22,16 @@ export default function Home() {
   })
 
   const dispatch = useDispatch()
-
-  const transformApiResponse = (apiResponse: any) => {
-    const ARTICLES = apiResponse?.map((item: any) => ({
-      id: item.id,
-      tag_id: item.tag_id,
-      title: item.title,
-      isfavorite: item.isfavorite
-    }));
-
-    const TAGS = Array.from(new Set(apiResponse.map((item: any) => item.tag_id))).map((tagId) => ({
-      id: tagId,
-      title: apiResponse.find((item: any) => item.tag_id === tagId)?.tag_title || "",
-      dep_id: apiResponse.find((item: any) => item.tag_id === tagId)?.dept_id || ""
-    }));
-    return {
-      ARTICLES,
-      TAGS: TAGS
-    };
-  };
+  const [isLoading, setIsLoading] = useState(false);
 
   const reRederMenu = useSelector((state: RootState) => state?.article.isRender);
 
   useEffect(() => {
+    setIsLoading(true)
     GetTagAndArticle(50).then((res: any) => {
-      // const transformedData: any = transformApiResponse(res);
       setMenudata(res?.data.rec);
       dispatch(isRender(false));
+      setIsLoading(false)
     })
   }, [reRederMenu])
 
@@ -66,6 +50,12 @@ export default function Home() {
     // Get user_id
     handleViewFavorite(session?.user?.userId);
   }, [session])
+
+  if (isLoading) {
+    return (
+      <LoadingCustom />
+    );
+  }
 
 
   return (
