@@ -110,7 +110,6 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                     TAGS.map((item, index) => (
                         <span style={{ width: '160px', display: 'inline-flex' }}>
                             <li key={index + 1} >
-
                                 <details>
                                     <summary className="mt-1 font-medium hover:bg-base-100">{item.title}</summary>
                                     <ul>
@@ -135,7 +134,6 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                                         }
                                     </ul>
                                 </details>
-
                             </li>
                             <li>
                                 <div className='btn btn-ghost btn-circle' onClick={handleOpenTag}>
