@@ -7,6 +7,7 @@ import React, { useState } from 'react'
 import { PinInput, PinInputField } from "@chakra-ui/pin-input";
 import GppGoodOutlinedIcon from "@mui/icons-material/GppGoodOutlined";
 import { Backdrop, Box, Button, Modal, Typography } from '@mui/material';
+import { API_M_BASE_URL } from '@/app/utils/xhttp';
 
 function Page() {
 
@@ -20,7 +21,7 @@ function Page() {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        const res = await fetch(`http://192.168.178.72:8085/api/v1/auth/send-otp`, {
+        const res = await fetch(`${API_M_BASE_URL}/api/v1/auth/send-otp`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',

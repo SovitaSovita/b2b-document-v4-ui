@@ -29,7 +29,7 @@ import CustomAlert from './Material/CustomAlert';
 import { isRender } from '../service/Redux/articleDetailSlice';
 import AskToConfirmModal from './Modal/AskToConfirmModal';
 // import { getFavorite, checkIsFavorite } from '../service/Favourite';
-import ihttp from '../utils/xhttp';
+import ihttp, { UI_BASE_URL } from '../utils/xhttp';
 import { MenuData } from '../type/MenuData';
 import { addToFavorite } from '../service/FavouriteService';
 import UpdateArticleModal from './Modal/UpdateArticleModal';
@@ -134,7 +134,7 @@ function SideContent() {
     }
 
     return (
-        <div className="drawer-content flex flex-col items-center justify-center p-4">
+        <div className="drawer-content bg-primary flex flex-col items-center justify-center p-4">
             {/* Page content here */}
             <div className='flex justify-between w-full mb-3'>
                 {/* <Breadcrumbs /> */}
@@ -196,22 +196,14 @@ function SideContent() {
                 </div>
             </div>
 
-            <div className="border-2 rounded-lg border-dashed w-full h-full p-4">
+            <div className="rounded-lg bg-white border w-full h-full p-4">
                 {
                     !article?.content_body ? (<HomeContent />)
                         : (
                             <div className='flex flex-col'>
                                 <div className='mb-4 flex items-center justify-between'>
                                     {/* Left side icons */}
-                                    <div className="flex items-center">
-                                        <div>
-                                            <DriveFileRenameOutlineIcon className='ml-5' />
-                                        </div>
-
-                                        <div>
-                                            <DeleteOutlineIcon className='ml-5' />
-                                        </div>
-                                    </div>
+                                    <div></div>
 
                                     {/* Right side icons */}
                                     <div className="flex items-center">
@@ -227,10 +219,8 @@ function SideContent() {
                                             )
                                         }
 
-
-
                                         <TelegramShareButton
-                                            url={'http://localhost:3000/'}
+                                            url={`${UI_BASE_URL}/share/${article?.id}`}
                                         >
                                             <ReplyAllOutlinedIcon className='mr-3' />
                                         </TelegramShareButton>

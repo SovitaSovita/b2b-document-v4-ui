@@ -16,6 +16,7 @@ import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutl
 import { fontGrid } from '@mui/material/styles/cssUtils';
 import EditorCustum from './editor/EditorCustum';
 import { DeleteIcon, EditIcon } from '@/public/icon/TableIcon';
+import empty_folder from '../../public/icon/empty-folder.png'
 import UpdateTagComponent from './Modal/UpdateTagComponent';
 import { checkIsFavorite, getFavoriteDetail } from '../service/FavouriteService';
 
@@ -75,7 +76,7 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
         <div className="drawer-side">
             <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
             {/* 4071f4 */}
-            <ul className="menu menu-dropdown-show p-4 w-80 min-h-full text-base-content overflow-auto">
+            <ul className="menu menu-dropdown-show p-4 w-80 bg-primary min-h-full text-base-content overflow-auto">
                 <div className="pt-3 pb-5 pl-3 flex justify-center items-center">
                     <Image src={"https://www.kosign.com.kh/images/Vectors-Wrapper.svg"} alt="" width={140} height={100} />
                     {/* <span className="font-extrabold inline-flex text-base-content text-md md:text-xl font-Anton ml-2">
@@ -108,11 +109,21 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                                 <details>
                                     <summary className="mt-1 font-medium">{item.title}</summary>
                                     <ul>
-                                        {filterArticlesByTagId(item.id).map(item => (
-                                            <li key={item?.id} onClick={() => handleViewArticle(item.id.toString())}>
-                                                <a className={activeItemId === item.id.toString() ? "bg-base-200" : ""}>{item?.title}</a>
-                                            </li>
-                                        ))}
+                                        {
+                                            filterArticlesByTagId(item.id).length > 0 ?
+                                                filterArticlesByTagId(item.id).map(item => (
+                                                    <li key={item?.id} onClick={() => handleViewArticle(item.id.toString())}>
+                                                        <a className={activeItemId === item.id.toString() ? "bg-secondary text-neutral mt-2" : "mt-2"}>{item?.title}</a>
+                                                    </li>
+                                                )) : (
+                                                    <div className='cursor-default flex flex-col justify-center items-center'>
+                                                        <div>
+                                                            <Image src={empty_folder} alt="no data" height={40} />
+                                                        </div>
+                                                        <p className='text-xs text-base-content'>No Article</p>
+                                                    </div>
+                                                )
+                                        }
                                     </ul>
                                 </details>
                             </li>
