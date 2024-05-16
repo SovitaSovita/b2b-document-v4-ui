@@ -73,6 +73,10 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
     console.log(FAVORITE)
 
 
+    function handleUpdate() {
+        alert();
+    }
+
     return (
         <div className="drawer-side">
             <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
@@ -110,8 +114,10 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                     TAGS.map((item, index) => (
                         <span style={{ width: '160px', display: 'inline-flex' }}>
                             <li key={index + 1} >
+
                                 <details>
-                                    <summary className="mt-1 font-medium hover:bg-base-100">{item.title}</summary>
+                                    <summary className="mt-1 font-medium" style={{ width: '180px' }}>{item.title}</summary>
+
                                     <ul>
                                         {
                                             filterArticlesByTagId(item.id).length > 0 ?
@@ -134,6 +140,7 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                                         }
                                     </ul>
                                 </details>
+
                             </li>
                             <li>
                                 <div className='btn btn-ghost btn-circle' onClick={handleOpenTag}>
@@ -153,9 +160,8 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
 
                 }
             </ul >
-
-            <UpdateTagComponent open={openTag} setOpen={setOpenTag} user={TAGS} />
-        </div >
+            <UpdateTagComponent open={openTag} setOpen={setOpenTag} user={session?.user} />
+        </div>
     )
 }
 
