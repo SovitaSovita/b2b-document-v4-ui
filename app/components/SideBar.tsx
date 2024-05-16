@@ -106,11 +106,11 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                         </ul >
                     </details >
                 </li >
-
                 {
-                    TAGS?.length > 0 ?
-                        TAGS.map((item, index) => (
-                            <li key={index + 1}>
+                    TAGS.map((item, index) => (
+                        <span style={{ width: '160px', display: 'inline-flex' }}>
+                            <li key={index + 1} >
+
                                 <details>
                                     <summary className="mt-1 font-medium hover:bg-base-100">{item.title}</summary>
                                     <ul>
@@ -135,14 +135,28 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                                         }
                                     </ul>
                                 </details>
+
                             </li>
-                        )) : <div className='flex justify-center items-center mt-24'>
-                            <p>No Data Found</p>
-                        </div>
+                            <li>
+                                <div className='btn btn-ghost btn-circle' onClick={handleOpenTag}>
+                                    <EditIcon />
+                                </div>
+                            </li>
+                            <li>
+                                <div className='btn btn-ghost btn-circle'>
+                                    <DeleteIcon />
+                                </div>
+                            </li>
+
+
+                        </span>
+
+                    ))
+
                 }
             </ul >
 
-            <UpdateTagComponent />
+            <UpdateTagComponent open={openTag} setOpen={setOpenTag} user={TAGS} />
         </div >
     )
 }

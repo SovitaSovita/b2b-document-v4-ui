@@ -1,10 +1,12 @@
 import { UpdateTag } from '@/app/service/TagService';
 import { Backdrop, Fade, Modal } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function UpdateTagComponent({ open, setOpen, user }: any) {
+  console.log("vimean",user)
   const currentDate = new Date();
   const formattedDate = currentDate.toISOString();
+
   
   const handleClose = () => {
     setOpen(false)
@@ -12,6 +14,7 @@ export default function UpdateTagComponent({ open, setOpen, user }: any) {
 const handleupdate = (e: any) =>{
   
 }
+
 
   const request = {
     id: 40,
@@ -46,7 +49,8 @@ const handleupdate = (e: any) =>{
           <div className='w-1/3 bg-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg p-6 rounded-lg'>
             <form  className='flex flex-col justify-between items-center'>
               <label className="input w-full input-bordered flex items-cent input-sm er gap-2">
-                <input type="text" className="grow" placeholder="Enter new Tag name" />
+              
+                <input type="text" className="grow" />
               </label>
               <div className='self-end'>
                 <button type='button' onClick={handleClose} className="btn btn-active mt-2 btn-sm">Cancel</button>
