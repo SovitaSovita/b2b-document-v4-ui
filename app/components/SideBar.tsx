@@ -36,9 +36,18 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
 
     //const handleOpenTag = () => setOpenTag(true);
     const [openTag, setOpenTag] = React.useState(false);
-    const handleOpenTag = () => setOpenTag(true);
+    const [tagUpdateData, setTagUpdateData] = React.useState({});
+    const [tagDeleteData, setTagDeleteData] = React.useState({});
 
+    const handleOpenTag = (item: any) => {
+        setTagUpdateData(item)
+        setOpenTag(true)
+    };
+    const handleDelete = (item: any) =>{
+        setTagDeleteData(item)
+        //setOpenTag(true)
 
+    }
     const dispatch = useDispatch();
 
     // Function to filter articles based on tag_id
@@ -100,7 +109,7 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                         </ul >
                     </details >
                 </li >
- {
+                {
                     TAGS.map((item, index) => (
                         <span style={{ width: '160px', display: 'inline-flex' }}>
                             <li key={index + 1} >
@@ -117,15 +126,15 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
 
                             </li>
                             <li>
-                                <div className='btn btn-ghost btn-circle' onClick={handleOpenTag}>
+                                <div className='btn btn-ghost btn-circle' onClick={() => handleOpenTag(item)}>
                                     <EditIcon />
                                 </div>
                             </li>
-                             <li>  
-                                <div className='btn btn-ghost btn-circle'>
+                            <li>
+                                <div className='btn btn-ghost btn-circle' onClick={() =>handleDelete(item)}>
                                     <DeleteIcon />
                                 </div>
-                            </li> 
+                            </li>
 
 
                         </span>
@@ -135,7 +144,7 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                 }
             </ul >
 
-            <UpdateTagComponent open={openTag} setOpen={setOpenTag} user={TAGS} />
+            <UpdateTagComponent open={openTag} setOpen={setOpenTag} tagUpdateData={tagUpdateData} />
         </div >
     )
 }
