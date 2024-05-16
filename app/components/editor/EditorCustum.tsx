@@ -18,13 +18,13 @@ import { useDispatch } from 'react-redux'
 
 
 export default function EditorCustum({ handleClose, session, articleData }: any) {
-
+ console.log("session>>>",session)
   const editorRef = useRef<any>(null);
   const dispatch = useDispatch()
 
   const [tagValue, setTagValue] = React.useState<TagType | any>();
   const [inputValue, setInputValue ] = React.useState('');
-  const [inputval,setInputVal] = useState();
+  const [inputval,setInputVal] = useState('');
   const [isErrorAlert, setIsErrorAlert] = useState({
     open: false,
     type: "",
@@ -44,6 +44,10 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
     error: false,
     label: "Enter Sub title",
   });
+   
+  // const parseLong 
+  const currentDate = new Date();
+  const formattedDate = currentDate.toISOString();
 
   const [tagData, setTagData] = useState([]);
   const [title, setTitle] = useState("");
@@ -61,6 +65,13 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
   const onchange = (e: any) => {
     const value = e.target.value
     setTitle(value)
+    setId(value)
+    setuserId(value)
+    setdeptId(value)
+
+    setInputVal(e.target.value)
+    setInputValue(e.target.value)
+   
   }
   const handleChildData = (dataFromChild: object) => {
     setShowDefaultValue(true);
@@ -70,18 +81,26 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
 
   useEffect(() =>{
     setInputValue(articleData?.tag_title)
-    setInputVal(articleData?.title)
-
   })
+
+  useEffect(() =>{
+   
+    setInputVal(articleData?.title)
+  }, [setInputVal])
 
 
   const handleSave = (e: any) => {
     e.preventDefault();
     let content: string = "";
+    let userId : String = ""; 
+
 
     if (editorRef.current) {
       content = editorRef.current.getContent();
     }
+    // if (editorRef.current) {
+    //   userId = editorRef.current.getuserId();
+    // }
 
     if (!tagValue) {
       setIsErrorAlert({
@@ -109,12 +128,15 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
       "status": 1
     }
     const input = {
-      "id" : id,
-      "title": title,
+      "id" : articleData?.id,
+      "title": inputval,
       "content_body": content,
-      "user_id": userId,
-      "dept_id" : deptId,
+      "user_id": articleData?.user_id,
+      "dept_id" : session?.user.dvsn_CD,
+      "modifiedBy":session?.user.userId,
+      "modified_date":formattedDate,
     }
+    console.log(">>>>>input",input)
 
     if(articleData== null){
       AddArticleBy(request).then((res: any) => {
@@ -225,8 +247,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
                 onChange={(event: any, newValue: string | null) => {
                   setTagValue(newValue);
                 }}
-                // defaultValue={articleData?.tag_title}
-                inputValue={inputValue}
+                defaultValue={inputValue}
                 onInputChange={(event, newInputValue) => {
                   setShowDefaultValue(true);
                   setInputValue(newInputValue);
@@ -235,7 +256,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
                 size="small"
                 id="combo-box-demo"
                 options={tagData}
-                defaultValue={inputValue}
+                inputValue={inputValue}
                 sx={{ width: 300, mr: 2 }}
                 renderInput={(params) => <TextField {...params} label="Search Tag name"  />}
               />
@@ -246,15 +267,16 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
 
             <TextField
               error={isErrorInput.error}
-              onChange={onchange}
+              onChange={(e) => setInputVal(e.target.value)}
               id="outlined-basic"
               value={inputval}
               size='small'
               label={isErrorInput.label}
               variant="outlined"
               autoFocus
-            // helperText="Incorrect entry."
+            
             />
+
           </div>
           <Editor
             apiKey='51cakyf7l011kd34r23bib5jrvh79lb520v82wpid72wq92n'

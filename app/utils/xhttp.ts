@@ -5,10 +5,12 @@ import axios, {
 } from "axios";
 import { getSession } from "next-auth/react";
 
-//  export const API_BASE_URL = "http://localhost:4545/api/v1";
-export const API_BASE_URL = "http://178.128.52.39:4545/api/v1";
-
-//export const API_BASE_URL = "http://192.168.178.239:4545/api/v1";
+//our API URL
+export const API_BASE_URL = "http://localhost:4545/api/v1";
+//UI URL
+export const UI_BASE_URL = "http://localhost:3000";
+//api managament URL
+export const API_M_BASE_URL = "http://localhost:8085";
 
 const ihttp = axios.create({
   baseURL: API_BASE_URL,

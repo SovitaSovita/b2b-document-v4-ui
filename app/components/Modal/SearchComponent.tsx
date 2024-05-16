@@ -14,10 +14,13 @@ function SearchComponent({ open, setOpen }: any) {
 
     const [recentData, setRecentData] = useState([]);
     const [searchData, setSearchData] = useState([]);
+    const [focus, setFocus] = useState(false);
     const dispatch = useDispatch()
 
     useEffect(() => {
         getRecentSearch()
+        if (focus) setFocus(false)
+        else setFocus(true)
     }, [open])
 
     const onChange = (e: any) => {
@@ -81,8 +84,6 @@ function SearchComponent({ open, setOpen }: any) {
             getRecentSearch()
         }
     }
-
-    console.log(recentData);
 
     return (
         <div>
