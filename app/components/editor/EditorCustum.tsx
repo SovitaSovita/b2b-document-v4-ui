@@ -49,6 +49,13 @@ export default function EditorCustum({ handleClose, session }: any) {
     const value = e.target.value
     setTitle(value)
   }
+
+  const [selectedValue, setSelectedValue] = useState(1); // Defaulting to "Public"
+
+  const handleSelectChange = (event: any) => {
+    setSelectedValue(parseInt(event.target.value));
+  };
+
   const handleChildData = (dataFromChild: object) => {
     setShowDefaultValue(true);
     setTagValue(dataFromChild);
@@ -86,7 +93,7 @@ export default function EditorCustum({ handleClose, session }: any) {
       "title": title,
       "content_body": content,
       "file_article_id": "123",
-      "status": 1
+      "status": selectedValue
     }
 
     AddArticleBy(request).then((res: any) => {
@@ -115,7 +122,7 @@ export default function EditorCustum({ handleClose, session }: any) {
 
   useEffect(() => {
     if (session) {
-      GetTagAndArticle(parseInt(session?.user.dvsn_CD, 10)).then((res: any) => {
+      GetTagAndArticle(parseInt(session?.user.dvsn_CD, 10), 1).then((res: any) => {
         const updatedTagList = res?.data?.rec?.tagList.map((tag: any) => ({
           ...tag,
           label: tag.title,
@@ -194,6 +201,14 @@ export default function EditorCustum({ handleClose, session }: any) {
               autoFocus
             // helperText="Incorrect entry."
             />
+            <select
+              value={selectedValue} // Bind the selected value to state
+              onChange={handleSelectChange}
+              className="select select-sm select-bordered w-full ml-3 max-w-40">
+              <option selected value={1}>Public</option>
+              <option value={0}>Private</option>
+              <option value={2}>Depament Only</option>
+            </select>
           </div>
           <Editor
             apiKey='51cakyf7l011kd34r23bib5jrvh79lb520v82wpid72wq92n'

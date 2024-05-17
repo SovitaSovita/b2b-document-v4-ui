@@ -196,6 +196,18 @@ function SideContent() {
                 </div>
             </div>
 
+            {/* <img src={article?.img_path} alt="content" width={500} className='mt-6 ml-6' /> */}
+            {/* <div>
+                <div data-dial-init className="fixed start-4 z-50 bottom-4 group">
+                    <button type="button" onClick={handleOpenArticle} data-dial-toggle="speed-dial-menu-default" aria-controls="speed-dial-menu-default" aria-expanded="false" className="flex items-center justify-center text-white bg-blue-700 rounded-full w-10 h-10 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800" style={{ width: '2.5rem !important', height: '2.5rem !important' }}>
+                        <svg className="w-5 h-5 transition-transform group-hover:rotate-45" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
+                        </svg>
+                        <span className="sr-only">Open actions menu</span>
+                    </button>
+                </div>
+            </div> */}
+
             <div className="rounded-lg bg-base-100 border w-full h-full p-4">
                 {
                     !article?.content_body ? (<HomeContent />)
@@ -244,18 +256,6 @@ function SideContent() {
 
                         )
                 }
-
-                {/* <img src={article?.img_path} alt="content" width={500} className='mt-6 ml-6' /> */}
-                <div>
-                    <div data-dial-init className="fixed end-6 bottom-6 group">
-                        <button type="button" onClick={handleOpenArticle} data-dial-toggle="speed-dial-menu-default" aria-controls="speed-dial-menu-default" aria-expanded="false" className="flex items-center justify-center text-white bg-blue-700 rounded-full w-14 h-14 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800" style={{ width: '2.5rem !important', height: '2.5rem !important' }}>
-                            <svg className="w-5 h-5 transition-transform group-hover:rotate-45" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
-                            </svg>
-                            <span className="sr-only">Open actions menu</span>
-                        </button>
-                    </div>
-                </div>
             </div>
 
             {/* <label htmlFor="my-drawer-2" className="btn btn-circle drawer-button lg:hidden">

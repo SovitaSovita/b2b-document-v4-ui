@@ -28,7 +28,7 @@ export default function Home() {
 
   useEffect(() => {
     setIsLoading(true)
-    GetTagAndArticle(50).then((res: any) => {
+    GetTagAndArticle(50, 1).then((res: any) => {
       setMenudata(res?.data.rec);
       dispatch(isRender(false));
       setIsLoading(false)
@@ -51,11 +51,11 @@ export default function Home() {
     handleViewFavorite(session?.user?.userId);
   }, [session])
 
-  if (isLoading) {
-    return (
-      <LoadingCustom />
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <LoadingCustom />
+  //   );
+  // }
 
 
   return (
