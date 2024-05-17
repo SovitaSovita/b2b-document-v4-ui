@@ -134,10 +134,6 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                         <span style={{ width: '160px', display: 'inline-flex' }}>
                             <li key={index + 1} >
 
-                    TAGS.map((item, index) => (
-                        <span style={{ width: '160px', display: 'inline-flex' }}>
-                            <li key={index + 1} >
-
                                 <details>
                                     <summary className="mt-1 font-medium" style={{ width: '180px' }}>{item.title}</summary>
 
