@@ -122,7 +122,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
 
     const request = {
       "tag_id": tagValue?.id,
-      "title": inputval,
+      "title": title,
       "content_body": content,
       "file_article_id": "123",
       "status": 1
@@ -188,8 +188,6 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
     }
     
   }
-
- 
 
   useEffect(() => {
     if (session) {

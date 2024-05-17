@@ -62,8 +62,6 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
     //         //id:tagDeleteData.id
     //     }
     //     DeleteTag(request).then((res:any)=>{
-    //         alert("ok")
-
     //     })
     // }
     const dispatch = useDispatch();
@@ -78,6 +76,7 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
             console.log("res[0] >>", res);
             dispatch(getArticle(res[0]))
         })
+
         // favorite
         checkIsFavorite(session.user.userId, parseInt(id, 10), session.user.dvsn_CD).then((data) => {
 
@@ -89,7 +88,6 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
             }
 
         })
-
 
     }
 
@@ -111,8 +109,6 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                         </span>
                     </div>
                 </div>
-
-
 
                 <div className="css-o2c9dn my-6"></div>
 
