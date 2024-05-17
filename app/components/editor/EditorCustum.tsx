@@ -109,7 +109,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
         type: "error",
         message: "Tag name can't empty.",
       });
-      return;
+      //return;
     }
 
     if (title === "") {
@@ -117,7 +117,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
         error: true,
         label: 'Enter Sub title',
       })
-       return;
+      //return;
     }
 
     const request = {
