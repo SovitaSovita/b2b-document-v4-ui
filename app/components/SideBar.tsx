@@ -112,6 +112,8 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                     </div>
                 </div>
 
+
+
                 <div className="css-o2c9dn my-6"></div>
 
                 {/* Favorite */}
@@ -155,7 +157,6 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                                 </div>
                             </div>
                             <li key={index + 1} className='min-w-[260px]'>
-
                                 <details>
                                     <summary className="mt-1 font-medium" onClick={() => handleSendTagData(item)}>
                                         {item.title}
