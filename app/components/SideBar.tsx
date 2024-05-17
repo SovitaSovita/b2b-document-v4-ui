@@ -12,7 +12,7 @@ import { getArticle, getFavorite, isFavorite } from '../service/Redux/articleDet
 import { useDispatch } from 'react-redux';
 
 import { useSession } from 'next-auth/react';
-import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { fontGrid } from '@mui/material/styles/cssUtils';
 import EditorCustum from './editor/EditorCustum';
 import { DeleteIcon, EditIcon } from '@/public/icon/TableIcon';
@@ -69,12 +69,8 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
 
     }
 
-
-    console.log(FAVORITE)
-
-
-    function handleUpdate() {
-        alert();
+    const handleSendTagData = (item: any) => {
+        console.log(item);
     }
 
     return (
@@ -112,12 +108,32 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                 </li >
                 {
                     TAGS.map((item, index) => (
-                        <span style={{ width: '160px', display: 'inline-flex' }}>
-                            <li key={index + 1} >
+                        <span className='flex mainManageTag group'>
+                            <div className="dropdown dropdown-hover mt-2.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div tabIndex={0} role="button">
+                                    <MoreVertIcon />
+                                </div>
+                                <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32">
+                                    <li>
+                                        <div className='flex items-center' onClick={handleOpenTag}>
+                                            <EditIcon />
+                                            <span>Edit</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div className='flex items-center text-red-400'>
+                                            <DeleteIcon />
+                                            <span>Detele</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <li key={index + 1} className='min-w-[265px]'>
 
                                 <details>
-                                    <summary className="mt-1 font-medium" style={{ width: '180px' }}>{item.title}</summary>
-
+                                    <summary className="mt-1 font-medium" onClick={() => handleSendTagData(item)}>
+                                        {item.title}
+                                    </summary>
                                     <ul>
                                         {
                                             filterArticlesByTagId(item.id).length > 0 ?
@@ -140,20 +156,7 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                                         }
                                     </ul>
                                 </details>
-
                             </li>
-                            <li>
-                                <div className='btn btn-ghost btn-circle' onClick={handleOpenTag}>
-                                    <EditIcon />
-                                </div>
-                            </li>
-                            <li>
-                                <div className='btn btn-ghost btn-circle'>
-                                    <DeleteIcon />
-                                </div>
-                            </li>
-
-
                         </span>
 
                     ))

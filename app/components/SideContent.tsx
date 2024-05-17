@@ -134,9 +134,9 @@ function SideContent() {
     }
 
     return (
-        <div className="drawer-content bg-primary flex flex-col items-center justify-center p-4">
+        <div className="drawer-content bg-primary flex flex-col items-center justify-center py-2 px-4">
             {/* Page content here */}
-            <div className='flex justify-between w-full mb-3'>
+            <div className='flex justify-between items-center w-full mb-3'>
                 {/* <Breadcrumbs /> */}
                 <div data-tip="Create new" className='tooltip tooltip-left'>
                     {/* <div className='btn btn-ghost btn-circle' onClick={handleOpenTag}>
@@ -196,7 +196,7 @@ function SideContent() {
                 </div>
             </div>
 
-            <div className="rounded-lg bg-white border w-full h-full p-4">
+            <div className="rounded-lg bg-base-100 border w-full h-full p-4">
                 {
                     !article?.content_body ? (<HomeContent />)
                         : (
@@ -206,7 +206,7 @@ function SideContent() {
                                     <div></div>
 
                                     {/* Right side icons */}
-                                    <div className="flex items-center">
+                                    <div className="flex items-center bg-primary p-2 rounded-lg border">
                                         {/* Favorite */}
                                         {/* <div>
                                             <FavoriteBorderOutlinedIcon className='mr-3' style={{ cursor: 'pointer', color: 'red' }} />
