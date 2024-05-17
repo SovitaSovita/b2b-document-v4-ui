@@ -16,6 +16,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import LoadingCustom from './Material/Loading';
 import { useParams, useRouter } from 'next/navigation';
 import HomeContent from './HomeContent';
+
 import {
     TelegramIcon,
     TelegramShareButton,
@@ -40,11 +41,13 @@ interface SideContentProps {
     dept_id: number;
 }
 
+
+
 function SideContent() {
 
     const { article }: { article: any } = useSelector((state: RootState) => state?.article);
     const router = useRouter();
-    // Favorite
+    // Favorite yuth
     const isFavorite = useSelector((state: RootState) => state.article.isFavorite);
     const { data: session, status }: { data: any, status: any } = useSession();
     const path = useParams();

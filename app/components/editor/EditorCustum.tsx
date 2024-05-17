@@ -136,7 +136,6 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
       "modifiedBy":session?.user.userId,
       "modified_date":formattedDate,
     }
-    console.log(">>>>>input",input)
 
     if(articleData== null){
       AddArticleBy(request).then((res: any) => {
@@ -305,7 +304,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
         </form >
       </div >
 
-      <TagComponent open={openTag} setOpen={setOpenTag} user={session?.user} sendDataToParent={handleChildData} />
+      <TagComponent open={openTag}  setOpen={setOpenTag} user={session?.user} sendDataToParent={handleChildData} />
     </>
   )
 
