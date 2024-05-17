@@ -18,6 +18,8 @@ import EditorCustum from './editor/EditorCustum';
 import { DeleteIcon, EditIcon } from '@/public/icon/TableIcon';
 import UpdateTagComponent from './Modal/UpdateTagComponent';
 import { checkIsFavorite, getFavoriteDetail } from '../service/FavouriteService';
+import { DeleteTag } from '../service/TagService';
+import DeleteTagComponent from './Modal/DeleteTagComponent';
 
 
 interface TagItem {
@@ -38,16 +40,30 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
     const [openTag, setOpenTag] = React.useState(false);
     const [tagUpdateData, setTagUpdateData] = React.useState({});
     const [tagDeleteData, setTagDeleteData] = React.useState({});
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const openModal = (item:any) =>{
+        setIsModalOpen(true);
+    } 
+    const closeModal = () => setIsModalOpen(false);
 
     const handleOpenTag = (item: any) => {
         setTagUpdateData(item)
         setOpenTag(true)
     };
-    const handleDelete = (item: any) =>{
-        setTagDeleteData(item)
+    const handleDelete = (item:any) => {
+        DeleteTagComponent
         //setOpenTag(true)
-
     }
+    // const handleDelete = (e: any) => {
+    //     //setTagDeleteData(item)
+    //     const request ={
+    //         //id:tagDeleteData.id
+    //     }
+    //     DeleteTag(request).then((res:any)=>{
+    //         alert("ok")
+
+    //     })
+    // }
     const dispatch = useDispatch();
 
     // Function to filter articles based on tag_id
@@ -131,7 +147,7 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                                 </div>
                             </li>
                             <li>
-                                <div className='btn btn-ghost btn-circle' onClick={() =>handleDelete(item)}>
+                                <div className='btn btn-ghost btn-circle' onClick={() =>openModal(item)}>
                                     <DeleteIcon />
                                 </div>
                             </li>
@@ -145,6 +161,8 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
             </ul >
 
             <UpdateTagComponent open={openTag} setOpen={setOpenTag} tagUpdateData={tagUpdateData} />
+            {/* <DeleteTagComponent open={openTag} setOpen={setOpenTag} tagUpdateData={tagUpdateData} /> */}
+         
         </div >
     )
 }
