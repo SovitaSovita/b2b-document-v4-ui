@@ -26,10 +26,11 @@ export const UpdateTag = async (request: object) => {
         return error;
     }
 }
-
-
-
-
-
-
-
+export const DeleteTag = async (request: object) => {
+    try {
+        const response = await ihttp.post(`DocTag/deleteTag`, request)
+        return response;
+    } catch (error) {
+        return error;
+    }
+}

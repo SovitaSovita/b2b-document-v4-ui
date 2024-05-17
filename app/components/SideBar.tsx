@@ -20,6 +20,8 @@ import empty_folder from '../../public/icon/empty-folder.png'
 import UpdateTagComponent from './Modal/UpdateTagComponent';
 import { checkIsFavorite, getFavoriteDetail } from '../service/FavouriteService';
 import logoDocument from "../../public/icon/Document.png"
+import { DeleteTag } from '../service/TagService';
+import DeleteTagComponent from './Modal/DeleteTagComponent';
 
 
 interface TagItem {
@@ -38,9 +40,32 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
 
     //const handleOpenTag = () => setOpenTag(true);
     const [openTag, setOpenTag] = React.useState(false);
-    const handleOpenTag = () => setOpenTag(true);
+    const [tagUpdateData, setTagUpdateData] = React.useState({});
+    const [tagDeleteData, setTagDeleteData] = React.useState({});
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const openModal = (item: any) => {
+        setIsModalOpen(true);
+    }
+    const closeModal = () => setIsModalOpen(false);
 
+    const handleOpenTag = (item: any) => {
+        setTagUpdateData(item)
+        setOpenTag(true)
+    };
+    const handleDelete = (item: any) => {
+        DeleteTagComponent
+        //setOpenTag(true)
+    }
+    // const handleDelete = (e: any) => {
+    //     //setTagDeleteData(item)
+    //     const request ={
+    //         //id:tagDeleteData.id
+    //     }
+    //     DeleteTag(request).then((res:any)=>{
+    //         alert("ok")
 
+    //     })
+    // }
     const dispatch = useDispatch();
 
     // Function to filter articles based on tag_id
@@ -108,26 +133,28 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                 {
                     TAGS.map((item, index) => (
                         <span className='flex mainManageTag group'>
-                            <div className="dropdown dropdown-hover mt-2.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <div tabIndex={0} role="button">
-                                    <MoreVertIcon />
+                            <div className='w-6'>
+                                <div className="dropdown dropdown-hover dropdown-top mt-2.5 opacity-0 hidden group-hover:block group-hover:opacity-100 transition-all">
+                                    <div tabIndex={0} role="button">
+                                        <MoreVertIcon />
+                                    </div>
+                                    <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32">
+                                        <li>
+                                            <div className='flex items-center' onClick={() => handleOpenTag(item)}>
+                                                <EditIcon />
+                                                <span>Edit</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className='flex items-center text-red-400' onClick={() => openModal(item)}>
+                                                <DeleteIcon />
+                                                <span>Detele</span>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32">
-                                    <li>
-                                        <div className='flex items-center' onClick={handleOpenTag}>
-                                            <EditIcon />
-                                            <span>Edit</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className='flex items-center text-red-400'>
-                                            <DeleteIcon />
-                                            <span>Detele</span>
-                                        </div>
-                                    </li>
-                                </ul>
                             </div>
-                            <li key={index + 1} className='min-w-[265px]'>
+                            <li key={index + 1} className='min-w-[260px]'>
 
                                 <details>
                                     <summary className="mt-1 font-medium" onClick={() => handleSendTagData(item)}>
@@ -162,8 +189,11 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
 
                 }
             </ul >
-            <UpdateTagComponent open={openTag} setOpen={setOpenTag} user={session?.user} />
-        </div>
+
+            <UpdateTagComponent open={openTag} setOpen={setOpenTag} tagUpdateData={tagUpdateData} />
+            {/* <DeleteTagComponent open={openTag} setOpen={setOpenTag} tagUpdateData={tagUpdateData} /> */}
+
+        </div >
     )
 }
 
