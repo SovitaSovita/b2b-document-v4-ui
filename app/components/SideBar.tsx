@@ -193,5 +193,4 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
         </div >
     )
 }
-
 export default SideBar 
