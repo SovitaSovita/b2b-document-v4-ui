@@ -36,7 +36,7 @@ async function responseErrorInterceptor({ status, code, ...err }: AxiosError) {
   if (isNotWorkError) {
     try {
       //
-      // window.location.pathname = "/error"
+      window.location.pathname = "/error"
     } catch {
       /** in case called from server ignore client side function*/
     }
