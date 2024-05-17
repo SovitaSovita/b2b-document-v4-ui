@@ -31,7 +31,7 @@ import AskToConfirmModal from './Modal/AskToConfirmModal';
 // import { getFavorite, checkIsFavorite } from '../service/Favourite';
 import ihttp, { UI_BASE_URL } from '../utils/xhttp';
 import { MenuData } from '../type/MenuData';
-import { addToFavorite } from '../service/FavouriteService';
+import { addToFavorite, deleteFavorite } from '../service/FavouriteService';
 import UpdateArticleModal from './Modal/UpdateArticleModal';
 
 interface SideContentProps {
@@ -49,6 +49,7 @@ function SideContent() {
     const { data: session, status }: { data: any, status: any } = useSession();
     const path = useParams();
     const dispatch = useDispatch()
+    const [isFavorites, setIsFavorites] = useState(false);
 
     const [isErrorAlert, setIsErrorAlert] = React.useState({
         open: false,
@@ -92,7 +93,8 @@ function SideContent() {
                     type: "success",
                     message: "Deleted Successfully.",
                 });
-                dispatch(isRender(true));
+                //dispatch(isRender(true));
+                setIsFavorites(true);
                 setOpenAskCf(false)
             }
             else {
@@ -107,38 +109,65 @@ function SideContent() {
         })
     }
 
+    // Add to favorite
+    const handleAddFavorite = async (article_id: number) => {
+        try {
+            const response = await addToFavorite({
+                article_id: article_id,
+                dept_id: session?.user.dvsn_CD,
+                user_id: session?.user.userId
+            });
+            if (response.code === "200") {
+                setIsErrorAlert({
+                    ...isErrorAlert,
+                    open: true,
+                    type: "success",
+                    message: "Add to favorite success."
+                })
+                dispatch(isRender(true));
+                setOpenAskCf(false)
+            } else {
+                setIsErrorAlert({
+                    ...isErrorAlert,
+                    open: true,
+                    type: "error",
+                    message: "Faild add to favorite. Please try again."
+                })
+            }
+        } catch (error) {
+            console.error("Error adding to favorites:", error);
+        }
+    };
 
+    // Delete favorite
+    const handleDeleteFavorite = async (article_id: number, user_id: string) => {
+        try {
+            const response = await deleteFavorite({
+                article_id: article_id,
+                user_id: session?.user.userId
+            });
 
-
-
-    // Check if favorite
-    // function checkUserIsFavorite(user_id: string, article_id: number, dept_id: number) {
-    //     checkIsFavorite(user_id, article_id, dept_id).then((response) => {
-    //         console.log("Hello World", response)
-    //     })
-    // }
-    // useEffect(() => {
-
-    //     checkUserIsFavorite("sararuth", 131, 50);
-
-    // }, [session])
-
-
-
-
-
-    // console.log("Log article", article);
-    // console.log("Log favorite", isFavorite);
-
-    const handleAddFavorite = (article_id: number) => {
-        addToFavorite({
-            "article_id": article_id,
-            "dept_id": 50,
-            "user_id": "sovita"
-        }).then((data) => {
-            console.log(data)
-        })
+            if (response.code === "200") {
+                setIsErrorAlert({
+                    ...isErrorAlert,
+                    open: true,
+                    type: "success",
+                    message: "Delete success."
+                })
+                dispatch(isRender(true));
+            } else {
+                setIsErrorAlert({
+                    ...isErrorAlert,
+                    open: true,
+                    type: "error",
+                    message: "Faild to delete. Please try again."
+                })
+            }
+        } catch (error) {
+            console.error("Error deleting from favorites:", error);
+        }
     }
+
 
     return (
         <div className="drawer-content bg-primary flex flex-col items-center justify-center py-2 px-4">
@@ -215,12 +244,10 @@ function SideContent() {
                                     {/* Right side icons */}
                                     <div className="flex items-center bg-primary p-2 rounded-lg border">
                                         {/* Favorite */}
-                                        {/* <div>
-                                            <FavoriteBorderOutlinedIcon className='mr-3' style={{ cursor: 'pointer', color: 'red' }} />
-                                        </div> */}
+
                                         {
                                             isFavorite ? (
-                                                <FavoriteBorderOutlinedIcon className='mr-3' style={{ cursor: 'pointer', color: 'red' }} />
+                                                <FavoriteBorderOutlinedIcon onClick={() => handleDeleteFavorite(article?.id, session.user.userId)} className='mr-3' style={{ cursor: 'pointer', color: 'red' }} />
                                             ) : (
                                                 <FavoriteBorderOutlinedIcon onClick={() => handleAddFavorite(article?.id)} className='mr-3' style={{ cursor: 'pointer', color: 'black' }} />
                                             )
@@ -285,7 +312,7 @@ function SideContent() {
                 setOpen={setOpenAskCf}
                 handleSubmitCallback={handleDeleteArticle}
             />
-            <UpdateArticleModal open={openArticle} setOpen={setOpenArticle} session={session} articleData={articleData}/>
+            <UpdateArticleModal open={openArticle} setOpen={setOpenArticle} session={session} articleData={articleData} />
         </div>
     )
 }
