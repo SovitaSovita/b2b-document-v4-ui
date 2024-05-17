@@ -134,26 +134,28 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                 {
                     TAGS.map((item, index) => (
                         <span className='flex mainManageTag group'>
-                            <div className="dropdown dropdown-hover mt-2.5 opacity-0 hidden group-hover:block group-hover:opacity-100 transition-all">
-                                <div tabIndex={0} role="button">
-                                    <MoreVertIcon />
+                            <div className='w-6'>
+                                <div className="dropdown dropdown-hover dropdown-top mt-2.5 opacity-0 hidden group-hover:block group-hover:opacity-100 transition-all">
+                                    <div tabIndex={0} role="button">
+                                        <MoreVertIcon />
+                                    </div>
+                                    <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32">
+                                        <li>
+                                            <div className='flex items-center' onClick={() => handleOpenTag(item)}>
+                                                <EditIcon />
+                                                <span>Edit</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className='flex items-center text-red-400' onClick={() => openModal(item)}>
+                                                <DeleteIcon />
+                                                <span>Detele</span>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32">
-                                    <li>
-                                        <div className='flex items-center' onClick={() => handleOpenTag(item)}>
-                                            <EditIcon />
-                                            <span>Edit</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className='flex items-center text-red-400' onClick={() => openModal(item)}>
-                                            <DeleteIcon />
-                                            <span>Detele</span>
-                                        </div>
-                                    </li>
-                                </ul>
                             </div>
-                            <li key={index + 1} className='min-w-[265px]'>
+                            <li key={index + 1} className='min-w-[260px]'>
 
                                 <details>
                                     <summary className="mt-1 font-medium" onClick={() => handleSendTagData(item)}>
