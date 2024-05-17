@@ -57,6 +57,6 @@ export default function UpdateTagComponent({ open, setOpen, user }: any) {
           </div>
         </Fade>
       </Modal>
-    </div >
+    </div > 
   );
 }
