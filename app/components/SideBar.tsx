@@ -109,7 +109,7 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                 {
                     TAGS.map((item, index) => (
                         <span className='flex mainManageTag group'>
-                            <div className="dropdown dropdown-hover mt-2.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div className="dropdown dropdown-hover mt-2.5 opacity-0 hidden group-hover:block group-hover:opacity-100 transition-all">
                                 <div tabIndex={0} role="button">
                                     <MoreVertIcon />
                                 </div>
