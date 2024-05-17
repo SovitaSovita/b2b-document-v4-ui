@@ -62,10 +62,10 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
 
     function handleViewArticle(id: string) {
         getArticleDetail(id).then((res) => {
-            // console.log("res[0] >>", res);
+            console.log("res[0] >>", res);
             dispatch(getArticle(res[0]))
-            setActiveItemId(id);
         })
+
         // favorite
         checkIsFavorite(session.user.userId, parseInt(id, 10), session.user.dvsn_CD).then((data) => {
 
@@ -77,7 +77,6 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
             }
 
         })
-
 
     }
 
@@ -109,13 +108,25 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                             <FavoriteBorderOutlinedIcon className='text-[18px]' />
                             Favorites
                         </summary>
-                        <ul className='pt-1'>
-                            {FAVORITE?.map((item: any, index) => (
-                                <li key={index + 1} onClick={() => { console.log(item.article_id); handleViewArticle(item?.article_id.toString()) }}>
-                                    <a className="text-[13px]">{item?.title}</a>
+                        {FAVORITE && FAVORITE.length > 0 ? (
+                            <ul className='pt-1'>
+                                {FAVORITE.map((item: any, index) => (
+                                    <li key={index} onClick={() => {
+                                        console.log(item.article_id);
+                                        handleViewArticle(item?.article_id.toString());
+                                    }}>
+                                        <a className="text-[13px]">{item?.title}</a>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <ul className='pt-1'>
+                                <li>
+                                    <a className="text-[13px]" style={{ cursor: 'none', pointerEvents: 'none' }}>No favorite</a>
                                 </li>
-                            ))}
-                        </ul >
+                            </ul>
+
+                        )}
                     </details >
                 </li >
                 {
@@ -143,7 +154,6 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                                 </div>
                             </div>
                             <li key={index + 1} className='min-w-[260px]'>
-
                                 <details>
                                     <summary className="mt-1 font-medium" onClick={() => handleSendTagData(item)}>
                                         {item.title}

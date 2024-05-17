@@ -24,14 +24,14 @@ import { DeleteIcon, EditIcon } from '@/public/icon/TableIcon';
 import SearchComponent from './Modal/SearchComponent';
 import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined';
 import TagComponent from './Modal/TagComponent';
-import { deleteArticle } from '../service/ArticleService';
+import { AddArticleBy, deleteArticle } from '../service/ArticleService';
 import CustomAlert from './Material/CustomAlert';
 import { isRender } from '../service/Redux/articleDetailSlice';
 import AskToConfirmModal from './Modal/AskToConfirmModal';
 // import { getFavorite, checkIsFavorite } from '../service/Favourite';
 import ihttp, { UI_BASE_URL } from '../utils/xhttp';
 import { MenuData } from '../type/MenuData';
-import { addToFavorite } from '../service/FavouriteService';
+import { addToFavorite, deleteFavorite } from '../service/FavouriteService';
 import UpdateArticleModal from './Modal/UpdateArticleModal';
 
 interface SideContentProps {
@@ -49,6 +49,7 @@ function SideContent() {
     const { data: session, status }: { data: any, status: any } = useSession();
     const path = useParams();
     const dispatch = useDispatch()
+    const [isFavorites, setIsFavorites] = useState(false);
 
     const [isErrorAlert, setIsErrorAlert] = React.useState({
         open: false,
@@ -63,8 +64,13 @@ function SideContent() {
     const [openTag, setOpenTag] = React.useState(false);
     const handleOpenTag = () => setOpenTag(true);
 
+
+    const [articleData, setArticleData] = React.useState({});
     const [openArticle, setOpenArticle] = React.useState(false);
-    const handleOpenArticle = () => setOpenArticle(true);
+    const handleOpenArticle = (article: any) => {
+        setArticleData(article)
+        setOpenArticle(true)
+    };
 
     const [openAskCf, setOpenAskCf] = React.useState(false);
     const [articleId, setArticleId] = React.useState<number>();
@@ -87,7 +93,8 @@ function SideContent() {
                     type: "success",
                     message: "Deleted Successfully.",
                 });
-                dispatch(isRender(true));
+                //dispatch(isRender(true));
+                setIsFavorites(true);
                 setOpenAskCf(false)
             }
             else {
@@ -102,36 +109,65 @@ function SideContent() {
         })
     }
 
+    // Add to favorite
+    const handleAddFavorite = async (article_id: number) => {
+        try {
+            const response = await addToFavorite({
+                article_id: article_id,
+                dept_id: session?.user.dvsn_CD,
+                user_id: session?.user.userId
+            });
+            if (response.code === "200") {
+                setIsErrorAlert({
+                    ...isErrorAlert,
+                    open: true,
+                    type: "success",
+                    message: "Add to favorite success."
+                })
+                dispatch(isRender(true));
+                setOpenAskCf(false)
+            } else {
+                setIsErrorAlert({
+                    ...isErrorAlert,
+                    open: true,
+                    type: "error",
+                    message: "Faild add to favorite. Please try again."
+                })
+            }
+        } catch (error) {
+            console.error("Error adding to favorites:", error);
+        }
+    };
 
+    // Delete favorite
+    const handleDeleteFavorite = async (article_id: number, user_id: string) => {
+        try {
+            const response = await deleteFavorite({
+                article_id: article_id,
+                user_id: session?.user.userId
+            });
 
-    // Check if favorite
-    // function checkUserIsFavorite(user_id: string, article_id: number, dept_id: number) {
-    //     checkIsFavorite(user_id, article_id, dept_id).then((response) => {
-    //         console.log("Hello World", response)
-    //     })
-    // }
-    // useEffect(() => {
-
-    //     checkUserIsFavorite("sararuth", 131, 50);
-
-    // }, [session])
-
-
-
-
-
-    // console.log("Log article", article);
-    // console.log("Log favorite", isFavorite);
-
-    const handleAddFavorite = (article_id: number) => {
-        addToFavorite({
-            "article_id": article_id,
-            "dept_id": 50,
-            "user_id": "sovita"
-        }).then((data) => {
-            console.log(data)
-        })
+            if (response.code === "200") {
+                setIsErrorAlert({
+                    ...isErrorAlert,
+                    open: true,
+                    type: "success",
+                    message: "Delete success."
+                })
+                dispatch(isRender(true));
+            } else {
+                setIsErrorAlert({
+                    ...isErrorAlert,
+                    open: true,
+                    type: "error",
+                    message: "Faild to delete. Please try again."
+                })
+            }
+        } catch (error) {
+            console.error("Error deleting from favorites:", error);
+        }
     }
+
 
     return (
         <div className="drawer-content bg-primary flex flex-col items-center justify-center py-2 px-4">
@@ -208,12 +244,10 @@ function SideContent() {
                                     {/* Right side icons */}
                                     <div className="flex items-center bg-primary p-2 rounded-lg border">
                                         {/* Favorite */}
-                                        {/* <div>
-                                            <FavoriteBorderOutlinedIcon className='mr-3' style={{ cursor: 'pointer', color: 'red' }} />
-                                        </div> */}
+
                                         {
                                             isFavorite ? (
-                                                <FavoriteBorderOutlinedIcon className='mr-3' style={{ cursor: 'pointer', color: 'red' }} />
+                                                <FavoriteBorderOutlinedIcon onClick={() => handleDeleteFavorite(article?.id, session.user.userId)} className='mr-3' style={{ cursor: 'pointer', color: 'red' }} />
                                             ) : (
                                                 <FavoriteBorderOutlinedIcon onClick={() => handleAddFavorite(article?.id)} className='mr-3' style={{ cursor: 'pointer', color: 'black' }} />
                                             )
@@ -228,7 +262,7 @@ function SideContent() {
                                         {
                                             session?.user.userId === article?.username && (
                                                 <div className='flex justify-between w-10'>
-                                                    <EditIcon />
+                                                    <EditIcon variant="text" onClick={() => handleOpenArticle(article)} />
                                                     <DeleteIcon className="cursor-pointer" onClick={() => handleOpenAskCf(article?.id)} />
                                                 </div>
                                             )
@@ -248,7 +282,7 @@ function SideContent() {
                 {/* <img src={article?.img_path} alt="content" width={500} className='mt-6 ml-6' /> */}
                 <div>
                     <div data-dial-init className="fixed end-6 bottom-6 group">
-                        <button type="button" onClick={handleOpenArticle} data-dial-toggle="speed-dial-menu-default" aria-controls="speed-dial-menu-default" aria-expanded="false" className="flex items-center justify-center text-white bg-blue-700 rounded-full w-14 h-14 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800" style={{ width: '2.5rem !important', height: '2.5rem !important' }}>
+                        <button type="button" onClick={() => handleOpenArticle(null)} data-dial-toggle="speed-dial-menu-default" aria-controls="speed-dial-menu-default" aria-expanded="false" className="flex items-center justify-center text-white bg-blue-700 rounded-full w-14 h-14 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800" style={{ width: '2.5rem !important', height: '2.5rem !important' }}>
                             <svg className="w-5 h-5 transition-transform group-hover:rotate-45" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
                             </svg>
@@ -278,7 +312,7 @@ function SideContent() {
                 setOpen={setOpenAskCf}
                 handleSubmitCallback={handleDeleteArticle}
             />
-            <UpdateArticleModal open={openArticle} setOpen={setOpenArticle} session={session} />
+            <UpdateArticleModal open={openArticle} setOpen={setOpenArticle} session={session} articleData={articleData} />
         </div>
     )
 }
