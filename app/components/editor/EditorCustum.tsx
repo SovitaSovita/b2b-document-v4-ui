@@ -18,13 +18,13 @@ import { useDispatch } from 'react-redux'
 
 
 export default function EditorCustum({ handleClose, session, articleData }: any) {
- console.log("session>>>",session)
+  console.log("session>>>", session)
   const editorRef = useRef<any>(null);
   const dispatch = useDispatch()
 
   const [tagValue, setTagValue] = React.useState<TagType | any>();
-  const [inputValue, setInputValue ] = React.useState('');
-  const [inputval,setInputVal] = useState('');
+  const [inputValue, setInputValue] = React.useState('');
+  const [inputval, setInputVal] = useState('');
   const [isErrorAlert, setIsErrorAlert] = useState({
     open: false,
     type: "",
@@ -33,18 +33,18 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
   });
 
   const [isUpdateArticle, setIsUpdateArticle] = useState({
-    open : false,
-    error : false,
-    type :"",
-    message:"",
-    duration:1600,
+    open: false,
+    error: false,
+    type: "",
+    message: "",
+    duration: 1600,
   })
 
   const [isErrorInput, setIsErrorInput] = useState({
     error: false,
     label: "Enter Sub title",
   });
-   
+
   // const parseLong 
   const currentDate = new Date();
   const formattedDate = currentDate.toISOString();
@@ -52,9 +52,9 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
   const [tagData, setTagData] = useState([]);
   const [title, setTitle] = useState("");
 
-  const [id,setId] = useState("");
-  const [userId,setuserId] = useState("");
-  const [deptId,setdeptId] = useState("");
+  const [id, setId] = useState("");
+  const [userId, setuserId] = useState("");
+  const [deptId, setdeptId] = useState("");
 
   const [openTag, setOpenTag] = React.useState(false);
   const handleOpenTag = () => {
@@ -71,7 +71,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
 
     setInputVal(e.target.value)
     setInputValue(e.target.value)
-   
+
   }
 
   const [selectedValue, setSelectedValue] = useState(1); // Defaulting to "Public"
@@ -86,12 +86,12 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
   };
 
 
-  useEffect(() =>{
+  useEffect(() => {
     setInputValue(articleData?.tag_title)
   })
 
-  useEffect(() =>{
-   
+  useEffect(() => {
+
     setInputVal(articleData?.title)
   }, [setInputVal])
 
@@ -99,7 +99,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
   const handleSave = (e: any) => {
     e.preventDefault();
     let content: string = "";
-    let userId : String = ""; 
+    let userId: String = "";
 
 
     if (editorRef.current) {
@@ -135,16 +135,16 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
       "status": selectedValue
     }
     const input = {
-      "id" : articleData?.id,
+      "id": articleData?.id,
       "title": inputval,
       "content_body": content,
       "user_id": articleData?.user_id,
-      "dept_id" : session?.user.dvsn_CD,
-      "modifiedBy":session?.user.userId,
-      "modified_date":formattedDate,
+      "dept_id": session?.user.dvsn_CD,
+      "modifiedBy": session?.user.userId,
+      "modified_date": formattedDate,
     }
 
-    if(articleData== null){
+    if (articleData == null) {
       AddArticleBy(request).then((res: any) => {
         if (res.status == 200) {
           setIsErrorAlert({
@@ -164,35 +164,35 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
             message: "Something wrong...",
           });
           handleClose();
-  
+
         }
       })
     }
-    else{
-      UpdateArticle(input).then((rec:any)=>{
-        console.log("rec work",rec)
-        if(rec.status == 200){
+    else {
+      UpdateArticle(input).then((rec: any) => {
+        console.log("rec work", rec)
+        if (rec.status == 200) {
           setIsUpdateArticle({
             ...isUpdateArticle,
-            open:true,
-            type:"success",
+            open: true,
+            type: "success",
             message: "Update article successfully",
           });
           dispatch(isRender(true))
           handleClose();
-        }else{
+        } else {
           setIsUpdateArticle({
             ...isUpdateArticle,
-            open:true,
-            type:"error",
+            open: true,
+            type: "error",
             message: "Something went wrong. Can't update...",
           })
           handleClose();
         }
       })
-      
+
     }
-    
+
   }
 
   useEffect(() => {
@@ -246,26 +246,26 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
           <div className='flex mb-4'>
             <div className='flex items-center mr-8'>
               <aside>
-              <Autocomplete
-                value={showDefaultValue ? tagValue : null}
-                onChange={(event: any, newValue: string | null) => {
-                  setTagValue(newValue);
-                }}
-                defaultValue={inputValue}
-                onInputChange={(event, newInputValue) => {
-                  setShowDefaultValue(true);
-                  setInputValue(newInputValue);
-                }}
-                disablePortal
-                size="small"
-                id="combo-box-demo"
-                options={tagData}
-                inputValue={inputValue}
-                sx={{ width: 300, mr: 2 }}
-                renderInput={(params) => <TextField {...params} label="Search Tag name"  />}
-              />
+                <Autocomplete
+                  value={showDefaultValue ? tagValue : null}
+                  onChange={(event: any, newValue: string | null) => {
+                    setTagValue(newValue);
+                  }}
+                  defaultValue={inputValue}
+                  onInputChange={(event, newInputValue) => {
+                    setShowDefaultValue(true);
+                    setInputValue(newInputValue);
+                  }}
+                  disablePortal
+                  size="small"
+                  id="combo-box-demo"
+                  options={tagData}
+                  inputValue={inputValue}
+                  sx={{ width: 300, mr: 2 }}
+                  renderInput={(params) => <TextField {...params} label="Search Tag name" />}
+                />
               </aside>
-              
+
               <button type='button' onClick={handleOpenTag} className="btn btn-active btn-primary btn-sm">Add New</button>
             </div>
 
@@ -278,7 +278,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
               label={isErrorInput.label}
               variant="outlined"
               autoFocus
-            
+
             />
             <select
               value={selectedValue} // Bind the selected value to state
@@ -292,7 +292,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
           <Editor
             apiKey='51cakyf7l011kd34r23bib5jrvh79lb520v82wpid72wq92n'
             onInit={(_evt, editor) => editorRef.current = editor}
-            initialValue= {articleData?.content_body}
+            initialValue={articleData?.content_body}
             init={{
               height: 500,
               menu: {
@@ -318,7 +318,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
         </form >
       </div >
 
-      <TagComponent open={openTag}  setOpen={setOpenTag} user={session?.user} sendDataToParent={handleChildData} />
+      <TagComponent open={openTag} setOpen={setOpenTag} user={session?.user} sendDataToParent={handleChildData} />
     </>
   )
 
