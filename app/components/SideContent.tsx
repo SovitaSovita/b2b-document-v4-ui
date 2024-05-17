@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 import Breadcrumbs from './Breadcrumbs'
 import Page from '../(root)/vanda/page';
 
@@ -46,10 +46,10 @@ function SideContent() {
     const router = useRouter();
     // Favorite
     const isFavorite = useSelector((state: RootState) => state.article.isFavorite);
+    // const [isFavorite, setIsFavorite] = useState(article.isFavorite);
     const { data: session, status }: { data: any, status: any } = useSession();
     const path = useParams();
     const dispatch = useDispatch()
-    const [isFavorites, setIsFavorites] = useState(false);
 
     const [isErrorAlert, setIsErrorAlert] = React.useState({
         open: false,
@@ -87,14 +87,13 @@ function SideContent() {
 
         deleteArticle(articleId!).then((res) => {
             if (res.code == "200") {
-                setIsErrorAlert({
+       +         setIsErrorAlert({
                     ...isErrorAlert,
                     open: true,
                     type: "success",
                     message: "Deleted Successfully.",
                 });
-                //dispatch(isRender(true));
-                setIsFavorites(true);
+                dispatch(isRender(true));
                 setOpenAskCf(false)
             }
             else {
@@ -126,6 +125,7 @@ function SideContent() {
                 })
                 dispatch(isRender(true));
                 setOpenAskCf(false)
+                
             } else {
                 setIsErrorAlert({
                     ...isErrorAlert,
@@ -155,6 +155,7 @@ function SideContent() {
                     message: "Delete success."
                 })
                 dispatch(isRender(true));
+                
             } else {
                 setIsErrorAlert({
                     ...isErrorAlert,
@@ -269,10 +270,7 @@ function SideContent() {
                                         }
                                     </div>
                                 </div>
-
                                 <div dangerouslySetInnerHTML={{ __html: article?.content_body }} />
-
-
                             </div>
 
 
