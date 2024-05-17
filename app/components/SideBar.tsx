@@ -96,6 +96,10 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
     console.log(FAVORITE)
 
 
+    function handleUpdate(){
+        alert();
+    }
+
     return (
         <div className="drawer-side">
             <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
@@ -126,6 +130,10 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                     </details >
                 </li >
                 {
+                    TAGS.map((item, index) => (
+                        <span style={{ width: '160px', display: 'inline-flex' }}>
+                            <li key={index + 1} >
+
                     TAGS.map((item, index) => (
                         <span style={{ width: '160px', display: 'inline-flex' }}>
                             <li key={index + 1} >
