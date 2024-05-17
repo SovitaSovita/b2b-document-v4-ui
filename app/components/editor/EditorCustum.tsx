@@ -122,7 +122,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
 
     const request = {
       "tag_id": tagValue?.id,
-      "title": title,
+      "title": inputval,
       "content_body": content,
       "file_article_id": "123",
       "status": 1
