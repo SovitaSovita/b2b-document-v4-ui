@@ -25,6 +25,8 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
 
   const reRederMenu = useSelector((state: RootState) => state?.article.isRender);
+  const reRederFavorite = useSelector((state : RootState) => state?.favorite.isRender);
+  const [favorites, setFavorites] = useState<any>([]);
 
   useEffect(() => {
     setIsLoading(true)
@@ -35,21 +37,19 @@ export default function Home() {
     })
   }, [reRederMenu])
 
-  const [favorites, setFavorites] = useState<any>([]);
+  
 
 
   // Favorote
   function handleViewFavorite(user_id: string) {
     getFavoriteDetail(user_id).then((res) => {
-      console.log("Favorite response", res);
       setFavorites(res);
-    })
+    },)
   }
 
   useEffect(() => {
-    // Get user_id
     handleViewFavorite(session?.user?.userId);
-  }, [session])
+  }, [session, reRederFavorite])
 
   // if (isLoading) {
   //   return (

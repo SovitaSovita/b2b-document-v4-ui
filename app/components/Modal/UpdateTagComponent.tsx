@@ -100,6 +100,6 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData }: any
           </div>
         </Fade>
       </Modal>
-    </div >
+    </div > 
   );
 }
