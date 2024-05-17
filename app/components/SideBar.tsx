@@ -40,32 +40,19 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
 
     //const handleOpenTag = () => setOpenTag(true);
     const [openTag, setOpenTag] = React.useState(false);
+    const [openTags, setOpenTags] = React.useState(false);
     const [tagUpdateData, setTagUpdateData] = React.useState({});
     const [tagDeleteData, setTagDeleteData] = React.useState({});
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const openModal = (item: any) => {
-        setIsModalOpen(true);
-    }
-    const closeModal = () => setIsModalOpen(false);
+
 
     const handleOpenTag = (item: any) => {
         setTagUpdateData(item)
         setOpenTag(true)
     };
     const handleDelete = (item: any) => {
-        DeleteTagComponent
-        //setOpenTag(true)
+        setTagDeleteData(item)
+        setOpenTags(true)
     }
-    // const handleDelete = (e: any) => {
-    //     //setTagDeleteData(item)
-    //     const request ={
-    //         //id:tagDeleteData.id
-    //     }
-    //     DeleteTag(request).then((res:any)=>{
-    //         alert("ok")
-
-    //     })
-    // }
     const dispatch = useDispatch();
 
     // Function to filter articles based on tag_id
@@ -147,7 +134,7 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                                             </div>
                                         </li>
                                         <li>
-                                            <div className='flex items-center text-red-400' onClick={() => openModal(item)}>
+                                            <div className='flex items-center text-red-400' onClick={() => handleDelete(item)}>
                                                 <DeleteIcon />
                                                 <span>Detele</span>
                                             </div>
@@ -185,16 +172,7 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
                                 </details>
 
                             </li>
-                            <li>
-                                <div className='btn btn-ghost btn-circle' onClick={() => handleOpenTag(item)}>
-                                    <EditIcon />
-                                </div>
-                            </li>
-                            <li>
-                                <div className='btn btn-ghost btn-circle' onClick={() =>openModal(item)}>
-                                    <DeleteIcon />
-                                </div>
-                            </li>
+   
 
 
                         </span>
@@ -205,7 +183,7 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
             </ul >
 
             <UpdateTagComponent open={openTag} setOpen={setOpenTag} tagUpdateData={tagUpdateData} />
-            {/* <DeleteTagComponent open={openTag} setOpen={setOpenTag} tagUpdateData={tagUpdateData} /> */}
+            <DeleteTagComponent open={openTags} setOpen={setOpenTags} tagDeleteData={tagDeleteData} /> 
 
         </div >
     )
