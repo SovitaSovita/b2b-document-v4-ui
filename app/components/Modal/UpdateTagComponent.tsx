@@ -1,3 +1,4 @@
+
 import { isRender } from '@/app/service/Redux/articleDetailSlice';
 import { UpdateTag } from '@/app/service/TagService';
 import { Backdrop, Fade, Modal } from '@mui/material';
@@ -5,7 +6,12 @@ import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+
 export default function UpdateTagComponent({ open, setOpen, tagUpdateData }: any) {
+
+
+
+  console.log("tagUpdateData >>>", tagUpdateData);
   const currentDate = new Date();
   const formattedDate = currentDate.toISOString();
   const dispatch = useDispatch()
@@ -56,7 +62,6 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData }: any
           message: "Updated Successfully.",
         });
         handleClose();
-        dispatch(isRender(true));
 
       })
     }
@@ -100,6 +105,6 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData }: any
           </div>
         </Fade>
       </Modal>
-    </div > 
+    </div >
   );
 }
