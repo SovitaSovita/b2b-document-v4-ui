@@ -4,7 +4,8 @@ import articleDetailSlice from '../articleDetailSlice'
 export const store = configureStore({
     reducer: {
         article: articleDetailSlice,
-        favorite: articleDetailSlice
+        favorite: articleDetailSlice,
+        
     },
 })
 
