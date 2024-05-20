@@ -6,7 +6,6 @@ import React, { useEffect, useState } from 'react';
 export default function UpdateTagComponent({ open, setOpen, tagUpdateData }: any) {
 
 
-
   console.log("tagUpdateData >>>", tagUpdateData);
   const currentDate = new Date();
   const formattedDate = currentDate.toISOString();

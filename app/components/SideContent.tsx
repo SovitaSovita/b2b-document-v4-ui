@@ -41,8 +41,6 @@ interface SideContentProps {
     dept_id: number;
 }
 
-
-
 function SideContent() {
 
     const { article }: { article: any } = useSelector((state: RootState) => state?.article);

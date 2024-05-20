@@ -8,8 +8,6 @@ function Breadcrumbs() {
         return pathname.replace(/^\//, '').split('/');
     }
 
-    // console.log(formatPath("/joo"))
-
     return (
         <div className="text-sm breadcrumbs">
             <ul>
@@ -20,5 +18,5 @@ function Breadcrumbs() {
         </div>
     )
 }
-
+               
 export default Breadcrumbs
