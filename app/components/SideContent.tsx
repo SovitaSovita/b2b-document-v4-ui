@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 import Breadcrumbs from './Breadcrumbs'
 import Page from '../(root)/vanda/page';
 
@@ -62,10 +62,10 @@ function SideContent({ openMainDrawer }: any) {
     const router = useRouter();
     // Favorite yuth
     const isFavorite = useSelector((state: RootState) => state.article.isFavorite);
+    // const [isFavorite, setIsFavorite] = useState(article.isFavorite);
     const { data: session, status }: { data: any, status: any } = useSession();
     const path = useParams();
     const dispatch = useDispatch()
-    const [isFavorites, setIsFavorites] = useState(false);
 
     const [isErrorAlert, setIsErrorAlert] = React.useState({
         open: false,
@@ -103,14 +103,13 @@ function SideContent({ openMainDrawer }: any) {
 
         deleteArticle(articleId!).then((res) => {
             if (res.code == "200") {
-                setIsErrorAlert({
+       +         setIsErrorAlert({
                     ...isErrorAlert,
                     open: true,
                     type: "success",
                     message: "Deleted Successfully.",
                 });
                 dispatch(isRender(true));
-                setIsFavorites(true);
                 setOpenAskCf(false)
             }
             else {
@@ -142,6 +141,7 @@ function SideContent({ openMainDrawer }: any) {
                 })
                 dispatch(isRender(true));
                 setOpenAskCf(false)
+                
             } else {
                 setIsErrorAlert({
                     ...isErrorAlert,
@@ -171,6 +171,7 @@ function SideContent({ openMainDrawer }: any) {
                     message: "Delete success."
                 })
                 dispatch(isRender(true));
+                
             } else {
                 setIsErrorAlert({
                     ...isErrorAlert,
