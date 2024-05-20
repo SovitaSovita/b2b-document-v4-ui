@@ -90,7 +90,7 @@ function SideContent() {
 
         deleteArticle(articleId!).then((res) => {
             if (res.code == "200") {
-       +         setIsErrorAlert({
+                setIsErrorAlert({
                     ...isErrorAlert,
                     open: true,
                     type: "success",
@@ -128,7 +128,7 @@ function SideContent() {
                 })
                 dispatch(isRender(true));
                 setOpenAskCf(false)
-                
+
             } else {
                 setIsErrorAlert({
                     ...isErrorAlert,
@@ -158,7 +158,7 @@ function SideContent() {
                     message: "Delete success."
                 })
                 dispatch(isRender(true));
-                
+
             } else {
                 setIsErrorAlert({
                     ...isErrorAlert,
