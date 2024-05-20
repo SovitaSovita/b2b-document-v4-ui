@@ -1,6 +1,4 @@
 import React, { FormEvent, useEffect, useState } from 'react'
-import Breadcrumbs from './Breadcrumbs'
-import Page from '../(root)/vanda/page';
 
 import LeftDrawerCustom from './Profile/LeftDrawerCustom'
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,11 +7,8 @@ import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
 import Profile from './Profile/Profile';
 import ProfileDrawer from './Profile/ProfileDrawer';
-import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import ReplyAllOutlinedIcon from '@mui/icons-material/ReplyAllOutlined';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import LoadingCustom from './Material/Loading';
 import { useParams, useRouter } from 'next/navigation';
 import HomeContent from './HomeContent';
 
@@ -186,11 +181,13 @@ function SideContent({ openMainDrawer }: any) {
     }
 
     const onChange = (e: any) => {
-        if ("dark" === localStorage.getItem("mode")) {
-            localStorage.setItem("mode", "light");
-        }
-        else {
-            localStorage.setItem("mode", "dark");
+        if (typeof window !== 'undefined') {
+            if ("dark" === localStorage.getItem("mode")) {
+                localStorage.setItem("mode", "light");
+            }
+            else {
+                localStorage.setItem("mode", "dark");
+            }
         }
         dispatch(isMode(true))
     }

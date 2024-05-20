@@ -4,13 +4,11 @@ import { useSession } from "next-auth/react";
 import SideContent from "../components/SideContent";
 import SideBar from "../components/SideBar/SideBar";
 import React, { useEffect, useState } from "react";
-import { getMenuSidebar } from "../service/MenuService";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../service/Redux/store/store";
 import { isMode, isRender } from "../service/Redux/articleDetailSlice";
 import { GetTagAndArticle } from "../service/TagService";
 import { getFavoriteDetail } from "../service/FavouriteService";
-import LoadingCustom from "../components/Material/Loading";
 
 export default function Home() {
 
@@ -79,8 +77,10 @@ export default function Home() {
   const [mode, setMode] = useState("light");
 
   useEffect(() => {
-    setMode(localStorage.getItem("mode")!);
-    dispatch(isMode(false))
+    if (typeof window !== 'undefined') {
+      setMode(localStorage.getItem("mode")!);
+      dispatch(isMode(false))
+    }
   }, [isMode_theme])
 
 

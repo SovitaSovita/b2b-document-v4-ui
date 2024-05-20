@@ -29,7 +29,6 @@ function Page() {
             body: JSON.stringify(credentials)
         })
         const user = await res.json();
-        console.log(res);
         if (res.ok) {
             localStorage.setItem("userId", credentials?.userId)
             handleOpenOTP()

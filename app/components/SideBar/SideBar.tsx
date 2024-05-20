@@ -148,7 +148,7 @@ function SideBar(props: any) {
 
                 {
                     TAGS.map((item, index) => (
-                        <span className='flex mainManageTag group'>
+                        <span key={index} className='flex mainManageTag group'>
                             <div className='w-6'>
                                 <div className="dropdown dropdown-hover dropdown-top mt-2.5 opacity-0 hidden group-hover:block group-hover:opacity-100 transition-all">
                                     <div tabIndex={0} role="button">
