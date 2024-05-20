@@ -132,7 +132,7 @@ function SideBar(props: any) {
                             <ul className='pt-1'>
                                 {FAVORITE.map((item: any, index) => (
                                     <li key={index} onClick={() => {
-                                        console.log(item.article_id);
+                                        // console.log(item.article_id);
                                         handleViewArticle(item?.article_id.toString());
                                     }}>
                                         <a className="text-[13px]">{item?.title}</a>

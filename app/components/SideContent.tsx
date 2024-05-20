@@ -27,14 +27,15 @@ import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutl
 import TagComponent from './Modal/TagComponent';
 import { AddArticleBy, deleteArticle } from '../service/ArticleService';
 import CustomAlert from './Material/CustomAlert';
-import { isRender } from '../service/Redux/articleDetailSlice';
+import { getArticle, isRender, getFavorite, isFavorite } from '../service/Redux/articleDetailSlice';
 import AskToConfirmModal from './Modal/AskToConfirmModal';
-// import { getFavorite, checkIsFavorite } from '../service/Favourite';
 import ihttp, { UI_BASE_URL } from '../utils/xhttp';
-import { MenuData } from '../type/MenuData';
-import { addToFavorite, deleteFavorite } from '../service/FavouriteService';
+import { addToFavorite, checkIsFavorite, deleteFavorite } from '../service/FavouriteService';
 import UpdateArticleModal from './Modal/UpdateArticleModal';
 import { styled } from '@mui/material';
+import { getArticleDetail } from '../service/MenuService';
+
+
 
 const drawerWidth = 320;
 
@@ -60,9 +61,9 @@ function SideContent({ openMainDrawer }: any) {
 
     const { article }: { article: any } = useSelector((state: RootState) => state?.article);
     const router = useRouter();
-    // Favorite yuth
-    const isFavorite = useSelector((state: RootState) => state.article.isFavorite);
-    // const [isFavorite, setIsFavorite] = useState(article.isFavorite);
+    // Favorite 
+    const isFavorites = useSelector((state: RootState) => state.article.isFavorite);
+
     const { data: session, status }: { data: any, status: any } = useSession();
     const path = useParams();
     const dispatch = useDispatch()
@@ -124,6 +125,22 @@ function SideContent({ openMainDrawer }: any) {
         })
     }
 
+    
+    function handleViewArticle(id: string) {
+        getArticleDetail(id).then((res) => {
+            dispatch(getArticle(res?.rec[0]))
+        })
+        checkIsFavorite(session.user.userId, parseInt(id, 10), session.user.dvsn_CD).then((data) => {
+            if (data != null) {
+                dispatch(isFavorite(true))
+            }
+            else {
+                dispatch(isFavorite(false))
+            }
+        })
+    }
+
+
     // Add to favorite
     const handleAddFavorite = async (article_id: number) => {
         try {
@@ -140,7 +157,10 @@ function SideContent({ openMainDrawer }: any) {
                     message: "Add to favorite success."
                 })
                 dispatch(isRender(true));
+                // dispatch(getArticle(true))
                 setOpenAskCf(false)
+                handleViewArticle(article_id.toString())
+                
 
             } else {
                 setIsErrorAlert({
@@ -171,6 +191,7 @@ function SideContent({ openMainDrawer }: any) {
                     message: "Delete success."
                 })
                 dispatch(isRender(true));
+                handleViewArticle(article_id.toString())
 
             } else {
                 setIsErrorAlert({
@@ -276,7 +297,7 @@ function SideContent({ openMainDrawer }: any) {
                                             {/* Favorite */}
 
                                             {
-                                                isFavorite ? (
+                                                isFavorites ? (
                                                     <FavoriteBorderOutlinedIcon onClick={() => handleDeleteFavorite(article?.id, session.user.userId)} className='mr-3' style={{ cursor: 'pointer', color: 'red' }} />
                                                 ) : (
                                                     <FavoriteBorderOutlinedIcon onClick={() => handleAddFavorite(article?.id)} className='mr-3' style={{ cursor: 'pointer', color: 'black' }} />
