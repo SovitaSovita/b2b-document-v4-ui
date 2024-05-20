@@ -191,12 +191,10 @@ function SideBar({ ARTICLES, TAGS, FAVORITE }: MenuData) {
 
                 }
             </ul >
-
             <UpdateTagComponent open={openTag} setOpen={setOpenTag} tagUpdateData={tagUpdateData} />
             <DeleteTagComponent open={openTags} setOpen={setOpenTags} tagDeleteData={tagDeleteData} /> 
 
         </div >
     )
 }
-
 export default SideBar 
