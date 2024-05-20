@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="light">
+    <html lang="en">
       <head>
         <link rel="icon" href="https://www.kosign.com.kh/images/Vectors-Wrapper.svg" />
       </head>

@@ -4,7 +4,9 @@ const initialState = {
     article: {},
     favorite: {},
     isRender: false,
-    isFavorite: false
+    isFavorite: false,
+    isMode: false,
+    getOptionData: "",
 }
 
 const articleSlice = createSlice({
@@ -18,17 +20,21 @@ const articleSlice = createSlice({
             state.favorite = action.payload
         },
         isFavorite(state, action) {
-            console.log("action.payload >> >", action.payload)
-            console.log("state.isFavorite >> >", state.isFavorite)
             state.isFavorite = action.payload
         },
         isRender(state, action) {
             state.isRender = action.payload
         },
-        
+        getOptionData(state, action) {
+            state.getOptionData = action.payload
+        },
+        isMode(state, action) {
+            state.isMode = action.payload
+        },
+
     },
 })
 
 
-export const { getArticle, getFavorite, isFavorite, isRender } = articleSlice.actions
+export const { getArticle, getFavorite, isFavorite, isRender, getOptionData, isMode } = articleSlice.actions
 export default articleSlice.reducer

@@ -27,7 +27,7 @@ import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutl
 import TagComponent from './Modal/TagComponent';
 import { AddArticleBy, deleteArticle } from '../service/ArticleService';
 import CustomAlert from './Material/CustomAlert';
-import { isRender } from '../service/Redux/articleDetailSlice';
+import { isMode, isRender } from '../service/Redux/articleDetailSlice';
 import AskToConfirmModal from './Modal/AskToConfirmModal';
 // import { getFavorite, checkIsFavorite } from '../service/Favourite';
 import ihttp, { UI_BASE_URL } from '../utils/xhttp';
@@ -103,7 +103,7 @@ function SideContent({ openMainDrawer }: any) {
 
         deleteArticle(articleId!).then((res) => {
             if (res.code == "200") {
-       +         setIsErrorAlert({
+                +         setIsErrorAlert({
                     ...isErrorAlert,
                     open: true,
                     type: "success",
@@ -141,7 +141,7 @@ function SideContent({ openMainDrawer }: any) {
                 })
                 dispatch(isRender(true));
                 setOpenAskCf(false)
-                
+
             } else {
                 setIsErrorAlert({
                     ...isErrorAlert,
@@ -171,7 +171,7 @@ function SideContent({ openMainDrawer }: any) {
                     message: "Delete success."
                 })
                 dispatch(isRender(true));
-                
+
             } else {
                 setIsErrorAlert({
                     ...isErrorAlert,
@@ -183,6 +183,16 @@ function SideContent({ openMainDrawer }: any) {
         } catch (error) {
             console.error("Error deleting from favorites:", error);
         }
+    }
+
+    const onChange = (e: any) => {
+        if ("dark" === localStorage.getItem("mode")) {
+            localStorage.setItem("mode", "light");
+        }
+        else {
+            localStorage.setItem("mode", "dark");
+        }
+        dispatch(isMode(true))
     }
 
 
@@ -212,6 +222,7 @@ function SideContent({ openMainDrawer }: any) {
                                     <input
                                         type="checkbox"
                                         name="mode"
+                                        onChange={onChange}
                                         className="theme-controller"
                                         value={"dark"}
                                     />
