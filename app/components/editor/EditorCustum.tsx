@@ -159,7 +159,6 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
             message: "Update article successfully",
           });
           AddArticleBy(articleData?.id)
-          dispatch(isRender(true));
           handleClose();
         } else {
           setIsUpdateArticle({
