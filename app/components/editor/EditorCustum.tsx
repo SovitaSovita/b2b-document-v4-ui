@@ -1,30 +1,26 @@
 "use client"
 import { AddArticleBy, UpdateArticle } from '@/app/service/ArticleService'
-import { GetAllDepartmentId } from '@/app/service/DepartmentService'
 import { GetTagAndArticle } from '@/app/service/TagService'
-import { DepartmentList } from '@/app/type/DepartmentType'
-import ihttp, { API_BASE_URL } from '@/app/utils/xhttp'
-import { Autocomplete, Popper, TextField } from '@mui/material'
+import { API_BASE_URL } from '@/app/utils/xhttp'
+import { Autocomplete, TextField } from '@mui/material'
 import { Editor } from '@tinymce/tinymce-react'
-import { useSession } from 'next-auth/react'
-import { hasCustomGetInitialProps } from 'next/dist/build/utils'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 import CustomAlert from '../Material/CustomAlert'
 import TagComponent from '../Modal/TagComponent'
 import { isRender } from '@/app/service/Redux/articleDetailSlice'
 import { useDispatch } from 'react-redux'
+import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 
 
 
 export default function EditorCustum({ handleClose, session, articleData }: any) {
-  console.log("session>>>", session)
+  // console.log("session>>>", session)
   const editorRef = useRef<any>(null);
   const dispatch = useDispatch()
 
   const [tagValue, setTagValue] = React.useState<TagType | any>();
   const [inputValue, setInputValue] = React.useState('');
-  const [inputval, setInputVal] = useState('');
   const [isErrorAlert, setIsErrorAlert] = useState({
     open: false,
     type: "",
@@ -52,10 +48,6 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
   const [tagData, setTagData] = useState([]);
   const [title, setTitle] = useState("");
 
-  const [id, setId] = useState("");
-  const [userId, setuserId] = useState("");
-  const [deptId, setdeptId] = useState("");
-
   const [openTag, setOpenTag] = React.useState(false);
   const handleOpenTag = () => {
     setOpenTag(true);
@@ -65,13 +57,6 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
   const onchange = (e: any) => {
     const value = e.target.value
     setTitle(value)
-    setId(value)
-    setuserId(value)
-    setdeptId(value)
-
-    setInputVal(e.target.value)
-    setInputValue(e.target.value)
-
   }
 
   const [selectedValue, setSelectedValue] = useState(1); // Defaulting to "Public"
@@ -87,36 +72,31 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
 
 
   useEffect(() => {
-    setInputValue(articleData?.tag_title)
-  })
-
-  useEffect(() => {
-
-    setInputVal(articleData?.title)
-  }, [setInputVal])
+    if (articleData != null) {
+      setInputValue(articleData?.tag_title)
+      setTitle(articleData?.title)
+    }
+  }, [inputValue])
 
 
   const handleSave = (e: any) => {
     e.preventDefault();
     let content: string = "";
-    let userId: String = "";
 
 
     if (editorRef.current) {
       content = editorRef.current.getContent();
     }
-    // if (editorRef.current) {
-    //   userId = editorRef.current.getuserId();
-    // }
 
-    if (!tagValue) {
+
+    if (!tagValue && articleData == null) {
       setIsErrorAlert({
         ...isErrorAlert,
         open: true,
         type: "error",
         message: "Tag name can't empty.",
       });
-      //return;
+      return;
     }
 
     if (title === "") {
@@ -124,27 +104,18 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
         error: true,
         label: 'Enter Sub title',
       })
-      //return;
-    }
-
-    const request = {
-      "tag_id": tagValue?.id,
-      "title": title,
-      "content_body": content,
-      "file_article_id": "123",
-      "status": selectedValue
-    }
-    const input = {
-      "id": articleData?.id,
-      "title": inputval,
-      "content_body": content,
-      "user_id": articleData?.user_id,
-      "dept_id": session?.user.dvsn_CD,
-      "modifiedBy": session?.user.userId,
-      "modified_date": formattedDate,
+      return;
     }
 
     if (articleData == null) {
+      const request = {
+        "tag_id": tagValue?.id,
+        "title": title,
+        "content_body": content,
+        "file_article_id": "123",
+        "status": selectedValue
+      }
+
       AddArticleBy(request).then((res: any) => {
         if (res.status == 200) {
           setIsErrorAlert({
@@ -169,8 +140,17 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
       })
     }
     else {
+      const input = {
+        "id": articleData?.id,
+        "title": title,
+        "content_body": content,
+        "user_id": articleData?.user_id,
+        "dept_id": session?.user.dvsn_CD,
+        "modifiedBy": session?.user.userId,
+        "modified_date": formattedDate,
+      }
+
       UpdateArticle(input).then((rec: any) => {
-        console.log("rec work", rec)
         if (rec.status == 200) {
           setIsUpdateArticle({
             ...isUpdateArticle,
@@ -244,36 +224,43 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
       <div className='px-24 mt-14'>
         <form onSubmit={handleSave} className="ui form">
           <div className='flex mb-4'>
-            <div className='flex items-center mr-8'>
-              <aside>
-                <Autocomplete
-                  value={showDefaultValue ? tagValue : null}
-                  onChange={(event: any, newValue: string | null) => {
-                    setTagValue(newValue);
-                  }}
-                  defaultValue={inputValue}
-                  onInputChange={(event, newInputValue) => {
-                    setShowDefaultValue(true);
-                    setInputValue(newInputValue);
-                  }}
-                  disablePortal
-                  size="small"
-                  id="combo-box-demo"
-                  options={tagData}
-                  inputValue={inputValue}
-                  sx={{ width: 300, mr: 2 }}
-                  renderInput={(params) => <TextField {...params} label="Search Tag name" />}
-                />
-              </aside>
+            {
+              !articleData ? (
+                <div className='flex items-center mr-8'>
+                  <Autocomplete
+                    value={showDefaultValue ? tagValue : null}
+                    onChange={(event: any, newValue: string | null) => {
+                      setTagValue(newValue);
+                    }}
+                    defaultValue={inputValue}
+                    onInputChange={(event, newInputValue) => {
+                      setShowDefaultValue(true);
+                      setInputValue(newInputValue);
+                    }}
+                    disablePortal
+                    size="small"
+                    id="combo-box-demo"
+                    options={tagData}
+                    inputValue={inputValue}
+                    sx={{ width: 300, mr: 2 }}
+                    renderInput={(params) => <TextField {...params} label="Search Tag name" />}
+                  />
+                  < button type='button' onClick={handleOpenTag} className="btn btn-active btn-primary btn-sm">Add New</button>
+                </div>
+              ) : (
+                <div className='btn btn-secondary btn-sm mr-3'>
+                  <LocalOfferOutlinedIcon className='text-base' />
+                  {articleData?.tag_title}
+                </div>
+              )
+            }
 
-              <button type='button' onClick={handleOpenTag} className="btn btn-active btn-primary btn-sm">Add New</button>
-            </div>
 
             <TextField
               error={isErrorInput.error}
-              onChange={(e) => setInputVal(e.target.value)}
+              onChange={onchange}
               id="outlined-basic"
-              value={inputval}
+              value={title}
               size='small'
               label={isErrorInput.label}
               variant="outlined"

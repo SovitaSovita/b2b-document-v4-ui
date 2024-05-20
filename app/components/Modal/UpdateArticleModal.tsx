@@ -12,9 +12,6 @@ import EditorCustum from '../editor/EditorCustum';
 
 function UpdateArticleModal({ open, setOpen, session, articleData }: any) {
 
-    console.log("work")
-    console.log("articleData ??", articleData)
-
     const dispatch = useDispatch()
     const [inputVal, setInputVal] = useState<string>();
     const router = useRouter()
@@ -57,7 +54,7 @@ function UpdateArticleModal({ open, setOpen, session, articleData }: any) {
             >
                 <Fade in={open}>
                     <div className='w-full h-full overflow-scroll bg-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg p-6'>
-                        <EditorCustum handleClose={handleClose} session={session} articleData={articleData}/>
+                        <EditorCustum handleClose={handleClose} session={session} articleData={articleData} />
                     </div>
                 </Fade>
             </Modal>
