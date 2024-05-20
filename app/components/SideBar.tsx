@@ -32,7 +32,7 @@ const drawerWidth = 320;
 function SideBar(props: any) {
     const { ARTICLES, TAGS, FAVORITE }: MenuData = props
     const { handleDrawerClose, openMainDrawer }: any = props
-
+    console.log("LAST>>>",TAGS)
     const { data: session, status }: { data: any, status: any } = useSession();
     const [activeItemId, setActiveItemId] = useState("");
 
@@ -41,6 +41,7 @@ function SideBar(props: any) {
     const [openTag, setOpenTag] = React.useState(false);
     const [openTags, setOpenTags] = React.useState(false);
     const [tagUpdateData, setTagUpdateData] = React.useState({});
+    const [tagData , settagData] = React.useState({})
     const [tagDeleteData, setTagDeleteData] = React.useState({});
 
 

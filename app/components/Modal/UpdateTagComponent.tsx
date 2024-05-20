@@ -62,6 +62,7 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData }: any
           message: "Updated Successfully.",
         });
         handleClose();
+        dispatch(isRender(true))
 
       })
     }
