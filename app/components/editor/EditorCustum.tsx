@@ -8,18 +8,20 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 import CustomAlert from '../Material/CustomAlert'
 import TagComponent from '../Modal/TagComponent'
-import { isRender } from '@/app/service/Redux/articleDetailSlice'
+import { getArticle, isRender } from '@/app/service/Redux/articleDetailSlice'
 import { useDispatch } from 'react-redux'
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
+import { getArticleDetail } from '@/app/service/MenuService'
+import { MenuData } from '@/app/type/MenuData'
 
 
 
 export default function EditorCustum({ handleClose, session, articleData }: any) {
-  // console.log("session>>>", session)
   const editorRef = useRef<any>(null);
   const dispatch = useDispatch()
 
   const [tagValue, setTagValue] = React.useState<TagType | any>();
+  console.log("tagValue=====",tagValue)
   const [inputValue, setInputValue] = React.useState('');
   const [isErrorAlert, setIsErrorAlert] = useState({
     open: false,
@@ -69,6 +71,13 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
     setShowDefaultValue(true);
     setTagValue(dataFromChild);
   };
+
+  const handleViewArticle = (id: string) => {
+    getArticleDetail(id).then((res) => {
+      console.log("id",id)
+       dispatch(getArticle(res?.rec[0]))
+    })
+  }
 
 
   useEffect(() => {
@@ -158,18 +167,20 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
             type: "success",
             message: "Update article successfully",
           });
-          AddArticleBy(articleData?.id)
+          //dispatch(isRender(true))
           handleClose();
+          handleViewArticle(articleData?.id)
         } else {
           setIsUpdateArticle({
             ...isUpdateArticle,
-            open: true,
+            open: true, 
             type: "error",
             message: "Something went wrong. Can't update...",
           })
           handleClose();
         }
       })
+    
 
     }
 
