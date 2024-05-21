@@ -52,7 +52,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
     }),
 }));
 
-function SideContent({ openMainDrawer }: any) {
+function SideContent({ openMainDrawer , setOpen}: any) {
 
     const { article }: { article: any } = useSelector((state: RootState) => state?.article);
     const router = useRouter();
@@ -69,6 +69,9 @@ function SideContent({ openMainDrawer }: any) {
         message: "",
         duration: 1600,
     });
+    const handleClose = () => {
+        setOpen(false)
+      };
 
     const [openSearch, setOpenSearch] = React.useState(false);
     const handleOpenSearch = () => setOpenSearch(true);
@@ -165,6 +168,9 @@ function SideContent({ openMainDrawer }: any) {
                     message: "Faild add to favorite. Please try again."
                 })
             }
+            handleClose()
+            //dispatch(handleOpenArticle(art);
+            setOpenAskCf(false)
         } catch (error) {
             console.error("Error adding to favorites:", error);
         }

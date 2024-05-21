@@ -1,3 +1,4 @@
+
 import { isRender } from '@/app/service/Redux/articleDetailSlice';
 import { UpdateTag } from '@/app/service/TagService';
 import { Backdrop, Fade, Modal } from '@mui/material';
@@ -5,14 +6,15 @@ import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+
 export default function UpdateTagComponent({ open, setOpen, tagUpdateData }: any) {
 
 
 
-  // console.log("tagUpdateData >>>", tagUpdateData);
-  const dispatch = useDispatch()
+  console.log("tagUpdateData >>>", tagUpdateData);
   const currentDate = new Date();
   const formattedDate = currentDate.toISOString();
+  const dispatch = useDispatch()
   //const [inputVal,setInputVal] = useState<String>();
   const [inputVal, setInputVal] = useState("");
   const { data: session, status }: { data: any, status: any } = useSession();
@@ -61,6 +63,7 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData }: any
         });
         handleClose();
         dispatch(isRender(true))
+
       })
     }
 

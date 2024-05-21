@@ -27,37 +27,27 @@ const drawerWidth = 320;
 function SideBar(props: any) {
     const { ARTICLES, TAGS, FAVORITE }: MenuData = props
     const { handleDrawerClose, openMainDrawer }: any = props
-
+    console.log("LAST>>>",TAGS)
     const { data: session, status }: { data: any, status: any } = useSession();
     const [activeItemId, setActiveItemId] = useState("");
 
 
     //const handleOpenTag = () => setOpenTag(true);
     const [openTag, setOpenTag] = React.useState(false);
+    const [openTags, setOpenTags] = React.useState(false);
     const [tagUpdateData, setTagUpdateData] = React.useState({});
+    const [tagData , settagData] = React.useState({})
     const [tagDeleteData, setTagDeleteData] = React.useState({});
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const openModal = (item: any) => {
-        setIsModalOpen(true);
-    }
-    const closeModal = () => setIsModalOpen(false);
+
 
     const handleOpenTag = (item: any) => {
         setTagUpdateData(item)
         setOpenTag(true)
     };
     const handleDelete = (item: any) => {
-        DeleteTagComponent
-        //setOpenTag(true)
+        setTagDeleteData(item)
+        setOpenTags(true)
     }
-    // const handleDelete = (e: any) => {
-    //     //setTagDeleteData(item)
-    //     const request ={
-    //         //id:tagDeleteData.id
-    //     }
-    //     DeleteTag(request).then((res:any)=>{
-    //     })
-    // }
     const dispatch = useDispatch();
 
     // Function to filter articles based on tag_id
@@ -162,7 +152,7 @@ function SideBar(props: any) {
                                             </div>
                                         </li>
                                         <li>
-                                            <div className='flex items-center text-red-400' onClick={() => openModal(item)}>
+                                            <div className='flex items-center text-red-400' onClick={() => handleDelete(item)}>
                                                 <DeleteIcon />
                                                 <span>Detele</span>
                                             </div>
@@ -197,7 +187,11 @@ function SideBar(props: any) {
                                         }
                                     </ul>
                                 </details>
+
                             </li>
+   
+
+
                         </span>
                     ))
                 }
