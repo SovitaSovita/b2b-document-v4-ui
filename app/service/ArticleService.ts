@@ -42,7 +42,6 @@ export const searchArticle = async (title: string) => {
     }
 }
 
-
 export const deleteArticle = async (articleId: number) => {
     try {
         const response = await ihttp.delete(`/articles/delete?articleId=${articleId}`);

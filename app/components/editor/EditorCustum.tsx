@@ -1,5 +1,5 @@
 "use client"
-import { AddArticleBy, UpdateArticle } from '@/app/service/ArticleService'
+import { AddArticleBy, GetArticleById, UpdateArticle } from '@/app/service/ArticleService'
 import { GetTagAndArticle } from '@/app/service/TagService'
 import { API_BASE_URL } from '@/app/utils/xhttp'
 import { Autocomplete, TextField } from '@mui/material'
@@ -268,7 +268,6 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
               )
             }
 
-
             <TextField
               error={isErrorInput.error}
               onChange={onchange}
@@ -308,12 +307,13 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
                 'alignright alignjustify | bullist numlist outdent indent | ' +
                 'removeformat | help',
               images_upload_handler: handleImageUpload,
-              content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+              file_picker_types: 'file image media',
+              content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
             }}
           />
           <div className='mt-8 flex justify-end'>
             <button onClick={handleClose} className="btn btn-active btn-ghost mr-3">Cancel</button>
-            <button type='submit' className="btn btn-active btn-success text-white">Save</button>
+            <button  type='submit' className="btn btn-active btn-success text-white ">Save</button>
           </div>
         </form >
       </div >

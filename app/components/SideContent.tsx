@@ -309,7 +309,6 @@ function SideContent({ openMainDrawer , setOpen}: any) {
                                         {/* Right side icons */}
                                         <div className="flex items-center bg-primary p-2 rounded-lg border">
                                             {/* Favorite */}
-
                                             {
                                                 isFavorites ? (
                                                     <FavoriteBorderOutlinedIcon onClick={() => handleDeleteFavorite(article?.id, session.user.userId)} className='mr-3' style={{ cursor: 'pointer', color: 'red' }} />
