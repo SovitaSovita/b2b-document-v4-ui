@@ -12,7 +12,8 @@ import { useSession } from 'next-auth/react';
 import CustomAlert from '../Material/CustomAlert';
 import { isRender } from '@/app/service/Redux/articleDetailSlice';
 
-function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
+function TagComponent({ open, setOpen, user, sendDataToParent , selectedValue}: any) {
+    console.log("selectedValue",selectedValue)
 
     const dispatch = useDispatch()
     const [inputVal, setInputVal] = useState<string>();
@@ -46,7 +47,7 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
                 dept_id: parseInt(user?.dvsn_CD, 10),
                 title: inputVal,
                 user_name: session?.user.userId,
-                status: 1,
+                status: selectedValue,
                 create_date: formattedDate
             }
             SaveNewTag(request).then((res: any) => {
