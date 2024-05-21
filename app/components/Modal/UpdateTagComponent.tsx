@@ -9,7 +9,7 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData }: any
 
 
 
-  console.log("tagUpdateData >>>", tagUpdateData);
+  // console.log("tagUpdateData >>>", tagUpdateData);
   const dispatch = useDispatch()
   const currentDate = new Date();
   const formattedDate = currentDate.toISOString();

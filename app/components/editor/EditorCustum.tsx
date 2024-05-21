@@ -255,7 +255,6 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
               )
             }
 
-
             <TextField
               error={isErrorInput.error}
               onChange={onchange}
@@ -295,7 +294,8 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
                 'alignright alignjustify | bullist numlist outdent indent | ' +
                 'removeformat | help',
               images_upload_handler: handleImageUpload,
-              content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+              file_picker_types: 'file image media',
+              content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
             }}
           />
           <div className='mt-8 flex justify-end'>
