@@ -11,7 +11,7 @@ export const API_BASE_URL = "http://localhost:4545/api/v1";
 //UI URL
 export const UI_BASE_URL = "http://localhost:3000";
 //api managament URL
-export const API_M_BASE_URL = "http://192.168.178.239:8085";
+export const API_M_BASE_URL = "http://192.168.178.72:8085";
 
 const ihttp = axios.create({
   baseURL: API_BASE_URL,

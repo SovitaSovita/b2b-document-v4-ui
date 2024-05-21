@@ -50,18 +50,21 @@ function SearchComponent({ open, setOpen }: any) {
     }
 
     function addRecentSearch(searchData: any) {
-        var recentData = JSON.parse(localStorage.getItem('recentData') as any) || [];
 
-        var isDuplicate = recentData.some((item: any) => item?.id === searchData.id);
+        if (typeof window !== 'undefined') {
+            var recentData = JSON.parse(localStorage.getItem('recentData') as any) || [];
 
-        if (!isDuplicate) {
-            recentData.push(searchData);
+            var isDuplicate = recentData.some((item: any) => item?.id === searchData.id);
 
-            if (recentData.length > 10) {
-                recentData = recentData.slice(recentData.length - 10);
+            if (!isDuplicate) {
+                recentData.push(searchData);
+
+                if (recentData.length > 10) {
+                    recentData = recentData.slice(recentData.length - 10);
+                }
+                localStorage.setItem('recentData', JSON.stringify(recentData));
+                getRecentSearch()
             }
-            localStorage.setItem('recentData', JSON.stringify(recentData));
-            getRecentSearch()
         }
     }
 

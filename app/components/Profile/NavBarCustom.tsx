@@ -1,6 +1,5 @@
 "use client"
 import React from 'react'
-import LeftDrawerCustom from './LeftDrawerCustom'
 
 const NavBarCustom = () => {
     return (
@@ -9,7 +8,7 @@ const NavBarCustom = () => {
                 <a className="btn btn-ghost text-xl">daisyUI</a>
             </div>
             <div className="flex-none">
-                <LeftDrawerCustom />
+                {/* <LeftDrawerCustom /> */}
             </div>
         </div>
     )
