@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react'
 import KeyboardReturnOutlinedIcon from '@mui/icons-material/KeyboardReturnOutlined';
 import NoProfileComponent from './NoProfileComponent';
+import Image from 'next/image';
 
 function ProfileDrawer({ userInfo }: { userInfo: any }) {
     return (
@@ -36,7 +37,7 @@ function ProfileDrawer({ userInfo }: { userInfo: any }) {
                             userInfo?.prfl_PHTG != "" ? (
                                 <div className="avatar">
                                     <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                        <img src={userInfo?.image ? userInfo.image : userInfo?.prfl_PHTG} />
+                                        <Image width={24} height={24} alt='pf' src={userInfo?.image ? userInfo.image : userInfo?.prfl_PHTG} />
                                     </div>
                                 </div>
                             ) : (

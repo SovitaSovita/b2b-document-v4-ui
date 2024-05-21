@@ -1,6 +1,4 @@
 import React, { FormEvent, useEffect, useState } from 'react'
-import Breadcrumbs from './Breadcrumbs'
-import Page from '../(root)/vanda/page';
 
 import LeftDrawerCustom from './Profile/LeftDrawerCustom'
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,11 +7,8 @@ import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
 import Profile from './Profile/Profile';
 import ProfileDrawer from './Profile/ProfileDrawer';
-import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import ReplyAllOutlinedIcon from '@mui/icons-material/ReplyAllOutlined';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import LoadingCustom from './Material/Loading';
 import { useParams, useRouter } from 'next/navigation';
 import HomeContent from './HomeContent';
 
@@ -27,7 +22,7 @@ import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutl
 import TagComponent from './Modal/TagComponent';
 import { AddArticleBy, deleteArticle } from '../service/ArticleService';
 import CustomAlert from './Material/CustomAlert';
-import { getArticle, isRender, getFavorite, isFavorite } from '../service/Redux/articleDetailSlice';
+import { getArticle, isMode, isRender, getFavorite, isFavorite } from '../service/Redux/articleDetailSlice';
 import AskToConfirmModal from './Modal/AskToConfirmModal';
 import ihttp, { UI_BASE_URL } from '../utils/xhttp';
 import { addToFavorite, checkIsFavorite, deleteFavorite } from '../service/FavouriteService';
@@ -128,7 +123,7 @@ function SideContent({ openMainDrawer , setOpen}: any) {
         })
     }
 
-    
+
     function handleViewArticle(id: string) {
         getArticleDetail(id).then((res) => {
             dispatch(getArticle(res?.rec[0]))
@@ -163,7 +158,7 @@ function SideContent({ openMainDrawer , setOpen}: any) {
                 // dispatch(getArticle(true))
                 setOpenAskCf(false)
                 handleViewArticle(article_id.toString())
-                
+
 
             } else {
                 setIsErrorAlert({
@@ -212,6 +207,18 @@ function SideContent({ openMainDrawer , setOpen}: any) {
         }
     }
 
+    const onChange = (e: any) => {
+        if (typeof window !== 'undefined') {
+            if ("dark" === localStorage.getItem("mode")) {
+                localStorage.setItem("mode", "light");
+            }
+            else {
+                localStorage.setItem("mode", "dark");
+            }
+        }
+        dispatch(isMode(true))
+    }
+
 
     return (
         <Main open={openMainDrawer}>
@@ -239,6 +246,7 @@ function SideContent({ openMainDrawer , setOpen}: any) {
                                     <input
                                         type="checkbox"
                                         name="mode"
+                                        onChange={onChange}
                                         className="theme-controller"
                                         value={"dark"}
                                     />
