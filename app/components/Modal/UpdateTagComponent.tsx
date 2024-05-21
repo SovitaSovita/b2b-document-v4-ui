@@ -10,7 +10,6 @@ import { useDispatch } from 'react-redux';
 export default function UpdateTagComponent({ open, setOpen, tagUpdateData }: any) {
 
 
-
   console.log("tagUpdateData >>>", tagUpdateData);
   const currentDate = new Date();
   const formattedDate = currentDate.toISOString();

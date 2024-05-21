@@ -1,5 +1,5 @@
 "use client"
-import { AddArticleBy, UpdateArticle } from '@/app/service/ArticleService'
+import { AddArticleBy, GetArticleById, UpdateArticle } from '@/app/service/ArticleService'
 import { GetTagAndArticle } from '@/app/service/TagService'
 import { API_BASE_URL } from '@/app/utils/xhttp'
 import { Autocomplete, TextField } from '@mui/material'
@@ -311,7 +311,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
           />
           <div className='mt-8 flex justify-end'>
             <button onClick={handleClose} className="btn btn-active btn-ghost mr-3">Cancel</button>
-            <button type='submit' className="btn btn-active btn-success text-white">Save</button>
+            <button  type='submit' className="btn btn-active btn-success text-white ">Save</button>
           </div>
         </form >
       </div >
