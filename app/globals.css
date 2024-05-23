@@ -159,3 +159,43 @@
 .btn-cssbuttons:hover ul li:nth-child(3) a {
   transition-delay: 0.25s;
 }
+
+/* favorite */
+#checkboxInput {
+  display: none;
+}
+.bookmark {
+  cursor: pointer;
+  background-color: teal;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+.svgIcon path {
+  stroke-dasharray: 200 0;
+  stroke-dashoffset: 0;
+  stroke: white;
+  fill: #dddddd00;
+  transition-delay: 0s;
+  transition-duration: 0.5s;
+}
+
+#checkboxInput:checked ~ .svgIcon path {
+  fill: white;
+  animation: bookmark 0.5s linear;
+  transition-delay: 0.5s;
+}
+
+@keyframes bookmark {
+  0% {
+    stroke-dasharray: 0 200;
+    stroke-dashoffset: 80;
+  }
+  100% {
+    stroke-dasharray: 200 0;
+  }
+}
+/* end */
