@@ -14,6 +14,11 @@ import { isRender } from '@/app/service/Redux/articleDetailSlice';
 
 function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
 
+    const [selectedValue, setSelectedValue] = useState(1);
+    const handleSelectChange = (event :any) => {
+        setSelectedValue(parseInt(event.target.value));
+    };
+
     const dispatch = useDispatch()
     const [inputVal, setInputVal] = useState<string>();
     const router = useRouter()
@@ -46,8 +51,9 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
                 dept_id: parseInt(user?.dvsn_CD, 10),
                 title: inputVal,
                 user_name: session?.user.userId,
-                status: 1,
-                create_date: formattedDate
+                // status: 1,
+                create_date: formattedDate,
+                status: selectedValue
             }
             SaveNewTag(request).then((res: any) => {
                 setInputVal("")
@@ -117,10 +123,21 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
                                 <button type='button' onClick={handleClose} className="btn btn-active mt-2 btn-sm">Cancel</button>
                                 <button type='submit' onClick={handleSubmit} className="btn btn-active btn-primary ml-2 btn-sm">Save</button>
                             </div>
+                            <div className='self-start'>
+                                <select
+                                    value={selectedValue}
+                                    onChange={handleSelectChange} 
+                                    className="select select-sm select-bordered w-full ml-3 max-w-40">
+                                    <option selected value={1}>Public</option>
+                                    <option value={0}>Private</option>
+                                    <option value={2}>Depament</option>
+                                </select>
+                            </div>
                         </form>
                     </div>
                 </Fade>
             </Modal>
+
         </div >
     )
 }

@@ -52,7 +52,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
     }),
 }));
 
-function SideContent({ openMainDrawer , setOpen}: any) {
+function SideContent({ openMainDrawer, setOpen }: any) {
 
     const { article }: { article: any } = useSelector((state: RootState) => state?.article);
     const router = useRouter();
@@ -71,7 +71,7 @@ function SideContent({ openMainDrawer , setOpen}: any) {
     });
     const handleClose = () => {
         setOpen(false)
-      };
+    };
 
     const [openSearch, setOpenSearch] = React.useState(false);
     const handleOpenSearch = () => setOpenSearch(true);
@@ -316,6 +316,25 @@ function SideContent({ openMainDrawer , setOpen}: any) {
                                                     <FavoriteBorderOutlinedIcon onClick={() => handleAddFavorite(article?.id)} className='mr-3' style={{ cursor: 'pointer', color: 'black' }} />
                                                 )
                                             }
+
+                                            {/* New */}
+                                            <label  className="bookmark">
+                                                <input type="checkbox" id="checkboxInput" />
+                                                <svg
+                                                    width="15"
+                                                    viewBox="0 0 50 70"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    className="svgIcon"
+                                                >
+                                                    <path
+                                                        d="M46 62.0085L46 3.88139L3.99609 3.88139L3.99609 62.0085L24.5 45.5L46 62.0085Z"
+                                                        stroke="black"
+                                                        stroke-width="7"
+                                                    ></path>
+                                                </svg>
+                                            </label>
+
 
                                             <TelegramShareButton
                                                 url={`${UI_BASE_URL}/share/${article?.id}`}
