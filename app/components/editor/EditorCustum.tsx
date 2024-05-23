@@ -1,5 +1,5 @@
 "use client"
-import { AddArticleBy, GetArticleById, UpdateArticle } from '@/app/service/ArticleService'
+import { AddArticleBy, UpdateArticle } from '@/app/service/ArticleService'
 import { GetTagAndArticle } from '@/app/service/TagService'
 import { API_BASE_URL } from '@/app/utils/xhttp'
 import { Autocomplete, TextField } from '@mui/material'
@@ -8,20 +8,25 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 import CustomAlert from '../Material/CustomAlert'
 import TagComponent from '../Modal/TagComponent'
-import { getArticle, isRender } from '@/app/service/Redux/articleDetailSlice'
+import { isRender } from '@/app/service/Redux/articleDetailSlice'
 import { useDispatch } from 'react-redux'
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
-import { getArticleDetail } from '@/app/service/MenuService'
-import { MenuData } from '@/app/type/MenuData'
 
 
 
 export default function EditorCustum({ handleClose, session, articleData }: any) {
+  // console.log("session>>>", session)
   const editorRef = useRef<any>(null);
   const dispatch = useDispatch()
 
+  const handleInsertHTML = () => {
+    const htmlContent = `<a href="http://localhost:4545/api/v1/files/view_files?fileName=305efa11-f295-4308-8a9a-f211f3e00563.xlsx" download="305efa11-f295-4308-8a9a-f211f3e00563.xlsx">Click here to download</a>`;
+
+    console.log(editorRef.current);
+    editorRef?.current?.setContent(htmlContent);
+  };
+
   const [tagValue, setTagValue] = React.useState<TagType | any>();
-  console.log("tagValue=====",tagValue)
   const [inputValue, setInputValue] = React.useState('');
   const [isErrorAlert, setIsErrorAlert] = useState({
     open: false,
@@ -71,13 +76,6 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
     setShowDefaultValue(true);
     setTagValue(dataFromChild);
   };
-
-  const handleViewArticle = (id: string) => {
-    getArticleDetail(id).then((res) => {
-      console.log("id",id)
-       dispatch(getArticle(res?.rec[0]))
-    })
-  }
 
 
   useEffect(() => {
@@ -167,20 +165,18 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
             type: "success",
             message: "Update article successfully",
           });
-          //dispatch(isRender(true))
+          dispatch(isRender(true))
           handleClose();
-          handleViewArticle(articleData?.id)
         } else {
           setIsUpdateArticle({
             ...isUpdateArticle,
-            open: true, 
+            open: true,
             type: "error",
             message: "Something went wrong. Can't update...",
           })
           handleClose();
         }
       })
-    
 
     }
 
@@ -311,7 +307,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
           />
           <div className='mt-8 flex justify-end'>
             <button onClick={handleClose} className="btn btn-active btn-ghost mr-3">Cancel</button>
-            <button  type='submit' className="btn btn-active btn-success text-white ">Save</button>
+            <button type='submit' className="btn btn-active btn-success text-white">Save</button>
           </div>
         </form >
       </div >

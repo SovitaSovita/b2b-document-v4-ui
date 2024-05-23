@@ -52,7 +52,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
     }),
 }));
 
-function SideContent({ openMainDrawer , setOpen}: any) {
+function SideContent({ openMainDrawer, setOpen }: any) {
 
     const { article }: { article: any } = useSelector((state: RootState) => state?.article);
     const router = useRouter();
@@ -71,7 +71,7 @@ function SideContent({ openMainDrawer , setOpen}: any) {
     });
     const handleClose = () => {
         setOpen(false)
-      };
+    };
 
     const [openSearch, setOpenSearch] = React.useState(false);
     const handleOpenSearch = () => setOpenSearch(true);
