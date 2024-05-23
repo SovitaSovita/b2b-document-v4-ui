@@ -21,7 +21,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
   const dispatch = useDispatch()
 
   const [tagValue, setTagValue] = React.useState<TagType | any>();
-  console.log("tagValue=====",tagValue)
+  console.log("tagValue=====", tagValue)
   const [inputValue, setInputValue] = React.useState('');
   const [isErrorAlert, setIsErrorAlert] = useState({
     open: false,
@@ -66,6 +66,13 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
   const handleSelectChange = (event: any) => {
     setSelectedValue(parseInt(event.target.value));
   };
+  //check if public , private , department only
+  const options = [
+    { value: 'option1', label: 'Option 1', status: 0 }, // Enabled
+    { value: 'option2', label: 'Option 2', status: 1 }, // Disabled
+    { value: 'option3', label: 'Option 3', status: 0 }, // Enabled
+  ];
+
 
   const handleChildData = (dataFromChild: object) => {
     setShowDefaultValue(true);
@@ -74,8 +81,8 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
 
   const handleViewArticle = (id: string) => {
     getArticleDetail(id).then((res) => {
-      console.log("id",id)
-       dispatch(getArticle(res?.rec[0]))
+      console.log("id", id)
+      dispatch(getArticle(res?.rec[0]))
     })
   }
 
@@ -173,14 +180,14 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
         } else {
           setIsUpdateArticle({
             ...isUpdateArticle,
-            open: true, 
+            open: true,
             type: "error",
             message: "Something went wrong. Can't update...",
           })
           handleClose();
         }
       })
-    
+
 
     }
 
@@ -241,6 +248,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
                   <Autocomplete
                     value={showDefaultValue ? tagValue : null}
                     onChange={(event: any, newValue: string | null) => {
+                      //console.log("newValue======",newValue)
                       setTagValue(newValue);
                     }}
                     defaultValue={inputValue}
@@ -258,6 +266,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
                   />
                   < button type='button' onClick={handleOpenTag} className="btn btn-active btn-primary btn-sm">Add New</button>
                 </div>
+
               ) : (
                 <div className='btn btn-secondary btn-sm mr-3'>
                   <LocalOfferOutlinedIcon className='text-base' />
@@ -278,6 +287,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
 
             />
             <select
+
               value={selectedValue} // Bind the selected value to state
               onChange={handleSelectChange}
               className="select select-sm select-bordered w-full ml-3 max-w-40">
@@ -311,11 +321,10 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
           />
           <div className='mt-8 flex justify-end'>
             <button onClick={handleClose} className="btn btn-active btn-ghost mr-3">Cancel</button>
-            <button  type='submit' className="btn btn-active btn-success text-white ">Save</button>
+            <button type='submit' className="btn btn-active btn-success text-white ">Save</button>
           </div>
         </form >
       </div >
-
       <TagComponent open={openTag} setOpen={setOpenTag} user={session?.user} sendDataToParent={handleChildData} />
     </>
   )
