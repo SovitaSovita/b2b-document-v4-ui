@@ -1,4 +1,5 @@
 import ihttp from "../utils/xhttp";
+import ihttpFile from "../utils/xhttp-file";
 
 
 export const GetArticleById = async (id: number) => {
@@ -51,13 +52,21 @@ export const deleteArticle = async (articleId: number) => {
     }
 }
 
-export const UpdateArticle= async (input: object) => {
+export const UpdateArticle = async (input: object) => {
     try {
-        const response = await ihttp.put(`/articles/updateArticle`,input )
+        const response = await ihttp.put(`/articles/updateArticle`, input)
         return response;
     } catch (error) {
         return error;
     }
-    console.log('first input ??'+ input)
+}
+
+export const Insert_file = async (input: object) => {
+    try {
+        const response = await ihttpFile.post(`/files/upload_file?articleId=266`, input)
+        return response.data;
+    } catch (error) {
+        return error;
+    }
 }
 
