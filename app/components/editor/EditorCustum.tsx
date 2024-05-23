@@ -67,9 +67,11 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
   }
 
   const [selectedValue, setSelectedValue] = useState(1); // Defaulting to "Public"
+  
 
   const handleSelectChange = (event: any) => {
     setSelectedValue(parseInt(event.target.value));
+    console.log("setSelectedValue",selectedValue)
   };
 
   const handleChildData = (dataFromChild: object) => {
@@ -312,7 +314,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
         </form >
       </div >
 
-      <TagComponent open={openTag} setOpen={setOpenTag} user={session?.user} sendDataToParent={handleChildData} />
+      <TagComponent open={openTag} setOpen={setOpenTag} user={session?.user} sendDataToParent={handleChildData} selectedValue={selectedValue}  />
     </>
   )
 
