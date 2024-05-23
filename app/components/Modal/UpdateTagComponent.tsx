@@ -94,6 +94,7 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData }: any
                   type="text"
                   value={inputVal}
                   className="grow"
+                  style={{width:'100px'}}
                 />
 
               </label>
