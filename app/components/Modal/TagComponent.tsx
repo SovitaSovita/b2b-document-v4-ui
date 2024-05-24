@@ -12,7 +12,8 @@ import { useSession } from 'next-auth/react';
 import CustomAlert from '../Material/CustomAlert';
 import { isRender } from '@/app/service/Redux/articleDetailSlice';
 
-function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
+function TagComponent({ open, setOpen, user, sendDataToParent}: any) {
+    
 
     const [selectedValue, setSelectedValue] = useState(1);
     const handleSelectChange = (event: any) => {

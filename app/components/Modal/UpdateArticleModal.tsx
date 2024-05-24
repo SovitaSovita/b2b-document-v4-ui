@@ -52,8 +52,8 @@ function UpdateArticleModal({ open, setOpen, session, articleData }: any) {
                 }}
             >
                 <Fade in={open}>
-                    <div className='w-full h-full overflow-scroll bg-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg p-6'>
-                        <EditorCustum handleClose={handleClose} session={session} articleData={articleData} tagData={articleData?.id}/>
+                    <div className='w-full h-full overflow-scroll bg-primary absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg py-6'>
+                        <EditorCustum handleClose={handleClose} session={session} articleData={articleData} tagData={articleData?.id} />
                     </div>
                 </Fade>
             </Modal>
