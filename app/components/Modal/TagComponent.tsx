@@ -15,7 +15,7 @@ import { isRender } from '@/app/service/Redux/articleDetailSlice';
 function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
 
     const [selectedValue, setSelectedValue] = useState(1);
-    const handleSelectChange = (event :any) => {
+    const handleSelectChange = (event: any) => {
         setSelectedValue(parseInt(event.target.value));
     };
 
@@ -100,7 +100,7 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
             />
             {/* The button to open modal */}
             {/* Put this part before </body> tag */}
-            <Modal
+            {/* <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
                 open={open}
@@ -124,14 +124,41 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
                                 <button type='submit' onClick={handleSubmit} className="btn btn-active btn-primary ml-2 btn-sm">Save</button>
                             </div>
                             <div className='self-start'>
-                                <select
-                                    value={selectedValue}
-                                    onChange={handleSelectChange} 
-                                    className="select select-sm select-bordered w-full ml-3 max-w-40">
-                                    <option selected value={1}>Public</option>
-                                    <option value={0}>Private</option>
-                                    <option value={2}>Depament</option>
-                                </select>
+                               
+                            </div>
+                        </form>
+                    </div>
+                </Fade>
+
+            </Modal> */}
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                open={open}
+                onClose={handleClose}
+                closeAfterTransition
+                slots={{ backdrop: Backdrop }}
+                slotProps={{
+                    backdrop: {
+                        timeout: 500,
+                    },
+                }}
+            >
+                <Fade in={open}>
+                    <div className="w-1/3 bg-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg p-6 rounded-lg">
+                        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+                            <label className="w-full">
+                                <input onChange={onChange} type="text" className="input input-bordered w-full p-2" placeholder="Enter new Tag name" />
+                            </label>
+                            <select
+                                value={selectedValue} onChange={handleSelectChange} className="select select-bordered w-full" >
+                                <option value={1}>Public</option>
+                                <option value={0}>Private</option>
+                                <option value={2}>Department</option>
+                            </select>
+                            <div className="flex justify-end gap-4">
+                                <button type="button" onClick={handleClose} className="btn btn-sm btn-secondary">Cancel</button>
+                                <button type="submit" onClick={handleSubmit} className="btn btn-sm btn-primary" >Save</button>
                             </div>
                         </form>
                     </div>

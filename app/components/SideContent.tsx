@@ -318,7 +318,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                                             }
 
                                             {/* New */}
-                                            <label  className="bookmark">
+                                            {/* <label  className="bookmark">
                                                 <input type="checkbox" id="checkboxInput" />
                                                 <svg
                                                     width="15"
@@ -333,7 +333,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                                                         stroke-width="7"
                                                     ></path>
                                                 </svg>
-                                            </label>
+                                            </label> */}
 
 
                                             <TelegramShareButton
