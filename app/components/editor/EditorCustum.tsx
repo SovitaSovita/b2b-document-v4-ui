@@ -21,7 +21,6 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
   const dispatch = useDispatch()
 
   const [tagValue, setTagValue] = React.useState<TagType | any>();
-  console.log("tagValue=====",tagValue)
   const [inputValue, setInputValue] = React.useState('');
   const [isErrorAlert, setIsErrorAlert] = useState({
     open: false,
