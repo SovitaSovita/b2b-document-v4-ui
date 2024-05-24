@@ -18,3 +18,19 @@ interface TagType {
     create_date: Date;
     modified_date: Date;
 }
+
+interface FileUploadResponseType {
+    message: string;
+    payload: {
+        file_id: number;
+        file_idnt_id: string;
+        file_nm: string;
+        thum_img_path: string;
+        img_path: string;
+        file_size: string;
+        file_article_id: string;
+        status: number;
+    };
+    status: number;
+    date: string;
+}
