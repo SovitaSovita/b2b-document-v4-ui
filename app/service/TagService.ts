@@ -8,6 +8,7 @@ export const SaveNewTag = async (request: object) => {
         return error;
     }
 }
+
 export const GetTagAndArticle = async (dep_id: number, status: number) => {
     try {
         const response = await ihttp.get(`/DocTag/listTagAndAtricle?dept_id=${dep_id}&status=${status}`); //&username=sovita
@@ -16,6 +17,18 @@ export const GetTagAndArticle = async (dep_id: number, status: number) => {
         return error;
     }
 }
+
+// Test
+// export const GetTagAndArticle = async (dep_id: number, status: number, username: string) => {
+//     try {
+//         const response = await ihttp.get(`/DocTag/listTagAndAtricle?dept_id=${dep_id}&status=${status}&username=${username}`); //&username=sovita
+//         return response;
+//     } catch (error) {
+//         return error;
+//     }
+// }
+
+// Test new
 
 
 export const UpdateTag = async (request: object) => {

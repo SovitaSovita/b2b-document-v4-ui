@@ -101,37 +101,6 @@ function TagComponent({ open, setOpen, user, sendDataToParent}: any) {
             />
             {/* The button to open modal */}
             {/* Put this part before </body> tag */}
-            {/* <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                open={open}
-                onClose={handleClose}
-                closeAfterTransition
-                slots={{ backdrop: Backdrop }}
-                slotProps={{
-                    backdrop: {
-                        timeout: 500,
-                    },
-                }}
-            >
-                <Fade in={open}>
-                    <div className='w-1/3 bg-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg p-6 rounded-lg'>
-                        <form onSubmit={handleSubmit} className='flex flex-col justify-between items-center'>
-                            <label className="input w-full input-bordered flex items-cent input-sm er gap-2">
-                                <input onChange={onChange} type="text" className="grow" placeholder="Enter new Tag name" />
-                            </label>
-                            <div className='self-end'>
-                                <button type='button' onClick={handleClose} className="btn btn-active mt-2 btn-sm">Cancel</button>
-                                <button type='submit' onClick={handleSubmit} className="btn btn-active btn-primary ml-2 btn-sm">Save</button>
-                            </div>
-                            <div className='self-start'>
-                               
-                            </div>
-                        </form>
-                    </div>
-                </Fade>
-
-            </Modal> */}
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
