@@ -154,7 +154,7 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
                                 <div className="flex" style={{marginLeft:" 13px"}}>
                                     <div className='self-end '>
                                         <button type='button' onClick={handleClose} className="btn btn-active mt-2 btn-sm">Cancel</button>
-                                        <button type='submit' onClick={handleSubmit} className="btn btn-active btn-primary ml-2 btn-sm">Save</button>
+                                        <button type='submit' onClick={handleSubmit} className="btn btn-active btn-info ml-2 btn-sm  bg-blue-500">Save</button>
                                     </div>
                                 </div>
                             </div>
