@@ -51,9 +51,8 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
                 dept_id: parseInt(user?.dvsn_CD, 10),
                 title: inputVal,
                 user_name: session?.user.userId,
-                // status: 1,
-                create_date: formattedDate,
-                status: selectedValue
+                status: selectedValue,
+                create_date: formattedDate
             }
             SaveNewTag(request).then((res: any) => {
                 setInputVal("")
