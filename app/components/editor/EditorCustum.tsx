@@ -219,6 +219,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
           ...tag,
           label: tag.title,
         }));
+        console.log("dadaadd",updatedTagList);
 
         setTagData(updatedTagList)
       })
