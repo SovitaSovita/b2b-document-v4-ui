@@ -13,7 +13,7 @@ export const getMenuSidebar = async () => {
 export const getArticleDetail = async (id: string) => {
     try {
         const response = await ihttp.get(`/articles/listById?id=${id}`);
-        return response.data;
+        return response.data.rec.rec.rec;
     } catch (error) {
         return error;
     }
