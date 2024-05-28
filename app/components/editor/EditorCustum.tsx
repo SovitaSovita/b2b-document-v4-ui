@@ -99,7 +99,6 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
 
   const handleSelectChange = (event: any) => {
     setSelectedValue(parseInt(event.target.value));
-    console.log("setSelectedValue", selectedValue)
   };
   //check if public , private , department only
   const options = [
@@ -297,7 +296,9 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
                 />
                 < button type='button' onClick={handleOpenTag} className="btn btn-active btn-info text-base-100 btn-sm">Add New</button>
               </div>
-            ) : (
+            ) 
+            :
+             (
               <div className='btn btn-secondary btn-sm mr-3'>
                 <LocalOfferOutlinedIcon className='text-base-100' />
                 {articleData?.tag_title}
