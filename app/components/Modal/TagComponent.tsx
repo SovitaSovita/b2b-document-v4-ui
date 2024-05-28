@@ -86,23 +86,6 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
         }
     }
 
-    const DependentDropdown = () => {
-        const [firstDropdown, setFirstDropdown] = useState('');
-        const [secondDropdownOptions, setSecondDropdownOptions] = useState([]);
-
-        const optionsForFirstDropdown = ['Public', 'Private', 'Department'];
-
-        const optionsForSecondDropdown = {
-            'Public': ['Suboption 1-1', 'Suboption 1-2'],
-            'Private': ['Suboption 2-1', 'Suboption 2-2'],
-            'Department': ['Suboption 3-1', 'Suboption 3-2'],
-        };
-
-        
-
-
-
-    }
 
     return (
         <div>

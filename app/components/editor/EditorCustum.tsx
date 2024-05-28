@@ -225,6 +225,36 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
     }
   }, [session])
 
+  const DependentDropdown = () =>{
+    const [selectDropdown,setSelectDropdown] = useState ('');
+    const [secondDropdownValue, setSecondDropdownValue] = useState('');
+    const [secondDropdownOptions, setSecondDropdownOptions] = useState([]);
+
+    // Options for the first dropdown
+    const firstDropdownOptions = [
+      { value: 1, label: 'Public' },
+      { value: 0, label: 'Private' },
+      { value: 2, label: 'Department' },
+    ]
+    // Options for the second dropdown based on the first dropdown's value
+    const optionsForSecondDropdown = {
+    1: [
+      { value: '1-1', label: 'Public Option 1' },
+      { value: '1-2', label: 'Public Option 2' },
+    ],
+    0: [
+      { value: '0-1', label: 'Private Option 1' },
+      { value: '0-2', label: 'Private Option 2' },
+    ],
+    2: [
+      { value: '2-1', label: 'Department Option 1' },
+      { value: '2-2', label: 'Department Option 2' },
+    ],
+  };
+
+    
+  }
+
   const [showDefaultValue, setShowDefaultValue] = useState(false);
 
   const handleImageUpload: any = (blobInfo: any) => {
@@ -308,11 +338,11 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
             />
             <select
               value={selectedValue} // Bind the selected value to state
-              onChange={handleSelectChange}
+              onChange={handleSelectChange} onClick={DependentDropdown}
               className="select select-secondary select-sm select-bordered w-full ml-3 max-w-40">
               <option selected value={1}>Public</option>
               <option value={0}>Private</option>
-              <option value={2}>Depament Only</option>
+              <option value={2}>Department</option>
             </select>
           </div>
 
