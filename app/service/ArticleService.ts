@@ -15,7 +15,7 @@ export const GetArticleById = async (id: number) => {
 export const ListArticleByDept_ID = async (dept_id: number) => {
     try {
         const response = await ihttp.post(`/articles/list?dept_id=${dept_id}`);
-        console.log(response);
+        console.log("List Article");
         return response;
     } catch (error) {
         return error;
