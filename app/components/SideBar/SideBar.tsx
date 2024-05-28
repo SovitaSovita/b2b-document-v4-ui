@@ -5,12 +5,11 @@ import React, { useEffect } from 'react'
 import { MenuData } from '../../type/MenuData';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { useState } from 'react';
-import { getArticleDetail } from '../../service/MenuService';
+import { getArticleDetail } from '../../service/ArticleService';
 
 import { getArticle, isFavorite } from '../../service/Redux/articleDetailSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useSession } from 'next-auth/react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { DeleteIcon, EditIcon } from '@/public/icon/TableIcon';
 import empty_folder from '../../../public/icon/empty-folder.png'
@@ -27,7 +26,7 @@ const drawerWidth = 320;
 function SideBar(props: any) {
     const { ARTICLES, TAGS, FAVORITE }: MenuData = props
     const { handleDrawerClose, openMainDrawer }: any = props
-    const { data: session, status }: { data: any, status: any } = useSession();
+    const session: UserData = useSelector((state: RootState) => state?.article.session);
     const [activeItemId, setActiveItemId] = useState("");
 
 
@@ -61,7 +60,7 @@ function SideBar(props: any) {
         })
 
         // favorite
-        checkIsFavorite(session.user.userId, parseInt(id, 10), session.user.dvsn_CD).then((data) => {
+        checkIsFavorite(session?.userId, parseInt(id, 10), session?.dvsn_CD).then((data) => {
             if (data != null) {
                 dispatch(isFavorite(true))
             }
