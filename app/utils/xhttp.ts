@@ -4,9 +4,12 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 
-//our API URL
-//export const API_BASE_URL = "http://localhost:4545/api/v1";
-export const API_BASE_URL = "http://192.168.178.239:4545/api/v1"; //api yg
+// Our API URL
+// Localhost
+ //export const API_BASE_URL = "http://localhost:4545/api/v1"
+
+// API sak
+export const API_BASE_URL = "http://192.168.178.239:4545/api/v1";
 
 // export const API_BASE_URL = "http://178.128.52.39:4545/api/v1"; // api yg
 
@@ -22,8 +25,9 @@ const ihttp = axios.create({
 
 export const API_URL = process.env.API_URL;
 export const KEY = "XgIjrPEXEDoosHdWkN6b1ou3h+gE/xZyjd7AVjkATt8=";
+// export const KEY = process.env.KEY;
 
-let session = '';
+let session:any = '';
 let token: any;
 let url;
 
