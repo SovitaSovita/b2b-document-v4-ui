@@ -5,9 +5,10 @@ const nextConfig = {
     },
     env: {
         NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+        NEXT_URL: process.env.NEXT_URL,
+        NEXT_API_URL: process.env.NEXT_API_URL,
         KEY: process.env.KEY,
-        NEXT_APIURLFILE: process.env.NEXT_APIURLFILE,
-        API_BASE_URL: process.env.API_BASE_URL
+        API_M_BASE_URL: process.env.API_M_BASE_URL
     },
 };
 

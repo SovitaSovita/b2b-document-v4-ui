@@ -4,28 +4,20 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 
-// Our API URL
-// Localhost
- //export const API_BASE_URL = "http://localhost:4545/api/v1"
-
-// API sak
-export const API_BASE_URL = "https://bizweb-doc.kosign.dev/api/v1";
-
-// export const API_BASE_URL = "http://178.128.52.39:4545/api/v1"; // api yg
-
-// export const API_BASE_URL = "http://192.168.178.72:4545/api/v1";
+export const KEY = process.env.KEY;
 // UI URL
-export const UI_BASE_URL = "http://localhost:3000";
+export const UI_BASE_URL = process.env.NEXT_URL
+// our API URL
+export const API_BASE_URL = process.env.NEXT_API_URL;
 // api managament URL
-export const API_M_BASE_URL = "https://bizweb.kosign.dev";
+export const API_M_BASE_URL = process.env.API_M_BASE_URL
+
+console.log(API_M_BASE_URL);
 
 const ihttp = axios.create({
   baseURL: API_BASE_URL,
 });
 
-export const API_URL = process.env.API_URL;
-export const KEY = "XgIjrPEXEDoosHdWkN6b1ou3h+gE/xZyjd7AVjkATt8=";
-// export const KEY = process.env.KEY;
 
 let session:any = '';
 let token: any;
@@ -40,7 +32,7 @@ if (typeof window !== "undefined") {
 export async function getSession() {
   try {
     const headers = { 'Authorization': `Bearer ${token}` };
-    const res = await fetch(`${API_M_BASE_URL}/api/v1/session?token=${encodeURIComponent(token!)}&key=${encodeURIComponent(KEY!)}`, { headers });
+    const res = await fetch(`${API_M_BASE_URL}/session?token=${encodeURIComponent(token!)}&key=${encodeURIComponent(KEY!)}`, { headers });
     if (!res.ok) {
       throw new Error(`HTTP error! status: ${res.status}`);
     }
