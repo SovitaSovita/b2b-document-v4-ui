@@ -28,7 +28,7 @@ import ihttp, { UI_BASE_URL } from '../utils/xhttp';
 import { addToFavorite, checkIsFavorite, deleteFavorite } from '../service/FavouriteService';
 import UpdateArticleModal from './Modal/UpdateArticleModal';
 import { styled } from '@mui/material';
-import { getArticleDetail } from '../service/MenuService';
+import { getArticleDetail } from '../service/ArticleService';
 
 
 
