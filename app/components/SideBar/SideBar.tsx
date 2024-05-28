@@ -5,12 +5,11 @@ import React, { useEffect } from 'react'
 import { MenuData } from '../../type/MenuData';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { useState } from 'react';
-import { getArticleDetail } from '../../service/MenuService';
+import { getArticleDetail } from '../../service/ArticleService';
 
 import { getArticle, isFavorite } from '../../service/Redux/articleDetailSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useSession } from 'next-auth/react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { DeleteIcon, EditIcon } from '@/public/icon/TableIcon';
 import empty_folder from '../../../public/icon/empty-folder.png'
@@ -28,7 +27,7 @@ const drawerWidth = 320;
 function SideBar(props: any) {
     const { ARTICLES, TAGS, FAVORITE }: MenuData = props
     const { handleDrawerClose, openMainDrawer }: any = props
-    const { data: session, status }: { data: any, status: any } = useSession();
+    const session: UserData = useSelector((state: RootState) => state?.article.session);
     const [activeItemId, setActiveItemId] = useState("");
 
 
@@ -56,14 +55,13 @@ function SideBar(props: any) {
     }
 
     function handleViewArticle(id: string) {
-        getArticleDetail(id).then((res) => {
+        getArticleDetail(id).then((data) => {
             setActiveItemId(id)
-            dispatch(getArticle(res?.rec[0]))
+            dispatch(getArticle(data))
         })
 
         // favorite
-        checkIsFavorite(session.user.userId, parseInt(id, 10), session.user.dvsn_CD).then((data) => {
-
+        checkIsFavorite(session?.userId, parseInt(id, 10), session?.dvsn_CD).then((data) => {
             if (data != null) {
                 dispatch(isFavorite(true))
             }
@@ -145,7 +143,7 @@ function SideBar(props: any) {
                 {
                     TAGS.map((item, index) => (
                         <span key={index} className='flex mainManageTag group'>
-                            <div className='w-6'>
+                            <div className='w-6 self-start'>
                                 <div className="dropdown dropdown-hover dropdown-top mt-2.5 opacity-0 hidden group-hover:block group-hover:opacity-100 transition-all">
                                     <div tabIndex={0} role="button">
                                         <MoreVertIcon />
@@ -166,10 +164,10 @@ function SideBar(props: any) {
                                     </ul>
                                 </div>
                             </div>
-                            <li key={index + 1} className='min-w-[260px]'>
+                            <li key={index + 1} className='w-[260px]'>
                                 <details>
                                     <summary className="mt-1 font-medium">
-                                        {item.title}
+                                        <p className='line-clamp-1'>{item.title}</p>
                                     </summary>
                                     <ul>
                                         {
@@ -177,8 +175,8 @@ function SideBar(props: any) {
                                                 filterArticlesByTagId(item.id).map(item => (
                                                     <li key={item?.id} onClick={() => handleViewArticle(item.id.toString())}>
                                                         <a className={activeItemId === item.id.toString()
-                                                            ? "hover:bg-base-100 bg-base-100 border-r-4 border-secondary rounded-none mt-2"
-                                                            : "hover:bg-base-100 hover:border-l-4 border-secondary rounded-none transition-all mt-2"}>
+                                                            ? "hover:bg-base-100 line-clamp-1 bg-base-100 border-r-4 border-secondary rounded-none"
+                                                            : "hover:bg-base-100 line-clamp-1 hover:border-l-4 border-secondary rounded-none transition-all"}>
                                                             {item?.title}
                                                         </a>
                                                     </li>
@@ -193,11 +191,7 @@ function SideBar(props: any) {
                                         }
                                     </ul>
                                 </details>
-
                             </li>
-
-
-
                         </span>
                     ))
                 }

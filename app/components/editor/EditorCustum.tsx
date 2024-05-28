@@ -103,6 +103,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
   };
 
   const handleChildData = (dataFromChild: object) => {
+    console.log("dataFromChild ...", dataFromChild);
     setShowDefaultValue(true);
     setTagValue(dataFromChild);
   };
@@ -182,8 +183,8 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
         "title": title,
         "content_body": content,
         "user_id": articleData?.user_id,
-        "dept_id": session?.user.dvsn_CD,
-        "modifiedBy": session?.user.userId,
+        "dept_id": session?.dvsn_CD,
+        "modifiedBy": session?.userId,
         "modified_date": formattedDate,
       }
 
@@ -214,7 +215,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
 
   useEffect(() => {
     if (session) {
-      GetTagAndArticle(parseInt(session?.user.dvsn_CD, 10), 1).then((res: any) => {
+      GetTagAndArticle(parseInt(session?.dvsn_CD, 10), 1).then((res: any) => {
         const updatedTagList = res?.data?.rec?.tagList.map((tag: any) => ({
           ...tag,
           label: tag.title,
@@ -352,7 +353,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
         </div>
       </form >
 
-      <TagComponent open={openTag} setOpen={setOpenTag} user={session?.user} sendDataToParent={handleChildData} selectedValue={selectedValue} />
+      <TagComponent open={openTag} setOpen={setOpenTag} user={session} sendDataToParent={handleChildData} selectedValue={selectedValue} />
     </>
   )
 

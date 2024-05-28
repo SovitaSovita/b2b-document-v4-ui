@@ -45,7 +45,7 @@ function SearchComponent({ open, setOpen }: any) {
     function handleViewArticle(id: string) {
         getArticleDetail(id).then((res) => {
             dispatch(getArticle(res.rec[0]))
-            addRecentSearch(res[0])
+            addRecentSearch(res.rec[0])
             handleClose()
         })
     }
@@ -54,8 +54,7 @@ function SearchComponent({ open, setOpen }: any) {
 
         if (typeof window !== 'undefined') {
             var recentData = JSON.parse(localStorage.getItem('recentData') as any) || [];
-
-            var isDuplicate = recentData.some((item: any) => item?.id === searchData.id);
+            var isDuplicate = recentData.some((item: any) => item?.id === searchData?.id);
 
             if (!isDuplicate) {
                 recentData.push(searchData);
@@ -122,7 +121,7 @@ function SearchComponent({ open, setOpen }: any) {
                                                     recentData.length > 0 ?
                                                         (
                                                             recentData.map((item: SearchType) => (
-                                                                <li key={item.id} className=''>
+                                                                <li key={item?.id} className=''>
                                                                     <div key={item?.id} className='flex items-center justify-between py-2 pl-3 pr-1 hover:bg-base-200 text-sm rounded-lg cursor-pointer'>
                                                                         <a className='flex justify-between w-[97%]' onClick={() => handleViewArticle(item.id.toString())}>
                                                                             <div className='line-clamp-1 '>{item?.title}</div>
@@ -149,7 +148,7 @@ function SearchComponent({ open, setOpen }: any) {
                                                 <ul>
                                                     {
                                                         searchData.map((item: SearchType) => (
-                                                            <li key={item.id} className='py-2 px-3 hover:bg-neutral hover:text-base-100 text-sm rounded-lg cursor-pointer'>
+                                                            <li key={item.id} className='py-2 px-3 hover:bg-neutral hover:text-base-300 text-sm rounded-lg cursor-pointer'>
                                                                 <div key={item?.id} className='flex justify-between'>
                                                                     <a className='flex justify-between w-[97%]' onClick={() => handleViewArticle(item.id.toString())}>
                                                                         <div className='line-clamp-1 '>{item?.title}</div>

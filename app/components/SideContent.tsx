@@ -4,7 +4,7 @@ import LeftDrawerCustom from './Profile/LeftDrawerCustom'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../service/Redux/store/store';
 import Link from 'next/link';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import Profile from './Profile/Profile';
 import ProfileDrawer from './Profile/ProfileDrawer';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
@@ -28,7 +28,7 @@ import ihttp, { UI_BASE_URL } from '../utils/xhttp';
 import { addToFavorite, checkIsFavorite, deleteFavorite } from '../service/FavouriteService';
 import UpdateArticleModal from './Modal/UpdateArticleModal';
 import { styled } from '@mui/material';
-import { getArticleDetail } from '../service/MenuService';
+import { getArticleDetail } from '../service/ArticleService';
 
 
 
@@ -59,7 +59,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
     // Favorite 
     const isFavorites = useSelector((state: RootState) => state.article.isFavorite);
 
-    const { data: session, status }: { data: any, status: any } = useSession();
+    const session: UserData = useSelector((state: RootState) => state?.article.session);
     const path = useParams();
     const dispatch = useDispatch()
 
@@ -128,7 +128,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
         getArticleDetail(id).then((res) => {
             dispatch(getArticle(res?.rec[0]))
         })
-        checkIsFavorite(session.user.userId, parseInt(id, 10), session.user.dvsn_CD).then((data) => {
+        checkIsFavorite(session.userId, parseInt(id, 10), session.dvsn_CD).then((data) => {
             if (data != null) {
                 dispatch(isFavorite(true))
             }
@@ -144,8 +144,8 @@ function SideContent({ openMainDrawer, setOpen }: any) {
         try {
             const response = await addToFavorite({
                 article_id: article_id,
-                dept_id: session?.user.dvsn_CD,
-                user_id: session?.user.userId
+                dept_id: session?.dvsn_CD,
+                user_id: session?.userId
             });
             if (response.code === "200") {
                 setIsErrorAlert({
@@ -181,7 +181,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
         try {
             const response = await deleteFavorite({
                 article_id: article_id,
-                user_id: session?.user.userId
+                user_id: session?.userId
             });
 
             if (response.code === "200") {
@@ -240,7 +240,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                     <div className='flex items-center'>
                         <LeftDrawerCustom>
                             {/*left Sidebar content here */}
-                            <Profile userInfo={session?.user} />
+                            <Profile userInfo={session} />
                             <li className="border shadow rounded-lg mb-5">
                                 <label className="swap swap-rotate">
                                     <input
@@ -268,7 +268,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                                     </svg>
                                 </label>
                             </li>
-                            <ProfileDrawer userInfo={session?.user} />
+                            <ProfileDrawer userInfo={session} />
                             {/* <li>
                             <Link href={"/manage_users"}>Manage User</Link>
                         </li> */}
@@ -311,7 +311,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                                             {/* Favorite */}
                                             {
                                                 isFavorites ? (
-                                                    <FavoriteBorderOutlinedIcon onClick={() => handleDeleteFavorite(article?.id, session.user.userId)} className='mr-3' style={{ cursor: 'pointer', color: 'red' }} />
+                                                    <FavoriteBorderOutlinedIcon onClick={() => handleDeleteFavorite(article?.id, session.userId)} className='mr-3' style={{ cursor: 'pointer', color: 'red' }} />
                                                 ) : (
                                                     <FavoriteBorderOutlinedIcon onClick={() => handleAddFavorite(article?.id)} className='mr-3' style={{ cursor: 'pointer', color: 'black' }} />
                                                 )
@@ -343,7 +343,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                                             </TelegramShareButton>
 
                                             {
-                                                session?.user.userId === article?.username && (
+                                                session?.userId === article?.username && (
                                                     <div className='flex justify-between w-10'>
                                                         <EditIcon className="cursor-pointer" variant="text" onClick={() => handleOpenArticle(article)} />
                                                         <DeleteIcon className="cursor-pointer" onClick={() => handleOpenAskCf(article?.id)} />
@@ -377,7 +377,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                 />
 
                 <SearchComponent open={openSearch} setOpen={setOpenSearch} />
-                <TagComponent open={openTag} setOpen={setOpenTag} user={session?.user} />
+                <TagComponent open={openTag} setOpen={setOpenTag} user={session} />
                 <AskToConfirmModal
                     open={openAskCf}
                     setOpen={setOpenAskCf}

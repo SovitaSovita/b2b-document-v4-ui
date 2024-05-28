@@ -1,18 +1,15 @@
 'use client'
 
 import React, { ReactNode } from "react";
-import Profile from "./Profile";
-import Link from "next/link";
-import { signOut, useSession } from "next-auth/react";
+
 import Image from "next/image";
 import NoProfileComponent from "./NoProfileComponent";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/service/Redux/store/store";
 
 const LeftDrawerCustom = ({ children }: { children: ReactNode }) => {
 
-  const { data: session, status }: { data: any, status: any } = useSession();
-
-  // console.log("status : ", status);
-  // console.log("session : ", session);
+  const session: UserData = useSelector((state: RootState) => state?.article.session);
 
   return (
     <div className="drawer drawer-end z-50">
@@ -23,19 +20,19 @@ const LeftDrawerCustom = ({ children }: { children: ReactNode }) => {
 
           {/* Profile At Right Menu */}
           {
-            session?.user.prfl_PHTG != "" ? (
+            session?.prfl_PHTG != "" ? (
               <div
                 tabIndex={0}
                 role="button"
                 className="btn btn-ghost btn-circle avatar"
               >
                 <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-1">
-                  <Image src={session?.user.image ? session.user.image : session?.user.prfl_PHTG} alt="pf" width={140} height={100} loading="lazy" />
+                  <Image src={session?.prfl_PHTG} alt="pf" width={140} height={100} loading="lazy" />
                 </div>
               </div>
 
             ) : (
-              <NoProfileComponent username={session?.user?.flnm} size={"w-10"} />
+              <NoProfileComponent username={session?.flnm} size={"w-10"} />
             )
           }
 
