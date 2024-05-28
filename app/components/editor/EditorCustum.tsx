@@ -1,7 +1,6 @@
 "use client"
 import { AddArticleBy, Insert_file, UpdateArticle } from '@/app/service/ArticleService'
 import { GetTagAndArticle } from '@/app/service/TagService'
-import { API_BASE_URL } from '@/app/utils/xhttp'
 import { Autocomplete, TextField } from '@mui/material'
 import { Editor } from '@tinymce/tinymce-react'
 import { useRouter } from 'next/navigation'
@@ -13,7 +12,7 @@ import { useDispatch } from 'react-redux'
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import { DocumentText } from 'iconsax-react';
 
-
+const API_BASE_URL = process.env.NEXT_API_URL
 
 export default function EditorCustum({ handleClose, session, articleData }: any) {
   // console.log("session>>>", session)
@@ -40,7 +39,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
       Insert_file(formData).then((fileResponse: FileUploadResponseType) => {
         const htmlContent = `
               <div style="padding: 10px; width: 250px; background-color: rgb(246, 248, 252)">
-                <a href="http://localhost:4545/api/v1/files/view_files?fileName=${fileResponse?.payload.file_nm}" download=${fileResponse?.payload.file_nm} 
+                <a href="${API_BASE_URL}/files/view_files?fileName=${fileResponse?.payload.file_nm}" download=${fileResponse?.payload.file_nm} 
                 style="display: flex; align-items: center; justify-content: space-between; text-decoration: none;">
                   download ${fileResponse?.payload.file_nm}
                   <img width="30px" src="https://firebasestorage.googleapis.com/v0/b/core-appliance-412508.appspot.com/o/cloud-arrow-down-svgrepo-com.svg?alt=media&token=a2b5e6bc-c4e7-445c-b39e-37e35d8e4b5c" />
@@ -263,7 +262,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
       const file = blobInfo.blob();
       const formData = new FormData();
       formData.append("imageFile", file);
-      fetch(`${API_BASE_URL}/files/upload_file?articleId=266`, {
+      fetch(`${API_BASE_URL}/files/upload_file`, {
         method: "POST",
         body: formData,
       })
