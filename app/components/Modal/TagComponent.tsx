@@ -39,6 +39,10 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
         setInputVal(inputData);
     }
 
+    const handSelectDropdown = (e:any) => {
+        
+    }
+
     const handleSubmit = (e: any) => {
         e.preventDefault();
 

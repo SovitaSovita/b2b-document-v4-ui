@@ -103,6 +103,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
   };
 
   const handleChildData = (dataFromChild: object) => {
+    console.log("vanda123",dataFromChild);
     setShowDefaultValue(true);
     setTagValue(dataFromChild);
   };
