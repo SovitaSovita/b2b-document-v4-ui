@@ -21,6 +21,7 @@ import UpdateArticleModal from '../Modal/UpdateArticleModal';
 import { Drawer } from '@mui/material';
 import HeaderSidebar from './HeaderSidebar';
 import { RootState } from '@/app/service/Redux/store/store';
+import { getSession } from '@/app/utils/xhttp';
 
 const drawerWidth = 320;
 
@@ -81,6 +82,11 @@ function SideBar(props: any) {
     const isMode_theme = useSelector((state: RootState) => state?.article.isMode);
     const [bg_color, setBg_color] = useState("");
     useEffect(() => {
+
+        getSession().then((res) => {
+            console.log("Session from API: ",res)
+        })
+
         if (localStorage.getItem("mode") === "light") {
             setBg_color("rgb(246, 248, 252)")
         }
