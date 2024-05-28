@@ -1,6 +1,6 @@
 'use client'
 
-import { signIn, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
@@ -8,6 +8,8 @@ import { PinInput, PinInputField } from "@chakra-ui/pin-input";
 import GppGoodOutlinedIcon from "@mui/icons-material/GppGoodOutlined";
 import { Backdrop, Box, Button, Modal, Typography } from '@mui/material';
 import { API_M_BASE_URL } from '@/app/utils/xhttp';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/app/service/Redux/store/store';
 
 function Page() {
 
@@ -81,7 +83,7 @@ function Page() {
         setOpen(false)
     };
 
-    const { data: session, status }: { data: any, status: any } = useSession();
+    const session: UserData = useSelector((state: RootState) => state?.article.session);
 
     if (status === "authenticated") {
         router.push('/')

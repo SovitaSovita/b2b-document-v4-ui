@@ -1,11 +1,12 @@
 "use client"
 
-import { useSession } from 'next-auth/react'
+import { RootState } from '@/app/service/Redux/store/store';
 import React from 'react'
+import { useSelector } from 'react-redux';
 
 export default function AboutUser() {
 
-  const { data: session, status }: { data: any, status: any } = useSession();
+  const session: UserData = useSelector((state: RootState) => state?.article.session);
   console.log({ session });
 
   return (
@@ -14,15 +15,15 @@ export default function AboutUser() {
         <div className="card card-side bg-base-100 shadow-lg">
           <figure>
             <img
-              src={session?.user.image ? session.user.image : session?.user.prfl_PHTG} alt="pf" width={140} height={100} loading="lazy"
+              src={session?.prfl_PHTG} alt="pf" width={140} height={100} loading="lazy"
 
             />
           </figure>
           <div className="card-body">
             <h2 className="card-title text-lg md:text-xl lg:text-2xl">
-              {session?.user.flnm}
+              {session?.flnm}
             </h2>
-            <p className="text-sm md:text-base lg:text-lg">{session?.user.eml}</p>
+            <p className="text-sm md:text-base lg:text-lg">{session?.eml}</p>
 
           </div>
         </div>

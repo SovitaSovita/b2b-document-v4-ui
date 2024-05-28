@@ -2,20 +2,19 @@ import ihttp from "../utils/xhttp";
 import ihttpFile from "../utils/xhttp-file";
 
 
-export const GetArticleById = async (id: number) => {
+export const getArticleDetail = async (id: string) => {
     try {
         const response = await ihttp.get(`/articles/listById?id=${id}`);
-        console.log(response);
-        return response;
+        return response.data.rec.rec.rec;
     } catch (error) {
         return error;
     }
 }
 
+
 export const ListArticleByDept_ID = async (dept_id: number) => {
     try {
         const response = await ihttp.post(`/articles/list?dept_id=${dept_id}`);
-        console.log(response);
         return response;
     } catch (error) {
         return error;

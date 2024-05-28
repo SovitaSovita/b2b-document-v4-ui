@@ -5,7 +5,6 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { SaveNewTag } from '@/app/service/TagService';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 import CustomAlert from '../Material/CustomAlert';
 import { isRender } from '@/app/service/Redux/articleDetailSlice';
 import EditorCustum from '../editor/EditorCustum';

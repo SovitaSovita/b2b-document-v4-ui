@@ -3,8 +3,6 @@ import React from 'react'
 import NoProfileComponent from './NoProfileComponent';
 
 const Profile = ({ userInfo }: { userInfo: any }) => {
-
-    console.log(userInfo);
     return (
         <div className='mb-5'>
             <div className=''>

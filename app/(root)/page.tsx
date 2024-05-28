@@ -1,25 +1,39 @@
 'use client'
 
-import { useSession } from "next-auth/react";
 import SideContent from "../components/SideContent";
 import SideBar from "../components/SideBar/SideBar";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../service/Redux/store/store";
-import { isMode, isRender } from "../service/Redux/articleDetailSlice";
+import { get_session, isMode, isRender } from "../service/Redux/articleDetailSlice";
 import { GetTagAndArticle } from "../service/TagService";
 import { getFavoriteDetail } from "../service/FavouriteService";
+import { getSession } from "../utils/xhttp";
 
 export default function Home() {
 
-  const { data: session, status }: { data: any, status: any } = useSession()
+  const dispatch = useDispatch()
+  const session: UserData = useSelector((state: RootState) => state?.article.session);
+
+  const disptach_session = async () => {
+    try {
+      console.log("session work");
+      const session = await getSession();
+      dispatch(get_session(session));
+    } catch (error) {
+      console.error('Error fetching session:', error);
+    }
+  };
+
+  useEffect(() => {
+    disptach_session();
+  }, [])
 
   const [menudata, setMenudata] = useState({
     articleList: [],
     tagList: []
   })
 
-  const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(false);
 
   const reRederMenu = useSelector((state: RootState) => state?.article.isRender);
@@ -32,12 +46,14 @@ export default function Home() {
   useEffect(() => {
     setIsLoading(true)
     let status = 1;
-    if (session) {
+    if (session?.dvsn_CD != "") {
       if (optionGETdata == "PRIVATE") status = 0
       if (optionGETdata == "PUBLIC") status = 1
       if (optionGETdata == "DEPARTMENT") status = 2
       //GET
-      GetTagAndArticle(parseInt(session?.user.dvsn_CD, 10), status).then((res: any) => {
+      console.log("session?.dvsn_CD >> ", session?.dvsn_CD);
+      GetTagAndArticle(parseInt(session?.dvsn_CD, 10), status).then((res: any) => {
+        console.log(res);
         setMenudata(res?.data.rec);
         dispatch(isRender(false));
         setIsLoading(false)
@@ -56,7 +72,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    handleViewFavorite(session?.user?.userId);
+    handleViewFavorite(session?.userId);
   }, [session, reRederFavorite])
 
   // if (isLoading) {
@@ -82,6 +98,7 @@ export default function Home() {
       dispatch(isMode(false))
     }
   }, [isMode_theme])
+
 
 
   return (
