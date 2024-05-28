@@ -9,7 +9,7 @@ import axios, {
  //export const API_BASE_URL = "http://localhost:4545/api/v1"
 
 // API sak
-export const API_BASE_URL = "http://192.168.178.239:4545/api/v1";
+export const API_BASE_URL = "https://bizweb-doc.kosign.dev/api/v1";
 
 // export const API_BASE_URL = "http://178.128.52.39:4545/api/v1"; // api yg
 
@@ -17,7 +17,7 @@ export const API_BASE_URL = "http://192.168.178.239:4545/api/v1";
 // UI URL
 export const UI_BASE_URL = "http://localhost:3000";
 // api managament URL
-export const API_M_BASE_URL = "http://192.168.178.239:8085";
+export const API_M_BASE_URL = "https://bizweb.kosign.dev";
 
 const ihttp = axios.create({
   baseURL: API_BASE_URL,
@@ -62,11 +62,12 @@ export async function getSession() {
 
 async function requestInterceptor(config: InternalAxiosRequestConfig) {
 
-  const idToken: any = await getSession();
+  const idToken: any = token
+  // const idToken: any = await getSession();
   if (!idToken) {
     return Promise.reject("missing access token");
   }
-  config.headers["Authorization"] = `Bearer ${idToken?.token}`;
+  config.headers["Authorization"] = `Bearer ${token}`;
   config.headers["Content-Type"] = "application/json";
   return config;
 }

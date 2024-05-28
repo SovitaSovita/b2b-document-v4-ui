@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react'
 import logoDocument from "../../../public/icon/Document.png"
 import UnfoldMoreRoundedIcon from '@mui/icons-material/UnfoldMoreRounded';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
-import { Button, Divider, Menu, MenuItem, MenuProps, alpha, styled } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { Menu, MenuItem, MenuProps, alpha, styled } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 import { getOptionData } from '@/app/service/Redux/articleDetailSlice';
-import { useSession } from 'next-auth/react';
+import { RootState } from '@/app/service/Redux/store/store';
 
 const StyledMenu = styled((props: MenuProps) => (
     <Menu
@@ -62,7 +62,7 @@ const StyledMenu = styled((props: MenuProps) => (
 function HeaderSidebar({ handleOpenArticle }: any) {
 
     const dispatch = useDispatch();
-    const { data: session, status }: { data: any, status: any } = useSession();
+    const session: UserData = useSelector((state: RootState) => state?.article.session);
 
     const [activeItems, setActiveItem] = useState("PUBLIC");
 
@@ -134,7 +134,7 @@ function HeaderSidebar({ handleOpenArticle }: any) {
                     <div className='flex justify-between w-full items-center'>
                         <div className='flex items-center'>
                             <div className='w-7 h-7 bg-teal-400 rounded-md flex justify-center items-center text-base-100 text-xs font-medium'>
-                                {splitString(session?.user.flnm)}
+                                {splitString(session?.flnm)}
                             </div>
                             <div className='ml-2 text-sm font-medium'>Personal</div>
                         </div>
@@ -160,9 +160,9 @@ function HeaderSidebar({ handleOpenArticle }: any) {
                     <div className='flex justify-between w-full items-center'>
                         <div className='flex items-center'>
                             <div className='w-7 h-7 bg-orange-500 rounded-md flex justify-center items-center text-base-100 text-sm font-medium'>
-                                {splitString(session?.user.dvsn_NM)}
+                                {splitString(session?.dvsn_NM)}
                             </div>
-                            <div className='ml-2 text-sm font-medium'>{session?.user.dvsn_NM ? session?.user.dvsn_NM : "Department"}</div>
+                            <div className='ml-2 text-sm font-medium'>{session?.dvsn_NM ? session?.dvsn_NM : "Department"}</div>
                         </div>
                         {
                             activeItems == "DEPARTMENT" && <CheckOutlinedIcon />
