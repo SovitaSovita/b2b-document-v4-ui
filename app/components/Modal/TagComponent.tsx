@@ -13,9 +13,8 @@ import CustomAlert from '../Material/CustomAlert';
 import { isRender } from '@/app/service/Redux/articleDetailSlice';
 
 function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
-
     const [selectedValue, setSelectedValue] = useState(1);
-    const handleSelectChange = (event :any) => {
+    const handleSelectChange = (event: any) => {
         setSelectedValue(parseInt(event.target.value));
     };
 
@@ -86,6 +85,24 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
         }
     }
 
+    const DependentDropdown = () => {
+        const [firstDropdown, setFirstDropdown] = useState('');
+        const [secondDropdownOptions, setSecondDropdownOptions] = useState([]);
+
+        const optionsForFirstDropdown = ['Public', 'Private', 'Department'];
+
+        const optionsForSecondDropdown = {
+            'Public': ['Suboption 1-1', 'Suboption 1-2'],
+            'Private': ['Suboption 2-1', 'Suboption 2-2'],
+            'Department': ['Suboption 3-1', 'Suboption 3-2'],
+        };
+
+        
+
+
+
+    }
+
     return (
         <div>
             <CustomAlert
@@ -113,24 +130,32 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
                 }}
             >
                 <Fade in={open}>
-                    <div className='w-1/3 bg-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg p-6 rounded-lg'>
+                    <div className='w-1/3 bg-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg p-6 rounded-lg' style={{width:'455px'}}>
                         <form onSubmit={handleSubmit} className='flex flex-col justify-between items-center'>
-                            <label className="input w-full input-bordered flex items-cent input-sm er gap-2">
-                                <input onChange={onChange} type="text" className="grow" placeholder="Enter new Tag name" />
-                            </label>
-                            <div className='self-end'>
-                                <button type='button' onClick={handleClose} className="btn btn-active mt-2 btn-sm">Cancel</button>
-                                <button type='submit' onClick={handleSubmit} className="btn btn-active btn-primary ml-2 btn-sm">Save</button>
-                            </div>
-                            <div className='self-start'>
-                                <select
-                                    value={selectedValue}
-                                    onChange={handleSelectChange} 
-                                    className="select select-sm select-bordered w-full ml-3 max-w-40">
-                                    <option selected value={1}>Public</option>
-                                    <option value={0}>Private</option>
-                                    <option value={2}>Depament</option>
-                                </select>
+                            <div className=''>
+                                 {/* Left side icons */}
+                                 <div className='flex bg-base-100 p-3 rounded-lg'>
+                                    <label className="input w-full input-bordered flex items-cent input-sm er gap-2">
+                                        <input onChange={onChange} type="text" className="grow" placeholder="Enter new Tag name" />
+                                    </label>
+                                    <div className='self-start'>
+                                        <select
+                                            value={selectedValue}
+                                            onChange={handleSelectChange} 
+                                            className="select select-sm select-bordered w-full ml-3 max-w-40" style={{width:'125px'}}>
+                                            <option selected value={1}>Public</option>
+                                            <option value={0}>Private</option>
+                                            <option value={2}>Department</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                {/* Right side icons */}
+                                <div className="flex" style={{marginLeft:" 13px"}}>
+                                    <div className='self-end '>
+                                        <button type='button' onClick={handleClose} className="btn btn-active mt-2 btn-sm">Cancel</button>
+                                        <button type='submit' onClick={handleSubmit} className="btn btn-active btn-info ml-2 btn-sm  bg-blue-500">Save</button>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>
