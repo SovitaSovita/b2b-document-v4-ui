@@ -4,7 +4,6 @@ import LeftDrawerCustom from './Profile/LeftDrawerCustom'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../service/Redux/store/store';
 import Link from 'next/link';
-import { signOut } from 'next-auth/react';
 import Profile from './Profile/Profile';
 import ProfileDrawer from './Profile/ProfileDrawer';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
@@ -126,7 +125,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
 
     function handleViewArticle(id: string) {
         getArticleDetail(id).then((res) => {
-            dispatch(getArticle(res?.rec[0]))
+            dispatch(getArticle(res))
         })
         checkIsFavorite(session.userId, parseInt(id, 10), session.dvsn_CD).then((data) => {
             if (data != null) {
@@ -275,7 +274,10 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                             <li>
                                 <div
                                     role="button"
-                                    onClick={async () => await signOut()}
+                                    onClick={() => {
+                                        localStorage.removeItem("tid");
+                                        router.push("/error");
+                                    }}
                                     className="text-red-500"
                                 >
                                     Sign out

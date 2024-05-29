@@ -5,7 +5,7 @@ import { Backdrop, Box, Fade, Modal } from '@mui/material'
 import React, { useEffect, useRef, useState } from 'react'
 import empty_folder from '../../../public/icon/empty-folder.png'
 import Image from 'next/image';
-import { getArticleDetail } from '@/app/service/MenuService';
+import { getArticleDetail } from '@/app/service/ArticleService';
 import { getArticle } from '@/app/service/Redux/articleDetailSlice';
 import { useDispatch } from 'react-redux';
 import CloseIcon from '@mui/icons-material/Close';
