@@ -150,7 +150,9 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
         "title": title,
         "content_body": content,
         "file_article_id": "123",
-        "status": selectedValue
+        "status": selectedValue,
+        "user_id": 99,
+        "dept_id": session?.dvsn_CD
       }
 
       AddArticleBy(request).then((res: any) => {
