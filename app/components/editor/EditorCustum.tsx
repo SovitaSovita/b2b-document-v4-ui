@@ -98,17 +98,11 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
 
   const handleSelectChange = (event: any) => {
     setSelectedValue(parseInt(event.target.value));
+    console.log("setSelectedValue", selectedValue)
   };
-  //check if public , private , department only
-  const options = [
-    { value: 'option1', label: 'Option 1', status: 0 }, // Enabled
-    { value: 'option2', label: 'Option 2', status: 1 }, // Disabled
-    { value: 'option3', label: 'Option 3', status: 0 }, // Enabled
-  ];
-
 
   const handleChildData = (dataFromChild: object) => {
-    console.log("vanda123",dataFromChild);
+    console.log("vanda123", dataFromChild);
     setShowDefaultValue(true);
     setTagValue(dataFromChild);
   };
@@ -190,8 +184,9 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
         "title": title,
         "content_body": content,
         "user_id": articleData?.user_id,
-        "dept_id": session?.user.dvsn_CD,
-        "modifiedBy": session?.user.userId,
+        "dept_id": session?.dvsn_CD,
+        "status": '0',
+        "modifiedBy": session?.userId,
         "modified_date": formattedDate,
       }
 
@@ -222,49 +217,62 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
 
   useEffect(() => {
     if (session) {
-      GetTagAndArticle(parseInt(session?.user.dvsn_CD, 10), 1).then((res: any) => {
+      GetTagAndArticle(parseInt(session?.dvsn_CD, 10), 1).then((res: any) => {
         const updatedTagList = res?.data?.rec?.tagList.map((tag: any) => ({
           ...tag,
           label: tag.title,
         }));
-        console.log("dadaadd",updatedTagList);
+        console.log("dadaadd", updatedTagList);
 
         setTagData(updatedTagList)
       })
     }
   }, [session])
 
-  const DependentDropdown = () =>{
-    const [selectDropdown,setSelectDropdown] = useState ('');
-    const [secondDropdownValue, setSecondDropdownValue] = useState('');
-    const [secondDropdownOptions, setSecondDropdownOptions] = useState([]);
+  // const DependentDropdown = () => {
+  //   const [selectDropdown, setSelectDropdown] = useState('');
+  //   const [secondDropdownValue, setSecondDropdownValue] = useState('');
+  //   const [secondDropdownOptions, setSecondDropdownOptions] = useState([]);
 
-    // Options for the first dropdown
-    const firstDropdownOptions = [
-      { value: 1, label: 'Public' },
-      { value: 0, label: 'Private' },
-      { value: 2, label: 'Department' },
-    ]
-    // Options for the second dropdown based on the first dropdown's value
-    const optionsForSecondDropdown = {
-    1: [
-      { value: '1-1', label: 'Public Option 1' },
-      { value: '1-2', label: 'Public Option 2' },
-    ],
-    0: [
-      { value: '0-1', label: 'Private Option 1' },
-      { value: '0-2', label: 'Private Option 2' },
-    ],
-    2: [
-      { value: '2-1', label: 'Department Option 1' },
-      { value: '2-2', label: 'Department Option 2' },
-    ],
-  };
+  //   // Options for the first dropdown
+  //   const firstDropdownOptions = [
+  //     { value: 1, label: 'Public' },
+  //     { value: 0, label: 'Private' },
+  //     { value: 2, label: 'Department' },
+  //   ]
+  //   // Options for the second dropdown based on the first dropdown's value
+  //   const optionsForSecondDropdown = {
+  //     1: [
+  //       { value: '1-1', label: 'Public Option 1' },
+  //       { value: '1-2', label: 'Public Option 2' },
+  //     ],
+  //     0: [
+  //       { value: '0-1', label: 'Private Option 1' },
+  //       { value: '0-2', label: 'Private Option 2' },
+  //     ],
+  //     2: [
+  //       { value: '2-1', label: 'Department Option 1' },
+  //       { value: '2-2', label: 'Department Option 2' },
+  //     ],
+  //   };
 
-    
-  }
+
+  // }
 
   const [showDefaultValue, setShowDefaultValue] = useState(false);
+  const options  = () =>{
+      GetTagAndArticle(parseInt(session?.dvsn_CD, 10), 1).then((res: any) => {
+        const updatedTagList = res?.data?.rec?.tagList.map((tag: any) => ({
+          ...tag,
+          label: tag.title,
+        }));
+        console.log("dadaadd", updatedTagList);
+
+        setTagData(updatedTagList)
+      })
+    
+  };
+
 
   const handleImageUpload: any = (blobInfo: any) => {
     return new Promise((resolve, reject) => {
@@ -285,6 +293,8 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
         });
     });
   }
+  
+
 
   return (
     <>
@@ -329,9 +339,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
                 />
                 < button type='button' onClick={handleOpenTag} className="btn btn-active btn-info text-base-100 btn-sm">Add New</button>
               </div>
-            ) 
-            :
-             (
+            ) : (
               <div className='btn btn-secondary btn-sm mr-3'>
                 <LocalOfferOutlinedIcon className='text-base-100' />
                 {articleData?.tag_title}
@@ -348,15 +356,22 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
               className='input input-secondary input-bordered input-sm w-full max-w-xs'
             />
             <select
-
               value={selectedValue} // Bind the selected value to state
-              onChange={handleSelectChange} onClick={DependentDropdown}
+              onChange={handleSelectChange} 
+              //onClick={DependentDropdown}
               className="select select-secondary select-sm select-bordered w-full ml-3 max-w-40">
-              <option selected value={1}>Public</option>
+              
+               {/* {options.map(option => (
+                <option value={0}>
+                  {option}
+                </option>
+              ))}  */}
+              {/* <option selected value={1}>Public</option>
               <option value={0}>Private</option>
-              <option value={2}>Department</option>
+              <option value={2}>Department</option> */}
             </select>
           </div>
+
 
         </div>
         <div className='px-24'>
@@ -391,8 +406,10 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
         </div>
       </form >
 
-      <TagComponent open={openTag} setOpen={setOpenTag} user={session?.user} sendDataToParent={handleChildData} selectedValue={selectedValue} />
+      <TagComponent open={openTag} setOpen={setOpenTag} user={session} sendDataToParent={handleChildData} selectedValue={selectedValue} />
     </>
   )
 
 }
+
+
