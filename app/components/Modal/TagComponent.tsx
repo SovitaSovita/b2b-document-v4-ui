@@ -98,10 +98,6 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
             'Department': ['Suboption 3-1', 'Suboption 3-2'],
         };
 
-
-
-
-
     }
 
     return (

@@ -3,6 +3,7 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
+import { clearScreenDown } from "readline";
 
 export const KEY = process.env.KEY;
 // UI URL
@@ -27,6 +28,8 @@ if (typeof window !== "undefined") {
   url = new URL(window.location.href);
   token = url.searchParams.get("tid") || localStorage.getItem("tid");
 }
+
+console.log("token", token)
 
 // Get session from API
 export async function getSession() {

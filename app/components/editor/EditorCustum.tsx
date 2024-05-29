@@ -108,7 +108,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
 
 
   const handleChildData = (dataFromChild: object) => {
-    console.log("dataFromChild ...", dataFromChild);
+    console.log("vanda123",dataFromChild);
     setShowDefaultValue(true);
     setTagValue(dataFromChild);
   };
@@ -190,8 +190,8 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
         "title": title,
         "content_body": content,
         "user_id": articleData?.user_id,
-        "dept_id": session?.dvsn_CD,
-        "modifiedBy": session?.userId,
+        "dept_id": session?.user.dvsn_CD,
+        "modifiedBy": session?.user.userId,
         "modified_date": formattedDate,
       }
 
@@ -222,19 +222,47 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
 
   useEffect(() => {
     if (session) {
-      GetTagAndArticle(parseInt(session?.dvsn_CD, 10), 1).then((res: any) => {
+      GetTagAndArticle(parseInt(session?.user.dvsn_CD, 10), 1).then((res: any) => {
         const updatedTagList = res?.data?.rec?.tagList.map((tag: any) => ({
           ...tag,
           label: tag.title,
         }));
+        console.log("dadaadd",updatedTagList);
 
         setTagData(updatedTagList)
       })
     }
   }, [session])
 
-  // Test
-  // End test
+  const DependentDropdown = () =>{
+    const [selectDropdown,setSelectDropdown] = useState ('');
+    const [secondDropdownValue, setSecondDropdownValue] = useState('');
+    const [secondDropdownOptions, setSecondDropdownOptions] = useState([]);
+
+    // Options for the first dropdown
+    const firstDropdownOptions = [
+      { value: 1, label: 'Public' },
+      { value: 0, label: 'Private' },
+      { value: 2, label: 'Department' },
+    ]
+    // Options for the second dropdown based on the first dropdown's value
+    const optionsForSecondDropdown = {
+    1: [
+      { value: '1-1', label: 'Public Option 1' },
+      { value: '1-2', label: 'Public Option 2' },
+    ],
+    0: [
+      { value: '0-1', label: 'Private Option 1' },
+      { value: '0-2', label: 'Private Option 2' },
+    ],
+    2: [
+      { value: '2-1', label: 'Department Option 1' },
+      { value: '2-2', label: 'Department Option 2' },
+    ],
+  };
+
+    
+  }
 
   const [showDefaultValue, setShowDefaultValue] = useState(false);
 
@@ -322,11 +350,11 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
             <select
 
               value={selectedValue} // Bind the selected value to state
-              onChange={handleSelectChange}
+              onChange={handleSelectChange} onClick={DependentDropdown}
               className="select select-secondary select-sm select-bordered w-full ml-3 max-w-40">
               <option selected value={1}>Public</option>
               <option value={0}>Private</option>
-              <option value={2}>Depament Only</option>
+              <option value={2}>Department</option>
             </select>
           </div>
 
@@ -363,7 +391,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
         </div>
       </form >
 
-      <TagComponent open={openTag} setOpen={setOpenTag} user={session} sendDataToParent={handleChildData} selectedValue={selectedValue} />
+      <TagComponent open={openTag} setOpen={setOpenTag} user={session?.user} sendDataToParent={handleChildData} selectedValue={selectedValue} />
     </>
   )
 

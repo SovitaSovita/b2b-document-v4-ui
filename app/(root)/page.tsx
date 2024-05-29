@@ -61,9 +61,6 @@ export default function Home() {
     }
   }, [reRederMenu, session, optionGETdata])
 
-
-
-
   // Favorote
   function handleViewFavorite(user_id: string) {
     getFavoriteDetail(user_id).then((res) => {
