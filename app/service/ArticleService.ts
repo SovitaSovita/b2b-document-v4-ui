@@ -62,7 +62,7 @@ export const UpdateArticle = async (input: object) => {
 
 export const Insert_file = async (input: object) => {
     try {
-        const response = await ihttpFile.post(`/files/upload_file?articleId=266`, input)
+        const response = await ihttpFile.post(`/files/upload_file`, input)
         return response.data;
     } catch (error) {
         return error;
