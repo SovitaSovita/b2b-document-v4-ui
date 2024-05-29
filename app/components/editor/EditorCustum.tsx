@@ -241,19 +241,19 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
     ]
     // Options for the second dropdown based on the first dropdown's value
     const optionsForSecondDropdown = {
-    1: [
-      { value: '1-1', label: 'Public Option 1' },
-      { value: '1-2', label: 'Public Option 2' },
-    ],
-    0: [
-      { value: '0-1', label: 'Private Option 1' },
-      { value: '0-2', label: 'Private Option 2' },
-    ],
-    2: [
-      { value: '2-1', label: 'Department Option 1' },
-      { value: '2-2', label: 'Department Option 2' },
-    ],
-  };
+      1: [
+        { value: '1-1', label: 'Public Option 1' },
+        { value: '1-2', label: 'Public Option 2' },
+      ],
+      0: [
+        { value: '0-1', label: 'Private Option 1' },
+        { value: '0-2', label: 'Private Option 2' },
+      ],
+      2: [
+        { value: '2-1', label: 'Department Option 1' },
+        { value: '2-2', label: 'Department Option 2' },
+      ],
+    };
 
     
   }
