@@ -36,8 +36,8 @@ function ProfileDrawer({ userInfo }: { userInfo: any }) {
                         {
                             userInfo?.prfl_PHTG != "" ? (
                                 <div className="avatar">
-                                    <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                        <Image width={24} height={24} alt='pf' src={userInfo?.image ? userInfo.image : userInfo?.prfl_PHTG} />
+                                    <div className="w-24 rounded-full ring ring-secondary ring-offset-base-100 ring-offset-2">
+                                        <img alt='pf' className='w-full' src={userInfo?.prfl_PHTG} />
                                     </div>
                                 </div>
                             ) : (

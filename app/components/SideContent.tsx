@@ -217,8 +217,6 @@ function SideContent({ openMainDrawer, setOpen }: any) {
         }
         dispatch(isMode(true))
     }
-
-
     return (
         <Main open={openMainDrawer}>
             <div className="drawer-content bg-primary flex flex-col items-center justify-center py-2 px-4">

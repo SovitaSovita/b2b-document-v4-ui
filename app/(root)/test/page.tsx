@@ -1,5 +1,4 @@
 "use client"
-import { GetArticleById } from '@/app/service/ArticleService';
 import { useEffect, useState } from 'react';
 
 const WelcomePage = ({ }) => {

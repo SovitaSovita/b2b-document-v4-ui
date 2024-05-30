@@ -1,7 +1,7 @@
 "use client"
 import { AddArticleBy, Insert_file, UpdateArticle } from '@/app/service/ArticleService'
 import { GetTagAndArticle } from '@/app/service/TagService'
-import { Autocomplete, TextField } from '@mui/material'
+import { Autocomplete, Box, CssBaseline, IconButton, TextField, Toolbar, Typography, styled } from '@mui/material'
 import { Editor } from '@tinymce/tinymce-react'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
@@ -11,8 +11,51 @@ import { isRender } from '@/app/service/Redux/articleDetailSlice'
 import { useDispatch } from 'react-redux'
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import { DocumentText } from 'iconsax-react';
+import DrawerTemplate from '@/app/(root)/templates/DrawerTemplate'
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 
 const API_BASE_URL = process.env.NEXT_API_URL
+
+const drawerWidth = 240;
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
+  open?: boolean;
+}>(({ theme, open }) => ({
+  flexGrow: 1,
+  // padding: theme.spacing(3),
+  transition: theme.transitions.create('margin', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  marginRight: -drawerWidth,
+  ...(open && {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginRight: 0,
+  }),
+  position: 'relative',
+}));
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})<AppBarProps>(({ theme, open }) => ({
+  transition: theme.transitions.create(['margin', 'width'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginRight: drawerWidth,
+  }),
+}));
+
+interface AppBarProps extends MuiAppBarProps {
+  open?: boolean;
+}
 
 export default function EditorCustum({ handleClose, session, articleData }: any) {
   // console.log("session>>>", session)
@@ -102,7 +145,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
   };
 
   const handleChildData = (dataFromChild: object) => {
-    console.log("vanda123",dataFromChild);
+    console.log("vanda123", dataFromChild);
     setShowDefaultValue(true);
     setTagValue(dataFromChild);
   };
@@ -151,8 +194,6 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
         "content_body": content,
         "file_article_id": "123",
         "status": selectedValue,
-        "user_id": 99,
-        "dept_id": session?.dvsn_CD
       }
 
       AddArticleBy(request).then((res: any) => {
@@ -184,8 +225,8 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
         "title": title,
         "content_body": content,
         "user_id": articleData?.user_id,
-        "dept_id": session?.user.dvsn_CD,
-        "modifiedBy": session?.user.userId,
+        "dept_id": session?.dvsn_CD,
+        "modifiedBy": session?.userId,
         "modified_date": formattedDate,
       }
 
@@ -216,20 +257,20 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
 
   useEffect(() => {
     if (session) {
-      GetTagAndArticle(parseInt(session?.user.dvsn_CD, 10), 1).then((res: any) => {
+      GetTagAndArticle(parseInt(session?.dvsn_CD, 10), 1).then((res: any) => {
         const updatedTagList = res?.data?.rec?.tagList.map((tag: any) => ({
           ...tag,
           label: tag.title,
         }));
-        console.log("dadaadd",updatedTagList);
+        console.log("dadaadd", updatedTagList);
 
         setTagData(updatedTagList)
       })
     }
   }, [session])
 
-  const DependentDropdown = () =>{
-    const [selectDropdown,setSelectDropdown] = useState ('');
+  const DependentDropdown = () => {
+    const [selectDropdown, setSelectDropdown] = useState('');
     const [secondDropdownValue, setSecondDropdownValue] = useState('');
     const [secondDropdownOptions, setSecondDropdownOptions] = useState([]);
 
@@ -241,21 +282,21 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
     ]
     // Options for the second dropdown based on the first dropdown's value
     const optionsForSecondDropdown = {
-    1: [
-      { value: '1-1', label: 'Public Option 1' },
-      { value: '1-2', label: 'Public Option 2' },
-    ],
-    0: [
-      { value: '0-1', label: 'Private Option 1' },
-      { value: '0-2', label: 'Private Option 2' },
-    ],
-    2: [
-      { value: '2-1', label: 'Department Option 1' },
-      { value: '2-2', label: 'Department Option 2' },
-    ],
-  };
+      1: [
+        { value: '1-1', label: 'Public Option 1' },
+        { value: '1-2', label: 'Public Option 2' },
+      ],
+      0: [
+        { value: '0-1', label: 'Private Option 1' },
+        { value: '0-2', label: 'Private Option 2' },
+      ],
+      2: [
+        { value: '2-1', label: 'Department Option 1' },
+        { value: '2-2', label: 'Department Option 2' },
+      ],
+    };
 
-    
+
   }
 
   const [showDefaultValue, setShowDefaultValue] = useState(false);
@@ -280,109 +321,135 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
     });
   }
 
+  //open drawer template
+  const [openTemplate, setOpenTemplate] = React.useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpenTemplate(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpenTemplate(false);
+  };
+
+
   return (
     <>
-      <CustomAlert
-        open={isErrorAlert.open}
-        setOpen={(open: boolean) => {
-          setIsErrorAlert({ ...isErrorAlert, open });
-        }}
-        message={isErrorAlert.message}
-        type={isErrorAlert.type}
-        duration={isErrorAlert.duration}
-      />
-      <form onSubmit={handleSave} className="ui form">
-        <div className='mb-4 flex justify-end border-b pb-4 px-6'>
-          <button onClick={handleClose} className="btn btn-active btn-sm btn-ghost mr-3">Exit</button>
-          <button type='submit' className="btn btn-active btn-secondary btn-sm text-base-100">
-            <DocumentText size="20" className='text-primary' />
-            Save
-          </button>
-        </div>
-        <div className='flex items-center mb-4 px-24'>
-          {
-            !articleData ? (
-              <div className='flex p-3 rounded-lg border items-center mr-8 bg-base-100'>
-                <Autocomplete
-                  value={showDefaultValue ? tagValue : null}
-                  onChange={(event: any, newValue: string | null) => {
-                    setTagValue(newValue);
-                  }}
-                  defaultValue={inputValue}
-                  onInputChange={(event, newInputValue) => {
-                    setShowDefaultValue(true);
-                    setInputValue(newInputValue);
-                  }}
-                  disablePortal
-                  size="small"
-                  id="combo-box-demo"
-                  options={tagData}
-                  inputValue={inputValue}
-                  sx={{ width: 300, mr: 2 }}
-                  renderInput={(params) => <TextField {...params} placeholder="Search Tag name" />}
-                />
-                < button type='button' onClick={handleOpenTag} className="btn btn-active btn-info text-base-100 btn-sm">Add New</button>
-              </div>
-            ) : (
-              <div className='btn btn-secondary btn-sm mr-3'>
-                <LocalOfferOutlinedIcon className='text-base-100' />
-                {articleData?.tag_title}
-              </div>
-            )
-          }
-
-          <div className='flex bg-base-100 p-3 rounded-lg border'>
-            <input
-              onChange={onchange}
-              value={title}
-              autoFocus
-              placeholder="Enter Sub Title"
-              className='input input-secondary input-bordered input-sm w-full max-w-xs'
-            />
-            <select
-              value={selectedValue} // Bind the selected value to state
-              onChange={handleSelectChange} onClick={DependentDropdown}
-              className="select select-secondary select-sm select-bordered w-full ml-3 max-w-40">
-              <option selected value={1}>Public</option>
-              <option value={0}>Private</option>
-              <option value={2}>Department</option>
-            </select>
-          </div>
-
-        </div>
-        <div className='px-24'>
-          <Editor
-            apiKey='51cakyf7l011kd34r23bib5jrvh79lb520v82wpid72wq92n'
-            onInit={(_evt, editor) => editorRef.current = editor}
-            initialValue={articleData?.content_body}
-            init={{
-              height: 500,
-              plugins: [
-                'advlist', 'autolink', 'lists', 'list link image table wordcount', 'link', 'charmap', 'preview', 'image',
-                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount', 'tinydrive'
-              ],
-              setup: (editor) => {
-                // Define behavior for custom button
-                editor.ui.registry.addButton('insertFileBtn', {
-                  text: 'File',
-                  type: 'button',
-                  icon: 'browse',
-                  onAction: handleFileButtonClicked
-                });
-              },
-              toolbar: 'undo redo | blocks | ' + 'list link image table wordcount' + 'image' +
-                'bold italic forecolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist outdent indent | ' +
-                'removeformat | help | insertFileBtn',
-              images_upload_handler: handleImageUpload,
-              content_style: 'body {font - family:Helvetica,Arial,sans-serif; font-size:14px }',
+      <Box sx={{ display: 'flex' }}>
+        {/* <CssBaseline /> */}
+        <Main open={openTemplate}>
+          <CustomAlert
+            open={isErrorAlert.open}
+            setOpen={(open: boolean) => {
+              setIsErrorAlert({ ...isErrorAlert, open });
             }}
+            message={isErrorAlert.message}
+            type={isErrorAlert.type}
+            duration={isErrorAlert.duration}
           />
-        </div>
-      </form >
+          <form onSubmit={handleSave} className="ui form">
+            <div className='mb-4 flex justify-end border-b pb-4 px-6'>
+              <button onClick={handleClose} className="btn btn-active btn-sm btn-ghost mr-3">Exit</button>
+              <button type='submit' className="btn btn-active btn-secondary btn-sm text-base-100">
+                <DocumentText size="20" className='text-primary' />
+                Save
+              </button>
+            </div>
+            <div className='flex items-center mb-4 px-24'>
+              {
+                !articleData ? (
+                  <div className='flex p-3 rounded-lg border items-center mr-8 bg-base-100'>
+                    <Autocomplete
+                      value={showDefaultValue ? tagValue : null}
+                      onChange={(event: any, newValue: string | null) => {
+                        setTagValue(newValue);
+                      }}
+                      defaultValue={inputValue}
+                      onInputChange={(event, newInputValue) => {
+                        setShowDefaultValue(true);
+                        setInputValue(newInputValue);
+                      }}
+                      disablePortal
+                      size="small"
+                      id="combo-box-demo"
+                      options={tagData}
+                      inputValue={inputValue}
+                      sx={{ width: 300, mr: 2 }}
+                      renderInput={(params) => <TextField {...params} placeholder="Search Tag name" />}
+                    />
+                    < button type='button' onClick={handleOpenTag} className="btn btn-active btn-info text-base-100 btn-sm">Add New</button>
+                  </div>
+                ) : (
+                  <div className='btn btn-secondary btn-sm mr-3'>
+                    <LocalOfferOutlinedIcon className='text-base-100' />
+                    {articleData?.tag_title}
+                  </div>
+                )
+              }
 
-      <TagComponent open={openTag} setOpen={setOpenTag} user={session?.user} sendDataToParent={handleChildData} selectedValue={selectedValue} />
+              <div className='flex bg-base-100 p-3 rounded-lg border'>
+                <input
+                  onChange={onchange}
+                  value={title}
+                  autoFocus
+                  placeholder="Enter Sub Title"
+                  className='input input-secondary input-bordered input-sm w-full max-w-xs'
+                />
+                <select
+                  value={selectedValue} // Bind the selected value to state
+                  onChange={handleSelectChange} onClick={DependentDropdown}
+                  className="select select-secondary select-sm select-bordered w-full ml-3 max-w-40">
+                  <option selected value={1}>Public</option>
+                  <option value={0}>Private</option>
+                  <option value={2}>Department</option>
+                </select>
+              </div>
+              <button
+                type='button'
+                onClick={handleDrawerOpen}
+                className='btn btn-secondary btn-sm ml-4'
+                style={{ ...(openTemplate && { display: 'none' }) }}
+              >
+                open
+              </button>
+            </div>
+
+            <div className='px-24'>
+              <Editor
+                apiKey='51cakyf7l011kd34r23bib5jrvh79lb520v82wpid72wq92n'
+                onInit={(_evt, editor) => editorRef.current = editor}
+                initialValue={articleData?.content_body}
+                init={{
+                  height: 500,
+                  plugins: [
+                    'advlist', 'autolink', 'lists', 'list link image table wordcount', 'link', 'charmap', 'preview', 'image',
+                    'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                    'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount', 'tinydrive'
+                  ],
+                  setup: (editor) => {
+                    // Define behavior for custom button
+                    editor.ui.registry.addButton('insertFileBtn', {
+                      text: 'File',
+                      type: 'button',
+                      icon: 'browse',
+                      onAction: handleFileButtonClicked
+                    });
+                  },
+                  toolbar: 'undo redo | blocks | ' + 'list link image table wordcount' + 'image' +
+                    'bold italic forecolor | alignleft aligncenter ' +
+                    'alignright alignjustify | bullist numlist outdent indent | ' +
+                    'removeformat | help | insertFileBtn',
+                  images_upload_handler: handleImageUpload,
+                  content_style: 'body {font - family:Helvetica,Arial,sans-serif; font-size:14px }',
+                }}
+              />
+            </div>
+          </form >
+
+          <TagComponent open={openTag} setOpen={setOpenTag} user={session} sendDataToParent={handleChildData} selectedValue={selectedValue} />
+        </Main>
+        <DrawerTemplate open={openTemplate} handleDrawerClose={handleDrawerClose} />
+      </Box>
     </>
   )
 
