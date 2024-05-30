@@ -1,7 +1,6 @@
 "use client"
-import { AddArticleBy, Insert_file, UpdateArticle } from '@/app/service/ArticleService'
+import { AddArticleBy, UpdateArticle } from '@/app/service/ArticleService'
 import { GetTagAndArticle } from '@/app/service/TagService'
-import { Editor } from '@tinymce/tinymce-react'
 import React, { useEffect, useRef, useState } from 'react'
 import CustomAlert from '../Material/CustomAlert'
 import { isRender } from '@/app/service/Redux/articleDetailSlice'
@@ -9,6 +8,7 @@ import { useDispatch } from 'react-redux'
 import DrawerTemplate from '@/app/(root)/templates/DrawerTemplate'
 import InputTitleComponent from './InputTitleComponent'
 import { Box, styled } from '@mui/material'
+import TinyEditor from './TinyEditor'
 
 const API_BASE_URL = process.env.NEXT_API_URL
 
@@ -33,9 +33,8 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
   position: 'relative',
 }));
 
-export default function EditorCustum({ handleClose, session, articleData,handleViewArticle }: any) {
+export default function EditorCustum({ handleClose, session, articleData, handleViewArticle }: any) {
   // console.log("session>>>", session)
-  const editorRef = useRef<any>(null);
   const dispatch = useDispatch();
   const [isErrorAlert, setIsErrorAlert] = useState({
     open: false,
@@ -50,40 +49,6 @@ export default function EditorCustum({ handleClose, session, articleData,handleV
   const [inputValue, setInputValue] = React.useState('');
   const [selectedValue, setSelectedValue] = useState(1); // Defaulting to "Public"
 
-
-  const handleFileChange = (e: any) => {
-    const file = e.target.files[0];
-
-    const formData: FormData = new FormData();
-    formData.append("imageFile", file);
-    handleInsertHTML(formData);
-  };
-
-  const handleFileButtonClicked = () => {
-    const fileInput = document.createElement('input');
-    fileInput.setAttribute('type', 'file');
-    fileInput.onchange = handleFileChange;
-    fileInput.click();
-  };
-
-  const handleInsertHTML = (formData: FormData) => {
-    if (formData) {
-      Insert_file(formData).then((fileResponse: FileUploadResponseType) => {
-        const htmlContent = `
-              <div style="padding: 10px; width: 250px; background-color: rgb(246, 248, 252)">
-                <a href="${API_BASE_URL}/files/view_files?fileName=${fileResponse?.payload.file_nm}" download=${fileResponse?.payload.file_nm} 
-                style="display: flex; align-items: center; justify-content: space-between; text-decoration: none;">
-                  download ${fileResponse?.payload.file_nm}
-                  <img width="30px" src="https://firebasestorage.googleapis.com/v0/b/core-appliance-412508.appspot.com/o/cloud-arrow-down-svgrepo-com.svg?alt=media&token=a2b5e6bc-c4e7-445c-b39e-37e35d8e4b5c" />
-                </a>
-              </div>
-        `;
-        editorRef?.current?.setContent(editorRef.current.getContent() + htmlContent);
-      })
-    } else {
-      console.error("No file selected.");
-    }
-  };
   const [isErrorInput, setIsErrorInput] = useState({
     error: false,
     label: "Enter Sub title",
@@ -100,6 +65,12 @@ export default function EditorCustum({ handleClose, session, articleData,handleV
   // const parseLong 
   const currentDate = new Date();
   const formattedDate = currentDate.toISOString();
+
+  const [editorRef, setEditorRef] = useState<any>();
+
+  const geteditorRef = (editorRefFromChild: object) => {
+    setEditorRef(editorRefFromChild);
+  }
 
   const handleSave = (e: any) => {
     e.preventDefault();
@@ -229,27 +200,6 @@ export default function EditorCustum({ handleClose, session, articleData,handleV
   };
 
 
-  const handleImageUpload: any = (blobInfo: any) => {
-    return new Promise((resolve, reject) => {
-      const file = blobInfo.blob();
-      const formData = new FormData();
-      formData.append("imageFile", file);
-      fetch(`${API_BASE_URL}/files/upload_file`, {
-        method: "POST",
-        body: formData,
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          const imageURL = result?.payload?.thum_img_path;
-          resolve(imageURL);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  }
-
-
 
   //open drawer template
   const [openTemplate, setOpenTemplate] = React.useState(false);
@@ -298,40 +248,13 @@ export default function EditorCustum({ handleClose, session, articleData,handleV
               setSelectedValue={setSelectedValue}
             />
 
-            <div className='px-24'>
-              <Editor
-                apiKey='51cakyf7l011kd34r23bib5jrvh79lb520v82wpid72wq92n'
-                onInit={(_evt, editor) => editorRef.current = editor}
-                initialValue={articleData?.content_body}
-                init={{
-                  height: 500,
-                  plugins: [
-                    'advlist', 'autolink', 'lists', 'list link image table wordcount', 'link', 'charmap', 'preview', 'image',
-                    'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                    'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount', 'tinydrive'
-                  ],
-                  setup: (editor) => {
-                    // Define behavior for custom button
-                    editor.ui.registry.addButton('insertFileBtn', {
-                      text: 'File',
-                      type: 'button',
-                      icon: 'browse',
-                      onAction: handleFileButtonClicked
-                    });
-                  },
-                  toolbar: 'undo redo | blocks | ' + 'list link image table wordcount' + 'image' +
-                    'bold italic forecolor | alignleft aligncenter ' +
-                    'alignright alignjustify | bullist numlist outdent indent | ' +
-                    'removeformat | help | insertFileBtn',
-                  images_upload_handler: handleImageUpload,
-                  content_style: 'body {font - family:Helvetica,Arial,sans-serif; font-size:14px }',
-                }}
-              />
+            <div className='px-6'>
+              <TinyEditor geteditorRef={geteditorRef} articleData={articleData} />
             </div>
           </form >
 
         </Main>
-        <DrawerTemplate open={openTemplate} handleDrawerClose={handleDrawerClose} />
+        <DrawerTemplate open={openTemplate} handleDrawerClose={handleDrawerClose} editorRef={editorRef} />
       </Box>
     </>
   )

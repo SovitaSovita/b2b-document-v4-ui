@@ -9,6 +9,7 @@ import { get_session, isMode, isRender } from "../service/Redux/articleDetailSli
 import { GetTagAndArticle } from "../service/TagService";
 import { getFavoriteDetail } from "../service/FavouriteService";
 import { getSession } from "../utils/xhttp";
+import { Editor } from "tinymce";
 
 export default function Home() {
 
