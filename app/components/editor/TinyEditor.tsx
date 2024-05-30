@@ -11,7 +11,7 @@ function TinyEditor(props: any) {
 
     useEffect(() => {
         geteditorRef(editorRef)
-    }, [editorRef])
+    }, [editorRef, geteditorRef])
 
     const handleImageUpload: any = (blobInfo: any) => {
         return new Promise((resolve, reject) => {

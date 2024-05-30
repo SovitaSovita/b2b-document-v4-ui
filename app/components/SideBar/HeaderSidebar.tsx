@@ -110,7 +110,7 @@ function HeaderSidebar({ handleOpenArticle }: any) {
         <div className="p-2 pl-1 bg-base-100 border rounded-lg flex justify-between">
             <div className='flex items-center cursor-pointer' onClick={handleClick}>
                 <UnfoldMoreRoundedIcon className='text-gray-500 text-[19px]' />
-                <Image src={logoDocument} alt="" width={50} />
+                <Image src={logoDocument} alt="" width={50} height={50} />
                 <span className="inline-flex tracking-widest flex-col font-semibold text-gray-600 text-md font-Poppin ml-2">
                     <button className="button" data-text="Awesome">
                         <span className="actual-text">BizBook&nbsp;</span>
