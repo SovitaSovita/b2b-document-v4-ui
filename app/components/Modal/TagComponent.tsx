@@ -1,13 +1,9 @@
 'use client'
 
-import { Backdrop, Box, Fade, Modal } from '@mui/material'
-import React, { useEffect, useRef, useState } from 'react'
+import { Backdrop, Fade, Modal } from '@mui/material'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined';
-import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
-import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import { SaveNewTag } from '@/app/service/TagService';
-import { useRouter } from 'next/navigation';
 import CustomAlert from '../Material/CustomAlert';
 import { isRender } from '@/app/service/Redux/articleDetailSlice';
 import { RootState } from '@/app/service/Redux/store/store';
@@ -20,7 +16,6 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
 
     const dispatch = useDispatch()
     const [inputVal, setInputVal] = useState<string>();
-    const router = useRouter()
     const session: UserData = useSelector((state: RootState) => state?.article.session);
     const [isErrorAlert, setIsErrorAlert] = useState({
         open: false,
@@ -84,20 +79,6 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
                 message: "Input can not empty.",
             });
         }
-    }
-
-    const DependentDropdown = () => {
-        const [firstDropdown, setFirstDropdown] = useState('');
-        const [secondDropdownOptions, setSecondDropdownOptions] = useState([]);
-
-        const optionsForFirstDropdown = ['Public', 'Private', 'Department'];
-
-        const optionsForSecondDropdown = {
-            'Public': ['Suboption 1-1', 'Suboption 1-2'],
-            'Private': ['Suboption 2-1', 'Suboption 2-2'],
-            'Department': ['Suboption 3-1', 'Suboption 3-2'],
-        };
-
     }
 
     return (

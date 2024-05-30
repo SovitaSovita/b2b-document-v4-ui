@@ -1,18 +1,14 @@
 "use client"
 import { AddArticleBy, Insert_file, UpdateArticle } from '@/app/service/ArticleService'
 import { GetTagAndArticle } from '@/app/service/TagService'
-import { Autocomplete, Box, CssBaseline, IconButton, TextField, Toolbar, Typography, styled } from '@mui/material'
 import { Editor } from '@tinymce/tinymce-react'
-import { useRouter } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 import CustomAlert from '../Material/CustomAlert'
-import TagComponent from '../Modal/TagComponent'
 import { isRender } from '@/app/service/Redux/articleDetailSlice'
 import { useDispatch } from 'react-redux'
-import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
-import { DocumentText } from 'iconsax-react';
 import DrawerTemplate from '@/app/(root)/templates/DrawerTemplate'
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import InputTitleComponent from './InputTitleComponent'
+import { Box, styled } from '@mui/material'
 
 const API_BASE_URL = process.env.NEXT_API_URL
 
@@ -36,31 +32,24 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
   }),
   position: 'relative',
 }));
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})<AppBarProps>(({ theme, open }) => ({
-  transition: theme.transitions.create(['margin', 'width'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginRight: drawerWidth,
-  }),
-}));
 
-interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
-}
-
-export default function EditorCustum({ handleClose, session, articleData }: any) {
+export default function EditorCustum({ handleClose, session, articleData,handleViewArticle }: any) {
   // console.log("session>>>", session)
   const editorRef = useRef<any>(null);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const [isErrorAlert, setIsErrorAlert] = useState({
+    open: false,
+    type: "",
+    message: "",
+    duration: 1600,
+  });
+
+  const [tagData, setTagData] = useState([]);
+  const [title, setTitle] = useState("");
+  const [tagValue, setTagValue] = React.useState<TagType | any>();
+  const [inputValue, setInputValue] = React.useState('');
+  const [selectedValue, setSelectedValue] = useState(1); // Defaulting to "Public"
+
 
   const handleFileChange = (e: any) => {
     const file = e.target.files[0];
@@ -95,14 +84,9 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
       console.error("No file selected.");
     }
   };
-
-  const [tagValue, setTagValue] = React.useState<TagType | any>();
-  const [inputValue, setInputValue] = React.useState('');
-  const [isErrorAlert, setIsErrorAlert] = useState({
-    open: false,
-    type: "",
-    message: "",
-    duration: 1600,
+  const [isErrorInput, setIsErrorInput] = useState({
+    error: false,
+    label: "Enter Sub title",
   });
 
   const [isUpdateArticle, setIsUpdateArticle] = useState({
@@ -113,51 +97,9 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
     duration: 1600,
   })
 
-  const [isErrorInput, setIsErrorInput] = useState({
-    error: false,
-    label: "Enter Sub title",
-  });
-
   // const parseLong 
   const currentDate = new Date();
   const formattedDate = currentDate.toISOString();
-
-  const [tagData, setTagData] = useState([]);
-  const [title, setTitle] = useState("");
-
-  const [openTag, setOpenTag] = React.useState(false);
-  const handleOpenTag = () => {
-    setOpenTag(true);
-  }
-  const router = useRouter();
-
-  const onchange = (e: any) => {
-    const value = e.target.value
-    setTitle(value)
-  }
-
-  const [selectedValue, setSelectedValue] = useState(1); // Defaulting to "Public"
-
-
-  const handleSelectChange = (event: any) => {
-    setSelectedValue(parseInt(event.target.value));
-    console.log("setSelectedValue", selectedValue)
-  };
-
-  const handleChildData = (dataFromChild: object) => {
-    console.log("vanda123", dataFromChild);
-    setShowDefaultValue(true);
-    setTagValue(dataFromChild);
-  };
-
-
-  useEffect(() => {
-    if (articleData != null) {
-      setInputValue(articleData?.tag_title)
-      setTitle(articleData?.title)
-    }
-  }, [inputValue])
-
 
   const handleSave = (e: any) => {
     e.preventDefault();
@@ -239,6 +181,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
             type: "success",
             message: "Update article successfully",
           });
+          handleViewArticle(articleData?.id)
           dispatch(isRender(true))
           handleClose();
         } else {
@@ -270,35 +213,6 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
     }
   }, [session])
 
-  // const DependentDropdown = () => {
-  //   const [selectDropdown, setSelectDropdown] = useState('');
-  //   const [secondDropdownValue, setSecondDropdownValue] = useState('');
-  //   const [secondDropdownOptions, setSecondDropdownOptions] = useState([]);
-
-  //   // Options for the first dropdown
-  //   const firstDropdownOptions = [
-  //     { value: 1, label: 'Public' },
-  //     { value: 0, label: 'Private' },
-  //     { value: 2, label: 'Department' },
-  //   ]
-  //   // Options for the second dropdown based on the first dropdown's value
-  //   const optionsForSecondDropdown = {
-  //     1: [
-  //       { value: '1-1', label: 'Public Option 1' },
-  //       { value: '1-2', label: 'Public Option 2' },
-  //     ],
-  //     0: [
-  //       { value: '0-1', label: 'Private Option 1' },
-  //       { value: '0-2', label: 'Private Option 2' },
-  //     ],
-  //     2: [
-  //       { value: '2-1', label: 'Department Option 1' },
-  //       { value: '2-2', label: 'Department Option 2' },
-  //     ],
-  //   };
-
-
-  // }
 
   const [showDefaultValue, setShowDefaultValue] = useState(false);
   const options = () => {
@@ -364,71 +278,25 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
             duration={isErrorAlert.duration}
           />
           <form onSubmit={handleSave} className="ui form">
-            <div className='mb-4 flex justify-end border-b pb-4 px-6'>
-              <button onClick={handleClose} className="btn btn-active btn-sm btn-ghost mr-3">Exit</button>
-              <button type='submit' className="btn btn-active btn-secondary btn-sm text-base-100">
-                <DocumentText size="20" className='text-primary' />
-                Save
-              </button>
-            </div>
-            <div className='flex items-center mb-4 px-24'>
-              {
-                !articleData ? (
-                  <div className='flex p-3 rounded-lg border items-center mr-8 bg-base-100'>
-                    <Autocomplete
-                      value={showDefaultValue ? tagValue : null}
-                      onChange={(event: any, newValue: string | null) => {
-                        setTagValue(newValue);
-                      }}
-                      defaultValue={inputValue}
-                      onInputChange={(event, newInputValue) => {
-                        setShowDefaultValue(true);
-                        setInputValue(newInputValue);
-                      }}
-                      disablePortal
-                      size="small"
-                      id="combo-box-demo"
-                      options={tagData}
-                      inputValue={inputValue}
-                      sx={{ width: 300, mr: 2 }}
-                      renderInput={(params) => <TextField {...params} placeholder="Search Tag name" />}
-                    />
-                    < button type='button' onClick={handleOpenTag} className="btn btn-active btn-info text-base-100 btn-sm">Add New</button>
-                  </div>
-                ) : (
-                  <div className='btn btn-secondary btn-sm mr-3'>
-                    <LocalOfferOutlinedIcon className='text-base-100' />
-                    {articleData?.tag_title}
-                  </div>
-                )
-              }
 
-              <div className='flex bg-base-100 p-3 rounded-lg border'>
-                <input
-                  onChange={onchange}
-                  value={title}
-                  autoFocus
-                  placeholder="Enter Sub Title"
-                  className='input input-secondary input-bordered input-sm w-full max-w-xs'
-                />
-                <select
-                  value={selectedValue} // Bind the selected value to state
-                  onChange={handleSelectChange}
-                  className="select select-secondary select-sm select-bordered w-full ml-3 max-w-40">
-                  <option selected value={1}>Public</option>
-                  <option value={0}>Private</option>
-                  <option value={2}>Department</option>
-                </select>
-              </div>
-              <button
-                type='button'
-                onClick={handleDrawerOpen}
-                className='btn btn-secondary btn-sm ml-4'
-                style={{ ...(openTemplate && { display: 'none' }) }}
-              >
-                open
-              </button>
-            </div>
+            <InputTitleComponent
+              articleData={articleData}
+              handleClose={handleClose}
+              showDefaultValue={showDefaultValue}
+              setShowDefaultValue={setShowDefaultValue}
+              openTemplate={openTemplate}
+              handleDrawerOpen={handleDrawerOpen}
+              session={session}
+              tagData={tagData}
+              title={title}
+              setTitle={setTitle}
+              inputValue={inputValue}
+              setInputValue={setInputValue}
+              tagValue={tagValue}
+              setTagValue={setTagValue}
+              selectedValue={selectedValue}
+              setSelectedValue={setSelectedValue}
+            />
 
             <div className='px-24'>
               <Editor
@@ -462,7 +330,6 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
             </div>
           </form >
 
-          <TagComponent open={openTag} setOpen={setOpenTag} user={session} sendDataToParent={handleChildData} selectedValue={selectedValue} />
         </Main>
         <DrawerTemplate open={openTemplate} handleDrawerClose={handleDrawerClose} />
       </Box>
