@@ -82,7 +82,7 @@ function SideBar(props: any) {
     useEffect(() => {
 
         getSession().then((res) => {
-            console.log("Session from API: ",res)
+            console.log("Session from API: ", res)
         })
 
         if (localStorage.getItem("mode") === "light") {
@@ -101,7 +101,8 @@ function SideBar(props: any) {
                 '& .MuiDrawer-paper': {
                     width: drawerWidth,
                     boxSizing: 'border-box',
-                    bgcolor: bg_color
+                    bgcolor: bg_color,
+                    zIndex: 40
                 },
             }}
             variant="persistent"
