@@ -383,7 +383,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                     setOpen={setOpenAskCf}
                     handleSubmitCallback={handleDeleteArticle}
                 />
-                <UpdateArticleModal open={openArticle} setOpen={setOpenArticle} session={session} articleData={articleData} />
+                <UpdateArticleModal open={openArticle} setOpen={setOpenArticle} session={session} articleData={articleData} handleViewArticle={handleViewArticle}/>
             </div>
         </Main>
     )
