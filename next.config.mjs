@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['platform.bizplay.co.kr', 'lh3.googleusercontent.com'],
+        domains: ['platform.bizplay.co.kr', 'lh3.googleusercontent.com', 'cdn.create.microsoft.com'],
     },
     env: {
         NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,

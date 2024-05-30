@@ -9,6 +9,7 @@ import { get_session, isMode, isRender } from "../service/Redux/articleDetailSli
 import { GetTagAndArticle } from "../service/TagService";
 import { getFavoriteDetail } from "../service/FavouriteService";
 import { getSession } from "../utils/xhttp";
+import { Editor } from "tinymce";
 
 export default function Home() {
 
@@ -51,10 +52,8 @@ export default function Home() {
       if (optionGETdata == "PUBLIC") status = 1
       if (optionGETdata == "DEPARTMENT") status = 2
       //GET
-      console.log("session?.dvsn_CD >> ", session?.dvsn_CD);
       GetTagAndArticle(parseInt(session?.dvsn_CD, 10), status).then((res: any) => {
-        console.log(">>>>>             >>>>>>>", res);
-        setMenudata(res?.data.rec);
+        setMenudata(res?.data?.rec);
         dispatch(isRender(false));
         setIsLoading(false)
       })
@@ -101,7 +100,12 @@ export default function Home() {
   return (
     <>
       <div className="flex" data-theme={mode}>
-        <SideBar ARTICLES={menudata.articleList} TAGS={menudata.tagList} FAVORITE={favorites} handleDrawerClose={handleDrawerClose} openMainDrawer={open} />
+        <SideBar
+          ARTICLES={menudata.articleList}
+          TAGS={menudata.tagList}
+          FAVORITE={favorites}
+          handleDrawerClose={handleDrawerClose}
+          openMainDrawer={open} />
         <SideContent openMainDrawer={open} />
       </div>
     </>

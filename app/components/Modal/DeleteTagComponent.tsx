@@ -16,7 +16,7 @@ function DeleteTagComponent({ open, setOpen, tagDeleteData }: any) {
     type: "",
     message: "",
     duration: 1600,
-});
+  });
 
 
   const handleDelete = () => {
@@ -34,10 +34,10 @@ function DeleteTagComponent({ open, setOpen, tagDeleteData }: any) {
         open: true,
         type: "success",
         message: "Deleted Successfully.",
-    });
-    handleClose()
-    dispatch(isRender(true));
-    setOpenAskCf(false)
+      });
+      handleClose()
+      dispatch(isRender(true));
+      setOpenAskCf(false)
     })
 
   }
