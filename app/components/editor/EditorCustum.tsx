@@ -11,6 +11,7 @@ import { isRender } from '@/app/service/Redux/articleDetailSlice'
 import { useDispatch } from 'react-redux'
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import { DocumentText } from 'iconsax-react';
+import { event } from 'jquery'
 
 const API_BASE_URL = process.env.NEXT_API_URL
 
@@ -94,11 +95,30 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
   }
 
   const [selectedValue, setSelectedValue] = useState(1); // Defaulting to "Public"
-
-
+  
   const handleSelectChange = (event: any) => {
-    setSelectedValue(parseInt(event.target.value));
-    console.log("setSelectedValue", selectedValue)
+    const [selected, setSelectedValue] = useState(""); 
+    //setSelectedValue(parseInt(event.target.value));
+    setSelectedValue(event.target.value);
+    console.log("setSelectedValue", selectedValue);
+    const Private = 'Private';
+    const Public = 'Public';
+    const Department = 'Department';
+    
+    let options = null;
+    let type = null;
+
+    if(selected === 'Private'){
+      type = 'private';
+    }else if(selected === 'Public'){
+      type = 'public';
+    }else if(selected === 'Department'){
+      type = 'department';
+    }
+
+    if(type){
+      options = type.map((el) => <option key={el}>{el}</option>)
+    }
   };
 
   const handleChildData = (dataFromChild: object) => {
@@ -216,7 +236,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
 
   useEffect(() => {
     if (session) {
-      GetTagAndArticle(parseInt(session?.user.dvsn_CD, 10), 1).then((res: any) => {
+      GetTagAndArticle(parseInt(session?.dvsn_CD, 10), 1).then((res: any) => {
         const updatedTagList = res?.data?.rec?.tagList.map((tag: any) => ({
           ...tag,
           label: tag.title,
@@ -228,35 +248,6 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
     }
   }, [session])
 
-  const DependentDropdown = () =>{
-    const [selectDropdown,setSelectDropdown] = useState ('');
-    const [secondDropdownValue, setSecondDropdownValue] = useState('');
-    const [secondDropdownOptions, setSecondDropdownOptions] = useState([]);
-
-    // Options for the first dropdown
-    const firstDropdownOptions = [
-      { value: 1, label: 'Public' },
-      { value: 0, label: 'Private' },
-      { value: 2, label: 'Department' },
-    ]
-    // Options for the second dropdown based on the first dropdown's value
-    const optionsForSecondDropdown = {
-      1: [
-        { value: '1-1', label: 'Public Option 1' },
-        { value: '1-2', label: 'Public Option 2' },
-      ],
-      0: [
-        { value: '0-1', label: 'Private Option 1' },
-        { value: '0-2', label: 'Private Option 2' },
-      ],
-      2: [
-        { value: '2-1', label: 'Department Option 1' },
-        { value: '2-2', label: 'Department Option 2' },
-      ],
-    };
-
-    
-  }
 
   const [showDefaultValue, setShowDefaultValue] = useState(false);
 
@@ -341,7 +332,7 @@ export default function EditorCustum({ handleClose, session, articleData }: any)
             />
             <select
               value={selectedValue} // Bind the selected value to state
-              onChange={handleSelectChange} onClick={DependentDropdown}
+              onChange={handleSelectChange} 
               className="select select-secondary select-sm select-bordered w-full ml-3 max-w-40">
               <option selected value={1}>Public</option>
               <option value={0}>Private</option>
