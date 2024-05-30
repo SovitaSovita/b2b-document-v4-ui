@@ -13,14 +13,15 @@ export const API_BASE_URL = process.env.NEXT_API_URL;
 // api managament URL
 export const API_M_BASE_URL = process.env.API_M_BASE_URL
 
-console.log(API_M_BASE_URL);
+console.log("local",process.env.NEXT_URL);
+console.log("API_BASE_URL",API_BASE_URL)
 
 const ihttp = axios.create({
   baseURL: API_BASE_URL,
 });
 
 
-let session: any = '';
+let session:any = '';
 let token: any;
 let url;
 
