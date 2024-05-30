@@ -29,6 +29,7 @@ function SideBar(props: any) {
     const { handleDrawerClose, openMainDrawer }: any = props
     const session: UserData = useSelector((state: RootState) => state?.article.session);
     const [activeItemId, setActiveItemId] = useState("");
+    console.log("")
 
 
     //const handleOpenTag = () => setOpenTag(true);
@@ -196,7 +197,7 @@ function SideBar(props: any) {
                     ))
                 }
             </ul >
-            <UpdateTagComponent open={openTag} setOpen={setOpenTag} tagUpdateData={tagUpdateData} />
+            <UpdateTagComponent open={openTag} setOpen={setOpenTag} tagUpdateData={tagUpdateData} TAGS={TAGS}/>
             <UpdateArticleModal open={openArticle} setOpen={setOpenArticle} session={session} articleData={null} />
         </Drawer>
 

@@ -10,6 +10,7 @@ import { isRender } from '@/app/service/Redux/articleDetailSlice';
 import EditorCustum from '../editor/EditorCustum';
 
 function UpdateArticleModal({ open, setOpen, session, articleData,handleViewArticle }: any) {
+    console.log("articleData",articleData)
     const dispatch = useDispatch()
     const [inputVal, setInputVal] = useState<string>();
     const router = useRouter()
