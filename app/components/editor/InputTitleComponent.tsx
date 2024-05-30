@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import { useRouter } from 'next/navigation';
 import TagComponent from '../Modal/TagComponent';
+import { resolve } from 'path';
 
 
 function InputTitleComponent(props: any) {
@@ -44,28 +45,24 @@ function InputTitleComponent(props: any) {
 
 
     const handleSelectChange = (event: any) => {
-        const [selected, setSelectedValue] = useState("");
+        const [selectedValue, setSelectedValue] = useState("");
         //setSelectedValue(parseInt(event.target.value));
         setSelectedValue(event.target.value);
         console.log("setSelectedValue", selectedValue);
-        const Private = 'Private';
-        const Public = 'Public';
-        const Department = 'Department';
-
-        let options = [];
         let type = null;
+        const options ={
+            0:['Private Option 1','Private  Option 2'],
+            1:['Public Option 1','Public  Option 2'],
+            2:['Department Option 1','Department  Option 2']  
+        };
 
-        if (selected === 'Private') {
+        if (selectedValue === 'Private') {
             type = 'private';
-        } else if (selected === 'Public') {
+        } else if (selectedValue === 'Public') {
             type = 'public';
-        } else if (selected === 'Department') {
+        } else if (selectedValue === 'Department') {
             type = 'department';
         }
-
-        // if(type){
-        //   options = type.map((el) => <option key={el}>{el}</option>)
-        // }
     };
 
     const handleChildData = (dataFromChild: object) => {
