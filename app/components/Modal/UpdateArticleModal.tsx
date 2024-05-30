@@ -9,7 +9,7 @@ import CustomAlert from '../Material/CustomAlert';
 import { isRender } from '@/app/service/Redux/articleDetailSlice';
 import EditorCustum from '../editor/EditorCustum';
 
-function UpdateArticleModal({ open, setOpen, session, articleData }: any) {
+function UpdateArticleModal({ open, setOpen, session, articleData,handleViewArticle }: any) {
     const dispatch = useDispatch()
     const [inputVal, setInputVal] = useState<string>();
     const router = useRouter()
@@ -52,7 +52,7 @@ function UpdateArticleModal({ open, setOpen, session, articleData }: any) {
             >
                 <Fade in={open}>
                     <div className='w-full h-full overflow-scroll bg-primary absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg py-6'>
-                        <EditorCustum handleClose={handleClose} session={session} articleData={articleData} tagData={articleData?.id} />
+                        <EditorCustum handleClose={handleClose} session={session} articleData={articleData} tagData={articleData?.id} handleViewArticle={handleViewArticle}/>
                     </div>
                 </Fade>
             </Modal>

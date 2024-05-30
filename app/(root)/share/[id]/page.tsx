@@ -1,6 +1,6 @@
 'use client'
 
-import { getArticleDetail } from "@/app/service/MenuService";
+import { getArticleDetail } from "@/app/service/ArticleService";
 import { useEffect, useState } from "react";
 
 export default function Page({ params }: { params: { id: string } }) {

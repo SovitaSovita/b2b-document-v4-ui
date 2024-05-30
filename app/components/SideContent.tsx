@@ -4,7 +4,6 @@ import LeftDrawerCustom from './Profile/LeftDrawerCustom'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../service/Redux/store/store';
 import Link from 'next/link';
-import { signOut } from 'next-auth/react';
 import Profile from './Profile/Profile';
 import ProfileDrawer from './Profile/ProfileDrawer';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
@@ -126,7 +125,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
 
     function handleViewArticle(id: string) {
         getArticleDetail(id).then((res) => {
-            dispatch(getArticle(res?.rec[0]))
+            dispatch(getArticle(res))
         })
         checkIsFavorite(session.userId, parseInt(id, 10), session.dvsn_CD).then((data) => {
             if (data != null) {
@@ -218,8 +217,6 @@ function SideContent({ openMainDrawer, setOpen }: any) {
         }
         dispatch(isMode(true))
     }
-
-
     return (
         <Main open={openMainDrawer}>
             <div className="drawer-content bg-primary flex flex-col items-center justify-center py-2 px-4">
@@ -275,7 +272,10 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                             <li>
                                 <div
                                     role="button"
-                                    onClick={async () => await signOut()}
+                                    onClick={() => {
+                                        localStorage.removeItem("tid");
+                                        router.push("/error");
+                                    }}
                                     className="text-red-500"
                                 >
                                     Sign out
@@ -383,7 +383,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                     setOpen={setOpenAskCf}
                     handleSubmitCallback={handleDeleteArticle}
                 />
-                <UpdateArticleModal open={openArticle} setOpen={setOpenArticle} session={session} articleData={articleData} />
+                <UpdateArticleModal open={openArticle} setOpen={setOpenArticle} session={session} articleData={articleData} handleViewArticle={handleViewArticle}/>
             </div>
         </Main>
     )

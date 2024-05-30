@@ -53,7 +53,7 @@ export default function Home() {
       //GET
       console.log("session?.dvsn_CD >> ", session?.dvsn_CD);
       GetTagAndArticle(parseInt(session?.dvsn_CD, 10), status).then((res: any) => {
-        console.log(res);
+        console.log(">>>>>             >>>>>>>", res);
         setMenudata(res?.data.rec);
         dispatch(isRender(false));
         setIsLoading(false)
