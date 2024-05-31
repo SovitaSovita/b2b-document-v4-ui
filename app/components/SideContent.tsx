@@ -352,13 +352,8 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                                             }
                                         </div>
                                     </div>
-
                                     <div dangerouslySetInnerHTML={{ __html: article?.content_body }} />
-
-
                                 </div>
-
-
                             )
                     }
                 </div>
@@ -383,7 +378,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                     setOpen={setOpenAskCf}
                     handleSubmitCallback={handleDeleteArticle}
                 />
-                <UpdateArticleModal open={openArticle} setOpen={setOpenArticle} session={session} articleData={articleData} handleViewArticle={handleViewArticle}/>
+                <UpdateArticleModal open={openArticle} setOpen={setOpenArticle} session={session} articleData={articleData} handleViewArticle={handleViewArticle} />
             </div>
         </Main>
     )

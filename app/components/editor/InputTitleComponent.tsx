@@ -22,14 +22,14 @@ function InputTitleComponent(props: any) {
         tagValue,
         setTagValue,
         selectedValue,
-        setSelectedValue } = props
+    } = props
 
     useEffect(() => {
         if (articleData != null) {
-          setInputValue(articleData?.tag_title)
-          setTitle(articleData?.title)
+            setInputValue(articleData?.tag_title)
+            setTitle(articleData?.title)
         }
-      }, [inputValue])
+    }, [inputValue, articleData])
 
     const [openTag, setOpenTag] = React.useState(false);
     const handleOpenTag = () => {
@@ -43,8 +43,8 @@ function InputTitleComponent(props: any) {
     }
 
 
+    const [selected, setSelectedValue] = useState("");
     const handleSelectChange = (event: any) => {
-        const [selected, setSelectedValue] = useState("");
         //setSelectedValue(parseInt(event.target.value));
         setSelectedValue(event.target.value);
         console.log("setSelectedValue", selectedValue);

@@ -134,7 +134,7 @@ function SearchComponent({ open, setOpen }: any) {
                                                         ) :
                                                         (
                                                             < div className='h-full flex flex-col justify-center items-center'>
-                                                                <Image src={empty_folder} alt="empty" width={80} />
+                                                                <Image src={empty_folder} alt="empty" width={80} height={80} />
                                                                 No Data
                                                             </div>
                                                         )

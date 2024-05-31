@@ -104,20 +104,19 @@ function HeaderSidebar({ handleOpenArticle }: any) {
             });
             return result;
         }
-
     }
 
     return (
         <div className="p-2 pl-1 bg-base-100 border rounded-lg flex justify-between">
             <div className='flex items-center cursor-pointer' onClick={handleClick}>
                 <UnfoldMoreRoundedIcon className='text-gray-500 text-[19px]' />
-                <Image src={logoDocument} alt="" width={50} />
+                <Image src={logoDocument} alt="" width={50} height={50} />
                 <span className="inline-flex tracking-widest flex-col font-semibold text-gray-600 text-md font-Poppin ml-2">
                     <button className="button" data-text="Awesome">
-                        <span className="actual-text">Document&nbsp;</span>
-                        <span aria-hidden="true" className="hover-text">Document&nbsp;</span>
+                        <span className="actual-text">BizBook&nbsp;</span>
+                        <span aria-hidden="true" className="hover-text">BizBook&nbsp;</span>
                     </button>
-                    <span className='text-xs font-extralight'>v4.0</span>
+                    <span className='text-xs font-extralight'>v1.0</span>
                 </span>
                 {/* <Button onClick={handleDrawerClose}>Open drawer</Button> */}
             </div>
