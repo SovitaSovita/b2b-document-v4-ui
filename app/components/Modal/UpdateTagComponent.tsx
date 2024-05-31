@@ -25,11 +25,25 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
     duration: 1600,
   });
   const [selectedValue, setSelectedValue] = useState(1);
-  console.log("selectedValue", selectedValue)
   const handleSelectChange = (event: any) => {
     setSelectedValue(parseInt(event.target.value));
-
+    let options = [];
+    let type = null;
+    console.log("selectedValue", selectedValue)
+    if (selectedValue === 0) {
+      type = 'private';
+    } else if (selectedValue === 1) {
+      type = 'public';
+    } else if (selectedValue === 2) {
+      type = 'department';
+    }
+    console.log("type", type)
   };
+
+
+  const handleOption = () => {
+
+  }
 
 
   //   const handleSelectChange = (event: any) => {
@@ -63,11 +77,11 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
     if (tagUpdateData?.title) {
       setInputVal(tagUpdateData.title);
     }
-    if(TAGS?.status){
+    if (TAGS?.status) {
       setStatusVal(TAGS.status)
     }
-  }, [tagUpdateData] [TAGS]);
-
+  }, [tagUpdateData][TAGS]);
+  console.log("optionStatus", optionStatus)
   const handleClose = () => {
     setOpen(false)
   };
@@ -91,10 +105,10 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
         dept_id: tagUpdateData.dept_id,
         title: inputVal,
         user_name: session?.userId,
-        status: optionStatus,
+        status: selectedValue,
         modified_date: formattedDate
       }
-      console.log("request",request)
+      console.log("request", request)
       UpdateTag(request).then((res: any) => {
         setInputVal("")
         setIsErrorAlert({
@@ -109,6 +123,23 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
       })
     }
 
+  }
+  //option private , department and public
+  let typePub = "";
+  let typeDept = "";
+  let typePri = "";
+  if (tagUpdateData.status === 1) {
+    typePub = "Public";
+    typeDept = "Department";
+    typePri = "Private";
+  } else if (tagUpdateData.status === 0) {
+    typePri = 'Private';
+    typePub = "Public";
+    typeDept = "Department";
+  } else {
+    typeDept = 'Department'
+    typePri = 'Private';
+    typePub = "Public";
   }
   return (
     <div>
@@ -157,9 +188,9 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
                       value={selectedValue}
                       onChange={handleSelectChange}
                       className="select select-sm select-bordered w-full ml-3 max-w-40" style={{ width: '125px' }}>
-                      <option selected value={1}>Public</option>
-                      <option value={0}>Private</option>
-                      <option value={2}>Department</option> 
+                      <option selected value={1}>{typePub}</option>
+                      <option value={0}>{typePri}</option>
+                      <option value={2}>{typeDept}</option>
                     </select>
                   </div>
                 </div>

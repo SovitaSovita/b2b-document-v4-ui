@@ -77,6 +77,7 @@ function SideBar(props: any) {
 
     //open modal to insert or update article
     const [openArticle, setOpenArticle] = React.useState(false);
+    const [openTagDelete, setopenTagDelete] = React.useState(false);
     const handleOpenArticle = () => setOpenArticle(true);
 
     const isMode_theme = useSelector((state: RootState) => state?.article.isMode);
@@ -208,6 +209,7 @@ function SideBar(props: any) {
             </ul >
             <UpdateTagComponent open={openTag} setOpen={setOpenTag} tagUpdateData={tagUpdateData} TAGS={TAGS}/>
             <UpdateArticleModal open={openArticle} setOpen={setOpenArticle} session={session} articleData={null} />
+            <DeleteTagComponent open={openTags} setOpen={setOpenTags} session={session}  TAGS={TAGS} />
         </Drawer>
 
     )
