@@ -4,7 +4,7 @@ import { Backdrop, Fade, Modal } from '@mui/material';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-function DeleteTagComponent({ open, setOpen, tagDeleteData }: any) {
+function DeleteTagComponent({ open, setOpen, TAGS }: any) {
 
   const handleClose = () => {
     setOpen(false)
@@ -20,8 +20,8 @@ function DeleteTagComponent({ open, setOpen, tagDeleteData }: any) {
 
 
   const handleDelete = () => {
-    const tagId = tagDeleteData.id
-
+    const tagId = TAGS.id
+    console.log("tagId",TAGS?.id)
     if (!tagId) {
       alert("tag ID is wrong.")
     }
