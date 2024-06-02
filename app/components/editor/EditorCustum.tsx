@@ -254,7 +254,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
           </form >
 
         </Main>
-        <DrawerTemplate open={openTemplate} handleDrawerClose={handleDrawerClose} editorRef={editorRef} />
+        <DrawerTemplate open={openTemplate} setOpen={setOpenTemplate} handleDrawerClose={handleDrawerClose} editorRef={editorRef} />
       </Box>
     </>
   )

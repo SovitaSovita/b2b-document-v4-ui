@@ -102,8 +102,8 @@ export default function Home() {
       <div className="flex" data-theme={mode}>
         <SideBar
           isLoading={isLoading}
-          ARTICLES={menudata.articleList}
-          TAGS={menudata.tagList}
+          ARTICLES={menudata?.articleList}
+          TAGS={menudata?.tagList}
           FAVORITE={favorites}
           handleDrawerClose={handleDrawerClose}
           openMainDrawer={open} />

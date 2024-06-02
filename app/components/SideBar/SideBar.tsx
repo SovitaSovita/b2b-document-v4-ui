@@ -16,7 +16,7 @@ import empty_folder from '../../../public/icon/empty-folder.png'
 import UpdateTagComponent from '../Modal/UpdateTagComponent';
 import { checkIsFavorite } from '../../service/FavouriteService';
 import DeleteTagComponent from '../Modal/DeleteTagComponent';
-import UpdateArticleModal from '../Modal/UpdateArticleModal';
+import UpdateArticleModal from '../Modal/ArticleModal';
 import { Drawer } from '@mui/material';
 import HeaderSidebar from './HeaderSidebar';
 import { RootState } from '@/app/service/Redux/store/store';
@@ -110,7 +110,7 @@ function SideBar(props: any) {
             variant="persistent"
             anchor="left"
             open={openMainDrawer}>
-            <ul className="menu menu-dropdown-show p-4 w-full bg-primary text-base-content">
+            <ul className="menu menu-dropdown-show w-full bg-primary text-base-content">
                 <HeaderSidebar handleOpenArticle={handleOpenArticle} />
 
                 <div className="css-o2c9dn my-6"></div>
@@ -128,7 +128,7 @@ function SideBar(props: any) {
                                         </summary>
                                         {FAVORITE && FAVORITE.length > 0 ? (
                                             <ul className='pt-1'>
-                                                {FAVORITE.map((item: any, index) => (
+                                                {FAVORITE?.map((item: any, index) => (
                                                     <li key={index} onClick={() => {
                                                         handleViewArticle(item?.article_id.toString());
                                                     }}>
@@ -148,7 +148,7 @@ function SideBar(props: any) {
                                 </li >
 
                                 {
-                                    TAGS.map((item, index) => (
+                                    TAGS?.map((item, index) => (
                                         <span key={index} className='flex mainManageTag group'>
                                             <div className='w-6 self-start'>
                                                 <div className="dropdown dropdown-hover dropdown-top mt-2.5 opacity-0 hidden group-hover:block group-hover:opacity-100 transition-all">
@@ -206,7 +206,7 @@ function SideBar(props: any) {
                         )
                 }
             </ul >
-            <UpdateTagComponent open={openTag} setOpen={setOpenTag} tagUpdateData={tagUpdateData} TAGS={TAGS}/>
+            <UpdateTagComponent open={openTag} setOpen={setOpenTag} tagUpdateData={tagUpdateData} TAGS={TAGS} />
             <UpdateArticleModal open={openArticle} setOpen={setOpenArticle} session={session} articleData={null} />
         </Drawer>
 

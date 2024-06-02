@@ -25,9 +25,10 @@ import { getArticle, isMode, isRender, getFavorite, isFavorite } from '../servic
 import AskToConfirmModal from './Modal/AskToConfirmModal';
 import ihttp, { UI_BASE_URL } from '../utils/xhttp';
 import { addToFavorite, checkIsFavorite, deleteFavorite } from '../service/FavouriteService';
-import UpdateArticleModal from './Modal/UpdateArticleModal';
+import UpdateArticleModal from './Modal/ArticleModal';
 import { styled } from '@mui/material';
 import { getArticleDetail } from '../service/ArticleService';
+import RenderArticle from './RenderArticle';
 
 
 
@@ -297,7 +298,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                 </div>
             </div> */}
 
-                <div className="rounded-lg bg-base-100 border w-full min-h-screen p-4">
+                <div className="rounded-lg bg-base-100 border w-full min-h-screen">
                     {
                         !article?.content_body ? (<HomeContent />)
                             : (
@@ -307,7 +308,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                                         <div></div>
 
                                         {/* Right side icons */}
-                                        <div className="flex items-center bg-primary p-2 rounded-lg border">
+                                        <div className="flex items-center bg-primary rounded-bl-lg p-2 border">
                                             {/* Favorite */}
                                             {
                                                 isFavorites ? (
@@ -316,25 +317,6 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                                                     <FavoriteBorderOutlinedIcon onClick={() => handleAddFavorite(article?.id)} className='mr-3' style={{ cursor: 'pointer', color: 'black' }} />
                                                 )
                                             }
-
-                                            {/* New */}
-                                            {/* <label  className="bookmark">
-                                                <input type="checkbox" id="checkboxInput" />
-                                                <svg
-                                                    width="15"
-                                                    viewBox="0 0 50 70"
-                                                    fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    className="svgIcon"
-                                                >
-                                                    <path
-                                                        d="M46 62.0085L46 3.88139L3.99609 3.88139L3.99609 62.0085L24.5 45.5L46 62.0085Z"
-                                                        stroke="black"
-                                                        stroke-width="7"
-                                                    ></path>
-                                                </svg>
-                                            </label> */}
-
 
                                             <TelegramShareButton
                                                 url={`${UI_BASE_URL}/share/${article?.id}`}
@@ -352,7 +334,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                                             }
                                         </div>
                                     </div>
-                                    <div dangerouslySetInnerHTML={{ __html: article?.content_body }} />
+                                    <RenderArticle body={article?.content_body} />
                                 </div>
                             )
                     }

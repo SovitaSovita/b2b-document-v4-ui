@@ -24,6 +24,9 @@ const config: Config = {
       },
     },
   },
+  corePlugins: {
+    preflight: true,
+  },
   plugins: [require("daisyui")],
   daisyui: {
     themes: [{
@@ -31,7 +34,7 @@ const config: Config = {
         ...require("daisyui/src/theming/themes")["light"],
         primary: "rgb(246, 248, 252)",
         secondary: "#2b67e8",
-        neutral: "#fff",
+        neutral: "rgb(107 114 128 / 1",
       },
       dark: {
         ...require("daisyui/src/theming/themes")["dark"],
