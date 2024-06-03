@@ -25,11 +25,17 @@ function InputTitleComponent(props: any) {
         selectedValue,
     } = props
 
+    const [optionStatus, setStatusVal] = useState("");
+
     useEffect(() => {
         if (articleData != null) {
             setInputValue(articleData?.tag_title)
             setTitle(articleData?.title)
         }
+        if (articleData?.status) {
+            setStatusVal(articleData.status)
+            console.log("dada123:",articleData)
+          }
     }, [inputValue, articleData])
 
     const [openTag, setOpenTag] = React.useState(false);
@@ -47,23 +53,31 @@ function InputTitleComponent(props: any) {
     const [selected, setSelectedValue] = useState("");
     const handleSelectChange = (event: any) => {
         //setSelectedValue(parseInt(event.target.value));
-        setSelectedValue(event.target.value);
-        console.log("setSelectedValue", selectedValue);
+        const newValue = event.target.value
+        setSelectedValue(newValue);
+        console.log("setSelectedValue", newValue);
         let type = null;
-        const options ={
-            0:['Private','Private'],
-            1:['Public','Public'],
-            2:['Department','Department']  
-        };
-
-        if (selectedValue === 'Private') {
+        const options = {
+            0:'Private',
+            1:'Public',
+            2:'Department'
+        }
+        if (selectedValue === 0) {
             type = 'private';
-        } else if (selectedValue === 'Public') {
+          } else if (selectedValue === 1) {
             type = 'public';
-        } else if (selectedValue === 'Department') {
+          } else if (selectedValue === 2) {
             type = 'department';
         }
     };
+
+    //option select status
+    let typPri = "";
+    let typePub = "";
+    let typeDepart = "";
+
+
+    
 
     const handleChildData = (dataFromChild: object) => {
         setShowDefaultValue(true);
@@ -81,6 +95,7 @@ function InputTitleComponent(props: any) {
                                     value={showDefaultValue ? tagValue : null}
                                     onChange={(event: any, newValue: string | null) => {
                                         setTagValue(newValue);
+                                        console.log("VandaTest:",newValue);
                                     }}
                                     defaultValue={inputValue}
                                     onInputChange={(event, newInputValue) => {
@@ -91,7 +106,7 @@ function InputTitleComponent(props: any) {
                                     size="small"
                                     id="combo-box-demo"
                                     options={tagData}
-                                    inputValue={inputValue}
+                                    inputValue={inputValue} 
                                     sx={{ width: 300, mr: 2 }}
                                     renderInput={(params) => <TextField {...params} placeholder="Search Tag name" />}
                                 />
