@@ -3,8 +3,10 @@ import { DeleteTag } from '@/app/service/TagService';
 import { Backdrop, Fade, Modal } from '@mui/material';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import CustomAlert from '../Material/CustomAlert';
 
-function DeleteTagComponent({ open, setOpen, TAGS }: any) {
+function DeleteTagComponent({ open, setOpen, tagDeleteData }: any) {
+  console.log("Tagggg", tagDeleteData)
 
   const handleClose = () => {
     setOpen(false)
@@ -20,8 +22,7 @@ function DeleteTagComponent({ open, setOpen, TAGS }: any) {
 
 
   const handleDelete = () => {
-    const tagId = TAGS.id
-    console.log("tagId",TAGS?.id)
+    const tagId = tagDeleteData.id
     if (!tagId) {
       alert("tag ID is wrong.")
     }
@@ -43,6 +44,15 @@ function DeleteTagComponent({ open, setOpen, TAGS }: any) {
   }
   return (
     <div>
+      <CustomAlert
+        open={isErrorAlert.open}
+        setOpen={(open: boolean) => {
+          setIsErrorAlert({ ...isErrorAlert, open });
+        }}
+        message={isErrorAlert.message}
+        type={isErrorAlert.type}
+        duration={isErrorAlert.duration}
+      />
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
