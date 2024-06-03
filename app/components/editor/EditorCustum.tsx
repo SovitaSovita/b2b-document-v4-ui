@@ -181,8 +181,6 @@ export default function EditorCustum({ handleClose, session, articleData, handle
       })
     }
   }, [session])
-
-
   const [showDefaultValue, setShowDefaultValue] = useState(false);
   const options = () => {
     GetTagAndArticle(parseInt(session?.dvsn_CD, 10), 1, null).then((res: any) => {
@@ -194,9 +192,6 @@ export default function EditorCustum({ handleClose, session, articleData, handle
     })
 
   };
-
-
-
   //open drawer template
   const [openTemplate, setOpenTemplate] = React.useState(false);
 
@@ -224,7 +219,6 @@ export default function EditorCustum({ handleClose, session, articleData, handle
             duration={isErrorAlert.duration}
           />
           <form onSubmit={handleSave} className="ui form">
-
             <InputTitleComponent
               articleData={articleData}
               handleClose={handleClose}
@@ -243,7 +237,6 @@ export default function EditorCustum({ handleClose, session, articleData, handle
               selectedValue={selectedValue}
               setSelectedValue={setSelectedValue}
             />
-
             <div className='px-6'>
               <TinyEditor geteditorRef={geteditorRef} articleData={articleData} />
             </div>
