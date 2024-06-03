@@ -30,6 +30,7 @@ function InputTitleComponent(props: any) {
         if (articleData != null) {
             setInputValue(articleData?.tag_title)
             setTitle(articleData?.title)
+            setStatusVal(articleData.status)
         }
         if (articleData?.status) {
             setStatusVal(articleData.status)
@@ -48,7 +49,7 @@ function InputTitleComponent(props: any) {
         setTitle(value)
     }
 
-
+    const [status, setStatus] = useState('1')
     const [selected, setSelectedValue] = useState("");
     const handleSelectChange = (event: any) => {
         //setSelectedValue(parseInt(event.target.value));
@@ -69,15 +70,6 @@ function InputTitleComponent(props: any) {
             type = 'department';
         }
     };
-
-    //option select status
-    let typPri = "";
-    let typePub = "";
-    let typeDepart = "";
-
-
-    
-
     const handleChildData = (dataFromChild: object) => {
         setShowDefaultValue(true);
         setTagValue(dataFromChild);
@@ -120,7 +112,6 @@ function InputTitleComponent(props: any) {
                             </div>
                         )
                     }
-
                     <div className='flex bg-base-100 p-3 rounded-lg border'>
                         <input
                             onChange={onchange}
@@ -133,9 +124,19 @@ function InputTitleComponent(props: any) {
                             value={selectedValue} // Bind the selected value to state
                             onChange={handleSelectChange}
                             className="select select-neutral select-sm select-bordered w-full ml-3 max-w-40">
-                            <option selected value={1}>Public</option>
-                            <option value={0}>Private</option>
-                            <option value={2}>Department</option>
+                            {
+                                status == '1' ? (
+                                    <><option selected value={1}>Public</option><option value={0}>Private</option><option value={2}>Department</option></>
+                                  ) : status == '0'?(
+                                    <><option  value={0}>Private</option><option value={1}>Public</option><option value={2}>Department</option></>
+                                  ): status == '2'?(
+                                    <>
+                                    <option  value={2}>Department</option><option value={1}>Public</option><option value={0}>Private</option> 
+                                    </>
+                                  ):
+                                  <></>
+                            }
+                           
                         </select>
 
                         <button
