@@ -99,7 +99,7 @@ function InputTitleComponent(props: any) {
                                     renderInput={(params) => <TextField {...params} placeholder="Search Tag name" />}
                                 />
                                 < div onClick={handleOpenTag}>
-                                    <AddSquare size="28" className='text-neutral hover:scale-105 transition-all' />
+                                    <AddSquare size="28" className='text-neutral hover:scale-105 transition-all' style={{cursor: "pointer"}}/>
                                 </div>
                             </div>
                         ) : (
@@ -140,7 +140,7 @@ function InputTitleComponent(props: any) {
                 </div>
 
                 <div className='flex items-center'>
-                    <button onClick={handleClose} className="btn btn-active btn-sm btn-ghost mr-3">Exit</button>
+                    <button type='button' onClick={handleClose} className="btn btn-active btn-sm btn-ghost mr-3">Exit</button>
                     <button type='submit' className="btn btn-active btn-secondary btn-sm text-base-100">
                         <DocumentText size="20" className='text-primary' />
                         Save
