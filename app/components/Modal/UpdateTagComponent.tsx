@@ -17,6 +17,7 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
   //const [inputVal,setInputVal] = useState<String>();
   const [inputVal, setInputVal] = useState("");
   const [optionStatus, setStatusVal] = useState("");
+  const [status, setStatus] = useState('1')
   const session: UserData = useSelector((state: RootState) => state?.article.session);
   const [isErrorAlert, setIsErrorAlert] = useState({
     open: false,
@@ -25,57 +26,17 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
     duration: 1600,
   });
   const [selectedValue, setSelectedValue] = useState(1);
+
+  console.log("status",status)
   const handleSelectChange = (event: any) => {
     setSelectedValue(parseInt(event.target.value));
-    let options = [];
-    let type = null;
-    console.log("selectedValue", selectedValue)
-    if (selectedValue === 0) {
-      type = 'private';
-    } else if (selectedValue === 1) {
-      type = 'public';
-    } else if (selectedValue === 2) {
-      type = 'department';
-    }
-    console.log("type", type)
   };
-
-
-  const handleOption = () => {
-
-  }
-
-
-  //   const handleSelectChange = (event: any) => {
-  //     const [selected, setSelectedValue] = useState(1);
-  //     //setSelectedValue(parseInt(event.target.value));
-  //     setSelectedValue(event.target.value);
-  //     const Private = '0';
-  //     const Public = '1';
-  //     const Department = '2';
-
-  //     let options = [];
-  //     let type = null;
-
-  //     if (selected === 0) {
-  //         type = 'private';
-  //     } else if (selected === 1) {
-  //         type = 'public';
-  //     } else if (selected === 2) {
-  //         type = 'department';
-  //     }
-  //     console.log("type",type)
-
-  //     // if(type){
-  //     //   options = type.map((el) => <option key={el}>{el}</option>)
-  //     // }
-  // };
-
 
   // new code
   useEffect(() => {
     if (tagUpdateData?.title) {
       setInputVal(tagUpdateData.title);
+      setStatus(tagUpdateData.status)
     }
     if (TAGS?.status) {
       setStatusVal(TAGS.status)
@@ -125,23 +86,6 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
     }
 
   }
-  //option private , department and public
-  let typePub = "";
-  let typeDept = "";
-  let typePri = "";
-  if (tagUpdateData.status === 1) {
-    typePub = "Public";
-    typeDept = "Department";
-    typePri = "Private";
-  } else if (tagUpdateData.status === 0) {
-    typePri = 'Private';
-    typePub = "Public";
-    typeDept = "Department";
-  } else {
-    typeDept = 'Department'
-    typePri = 'Private';
-    typePub = "Public";
-  }
   return (
     <div>
       <CustomAlert
@@ -186,12 +130,22 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
                   </label>
                   <div className='self-start'>
                     <select
-                      value={selectedValue}
+                      //value={selectedValue}
                       onChange={handleSelectChange}
                       className="select select-sm select-bordered w-full ml-3 max-w-40" style={{ width: '125px' }}>
-                      <option selected value={1}>{typePub}</option>
-                      <option value={0}>{typePri}</option>
-                      <option value={2}>{typeDept}</option>
+                      {
+                        status == '1' ? (
+                          <><option selected value={1}>Public</option><option value={0}>Private</option><option value={2}>Department</option></>
+                        ) : status == '0'?(
+                          <><option  value={0}>Private</option><option value={1}>Public</option><option value={2}>Department</option></>
+                        ): status == '2'?(
+                          <>
+                          <option  value={2}>Department</option><option value={1}>Public</option><option value={0}>Private</option> 
+                          </>
+                        ):
+                        <></>
+                      } 
+
                     </select>
                   </div>
                 </div>

@@ -9,9 +9,17 @@ export const SaveNewTag = async (request: object) => {
     }
 }
 
-export const GetTagAndArticle = async (dep_id: number, status: number) => {
+export const GetTagAndArticle = async (dep_id: any, status: number, username: any) => {
     try {
-        const response = await ihttp.get(`/DocTag/listTagAndAtricle?dept_id=${dep_id}&status=${status}`); //&username=sovita
+        let plusUserName = "";
+        let plusDept_id = "";
+        if (username != null) {
+            plusUserName = `&username=${username}`;
+        }
+        if (dep_id != null) {
+            plusDept_id = `&dep_id=${dep_id}`;
+        }
+        const response = await ihttp.get(`/DocTag/listTagAndAtricle?status=${status}${plusDept_id}${plusUserName}`); //&username=sovita
         // const response = await ihttp.get(`/DocTag/listTagAndAtricle?dept_id=50&status=1`);
         return response;
     } catch (error) {

@@ -209,7 +209,7 @@ function SideBar(props: any) {
             </ul >
             <UpdateTagComponent open={openTag} setOpen={setOpenTag} tagUpdateData={tagUpdateData} TAGS={TAGS} />
             <UpdateArticleModal open={openArticle} setOpen={setOpenArticle} session={session} articleData={null} />
-            <DeleteTagComponent open={openTags} setOpen={setOpenTags} session={session}  TAGS={TAGS} />
+            <DeleteTagComponent open={openTags} setOpen={setOpenTags} session={session}  tagDeleteData={tagDeleteData} />
         </Drawer>
 
     )
