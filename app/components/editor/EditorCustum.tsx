@@ -34,7 +34,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
 }));
 
 export default function EditorCustum({ handleClose, session, articleData, handleViewArticle }: any) {
-
+  // console.log("session>>>", session)
   const dispatch = useDispatch();
   const [isErrorAlert, setIsErrorAlert] = useState({
     open: false,
@@ -80,7 +80,6 @@ export default function EditorCustum({ handleClose, session, articleData, handle
     if (editorRef.current) {
       content = editorRef.current.getContent();
     }
-
 
     if (!tagValue && articleData == null) {
       setIsErrorAlert({
@@ -172,26 +171,35 @@ export default function EditorCustum({ handleClose, session, articleData, handle
 
   useEffect(() => {
     if (session) {
-      GetTagAndArticle(parseInt(session?.dvsn_CD, 10), 1, null).then((res: any) => {
+      GetTagAndArticle(parseInt(session?.dvsn_CD, 10), 1).then((res: any) => {
         const updatedTagList = res?.data?.rec?.tagList.map((tag: any) => ({
           ...tag,
           label: tag.title,
         }));
+        console.log("dadaadd", updatedTagList);
+
         setTagData(updatedTagList)
       })
     }
   }, [session])
+
+
   const [showDefaultValue, setShowDefaultValue] = useState(false);
   const options = () => {
-    GetTagAndArticle(parseInt(session?.dvsn_CD, 10), 1, null).then((res: any) => {
+    GetTagAndArticle(parseInt(session?.dvsn_CD, 10), 1).then((res: any) => {
       const updatedTagList = res?.data?.rec?.tagList.map((tag: any) => ({
         ...tag,
         label: tag.title,
       }));
+      console.log("dadaadd", updatedTagList);
+
       setTagData(updatedTagList)
     })
 
   };
+
+
+
   //open drawer template
   const [openTemplate, setOpenTemplate] = React.useState(false);
 
@@ -219,6 +227,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
             duration={isErrorAlert.duration}
           />
           <form onSubmit={handleSave} className="ui form">
+
             <InputTitleComponent
               articleData={articleData}
               handleClose={handleClose}
@@ -237,6 +246,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
               selectedValue={selectedValue}
               setSelectedValue={setSelectedValue}
             />
+
             <div className='px-6'>
               <TinyEditor geteditorRef={geteditorRef} articleData={articleData} />
             </div>
