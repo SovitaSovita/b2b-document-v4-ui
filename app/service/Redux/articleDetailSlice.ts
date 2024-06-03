@@ -19,7 +19,8 @@ const initialState = {
         token: "",
         use_intt_id: null,
         userId: ""
-    }
+    },
+    geminiContent: "",
 }
 
 const articleSlice = createSlice({
@@ -47,10 +48,12 @@ const articleSlice = createSlice({
         get_session(state, action) {
             state.session = action.payload
         },
-
+        get_geminiContent(state, action) {
+            state.geminiContent = action.payload
+        },
     },
 })
 
 
-export const { getArticle, getFavorite, isFavorite, isRender, getOptionData, isMode, get_session } = articleSlice.actions
+export const { getArticle, getFavorite, isFavorite, isRender, getOptionData, isMode, get_session, get_geminiContent } = articleSlice.actions
 export default articleSlice.reducer

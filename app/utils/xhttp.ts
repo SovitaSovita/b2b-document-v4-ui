@@ -3,7 +3,6 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
-import { clearScreenDown } from "readline";
 
 export const KEY = process.env.KEY;
 // UI URL

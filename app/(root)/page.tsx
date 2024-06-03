@@ -47,12 +47,22 @@ export default function Home() {
   useEffect(() => {
     setIsLoading(true)
     let status = 1;
+    let username = null;
+    let departmentId = null;
     if (session?.dvsn_CD != "") {
-      if (optionGETdata == "PRIVATE") status = 0
-      if (optionGETdata == "PUBLIC") status = 1
-      if (optionGETdata == "DEPARTMENT") status = 2
+      if (optionGETdata == "PRIVATE") {
+        status = 0
+        username = session.userId
+      }
+      if (optionGETdata == "PUBLIC") {
+        status = 1
+      }
+      if (optionGETdata == "DEPARTMENT") {
+        status = 2
+        departmentId = parseInt(session?.dvsn_CD, 10)
+      }
       //GET
-      GetTagAndArticle(parseInt(session?.dvsn_CD, 10), status).then((res: any) => {
+      GetTagAndArticle(departmentId, status, username).then((res: any) => {
         setMenudata(res?.data?.rec);
         dispatch(isRender(false));
         setIsLoading(false)
