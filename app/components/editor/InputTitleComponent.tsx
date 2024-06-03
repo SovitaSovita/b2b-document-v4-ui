@@ -158,8 +158,6 @@ function InputTitleComponent(props: any) {
                         Save
                     </button>
                 </div>
-
-                <Gemini />
             </div>
             <TagComponent open={openTag} setOpen={setOpenTag} user={session} sendDataToParent={handleChildData} selectedValue={selectedValue} />
         </>
