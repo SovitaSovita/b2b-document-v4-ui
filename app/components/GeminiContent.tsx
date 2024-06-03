@@ -3,12 +3,14 @@ import { GeminiGetContentResponse } from '../service/GeminiService'
 import { useDispatch } from 'react-redux';
 import { get_geminiContent } from '../service/Redux/articleDetailSlice';
 import Marked from 'marked-react'
+import { Gemini } from 'iconsax-react';
 
-function Gemini() {
+function GeminiContent() {
 
     const [aiResponse, setAiResponse] = useState<String | any>();
     const dispatch = useDispatch();
-    let Aiprompt = "How to create next js project"
+
+    let Aiprompt = "How to create next js project";
 
     const getResponseFromGemini = () => {
         GeminiGetContentResponse({
@@ -43,9 +45,12 @@ function Gemini() {
             <div id='render' ref={renderRef} className='hidden'>
                 <Marked>{aiResponse}</Marked>
             </div>
-            <button type='button' onClick={getResponseFromGemini} className='btn btn-sm btn-success'>Send</button>
+            <button type='button' onClick={getResponseFromGemini} className='btn btn-sm btn-secondary ml-3'>
+                <Gemini size="20" className='text-primary' />
+                Gemini AI
+            </button>
         </div>
     )
 }
 
-export default Gemini
+export default GeminiContent
