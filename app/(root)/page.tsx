@@ -96,11 +96,11 @@ export default function Home() {
   }, [isMode_theme])
 
 
-
   return (
     <>
       <div className="flex" data-theme={mode}>
         <SideBar
+          isLoading={isLoading}
           ARTICLES={menudata.articleList}
           TAGS={menudata.tagList}
           FAVORITE={favorites}

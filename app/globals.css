@@ -165,15 +165,15 @@
 /* loading style */
 .spinner {
   position: absolute;
-  width: 9px;
-  height: 9px;
+  width: 5px;
+  height: 5px;
 }
 
 .spinner div {
   position: absolute;
   width: 50%;
   height: 150%;
-  background: #000000;
+  background: #666666;
   transform: rotate(calc(var(--rotation) * 1deg)) translate(0, calc(var(--translation) * 1%));
   animation: spinner-fzua35 1s calc(var(--delay) * 1s) infinite ease;
 }

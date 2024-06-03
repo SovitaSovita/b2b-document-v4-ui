@@ -10,9 +10,9 @@ export const SaveNewTag = async (request: object) => {
 }
 
 export const GetTagAndArticle = async (dep_id: number, status: number) => {
-    console.log("dep_id"+dep_id)
     try {
         const response = await ihttp.get(`/DocTag/listTagAndAtricle?dept_id=${dep_id}&status=${status}`); //&username=sovita
+        // const response = await ihttp.get(`/DocTag/listTagAndAtricle?dept_id=50&status=1`);
         return response;
     } catch (error) {
         return error;

@@ -23,14 +23,14 @@ function InputTitleComponent(props: any) {
         tagValue,
         setTagValue,
         selectedValue,
-        setSelectedValue } = props
+    } = props
 
     useEffect(() => {
         if (articleData != null) {
-          setInputValue(articleData?.tag_title)
-          setTitle(articleData?.title)
+            setInputValue(articleData?.tag_title)
+            setTitle(articleData?.title)
         }
-      }, [inputValue])
+    }, [inputValue, articleData])
 
     const [openTag, setOpenTag] = React.useState(false);
     const handleOpenTag = () => {
@@ -44,16 +44,16 @@ function InputTitleComponent(props: any) {
     }
 
 
+    const [selected, setSelectedValue] = useState("");
     const handleSelectChange = (event: any) => {
-        const [selectedValue, setSelectedValue] = useState("");
         //setSelectedValue(parseInt(event.target.value));
         setSelectedValue(event.target.value);
         console.log("setSelectedValue", selectedValue);
         let type = null;
         const options ={
-            0:['Private Option 1','Private  Option 2'],
-            1:['Public Option 1','Public  Option 2'],
-            2:['Department Option 1','Department  Option 2']  
+            0:['Private','Private'],
+            1:['Public','Public'],
+            2:['Department','Department']  
         };
 
         if (selectedValue === 'Private') {
@@ -110,6 +110,7 @@ function InputTitleComponent(props: any) {
                             {articleData?.tag_title}
                         </div>
                     )
+                    
                 }
 
                 <div className='flex bg-base-100 p-3 rounded-lg border'>
