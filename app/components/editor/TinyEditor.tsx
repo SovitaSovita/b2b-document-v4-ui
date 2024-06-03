@@ -73,7 +73,7 @@ function TinyEditor(props: any) {
                 onInit={(_evt, editor) => editorRef.current = editor}
                 initialValue={articleData?.content_body}
                 init={{
-                    height: 500,
+                    height: 580,
                     setup: (editor) => {
                         // Define behavior for custom button
                         editor.ui.registry.addButton('insertFileBtn', {
@@ -86,7 +86,7 @@ function TinyEditor(props: any) {
                     plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
                     toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media insertFileBtn table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
                     images_upload_handler: handleImageUpload,
-                    content_style: 'body {font - family:Helvetica,Arial,sans-serif; font-size:14px }',
+                    // content_style: 'body {font - family:Helvetica,Arial,sans-serif; font-size:14px }',
                 }}
             />
         </div>

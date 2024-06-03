@@ -11,8 +11,8 @@ import EditorCustum from '../editor/EditorCustum';
 import { Editor } from '@tinymce/tinymce-react';
 import { Button, Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
 
-
-function UpdateArticleModal({ open, setOpen, session, articleData, handleViewArticle }: any) {
+function UpdateArticleModal({ open, setOpen, session, articleData,handleViewArticle }: any) {
+    console.log("articleData",articleData)
     const dispatch = useDispatch()
     const [inputVal, setInputVal] = useState<string>();
     const router = useRouter()

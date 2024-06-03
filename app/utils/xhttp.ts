@@ -13,9 +13,6 @@ export const API_BASE_URL = process.env.NEXT_API_URL;
 // api managament URL
 export const API_M_BASE_URL = process.env.API_M_BASE_URL
 
-console.log("local", process.env.NEXT_URL);
-console.log("API_BASE_URL", API_BASE_URL)
-
 const ihttp = axios.create({
   baseURL: API_BASE_URL,
 });
@@ -29,25 +26,24 @@ if (typeof window !== "undefined") {
   url = new URL(window.location.href);
   token = url.searchParams.get("tid") || localStorage.getItem("tid");
 }
-
-console.log("token", token)
-
 // Get session from API
 export async function getSession() {
   try {
     const headers = { 'Authorization': `Bearer ${token}` };
     const res = await fetch(`${API_M_BASE_URL}/session?token=${encodeURIComponent(token!)}&key=${encodeURIComponent(KEY!)}`, { headers });
     if (!res.ok) {
-      return res;
-      // throw new Error(`HTTP error! status: ${res.status}`);
+      if (typeof window !== "undefined") {
+        window.location.href = "/error"
+      }
     }
     const data = await res.json();
     session = data.payload;
     localStorage.setItem("tid", session?.token);
     return session;
   } catch (e) {
-    console.error("Error: ", e);
-    throw e;
+    if (typeof window !== "undefined") {
+      window.location.href = "/error"
+    }
   }
 }
 

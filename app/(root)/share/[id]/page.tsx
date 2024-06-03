@@ -9,8 +9,8 @@ export default function Page({ params }: { params: { id: string } }) {
 
     function handleViewArticle() {
         getArticleDetail(params?.id).then((res) => {
-            if (res?.code == "200") {
-                setArticleData(res?.rec[0])
+            if (res) {
+                setArticleData(res)
             }
             else {
                 setArticleData(null)

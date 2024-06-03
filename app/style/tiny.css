@@ -1,0 +1,15 @@
+.tox-tinymce {
+    height: 100vh !important;
+}
+
+.my-tinymce-container .tox-editor-header {
+    display: none !important;
+}
+
+.my-tinymce-container .tox-tinymce {
+    border: none !important;
+}
+
+.my-tinymce-container .tox-statusbar {
+    display: none !important;
+}
