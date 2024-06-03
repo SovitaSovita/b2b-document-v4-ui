@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import { useRouter } from 'next/navigation';
 import TagComponent from '../Modal/TagComponent';
+import Gemini from '../Gemini';
 
 
 function InputTitleComponent(props: any) {
@@ -140,12 +141,14 @@ function InputTitleComponent(props: any) {
                 </div>
 
                 <div className='flex items-center'>
-                    <button onClick={handleClose} className="btn btn-active btn-sm btn-ghost mr-3">Exit</button>
+                    <button onClick={handleClose} type='button' className="btn btn-active btn-sm btn-ghost mr-3">Exit</button>
                     <button type='submit' className="btn btn-active btn-secondary btn-sm text-base-100">
                         <DocumentText size="20" className='text-primary' />
                         Save
                     </button>
                 </div>
+
+                <Gemini />
             </div>
             <TagComponent open={openTag} setOpen={setOpenTag} user={session} sendDataToParent={handleChildData} selectedValue={selectedValue} />
         </>
