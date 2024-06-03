@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import { useRouter } from 'next/navigation';
 import TagComponent from '../Modal/TagComponent';
-import Gemini from '../Gemini';
+import Gemini from '../GeminiContent';
 
 
 function InputTitleComponent(props: any) {
@@ -80,7 +80,7 @@ function InputTitleComponent(props: any) {
                 <div className='flex items-center'>
                     {
                         !articleData ? (
-                            <div className='flex p-3 rounded-lg border items-center mr-8 bg-base-100'>
+                            <div className='flex p-3 rounded-lg border items-center mr-4 bg-base-100'>
                                 <Autocomplete
                                     value={showDefaultValue ? tagValue : null}
                                     onChange={(event: any, newValue: string | null) => {
@@ -104,7 +104,7 @@ function InputTitleComponent(props: any) {
                                 </div>
                             </div>
                         ) : (
-                            <div className='btn btn-secondary btn-sm mr-3'>
+                            <div className='btn btn-secondary btn-sm mr-4'>
                                 <Tag size="22" variant="Outline" className='text-base-100' />
                                 {articleData?.tag_title}
                             </div>
@@ -127,16 +127,19 @@ function InputTitleComponent(props: any) {
                             <option value={0}>Private</option>
                             <option value={2}>Department</option>
                         </select>
+                    </div>
 
+                    <div className='flex bg-base-100 ml-4 p-3 rounded-lg border'>
                         <button
                             type='button'
                             onClick={handleDrawerOpen}
-                            className='btn btn-secondary btn-sm ml-4'
+                            className='btn btn-secondary btn-sm'
                             style={{ ...(openTemplate && { display: 'none' }) }}
                         >
                             <BrushBig size="24" className='text-base-100' />
                             <label>Templates</label>
                         </button>
+                        <Gemini />
                     </div>
                 </div>
 
@@ -147,8 +150,6 @@ function InputTitleComponent(props: any) {
                         Save
                     </button>
                 </div>
-
-                <Gemini />
             </div>
             <TagComponent open={openTag} setOpen={setOpenTag} user={session} sendDataToParent={handleChildData} selectedValue={selectedValue} />
         </>
