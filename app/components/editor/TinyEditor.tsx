@@ -1,6 +1,8 @@
 import { Insert_file } from '@/app/service/ArticleService';
+import { RootState } from '@/app/service/Redux/store/store';
 import { Editor } from '@tinymce/tinymce-react'
 import React, { useEffect, useRef } from 'react'
+import { useSelector } from 'react-redux';
 
 const API_BASE_URL = process.env.NEXT_API_URL
 
@@ -8,6 +10,12 @@ function TinyEditor(props: any) {
     const { geteditorRef, articleData } = props
 
     const editorRef = useRef<any>(null);
+    const geminiContent = useSelector((state: RootState) => state?.article.geminiContent);
+
+    useEffect(() => {
+        editorRef?.current?.setContent(editorRef.current.getContent() + geminiContent);
+    }, [geminiContent])
+
 
     useEffect(() => {
         geteditorRef(editorRef)
