@@ -4,11 +4,12 @@ import { GetTagAndArticle } from '@/app/service/TagService'
 import React, { useEffect, useRef, useState } from 'react'
 import CustomAlert from '../Material/CustomAlert'
 import { isRender } from '@/app/service/Redux/articleDetailSlice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import DrawerTemplate from '@/app/(root)/templates/DrawerTemplate'
 import InputTitleComponent from './InputTitleComponent'
 import { Box, styled } from '@mui/material'
 import TinyEditor from './TinyEditor'
+import { RootState } from '@/app/service/Redux/store/store'
 
 const API_BASE_URL = process.env.NEXT_API_URL
 
@@ -36,6 +37,8 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
 export default function EditorCustum({ handleClose, session, articleData, handleViewArticle }: any) {
 
   const dispatch = useDispatch();
+  const optionGETdata = useSelector((state: RootState) => state?.article.getOptionData);
+
   const [isErrorAlert, setIsErrorAlert] = useState({
     open: false,
     type: "",
@@ -172,26 +175,29 @@ export default function EditorCustum({ handleClose, session, articleData, handle
 
   useEffect(() => {
     if (session) {
-      GetTagAndArticle(parseInt(session?.dvsn_CD, 10), 1, null).then((res: any) => {
-        const updatedTagList = res?.data?.rec?.tagList.map((tag: any) => ({
-          ...tag,
-          label: tag.title,
-        }));
-        setTagData(updatedTagList)
-      })
+      if(optionGETdata === "PRIVATE"){
+        GetTagAndArticle(null, 0, session?.userId).then((res: any) => {
+          const updatedTagList = res?.data?.rec?.tagList.map((tag: any) => ({
+            ...tag,
+            label: tag.title,
+          }));
+          setTagData(updatedTagList)
+        })
+      }
+      if(optionGETdata === "DEPARTMENT") {
+        GetTagAndArticle(parseInt(session?.dvsn_CD, 10), 2, null).then((res: any) => {
+          const updatedTagList = res?.data?.rec?.tagList.map((tag: any) => ({
+            ...tag,
+            label: tag.title,
+          }));
+          setTagData(updatedTagList)
+        })
+      }
+      
     }
   }, [session])
   const [showDefaultValue, setShowDefaultValue] = useState(false);
-  const options = () => {
-    GetTagAndArticle(parseInt(session?.dvsn_CD, 10), 1, null).then((res: any) => {
-      const updatedTagList = res?.data?.rec?.tagList.map((tag: any) => ({
-        ...tag,
-        label: tag.title,
-      }));
-      setTagData(updatedTagList)
-    })
 
-  };
   //open drawer template
   const [openTemplate, setOpenTemplate] = React.useState(false);
 
@@ -202,6 +208,8 @@ export default function EditorCustum({ handleClose, session, articleData, handle
   const handleDrawerClose = () => {
     setOpenTemplate(false);
   };
+
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>", tagData)
 
 
   return (
