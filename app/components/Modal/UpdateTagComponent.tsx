@@ -80,8 +80,9 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
         });
         handleClose();
         dispatch(isRender(true))
-
       })
+    } else if (inputVal === "") {
+      alert()
     }
 
   }

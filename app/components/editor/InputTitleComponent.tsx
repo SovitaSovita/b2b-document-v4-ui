@@ -1,10 +1,10 @@
 import { Autocomplete, TextField } from '@mui/material';
-import { AddSquare, BrushBig, DocumentText, MessageAdd1, Tag } from 'iconsax-react';
+import { AddSquare, BrushBig, DocumentText, Gemini, MessageAdd1, Tag } from 'iconsax-react';
 import React, { useEffect, useState } from 'react'
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import { useRouter } from 'next/navigation';
 import TagComponent from '../Modal/TagComponent';
-import Gemini from '../GeminiContent';
+import GeminiContent from '../GeminiContent';
 
 
 function InputTitleComponent(props: any) {
@@ -25,11 +25,18 @@ function InputTitleComponent(props: any) {
         selectedValue,
     } = props
 
+    const [optionStatus, setStatusVal] = useState("");
+
     useEffect(() => {
         if (articleData != null) {
             setInputValue(articleData?.tag_title)
             setTitle(articleData?.title)
+            setStatusVal(articleData.status)
         }
+        if (articleData?.status) {
+            setStatusVal(articleData.status)
+            console.log("dada123:",articleData)
+          }
     }, [inputValue, articleData])
 
     const [openTag, setOpenTag] = React.useState(false);
@@ -43,32 +50,27 @@ function InputTitleComponent(props: any) {
         setTitle(value)
     }
 
-
+    const [status, setStatus] = useState('1')
     const [selected, setSelectedValue] = useState("");
     const handleSelectChange = (event: any) => {
         //setSelectedValue(parseInt(event.target.value));
-        setSelectedValue(event.target.value);
-        console.log("setSelectedValue", selectedValue);
-        const Private = 'Private';
-        const Public = 'Public';
-        const Department = 'Department';
-
-        let options = [];
+        const newValue = event.target.value
+        setSelectedValue(newValue);
+        console.log("setSelectedValue", newValue);
         let type = null;
-
-        if (selected === 'Private') {
+        const options = {
+            0:'Private',
+            1:'Public',
+            2:'Department'
+        }
+        if (selectedValue === 0) {
             type = 'private';
-        } else if (selected === 'Public') {
+          } else if (selectedValue === 1) {
             type = 'public';
-        } else if (selected === 'Department') {
+          } else if (selectedValue === 2) {
             type = 'department';
         }
-
-        // if(type){
-        //   options = type.map((el) => <option key={el}>{el}</option>)
-        // }
     };
-
     const handleChildData = (dataFromChild: object) => {
         setShowDefaultValue(true);
         setTagValue(dataFromChild);
@@ -85,6 +87,7 @@ function InputTitleComponent(props: any) {
                                     value={showDefaultValue ? tagValue : null}
                                     onChange={(event: any, newValue: string | null) => {
                                         setTagValue(newValue);
+                                        console.log("VandaTest:",newValue);
                                     }}
                                     defaultValue={inputValue}
                                     onInputChange={(event, newInputValue) => {
@@ -95,12 +98,12 @@ function InputTitleComponent(props: any) {
                                     size="small"
                                     id="combo-box-demo"
                                     options={tagData}
-                                    inputValue={inputValue}
+                                    inputValue={inputValue} 
                                     sx={{ width: 300, mr: 2 }}
                                     renderInput={(params) => <TextField {...params} placeholder="Search Tag name" />}
                                 />
                                 < div onClick={handleOpenTag}>
-                                    <AddSquare size="28" className='text-neutral hover:scale-105 transition-all' />
+                                    <AddSquare size="28" className='text-neutral hover:scale-105 transition-all' style={{cursor: "pointer"}}/>
                                 </div>
                             </div>
                         ) : (
@@ -110,7 +113,6 @@ function InputTitleComponent(props: any) {
                             </div>
                         )
                     }
-
                     <div className='flex bg-base-100 p-3 rounded-lg border'>
                         <input
                             onChange={onchange}
@@ -123,9 +125,19 @@ function InputTitleComponent(props: any) {
                             value={selectedValue} // Bind the selected value to state
                             onChange={handleSelectChange}
                             className="select select-neutral select-sm select-bordered w-full ml-3 max-w-40">
-                            <option selected value={1}>Public</option>
-                            <option value={0}>Private</option>
-                            <option value={2}>Department</option>
+                            {
+                                status == '1' ? (
+                                    <><option selected value={1}>Public</option><option value={0}>Private</option><option value={2}>Department</option></>
+                                  ) : status == '0'?(
+                                    <><option  value={0}>Private</option><option value={1}>Public</option><option value={2}>Department</option></>
+                                  ): status == '2'?(
+                                    <>
+                                    <option  value={2}>Department</option><option value={1}>Public</option><option value={0}>Private</option> 
+                                    </>
+                                  ):
+                                  <></>
+                            }
+                           
                         </select>
                     </div>
 
@@ -139,7 +151,7 @@ function InputTitleComponent(props: any) {
                             <BrushBig size="24" className='text-base-100' />
                             <label>Templates</label>
                         </button>
-                        <Gemini />
+                        <GeminiContent />
                     </div>
                 </div>
 

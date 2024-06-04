@@ -106,7 +106,6 @@ export default function Home() {
   }, [isMode_theme])
 
 
-
   return (
     <>
       <div className="flex" data-theme={mode}>
