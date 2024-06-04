@@ -103,7 +103,7 @@ function InputTitleComponent(props: any) {
                                     renderInput={(params) => <TextField {...params} placeholder="Search Tag name" />}
                                 />
                                 < div onClick={handleOpenTag}>
-                                    <AddSquare size="28" className='text-neutral hover:scale-105 transition-all' />
+                                    <AddSquare size="28" className='text-neutral hover:scale-105 transition-all' style={{cursor: "pointer"}}/>
                                 </div>
                             </div>
                         ) : (

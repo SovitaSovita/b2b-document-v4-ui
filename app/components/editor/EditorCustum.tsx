@@ -84,8 +84,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
       content = editorRef.current.getContent();
     }
 
-
-    if (!tagValue && articleData == null) {
+    if (!tagValue) {
       setIsErrorAlert({
         ...isErrorAlert,
         open: true,
@@ -95,7 +94,8 @@ export default function EditorCustum({ handleClose, session, articleData, handle
       return;
     }
 
-    if (title === "") {
+    if (title === null) {
+      console.log("title ", title)
       setIsErrorInput({
         error: true,
         label: 'Enter Sub title',

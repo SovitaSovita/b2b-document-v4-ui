@@ -23,11 +23,10 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
         message: "",
         duration: 1600,
     });
-
+    
     const handleClose = () => {
         setOpen(false)
     };
-
 
     const onChange = (e: any) => {
         const inputData = e.target.value;
@@ -36,11 +35,16 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
-
         const currentDate = new Date();
         const formattedDate = currentDate.toISOString();
-
-        if (inputVal != "") {
+        if (inputVal === undefined || inputVal === "") {
+            setIsErrorAlert({
+                ...isErrorAlert,
+                open: true,
+                type: "error",
+                message: "Input can not empty"
+            })
+        } else {
             const request = {
                 dept_id: parseInt(user?.dvsn_CD, 10),
                 title: inputVal,
@@ -49,6 +53,7 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
                 create_date: formattedDate,
                 status: selectedValue
             }
+            console.log("request", request)
             SaveNewTag(request).then((res: any) => {
                 setInputVal("")
                 setIsErrorAlert({
@@ -68,16 +73,7 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
                     modified_date: null,
                 })
                 handleClose();
-
             })
-        }
-        else {
-            setIsErrorAlert({
-                ...isErrorAlert,
-                open: true,
-                type: "error",
-                message: "Input can not empty.",
-            });
         }
     }
 
