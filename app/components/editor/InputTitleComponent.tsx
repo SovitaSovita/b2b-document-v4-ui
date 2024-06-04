@@ -23,6 +23,7 @@ function InputTitleComponent(props: any) {
         tagValue,
         setTagValue,
         selectedValue,
+        setSelectedValue
     } = props
 
     const [optionStatus, setStatusVal] = useState("");
@@ -35,46 +36,45 @@ function InputTitleComponent(props: any) {
         }
         if (articleData?.status) {
             setStatusVal(articleData.status)
-            console.log("dada123:",articleData)
-          }
+        }
     }, [inputValue, articleData])
 
     const [openTag, setOpenTag] = React.useState(false);
     const handleOpenTag = () => {
         setOpenTag(true);
     }
-    const router = useRouter();
-
     const onchange = (e: any) => {
         const value = e.target.value
         setTitle(value)
     }
 
-    const [status, setStatus] = useState('1')
-    const [selected, setSelectedValue] = useState("");
     const handleSelectChange = (event: any) => {
-        //setSelectedValue(parseInt(event.target.value));
         const newValue = event.target.value
         setSelectedValue(newValue);
-        console.log("setSelectedValue", newValue);
-        let type = null;
-        const options = {
-            0:'Private',
-            1:'Public',
-            2:'Department'
-        }
-        if (selectedValue === 0) {
-            type = 'private';
-          } else if (selectedValue === 1) {
-            type = 'public';
-          } else if (selectedValue === 2) {
-            type = 'department';
-        }
     };
-    const handleChildData = (dataFromChild: object) => {
+    const handleChildData = (dataFromChild: any) => {
         setShowDefaultValue(true);
         setTagValue(dataFromChild);
+
+        console.log("dataFromChild?.status " , dataFromChild)
+        if (dataFromChild?.status === 0){
+            setSelectedValue(0)
+            setDisableSelectArticle(true)
+        }
+        else if(dataFromChild?.status === 2){
+            setSelectedValue(2)
+            setDisableSelectArticle(true)
+        }
+        else if(dataFromChild?.status === 1){
+            setSelectedValue(1)
+            setDisableSelectArticle(true)
+        }
+        else {
+            setDisableSelectArticle(false)
+        }
     };
+
+    const [disableSelectArticle, setDisableSelectArticle] = useState<boolean>(false);
 
     return (
         <>
@@ -85,9 +85,19 @@ function InputTitleComponent(props: any) {
                             <div className='flex p-3 rounded-lg border items-center mr-4 bg-base-100'>
                                 <Autocomplete
                                     value={showDefaultValue ? tagValue : null}
-                                    onChange={(event: any, newValue: string | null) => {
+                                    onChange={(event: any, newValue: any | null) => {
                                         setTagValue(newValue);
-                                        console.log("VandaTest:",newValue);
+                                        if (newValue?.status === 0){
+                                            setSelectedValue(0)
+                                            setDisableSelectArticle(true)
+                                        }
+                                        else if(newValue?.status === 2){
+                                            setSelectedValue(2)
+                                            setDisableSelectArticle(true)
+                                        }
+                                        else {
+                                            setDisableSelectArticle(false)
+                                        }
                                     }}
                                     defaultValue={inputValue}
                                     onInputChange={(event, newInputValue) => {
@@ -98,12 +108,12 @@ function InputTitleComponent(props: any) {
                                     size="small"
                                     id="combo-box-demo"
                                     options={tagData}
-                                    inputValue={inputValue} 
+                                    inputValue={inputValue}
                                     sx={{ width: 300, mr: 2 }}
                                     renderInput={(params) => <TextField {...params} placeholder="Search Tag name" />}
                                 />
                                 < div onClick={handleOpenTag}>
-                                    <AddSquare size="28" className='text-neutral hover:scale-105 transition-all' style={{cursor: "pointer"}}/>
+                                    <AddSquare size="28" className='text-neutral hover:scale-105 transition-all' style={{ cursor: "pointer" }} />
                                 </div>
                             </div>
                         ) : (
@@ -122,22 +132,13 @@ function InputTitleComponent(props: any) {
                             className='input input-neutral input-bordered input-sm w-full max-w-xs'
                         />
                         <select
+                            disabled = {disableSelectArticle}
                             value={selectedValue} // Bind the selected value to state
                             onChange={handleSelectChange}
                             className="select select-neutral select-sm select-bordered w-full ml-3 max-w-40">
-                            {
-                                status == '1' ? (
-                                    <><option selected value={1}>Public</option><option value={0}>Private</option><option value={2}>Department</option></>
-                                  ) : status == '0'?(
-                                    <><option  value={0}>Private</option><option value={1}>Public</option><option value={2}>Department</option></>
-                                  ): status == '2'?(
-                                    <>
-                                    <option  value={2}>Department</option><option value={1}>Public</option><option value={0}>Private</option> 
-                                    </>
-                                  ):
-                                  <></>
-                            }
-                           
+                            <option value={1}>Public</option>
+                            <option value={0}>Private</option>
+                            <option value={2}>Department</option>
                         </select>
                     </div>
 
