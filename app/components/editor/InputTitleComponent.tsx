@@ -35,8 +35,8 @@ function InputTitleComponent(props: any) {
         }
         if (articleData?.status) {
             setStatusVal(articleData.status)
-            console.log("dada123:",articleData)
-          }
+            console.log("dada123:", articleData)
+        }
     }, [inputValue, articleData])
 
     const [openTag, setOpenTag] = React.useState(false);
@@ -59,15 +59,15 @@ function InputTitleComponent(props: any) {
         console.log("setSelectedValue", newValue);
         let type = null;
         const options = {
-            0:'Private',
-            1:'Public',
-            2:'Department'
+            0: 'Private',
+            1: 'Public',
+            2: 'Department'
         }
         if (selectedValue === 0) {
             type = 'private';
-          } else if (selectedValue === 1) {
+        } else if (selectedValue === 1) {
             type = 'public';
-          } else if (selectedValue === 2) {
+        } else if (selectedValue === 2) {
             type = 'department';
         }
     };
@@ -87,7 +87,7 @@ function InputTitleComponent(props: any) {
                                     value={showDefaultValue ? tagValue : null}
                                     onChange={(event: any, newValue: string | null) => {
                                         setTagValue(newValue);
-                                        console.log("VandaTest:",newValue);
+                                        console.log("VandaTest:", newValue);
                                     }}
                                     defaultValue={inputValue}
                                     onInputChange={(event, newInputValue) => {
@@ -98,12 +98,12 @@ function InputTitleComponent(props: any) {
                                     size="small"
                                     id="combo-box-demo"
                                     options={tagData}
-                                    inputValue={inputValue} 
+                                    inputValue={inputValue}
                                     sx={{ width: 300, mr: 2 }}
                                     renderInput={(params) => <TextField {...params} placeholder="Search Tag name" />}
                                 />
                                 < div onClick={handleOpenTag}>
-                                    <AddSquare size="28" className='text-neutral hover:scale-105 transition-all' style={{cursor: "pointer"}}/>
+                                    <AddSquare size="28" className='text-neutral hover:scale-105 transition-all' style={{ cursor: "pointer" }} />
                                 </div>
                             </div>
                         ) : (
@@ -128,16 +128,16 @@ function InputTitleComponent(props: any) {
                             {
                                 status == '1' ? (
                                     <><option selected value={1}>Public</option><option value={0}>Private</option><option value={2}>Department</option></>
-                                  ) : status == '0'?(
-                                    <><option  value={0}>Private</option><option value={1}>Public</option><option value={2}>Department</option></>
-                                  ): status == '2'?(
+                                ) : status == '0' ? (
+                                    <><option value={0}>Private</option><option value={1}>Public</option><option value={2}>Department</option></>
+                                ) : status == '2' ? (
                                     <>
-                                    <option  value={2}>Department</option><option value={1}>Public</option><option value={0}>Private</option> 
+                                        <option value={2}>Department</option><option value={1}>Public</option><option value={0}>Private</option>
                                     </>
-                                  ):
-                                  <></>
+                                ) :
+                                    <></>
                             }
-                           
+
                         </select>
                     </div>
 
