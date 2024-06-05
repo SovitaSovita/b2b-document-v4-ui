@@ -5,6 +5,10 @@ import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import { useRouter } from 'next/navigation';
 import TagComponent from '../Modal/TagComponent';
 import GeminiContent from '../GeminiContent';
+import { GetTagAndArticle } from '@/app/service/TagService';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/app/service/Redux/store/store';
+import { getOptionData } from '@/app/service/Redux/articleDetailSlice';
 
 
 function InputTitleComponent(props: any) {
@@ -26,18 +30,7 @@ function InputTitleComponent(props: any) {
         setSelectedValue
     } = props
 
-    const [optionStatus, setStatusVal] = useState("");
-
-    useEffect(() => {
-        if (articleData != null) {
-            setInputValue(articleData?.tag_title)
-            setTitle(articleData?.title)
-            setStatusVal(articleData.status)
-        }
-        if (articleData?.status) {
-            setStatusVal(articleData.status)
-        }
-    }, [inputValue, articleData])
+    
 
     const [openTag, setOpenTag] = React.useState(false);
     const handleOpenTag = () => {
@@ -51,7 +44,20 @@ function InputTitleComponent(props: any) {
     const handleSelectChange = (event: any) => {
         const newValue = event.target.value
         setSelectedValue(newValue);
+        console.log("Vanda Data:",newValue); 
+
+        if(event === 0){
+            setSelectedValue(0)
+        } else if(event === 1){
+            setSelectedValue(1)
+        }
     };
+
+
+    
+
+    
+
     const handleChildData = (dataFromChild: any) => {
         setShowDefaultValue(true);
         setTagValue(dataFromChild);
@@ -80,6 +86,25 @@ function InputTitleComponent(props: any) {
         <>
             <div className='flex justify-between px-6 mb-5'>
                 <div className='flex items-center'>
+                    <div className='flex bg-base-100 p-3 rounded-lg border'>
+                        <input
+                            onChange={onchange}
+                            value={title}
+                            autoFocus
+                            placeholder="Enter Sub Title"
+                            className='input input-neutral input-bordered input-sm w-full max-w-xs'
+                        />
+                        <select
+                            disabled={disableSelectArticle}
+                            value={selectedValue} // Bind the selected value to state
+                            onChange={handleSelectChange}
+                            
+                            className="select select-neutral select-sm select-bordered w-full ml-3 max-w-40">
+                            <option value={1}>Public</option>
+                            <option value={0}>Private</option>
+                            <option value={2}>Department</option>
+                        </select>
+                    </div>
                     {
                         !articleData ? (
                             <div className='flex p-3 rounded-lg border items-center mr-4 bg-base-100'>
@@ -123,24 +148,7 @@ function InputTitleComponent(props: any) {
                             </div>
                         )
                     }
-                    <div className='flex bg-base-100 p-3 rounded-lg border'>
-                        <input
-                            onChange={onchange}
-                            value={title}
-                            autoFocus
-                            placeholder="Enter Sub Title"
-                            className='input input-neutral input-bordered input-sm w-full max-w-xs'
-                        />
-                        <select
-                            disabled={disableSelectArticle}
-                            value={selectedValue} // Bind the selected value to state
-                            onChange={handleSelectChange}
-                            className="select select-neutral select-sm select-bordered w-full ml-3 max-w-40">
-                            <option value={1}>Public</option>
-                            <option value={0}>Private</option>
-                            <option value={2}>Department</option>
-                        </select>
-                    </div>
+                    
 
                     <div className='flex bg-base-100 ml-4 p-3 rounded-lg border'>
                         <button
