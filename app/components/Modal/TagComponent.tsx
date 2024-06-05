@@ -111,7 +111,7 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
                                 <div className='flex bg-base-100 p-3 rounded-lg'>
                                     <label className="input w-full input-bordered flex items-cent input-sm er gap-2">
                                         <input onChange={onChange} type="text" className="grow" placeholder="Enter new Tag name" />
-                                    </label>
+                                    </label> 
                                     <div className='self-start'>
                                         <select
                                             value={selectedValue}
