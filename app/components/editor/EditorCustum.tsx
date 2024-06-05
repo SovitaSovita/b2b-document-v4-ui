@@ -205,6 +205,10 @@ export default function EditorCustum({ handleClose, session, articleData, handle
       }
     }
   }, [session])
+  
+  useEffect(() => {
+    getTagAndArticleFunction(null, 0, session?.userId);
+  }, [])
 
 
   const getTagAndArticleFunction = (dept_id: number | null, status: number, userId: string | null) => {
