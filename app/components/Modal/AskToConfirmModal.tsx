@@ -3,18 +3,9 @@
 import { Backdrop, Box, Fade, Modal } from '@mui/material'
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux';
-import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined';
-import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
-import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
-import { SaveNewTag } from '@/app/service/TagService';
 import { useRouter } from 'next/navigation';
 
 function AskToConfirmModal({ open, setOpen, handleSubmitCallback }: any) {
-
-    const dispatch = useDispatch()
-    const [inputVal, setInputVal] = useState("");
-    const router = useRouter()
-
     const handleClose = () => {
         setOpen(false)
     };

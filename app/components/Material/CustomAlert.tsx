@@ -28,7 +28,7 @@ export default function CustomAlert(props: any) {
                 open={open}
                 autoHideDuration={duration}
                 onClose={handleClose}>
-                <Alert variant="filled" onClose={handleClose} severity={type} sx={{ width: '100%' }}>
+                <Alert variant="standard" onClose={handleClose} severity={type} sx={{ width: '100%', borderRadius: 1 }}>
                     {message}
                 </Alert>
             </Snackbar>
