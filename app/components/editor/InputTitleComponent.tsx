@@ -32,7 +32,7 @@ function InputTitleComponent(props: any) {
         isLoading
     } = props
 
-    
+
     const dispatch = useDispatch()
     const optionGETdata = useSelector((state: RootState) => state?.article.getOptionData);
 
@@ -53,29 +53,29 @@ function InputTitleComponent(props: any) {
     const handleSelectChange = (event: any) => {
         const newValue = event.target.value
         setSelectedValue(newValue);
-        
+
         if (newValue == 0) {
             getTagAndArticleFunction(null, 0, session?.userId);
         }
         if (newValue == 1) {
-            getTagAndArticleFunction(parseInt(session?.dvsn_CD, 10), 2, null);
+            getTagAndArticleFunction(null, 1, session?.userId);
         }
         if (newValue == 2) {
-            getTagAndArticleFunction(null, 1, session?.userId);
+            getTagAndArticleFunction(parseInt(session?.dvsn_CD, 10), 2, null);
         }
     };
 
     const getTagAndArticleFunction = (dept_id: number | null, status: number, userId: string | null) => {
         GetTagAndArticle(dept_id, status, userId).then((res: any) => {
-          const updatedTagList = res?.data?.rec?.tagList.map((tag: any) => ({
-            ...tag,
-            label: tag.title,
-          }));
-          setTagData(updatedTagList)
+            const updatedTagList = res?.data?.rec?.tagList.map((tag: any) => ({
+                ...tag,
+                label: tag.title,
+            }));
+            setTagData(updatedTagList)
         })
-      }
+    }
 
-    
+
 
     const convertStringToStatus = (option: string) => {
         let status = 0;
@@ -83,7 +83,7 @@ function InputTitleComponent(props: any) {
         else if (option === "PUBLIC") status = 1;
         else if (option === "DEPARTMENT") status = 2;
         return status;
-      }
+    }
 
     const handleChildData = (dataFromChild: any) => {
         setShowDefaultValue(true);
@@ -117,7 +117,7 @@ function InputTitleComponent(props: any) {
                             disabled={disableSelectArticle}
                             value={selectedValue} // Bind the selected value to state
                             onChange={handleSelectChange}
-                            
+
                             className="select select-neutral select-sm select-bordered w-full ml-3 max-w-40">
                             <option value={1}>Public</option>
                             <option value={0}>Private</option>
@@ -133,7 +133,7 @@ function InputTitleComponent(props: any) {
                     </div>
                     {
                         !articleData ? (
-                            <div className='flex p-3 rounded-lg border items-center mr-4 bg-base-100' style={{margin:"auto 35px;"} }>
+                            <div className='flex p-3 rounded-lg border items-center mr-4 bg-base-100' style={{ margin: "auto 35px;" }}>
                                 <Autocomplete
                                     value={showDefaultValue ? tagValue : null}
                                     onChange={(event: any, newValue: any | null) => {
@@ -174,9 +174,9 @@ function InputTitleComponent(props: any) {
                             </div>
                         )
                     }
-                    
 
-                    <div className='flex bg-base-100 ml-4 p-3 rounded-lg border' style={{margin: "auto 75px auto;"}}>
+
+                    <div className='flex bg-base-100 ml-4 p-3 rounded-lg border' style={{ margin: "auto 75px auto;" }}>
                         <button
                             type='button'
                             onClick={handleDrawerOpen}
