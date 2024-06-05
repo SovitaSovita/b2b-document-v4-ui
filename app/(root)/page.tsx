@@ -61,7 +61,7 @@ export default function Home() {
         status = 2
         departmentId = parseInt(session?.dvsn_CD, 10)
       }
-      //GET
+      // Get Tag
       GetTagAndArticle(departmentId, status, username).then((res: any) => {
         setMenudata(res?.data?.rec);
         dispatch(isRender(false));
@@ -76,16 +76,9 @@ export default function Home() {
       setFavorites(res);
     },)
   }
-
   useEffect(() => {
     handleViewFavorite(session?.userId);
   }, [session, reRederFavorite])
-
-  // if (isLoading) {
-  //   return (
-  //     <LoadingCustom />
-  //   );
-  // }
 
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -95,16 +88,14 @@ export default function Home() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
-  const [mode, setMode] = useState("light");
-
+ 
+  const [mode, setMode] = useState("light")
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setMode(localStorage.getItem("mode")!);
-      dispatch(isMode(false))
+      setMode(localStorage.getItem("mode") || "light")
+      dispatch(isMode(false));
     }
   }, [isMode_theme])
-
 
   return (
     <>

@@ -58,7 +58,6 @@ function SideContent({ openMainDrawer, setOpen }: any) {
     const router = useRouter();
     // Favorite 
     const isFavorites = useSelector((state: RootState) => state.article.isFavorite);
-
     const session: UserData = useSelector((state: RootState) => state?.article.session);
     const path = useParams();
     const dispatch = useDispatch()
@@ -123,7 +122,6 @@ function SideContent({ openMainDrawer, setOpen }: any) {
         })
     }
 
-
     function handleViewArticle(id: string) {
         getArticleDetail(id).then((res) => {
             dispatch(getArticle(res))
@@ -137,8 +135,6 @@ function SideContent({ openMainDrawer, setOpen }: any) {
             }
         })
     }
-
-
     // Add to favorite
     const handleAddFavorite = async (article_id: number) => {
         try {
@@ -183,7 +179,6 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                 article_id: article_id,
                 user_id: session?.userId
             });
-
             if (response.code === "200") {
                 setIsErrorAlert({
                     ...isErrorAlert,
@@ -193,7 +188,6 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                 })
                 dispatch(isRender(true));
                 handleViewArticle(article_id.toString())
-
             } else {
                 setIsErrorAlert({
                     ...isErrorAlert,
@@ -306,10 +300,9 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                                     <div className='mb-4 flex items-center justify-between'>
                                         {/* Left side icons */}
                                         <div></div>
-
                                         {/* Right side icons */}
                                         <div className="flex items-center bg-primary rounded-bl-lg p-2 border">
-                                            {/* Favorite */}
+                                            {/* Favorite icons*/}
                                             {
                                                 isFavorites ? (
                                                     <FavoriteBorderOutlinedIcon onClick={() => handleDeleteFavorite(article?.id, session.userId)} className='mr-3' style={{ cursor: 'pointer', color: 'red' }} />
@@ -317,13 +310,11 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                                                     <FavoriteBorderOutlinedIcon onClick={() => handleAddFavorite(article?.id)} className='mr-3' style={{ cursor: 'pointer', color: 'black' }} />
                                                 )
                                             }
-
                                             <TelegramShareButton
                                                 url={`${UI_BASE_URL}/share/${article?.id}`}
                                             >
                                                 <ReplyAllOutlinedIcon className='mr-3' />
                                             </TelegramShareButton>
-
                                             {
                                                 session?.userId === article?.username && (
                                                     <div className='flex justify-between w-10'>
