@@ -56,16 +56,16 @@ function InputTitleComponent(props: any) {
         setShowDefaultValue(true);
         setTagValue(dataFromChild);
 
-        console.log("dataFromChild?.status " , dataFromChild)
-        if (dataFromChild?.status === 0){
+        console.log("dataFromChild?.status ", dataFromChild)
+        if (dataFromChild?.status === 0) {
             setSelectedValue(0)
             setDisableSelectArticle(true)
         }
-        else if(dataFromChild?.status === 2){
+        else if (dataFromChild?.status === 2) {
             setSelectedValue(2)
             setDisableSelectArticle(true)
         }
-        else if(dataFromChild?.status === 1){
+        else if (dataFromChild?.status === 1) {
             setSelectedValue(1)
             setDisableSelectArticle(true)
         }
@@ -87,11 +87,11 @@ function InputTitleComponent(props: any) {
                                     value={showDefaultValue ? tagValue : null}
                                     onChange={(event: any, newValue: any | null) => {
                                         setTagValue(newValue);
-                                        if (newValue?.status === 0){
+                                        if (newValue?.status === 0) {
                                             setSelectedValue(0)
                                             setDisableSelectArticle(true)
                                         }
-                                        else if(newValue?.status === 2){
+                                        else if (newValue?.status === 2) {
                                             setSelectedValue(2)
                                             setDisableSelectArticle(true)
                                         }
@@ -132,7 +132,7 @@ function InputTitleComponent(props: any) {
                             className='input input-neutral input-bordered input-sm w-full max-w-xs'
                         />
                         <select
-                            disabled = {disableSelectArticle}
+                            disabled={disableSelectArticle}
                             value={selectedValue} // Bind the selected value to state
                             onChange={handleSelectChange}
                             className="select select-neutral select-sm select-bordered w-full ml-3 max-w-40">

@@ -111,66 +111,71 @@ function SideBar(props: any) {
             variant="persistent"
             anchor="left"
             open={openMainDrawer}>
-            <ul className="menu menu-dropdown-show w-full bg-primary text-base-content">
-                <HeaderSidebar handleOpenArticle={handleOpenArticle} />
+            <ul className="menu menu-dropdown-show w-full bg-primary text-base-content pt-0">
+                <div className='sticky top-0 bg-primary z-50'>
+                    <HeaderSidebar handleOpenArticle={handleOpenArticle} />
 
-                <div className="css-o2c9dn my-6"></div>
+                    {/* Favorite */}
+                    <li className='mb-2 mt-4'>
+                        <details>
+                            <summary className="border bg-base-100 font-semibold text-[15px] font-mono">
+                                <FavoriteBorderOutlinedIcon className='text-[18px]' />
+                                Favorites
+                            </summary>
+                            {FAVORITE && FAVORITE.length > 0 ? (
+                                <ul className='pt-1'>
+                                    {FAVORITE?.map((item: any, index) => (
+                                        <li key={index} onClick={() => {
+                                            handleViewArticle(item?.article_id.toString());
+                                        }}>
+                                            <a className="text-[13px]">{item?.title}</a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <ul className='pt-1'>
+                                    <li>
+                                        <a className="text-[13px]" style={{ cursor: 'none', pointerEvents: 'none' }}>No favorite</a>
+                                    </li>
+                                </ul>
+
+                            )}
+                        </details >
+                    </li >
+
+                    <div className="css-o2c9dn my-3"></div></div>
 
                 {
                     isLoading ? <LoadingCustom /> :
                         (
                             <div>
-                                {/* Favorite */}
-                                <li className='mb-2'>
-                                    <details>
-                                        <summary className="border bg-base-100 font-semibold text-[15px] font-mono">
-                                            <FavoriteBorderOutlinedIcon className='text-[18px]' />
-                                            Favorites
-                                        </summary>
-                                        {FAVORITE && FAVORITE.length > 0 ? (
-                                            <ul className='pt-1'>
-                                                {FAVORITE?.map((item: any, index) => (
-                                                    <li key={index} onClick={() => {
-                                                        handleViewArticle(item?.article_id.toString());
-                                                    }}>
-                                                        <a className="text-[13px]">{item?.title}</a>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        ) : (
-                                            <ul className='pt-1'>
-                                                <li>
-                                                    <a className="text-[13px]" style={{ cursor: 'none', pointerEvents: 'none' }}>No favorite</a>
-                                                </li>
-                                            </ul>
-
-                                        )}
-                                    </details >
-                                </li >
-
                                 {
-                                    TAGS?.map((item, index) => (
+                                    TAGS?.map((item: any, index) => (
                                         <span key={index} className='flex mainManageTag group'>
                                             <div className='w-6 self-start'>
-                                                <div className="dropdown dropdown-hover dropdown-top mt-2.5 opacity-0 hidden group-hover:block group-hover:opacity-100 transition-all">
-                                                    <div tabIndex={0} role="button">
-                                                        <MoreVertIcon />
-                                                    </div>
-                                                    <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32">
-                                                        <li>
-                                                            <div className='flex items-center' onClick={() => handleOpenTag(item)}>
-                                                                <EditIcon />
-                                                                <span>Edit</span>
+                                                {
+                                                    session?.userId === item?.user_name && (
+                                                        <div className="dropdown dropdown-hover dropdown-top mt-2.5 opacity-0 hidden group-hover:block group-hover:opacity-100 transition-all">
+                                                            <div tabIndex={0} role="button">
+                                                                <MoreVertIcon />
                                                             </div>
-                                                        </li>
-                                                        <li>
-                                                            <div className='flex items-center text-red-400' onClick={() => handleDelete(item)}>
-                                                                <DeleteIcon />
-                                                                <span>Detele</span>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                                            <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32">
+                                                                <li>
+                                                                    <div className='flex items-center' onClick={() => handleOpenTag(item)}>
+                                                                        <EditIcon />
+                                                                        <span>Edit</span>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div className='flex items-center text-red-400' onClick={() => handleDelete(item)}>
+                                                                        <DeleteIcon />
+                                                                        <span>Detele</span>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    )
+                                                }
                                             </div>
                                             <li key={index + 1} className='w-[260px]'>
                                                 <details>
@@ -209,7 +214,7 @@ function SideBar(props: any) {
             </ul >
             <UpdateTagComponent open={openTag} setOpen={setOpenTag} tagUpdateData={tagUpdateData} TAGS={TAGS} />
             <UpdateArticleModal open={openArticle} setOpen={setOpenArticle} session={session} articleData={null} />
-            <DeleteTagComponent open={openTags} setOpen={setOpenTags} session={session}  tagDeleteData={tagDeleteData} />
+            <DeleteTagComponent open={openTags} setOpen={setOpenTags} session={session} tagDeleteData={tagDeleteData} />
         </Drawer>
 
     )
