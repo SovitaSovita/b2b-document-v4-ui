@@ -96,7 +96,12 @@ function SideContent({ openMainDrawer, setOpen }: any) {
     const handleDeleteArticle: any = () => {
 
         if (!articleId) {
-            alert("Article ID is wrong.")
+            setIsErrorAlert({
+                ...isErrorAlert,
+                open: true,
+                type: "warning",
+                message: "Article ID is Incorrect.",
+            });
         }
 
         deleteArticle(articleId!).then((res) => {
@@ -108,7 +113,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                     message: "Deleted Successfully.",
                 });
                 dispatch(isRender(true));
-                setOpenAskCf(false)
+                dispatch(getArticle(null));
             }
             else {
                 setIsErrorAlert({
@@ -117,8 +122,8 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                     type: "error",
                     message: "fail deleted.",
                 });
-                setOpenAskCf(false)
             }
+            setOpenAskCf(false)
         })
     }
 
@@ -294,7 +299,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
 
                 <div className="rounded-lg bg-base-100 border w-full min-h-screen">
                     {
-                        !article?.content_body ? (<HomeContent />)
+                        article?.content_body == null ? (<HomeContent />)
                             : (
                                 <div className='flex flex-col'>
                                     <div className='mb-4 flex items-center justify-between'>

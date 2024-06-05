@@ -1,4 +1,4 @@
-import { isRender } from '@/app/service/Redux/articleDetailSlice';
+import { getArticle, isRender } from '@/app/service/Redux/articleDetailSlice';
 import { DeleteTag } from '@/app/service/TagService';
 import { Backdrop, Fade, Modal } from '@mui/material';
 import React, { useState } from 'react';
@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 import CustomAlert from '../Material/CustomAlert';
 
 function DeleteTagComponent({ open, setOpen, tagDeleteData }: any) {
-  console.log("Tagggg", tagDeleteData)
 
   const handleClose = () => {
     setOpen(false)
@@ -38,6 +37,7 @@ function DeleteTagComponent({ open, setOpen, tagDeleteData }: any) {
       });
       handleClose()
       dispatch(isRender(true));
+      dispatch(getArticle(null));
       setOpenAskCf(false)
     })
 

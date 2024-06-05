@@ -10,7 +10,7 @@ function RenderArticle({ body }: any) {
             {
                 body ?
                     <Editor
-                        apiKey='y7nhfoq6rca9j1otxq92aqdc64f3rm36gq92ebilc67dm6ni'
+                        apiKey='51cakyf7l011kd34r23bib5jrvh79lb520v82wpid72wq92n'
                         initialValue={body}
                         init={{
                             height: 800,

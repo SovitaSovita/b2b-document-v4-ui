@@ -3,6 +3,7 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
+import { redirect } from "next/navigation";
 
 export const KEY = process.env.KEY;
 // UI URL
@@ -34,15 +35,18 @@ export async function getSession() {
     const headers = { 'Authorization': `Bearer ${token}` };
     const res = await fetch(`${API_M_BASE_URL}/session?token=${encodeURIComponent(token!)}&key=${encodeURIComponent(KEY!)}`, { headers });
     if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
+      if (typeof window !== "undefined") {
+        window.location.href = "/error";
+      }
     }
     const data = await res.json();
     session = data.payload;
     localStorage.setItem("tid", session?.token);
     return session;
   } catch (e) {
-    console.error("Error: ", e);
-    throw e;
+    if (typeof window !== "undefined") {
+      window.location.href = "/error";
+    }
   }
 }
 
