@@ -3,13 +3,13 @@ import { AddArticleBy, UpdateArticle } from '@/app/service/ArticleService'
 import { GetTagAndArticle } from '@/app/service/TagService'
 import React, { useEffect, useRef, useState } from 'react'
 import CustomAlert from '../Material/CustomAlert'
-import { isRender } from '@/app/service/Redux/articleDetailSlice'
+import { getOptionData, isRender } from '@/app/service/Redux/articleDetailSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import DrawerTemplate from '@/app/(root)/templates/DrawerTemplate'
 import InputTitleComponent from './InputTitleComponent'
 import { Box, styled } from '@mui/material'
 import TinyEditor from './TinyEditor'
 import { RootState } from '@/app/service/Redux/store/store'
+import DrawerTemplate from '../templates/DrawerTemplate'
 
 const API_BASE_URL = process.env.NEXT_API_URL
 
@@ -37,6 +37,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
 export default function EditorCustum({ handleClose, session, articleData, handleViewArticle }: any) {
 
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
   const optionGETdata = useSelector((state: RootState) => state?.article.getOptionData);
 
   const [isErrorAlert, setIsErrorAlert] = useState({
@@ -79,12 +80,21 @@ export default function EditorCustum({ handleClose, session, articleData, handle
     e.preventDefault();
     let content: string = "";
 
-
     if (editorRef.current) {
       content = editorRef.current.getContent();
     }
 
-    if (!tagValue) {
+    if (content == "") {
+      setIsErrorAlert({
+        ...isErrorAlert,
+        open: true,
+        type: "warning",
+        message: "Editor's Content is Empty.",
+      });
+      return;
+    }
+
+    if (!tagValue && articleData == null) {
       setIsErrorAlert({
         ...isErrorAlert,
         open: true,
@@ -95,12 +105,13 @@ export default function EditorCustum({ handleClose, session, articleData, handle
     }
     
 
-    if (title === null) {
-      console.log("title ", title)
-      setIsErrorInput({
-        error: true,
-        label: 'Enter Sub title',
-      })
+    if (!title) {
+      setIsErrorAlert({
+        ...isErrorAlert,
+        open: true,
+        type: "error",
+        message: "Sub Title can't empty.",
+      });
       return;
     }
 
@@ -112,7 +123,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
         "file_article_id": "123",
         "status": selectedValue,
       }
-
+      setIsLoading(true)
       AddArticleBy(request).then((res: any) => {
         if (res.status == 200) {
           setIsErrorAlert({
@@ -121,8 +132,9 @@ export default function EditorCustum({ handleClose, session, articleData, handle
             type: "success",
             message: "Created Successfully.",
           });
+          dispatch(getOptionData(convertStatusToString(selectedValue)))
           dispatch(isRender(true))
-          handleClose();
+          handleClose()
         }
         else {
           setIsErrorAlert({
@@ -131,9 +143,8 @@ export default function EditorCustum({ handleClose, session, articleData, handle
             type: "error",
             message: "Something wrong...",
           });
-          handleClose();
-
         }
+        setIsLoading(false)
       })
     }
     else {
@@ -143,10 +154,11 @@ export default function EditorCustum({ handleClose, session, articleData, handle
         "content_body": content,
         "user_id": articleData?.user_id,
         "dept_id": session?.dvsn_CD,
-        "status": '0',
+        "status": articleData?.status,
         "modifiedBy": session?.userId,
         "modified_date": formattedDate,
       }
+      setIsLoading(true)
       UpdateArticle(input).then((rec: any) => {
         if (rec.status == 200) {
           setIsUpdateArticle({
@@ -156,6 +168,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
             message: "Update article successfully",
           });
           handleViewArticle(articleData?.id)
+          dispatch(getOptionData(convertStatusToString(articleData?.status)))
           dispatch(isRender(true))
           handleClose();
         } else {
@@ -165,27 +178,34 @@ export default function EditorCustum({ handleClose, session, articleData, handle
             type: "error",
             message: "Something went wrong. Can't update...",
           })
-          handleClose();
         }
+        setIsLoading(false)
       })
-
     }
-
   }
+
+  const convertStatusToString = (status: number) => {
+    let getOptionData = "PRIVATE";
+    if (status === 0) getOptionData = "PRIVATE";
+    else if (status === 1) getOptionData = "PUBLIC";
+    else if (status === 2) getOptionData = "DEPARTMENT";
+    return getOptionData;
+  }
+
 
   useEffect(() => {
     if (session) {
-      if(optionGETdata === "PRIVATE"){
+      if (optionGETdata === "PRIVATE") {
         getTagAndArticleFunction(null, 0, session?.userId);
       }
-      if(optionGETdata === "DEPARTMENT") {
+      if (optionGETdata === "DEPARTMENT") {
         getTagAndArticleFunction(parseInt(session?.dvsn_CD, 10), 2, null);
       }
-      if(optionGETdata === "PUBLIC") {
+      if (optionGETdata === "PUBLIC") {
         getTagAndArticleFunction(null, 1, session?.userId);
       }
     }
-  }, [session])
+  }, [session, optionGETdata])
 
 
   const getTagAndArticleFunction = (dept_id: number | null, status: number, userId: string | null) => {
@@ -234,6 +254,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
               handleDrawerOpen={handleDrawerOpen}
               session={session}
               tagData={tagData}
+              setTagData={setTagData}
               title={title}
               setTitle={setTitle}
               inputValue={inputValue}
@@ -242,12 +263,12 @@ export default function EditorCustum({ handleClose, session, articleData, handle
               setTagValue={setTagValue}
               selectedValue={selectedValue}
               setSelectedValue={setSelectedValue}
+              isLoading={isLoading}
             />
             <div className='px-6'>
               <TinyEditor geteditorRef={geteditorRef} articleData={articleData} />
             </div>
           </form >
-
         </Main>
         <DrawerTemplate open={openTemplate} setOpen={setOpenTemplate} handleDrawerClose={handleDrawerClose} editorRef={editorRef} />
       </Box>

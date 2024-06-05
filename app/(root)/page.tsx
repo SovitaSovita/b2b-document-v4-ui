@@ -88,7 +88,7 @@ export default function Home() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
- 
+
   const [mode, setMode] = useState("light")
   useEffect(() => {
     if (typeof window !== 'undefined') {

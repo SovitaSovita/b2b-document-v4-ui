@@ -5,10 +5,10 @@ import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import { useRouter } from 'next/navigation';
 import TagComponent from '../Modal/TagComponent';
 import GeminiContent from '../GeminiContent';
-import { GetTagAndArticle } from '@/app/service/TagService';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/app/service/Redux/store/store';
+import { useDispatch, useSelector } from 'react-redux';
 import { getOptionData } from '@/app/service/Redux/articleDetailSlice';
+import { GetTagAndArticle } from '@/app/service/TagService';
+import { RootState } from '@/app/service/Redux/store/store';
 
 
 function InputTitleComponent(props: any) {
@@ -20,6 +20,7 @@ function InputTitleComponent(props: any) {
         handleDrawerOpen,
         session,
         tagData,
+        setTagData,
         title,
         setTitle,
         inputValue,
@@ -27,10 +28,18 @@ function InputTitleComponent(props: any) {
         tagValue,
         setTagValue,
         selectedValue,
-        setSelectedValue
+        setSelectedValue,
+        isLoading
     } = props
 
     
+    const dispatch = useDispatch()
+    const optionGETdata = useSelector((state: RootState) => state?.article.getOptionData);
+
+
+    useEffect(() => {
+        setSelectedValue(convertStringToStatus(optionGETdata))
+    }, [])
 
     const [openTag, setOpenTag] = React.useState(false);
     const handleOpenTag = () => {
@@ -44,25 +53,42 @@ function InputTitleComponent(props: any) {
     const handleSelectChange = (event: any) => {
         const newValue = event.target.value
         setSelectedValue(newValue);
-        console.log("Vanda Data:",newValue); 
-
-        if(event === 0){
-            setSelectedValue(0)
-        } else if(event === 1){
-            setSelectedValue(1)
+        
+        if (newValue == 0) {
+            getTagAndArticleFunction(null, 0, session?.userId);
+        }
+        if (newValue == 1) {
+            getTagAndArticleFunction(parseInt(session?.dvsn_CD, 10), 2, null);
+        }
+        if (newValue == 2) {
+            getTagAndArticleFunction(null, 1, session?.userId);
         }
     };
 
+    const getTagAndArticleFunction = (dept_id: number | null, status: number, userId: string | null) => {
+        GetTagAndArticle(dept_id, status, userId).then((res: any) => {
+          const updatedTagList = res?.data?.rec?.tagList.map((tag: any) => ({
+            ...tag,
+            label: tag.title,
+          }));
+          setTagData(updatedTagList)
+        })
+      }
 
     
 
-    
+    const convertStringToStatus = (option: string) => {
+        let status = 0;
+        if (option === "PRIVATE") status = 0;
+        else if (option === "PUBLIC") status = 1;
+        else if (option === "DEPARTMENT") status = 2;
+        return status;
+      }
 
     const handleChildData = (dataFromChild: any) => {
         setShowDefaultValue(true);
         setTagValue(dataFromChild);
 
-        console.log("dataFromChild?.status ", dataFromChild)
         if (dataFromChild?.status === 0) {
             setSelectedValue(0)
             setDisableSelectArticle(true)
@@ -87,13 +113,6 @@ function InputTitleComponent(props: any) {
             <div className='flex justify-between px-6 mb-5'>
                 <div className='flex items-center'>
                     <div className='flex bg-base-100 p-3 rounded-lg border'>
-                        <input
-                            onChange={onchange}
-                            value={title}
-                            autoFocus
-                            placeholder="Enter Sub Title"
-                            className='input input-neutral input-bordered input-sm w-full max-w-xs'
-                        />
                         <select
                             disabled={disableSelectArticle}
                             value={selectedValue} // Bind the selected value to state
@@ -104,10 +123,17 @@ function InputTitleComponent(props: any) {
                             <option value={0}>Private</option>
                             <option value={2}>Department</option>
                         </select>
+                        <input
+                            onChange={onchange}
+                            value={title}
+                            autoFocus
+                            placeholder="Enter Sub Title"
+                            className='input input-neutral input-bordered input-sm w-full max-w-xs'
+                        />
                     </div>
                     {
                         !articleData ? (
-                            <div className='flex p-3 rounded-lg border items-center mr-4 bg-base-100'>
+                            <div className='flex p-3 rounded-lg border items-center mr-4 bg-base-100' style={{margin:"auto 35px;"} }>
                                 <Autocomplete
                                     value={showDefaultValue ? tagValue : null}
                                     onChange={(event: any, newValue: any | null) => {
@@ -138,7 +164,7 @@ function InputTitleComponent(props: any) {
                                     renderInput={(params) => <TextField {...params} placeholder="Search Tag name" />}
                                 />
                                 < div onClick={handleOpenTag}>
-                                    <AddSquare size="28" className='text-neutral hover:scale-105 transition-all' style={{ cursor: "pointer" }} />
+                                    <AddSquare size="28" className='hover:scale-110 transition-all' style={{ cursor: "pointer" }} />
                                 </div>
                             </div>
                         ) : (
@@ -150,7 +176,7 @@ function InputTitleComponent(props: any) {
                     }
                     
 
-                    <div className='flex bg-base-100 ml-4 p-3 rounded-lg border'>
+                    <div className='flex bg-base-100 ml-4 p-3 rounded-lg border' style={{margin: "auto 75px auto;"}}>
                         <button
                             type='button'
                             onClick={handleDrawerOpen}
@@ -166,8 +192,11 @@ function InputTitleComponent(props: any) {
 
                 <div className='flex items-center'>
                     <button onClick={handleClose} type='button' className="btn btn-active btn-sm btn-ghost mr-3">Exit</button>
-                    <button type='submit' className="btn btn-active btn-secondary btn-sm text-base-100">
-                        <DocumentText size="20" className='text-primary' />
+                    <button
+                        disabled={isLoading}
+                        type='submit'
+                        className="btn btn-secondary btn-sm text-base-100">
+                        <DocumentText size="20" className='' />
                         Save
                     </button>
                 </div>
