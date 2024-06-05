@@ -93,6 +93,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
       });
       return;
     }
+    
 
     if (title === null) {
       console.log("title ", title)
@@ -111,7 +112,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
         "file_article_id": "123",
         "status": selectedValue,
       }
-      
+
       AddArticleBy(request).then((res: any) => {
         if (res.status == 200) {
           setIsErrorAlert({
