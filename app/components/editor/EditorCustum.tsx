@@ -111,7 +111,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
         "file_article_id": "123",
         "status": selectedValue,
       }
-
+      
       AddArticleBy(request).then((res: any) => {
         if (res.status == 200) {
           setIsErrorAlert({
@@ -146,7 +146,6 @@ export default function EditorCustum({ handleClose, session, articleData, handle
         "modifiedBy": session?.userId,
         "modified_date": formattedDate,
       }
-
       UpdateArticle(input).then((rec: any) => {
         if (rec.status == 200) {
           setIsUpdateArticle({
