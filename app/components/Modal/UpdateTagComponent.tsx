@@ -9,12 +9,9 @@ import CustomAlert from '../Material/CustomAlert';
 
 
 export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS }: any) {
-  console.log("TAGS", tagUpdateData)
-
   const currentDate = new Date();
   const formattedDate = currentDate.toISOString();
   const dispatch = useDispatch()
-  //const [inputVal,setInputVal] = useState<String>();
   const [inputVal, setInputVal] = useState("");
   const [optionStatus, setStatusVal] = useState("");
   const [status, setStatus] = useState('1')
@@ -26,8 +23,6 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
     duration: 1600,
   });
   const [selectedValue, setSelectedValue] = useState(1);
-
-  console.log("status",status)
   const handleSelectChange = (event: any) => {
     setSelectedValue(parseInt(event.target.value));
   };
@@ -41,7 +36,7 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
     if (TAGS?.status) {
       setStatusVal(TAGS.status)
     }
-  }, [tagUpdateData][TAGS]);
+  }, [tagUpdateData, TAGS]);
   console.log("optionStatus", optionStatus)
   const handleClose = () => {
     setOpen(false)
@@ -66,7 +61,7 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
         dept_id: tagUpdateData.dept_id,
         title: inputVal,
         user_name: session?.userId,
-        status: selectedValue,
+        status: tagUpdateData.status,
         modified_date: formattedDate
       }
       console.log("request", request)
@@ -123,29 +118,20 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
                     <input
                       onChange={(e) => setInputVal(e.target.value)}
                       type="text"
-                      value={inputVal}
+                      defaultValue={inputVal}
                       className="grow"
                     // style={{ width: '100px' }}
                     />
                   </label>
                   <div className='self-start'>
                     <select
-                      //value={selectedValue}
+                      disabled
+                      value={tagUpdateData.status}
                       onChange={handleSelectChange}
                       className="select select-sm select-bordered w-full ml-3 max-w-40" style={{ width: '125px' }}>
-                      {
-                        status == '1' ? (
-                          <><option selected value={1}>Public</option><option value={0}>Private</option><option value={2}>Department</option></>
-                        ) : status == '0'?(
-                          <><option  value={0}>Private</option><option value={1}>Public</option><option value={2}>Department</option></>
-                        ): status == '2'?(
-                          <>
-                          <option  value={2}>Department</option><option value={1}>Public</option><option value={0}>Private</option> 
-                          </>
-                        ):
-                        <></>
-                      } 
-
+                      <option selected value={1}>Public</option>
+                      <option value={0}>Private</option>
+                      <option value={2}>Department</option>
                     </select>
                   </div>
                 </div>

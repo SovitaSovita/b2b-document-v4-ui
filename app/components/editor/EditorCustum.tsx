@@ -111,7 +111,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
         "file_article_id": "123",
         "status": selectedValue,
       }
-
+      
       AddArticleBy(request).then((res: any) => {
         if (res.status == 200) {
           setIsErrorAlert({
@@ -146,7 +146,6 @@ export default function EditorCustum({ handleClose, session, articleData, handle
         "modifiedBy": session?.userId,
         "modified_date": formattedDate,
       }
-
       UpdateArticle(input).then((rec: any) => {
         if (rec.status == 200) {
           setIsUpdateArticle({
@@ -176,26 +175,27 @@ export default function EditorCustum({ handleClose, session, articleData, handle
   useEffect(() => {
     if (session) {
       if(optionGETdata === "PRIVATE"){
-        GetTagAndArticle(null, 0, session?.userId).then((res: any) => {
-          const updatedTagList = res?.data?.rec?.tagList.map((tag: any) => ({
-            ...tag,
-            label: tag.title,
-          }));
-          setTagData(updatedTagList)
-        })
+        getTagAndArticleFunction(null, 0, session?.userId);
       }
       if(optionGETdata === "DEPARTMENT") {
-        GetTagAndArticle(parseInt(session?.dvsn_CD, 10), 2, null).then((res: any) => {
-          const updatedTagList = res?.data?.rec?.tagList.map((tag: any) => ({
-            ...tag,
-            label: tag.title,
-          }));
-          setTagData(updatedTagList)
-        })
+        getTagAndArticleFunction(parseInt(session?.dvsn_CD, 10), 2, null);
       }
-      
+      if(optionGETdata === "PUBLIC") {
+        getTagAndArticleFunction(null, 1, session?.userId);
+      }
     }
   }, [session])
+
+
+  const getTagAndArticleFunction = (dept_id: number | null, status: number, userId: string | null) => {
+    GetTagAndArticle(dept_id, status, userId).then((res: any) => {
+      const updatedTagList = res?.data?.rec?.tagList.map((tag: any) => ({
+        ...tag,
+        label: tag.title,
+      }));
+      setTagData(updatedTagList)
+    })
+  }
   const [showDefaultValue, setShowDefaultValue] = useState(false);
 
   //open drawer template
@@ -208,9 +208,6 @@ export default function EditorCustum({ handleClose, session, articleData, handle
   const handleDrawerClose = () => {
     setOpenTemplate(false);
   };
-
-  console.log(">>>>>>>>>>>>>>>>>>>>>>>", tagData)
-
 
   return (
     <>

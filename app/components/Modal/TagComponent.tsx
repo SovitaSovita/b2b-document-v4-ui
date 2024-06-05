@@ -53,7 +53,6 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
                 create_date: formattedDate,
                 status: selectedValue
             }
-            console.log("request", request)
             SaveNewTag(request).then((res: any) => {
                 setInputVal("")
                 setIsErrorAlert({
@@ -67,7 +66,7 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
                     id: res?.data?.rec.id,
                     label: res?.data?.rec.title,
                     user_id: res?.data?.rec.user_name,
-                    status: 1,
+                    status: res?.data?.rec.status,
                     dept_id: res?.data?.rec.dept_id,
                     create_date: Date.now(),
                     modified_date: null,
