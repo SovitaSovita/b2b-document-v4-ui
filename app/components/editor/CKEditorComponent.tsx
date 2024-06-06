@@ -1,12 +1,14 @@
 import { Insert_file } from '@/app/service/ArticleService';
 import { RootState } from '@/app/service/Redux/store/store';
 import { Editor } from '@tinymce/tinymce-react';
+import { Cagliostro } from 'next/font/google';
 // import { Editor } from '@tinymce/tinymce-react'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux';
 const API_BASE_URL = process.env.NEXT_API_URL
 
 function CKEditorComponent(props: any) {
+
     const { geteditorRef, articleData } = props
 
     const editorRef = useRef<any>(null);
@@ -74,6 +76,8 @@ function CKEditorComponent(props: any) {
         fileInput.onchange = handleFileChange;
         fileInput.click();
     };
+
+    
 
     return (
         <div>
