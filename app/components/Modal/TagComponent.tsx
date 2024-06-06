@@ -23,7 +23,7 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
         message: "",
         duration: 1600,
     });
-    
+
     const handleClose = () => {
         setOpen(false)
     };
@@ -90,6 +90,7 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
             {/* The button to open modal */}
             {/* Put this part before </body> tag */}
             <Modal
+                 
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
                 open={open}
@@ -103,7 +104,7 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
                 }}
             >
                 <Fade in={open}>
-                    <div className='w-1/3 bg-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg p-6 rounded-lg' style={{ width: '455px' }}>
+                    <div className='w-1/3 bg-base-100 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg p-6 rounded-lg' style={{ width: '455px' }}>
                         <form onSubmit={handleSubmit} className='flex flex-col justify-between items-center'>
                             <div className=''>
                                 {/* Left side icons */}

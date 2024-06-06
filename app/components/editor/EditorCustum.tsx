@@ -52,6 +52,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
   const [tagValue, setTagValue] = React.useState<TagType | any>();
   const [inputValue, setInputValue] = React.useState('');
   const [selectedValue, setSelectedValue] = useState(1); // Defaulting to "Public"
+  console.log("inputValue",inputValue)
 
   const [isErrorInput, setIsErrorInput] = useState({
     error: false,
@@ -153,10 +154,11 @@ export default function EditorCustum({ handleClose, session, articleData, handle
         "content_body": content,
         "user_id": articleData?.user_id,
         "dept_id": session?.dvsn_CD,
-        "status": articleData?.status,
+        "status": selectedValue,
         "modifiedBy": session?.userId,
         "modified_date": formattedDate,
       }
+      console.log("vimean---",input)
       setIsLoading(true)
       UpdateArticle(input).then((rec: any) => {
         if (rec.status == 200) {
@@ -205,6 +207,10 @@ export default function EditorCustum({ handleClose, session, articleData, handle
       }
     }
   }, [session])
+
+  useEffect(() => {
+    getTagAndArticleFunction(null, 0, session?.userId);
+  }, [])
 
 
   const getTagAndArticleFunction = (dept_id: number | null, status: number, userId: string | null) => {
