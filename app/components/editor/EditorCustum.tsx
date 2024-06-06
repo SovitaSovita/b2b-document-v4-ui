@@ -7,9 +7,9 @@ import { getOptionData, isRender } from '@/app/service/Redux/articleDetailSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import InputTitleComponent from './InputTitleComponent'
 import { Box, styled } from '@mui/material'
-import TinyEditor from './TinyEditor'
 import { RootState } from '@/app/service/Redux/store/store'
 import DrawerTemplate from '../templates/DrawerTemplate'
+import CKEditorComponent from './CKEditorComponent'
 
 const API_BASE_URL = process.env.NEXT_API_URL
 
@@ -78,7 +78,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
 
   const handleSave = (e: any) => {
     e.preventDefault();
-    let content: string = "";
+    let content = "";
 
     if (editorRef.current) {
       content = editorRef.current.getContent();
@@ -103,7 +103,6 @@ export default function EditorCustum({ handleClose, session, articleData, handle
       });
       return;
     }
-    
 
     if (!title) {
       setIsErrorAlert({
@@ -205,7 +204,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
         getTagAndArticleFunction(null, 1, session?.userId);
       }
     }
-  }, [session, optionGETdata])
+  }, [session])
 
 
   const getTagAndArticleFunction = (dept_id: number | null, status: number, userId: string | null) => {
@@ -266,7 +265,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
               isLoading={isLoading}
             />
             <div className='px-6'>
-              <TinyEditor geteditorRef={geteditorRef} articleData={articleData} />
+              <CKEditorComponent geteditorRef={geteditorRef} articleData={articleData} />
             </div>
           </form >
         </Main>

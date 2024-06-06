@@ -1,12 +1,12 @@
 import { Insert_file } from '@/app/service/ArticleService';
 import { RootState } from '@/app/service/Redux/store/store';
-import { Editor } from '@tinymce/tinymce-react'
+import { Editor } from '@tinymce/tinymce-react';
+// import { Editor } from '@tinymce/tinymce-react'
 import React, { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux';
-
 const API_BASE_URL = process.env.NEXT_API_URL
 
-function TinyEditor(props: any) {
+function CKEditorComponent(props: any) {
     const { geteditorRef, articleData } = props
 
     const editorRef = useRef<any>(null);
@@ -74,6 +74,7 @@ function TinyEditor(props: any) {
         fileInput.onchange = handleFileChange;
         fileInput.click();
     };
+
     return (
         <div>
             <Editor
@@ -91,8 +92,14 @@ function TinyEditor(props: any) {
                             onAction: handleFileButtonClicked
                         });
                     },
-                    plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
-                    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media insertFileBtn table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                    plugins: [
+                        'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export',
+                        'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
+                        'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
+                    ],
+                    toolbar: 'undo redo | casechange blocks | bold italic backcolor | ' +
+                        'alignleft aligncenter alignright alignjustify | ' +
+                        'bullist numlist checklist outdent indent | removeformat | insertFileBtn a11ycheck code table help',
                     images_upload_handler: handleImageUpload,
                     // content_style: 'body {font - family:Helvetica,Arial,sans-serif; font-size:14px }',
                 }}
@@ -101,4 +108,4 @@ function TinyEditor(props: any) {
     )
 }
 
-export default TinyEditor
+export default CKEditorComponent

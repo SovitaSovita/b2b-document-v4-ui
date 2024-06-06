@@ -13,3 +13,8 @@
 .my-tinymce-container .tox-statusbar {
     display: none !important;
 }
+
+.tox-notifications-container {
+    display: none !important;
+    visibility: hidden;
+}
