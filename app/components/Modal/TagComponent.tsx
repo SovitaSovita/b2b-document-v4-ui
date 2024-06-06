@@ -11,7 +11,9 @@ import { RootState } from '@/app/service/Redux/store/store';
 function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
     const [selectedValue, setSelectedValue] = useState(1);
     const handleSelectChange = (event: any) => {
-        setSelectedValue(parseInt(event.target.value));
+        const newInputValue = event.target.value;
+        setSelectedValue(parseInt(newInputValue));
+        console.log("dadaw3",newInputValue);
     };
 
     const dispatch = useDispatch()
@@ -117,9 +119,9 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
                                             value={selectedValue}
                                             onChange={handleSelectChange}
                                             className="select select-sm select-bordered w-full ml-3 max-w-40" style={{ width: '125px' }}>
-                                            <option selected value={1}>Public</option>
                                             <option value={0}>Private</option>
                                             <option value={2}>Department</option>
+                                            <option selected value={1}>Public</option>
                                         </select>
                                     </div>
                                 </div>

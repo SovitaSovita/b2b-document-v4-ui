@@ -143,19 +143,6 @@ function HeaderSidebar({ handleOpenArticle }: any) {
                         }
                     </div>
                 </MenuItem>
-                <MenuItem onClick={() => handleGetTagNArticle("PUBLIC")} disableRipple>
-                    <div className='flex justify-between w-full items-center'>
-                        <div className='flex items-center'>
-                            <div className='w-7 h-7 bg-blue-500 rounded-md flex justify-center items-center text-base-100 text-sm font-medium'>
-                                P
-                            </div>
-                            <div className='ml-2 text-sm font-medium'>Public</div>
-                        </div>
-                        {
-                            activeItems == "PUBLIC" && <CheckOutlinedIcon />
-                        }
-                    </div>
-                </MenuItem>
                 <MenuItem onClick={() => handleGetTagNArticle("DEPARTMENT")} disableRipple>
                     <div className='flex justify-between w-full items-center'>
                         <div className='flex items-center'>
@@ -166,6 +153,19 @@ function HeaderSidebar({ handleOpenArticle }: any) {
                         </div>
                         {
                             activeItems == "DEPARTMENT" && <CheckOutlinedIcon />
+                        }
+                    </div>
+                </MenuItem>
+                <MenuItem onClick={() => handleGetTagNArticle("PUBLIC")} disableRipple>
+                    <div className='flex justify-between w-full items-center'>
+                        <div className='flex items-center'>
+                            <div className='w-7 h-7 bg-blue-500 rounded-md flex justify-center items-center text-base-100 text-sm font-medium'>
+                                P
+                            </div>
+                            <div className='ml-2 text-sm font-medium'>Public</div>
+                        </div>
+                        {
+                            activeItems == "PUBLIC" && <CheckOutlinedIcon />
                         }
                     </div>
                 </MenuItem>
