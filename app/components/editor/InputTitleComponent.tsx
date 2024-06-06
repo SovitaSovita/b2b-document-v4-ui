@@ -37,9 +37,9 @@ function InputTitleComponent(props: any) {
     const optionGETdata = useSelector((state: RootState) => state?.article.getOptionData);
 
 
-    useEffect(() => {
-        setSelectedValue(convertStringToStatus(optionGETdata))
-    }, [])
+    // useEffect(() => {
+    //     setSelectedValue(convertStringToStatus(optionGETdata))
+    // }, [])
 
     const [openTag, setOpenTag] = React.useState(false);
     const handleOpenTag = () => {
