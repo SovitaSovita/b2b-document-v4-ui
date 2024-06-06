@@ -1,7 +1,9 @@
 'use client'
 
 import { getArticleDetail } from "@/app/service/ArticleService";
+import { Editor } from "@tinymce/tinymce-react";
 import { useEffect, useState } from "react";
+import '../../../style/tiny.css'
 
 export default function Page({ params }: { params: { id: string } }) {
 
@@ -33,7 +35,24 @@ export default function Page({ params }: { params: { id: string } }) {
                                 <span>Article ID [{params?.id}] is not Found</span>
                             </div>
                             : (
-                                <div dangerouslySetInnerHTML={{ __html: articleData?.content_body }} />
+                                <div className="my-tinymce-container">
+                                    <Editor
+                                        apiKey='51cakyf7l011kd34r23bib5jrvh79lb520v82wpid72wq92n'
+                                        initialValue={articleData?.content_body}
+                                        init={{
+                                            height: 800,
+                                            readonly: true as any,
+                                            plugins: 'false',
+                                            toolbar: false,
+                                            setup: function (editor) {
+                                                editor.on('init', function () {
+                                                    editor.getBody().setAttribute('contenteditable', 'false');
+                                                });
+                                            },
+                                            content_style: 'editor-style',
+                                        }}
+                                    />
+                                </div>
                             )
                     }
                 </div>

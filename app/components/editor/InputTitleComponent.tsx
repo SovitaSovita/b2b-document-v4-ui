@@ -112,7 +112,7 @@ function InputTitleComponent(props: any) {
         <>
             <div className='flex justify-between px-6 mb-5'>
                 <div className='flex items-center'>
-                    <div className='flex bg-base-100 p-3 rounded-lg border'>
+                    <div className='flex bg-base-100 p-3 rounded-lg border mr-4'>
                         <select
                             disabled={disableSelectArticle}
                             value={selectedValue} // Bind the selected value to state
@@ -128,12 +128,12 @@ function InputTitleComponent(props: any) {
                             value={title}
                             autoFocus
                             placeholder="Enter Sub Title"
-                            className='input input-neutral input-bordered input-sm w-full max-w-xs'
+                            className='input input-neutral input-bordered ml-3 input-sm w-full max-w-xs'
                         />
                     </div>
                     {
                         !articleData ? (
-                            <div className='flex p-3 rounded-lg border items-center mr-4 bg-base-100' style={{ margin: "auto 35px;" }}>
+                            <div className='flex p-3 rounded-lg border items-center bg-base-100' style={{ margin: "auto 35px;" }}>
                                 <Autocomplete
                                     value={showDefaultValue ? tagValue : null}
                                     onChange={(event: any, newValue: any | null) => {
@@ -178,6 +178,7 @@ function InputTitleComponent(props: any) {
 
                     <div className='flex bg-base-100 ml-4 p-3 rounded-lg border' style={{ margin: "auto 75px auto;" }}>
                         <button
+                            disabled
                             type='button'
                             onClick={handleDrawerOpen}
                             className='btn btn-secondary btn-sm'
