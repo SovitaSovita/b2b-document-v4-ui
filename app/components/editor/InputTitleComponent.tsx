@@ -125,7 +125,7 @@ function InputTitleComponent(props: any) {
                         </select>
                         <input
                             onChange={onchange}
-                            value={title}
+                            defaultValue={articleData?.title}
                             autoFocus
                             placeholder="Enter Sub Title"
                             className='input input-neutral input-bordered ml-3 input-sm w-full max-w-xs'

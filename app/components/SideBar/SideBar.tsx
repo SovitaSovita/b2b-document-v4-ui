@@ -30,8 +30,6 @@ function SideBar(props: any) {
     const { isLoading, handleDrawerClose, openMainDrawer }: any = props
     const session: UserData = useSelector((state: RootState) => state?.article.session);
     const [activeItemId, setActiveItemId] = useState("");
-    console.log("")
-
 
     //const handleOpenTag = () => setOpenTag(true);
     const [openTag, setOpenTag] = React.useState(false);
