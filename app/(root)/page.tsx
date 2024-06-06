@@ -88,17 +88,9 @@ export default function Home() {
     setOpen(false);
   };
 
-  const [mode, setMode] = useState("light")
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setMode(localStorage.getItem("mode") || "light")
-      dispatch(isMode(false));
-    }
-  }, [isMode_theme])
-
   return (
     <>
-      <div className="flex" data-theme={mode}>
+      <div className="flex">
         <SideBar
           isLoading={isLoading}
           ARTICLES={menudata?.articleList}

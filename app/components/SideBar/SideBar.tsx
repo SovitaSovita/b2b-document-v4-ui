@@ -77,22 +77,8 @@ function SideBar(props: any) {
     const [openArticle, setOpenArticle] = React.useState(false);
     const [openTagDelete, setopenTagDelete] = React.useState(false);
     const handleOpenArticle = () => setOpenArticle(true);
-
-    const isMode_theme = useSelector((state: RootState) => state?.article.isMode);
     const [bg_color, setBg_color] = useState("");
-    useEffect(() => {
-
-        getSession().then((res) => {
-            console.log("Session from API: ", res)
-        })
-
-        if (localStorage.getItem("mode") === "light") {
-            setBg_color("rgb(246, 248, 252)")
-        }
-        else {
-            setBg_color("oklch(0.232607 0.013807 253.101)")
-        }
-    }, [isMode_theme])
+    
 
     return (
         <Drawer
