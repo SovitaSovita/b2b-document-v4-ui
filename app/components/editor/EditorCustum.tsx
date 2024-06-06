@@ -105,6 +105,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
       return;
     }
 
+
     if (!title) {
       setIsErrorAlert({
         ...isErrorAlert,
@@ -206,7 +207,11 @@ export default function EditorCustum({ handleClose, session, articleData, handle
         getTagAndArticleFunction(null, 1, session?.userId);
       }
     }
-  }, [session])
+  }, [session, optionGETdata])
+
+  useEffect(() => {
+    getTagAndArticleFunction(null, 0, session?.userId);
+  }, [])
 
 
   const getTagAndArticleFunction = (dept_id: number | null, status: number, userId: string | null) => {
@@ -255,6 +260,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
               handleDrawerOpen={handleDrawerOpen}
               session={session}
               tagData={tagData}
+              setTagData={setTagData}
               title={title}
               setTitle={setTitle}
               inputValue={inputValue}
