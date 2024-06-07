@@ -6,7 +6,7 @@ const initialState = {
     isRender: false,
     isFavorite: false,
     isMode: false,
-    getOptionData: "",
+    getOptionData: "PRIVATE",
     session: {
         clph_NO: "",
         dvsn_CD: "",

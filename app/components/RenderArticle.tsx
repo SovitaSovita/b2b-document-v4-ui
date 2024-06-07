@@ -5,6 +5,7 @@ import '../style/tiny.css'
 import LoadingCustom from './Material/Loading';
 
 function RenderArticle({ body }: any) {
+    
     return (
         <div className="my-tinymce-container">
             {

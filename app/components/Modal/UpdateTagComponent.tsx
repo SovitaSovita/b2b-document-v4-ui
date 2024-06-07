@@ -37,7 +37,6 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
       setStatusVal(TAGS.status)
     }
   }, [tagUpdateData, TAGS]);
-  console.log("optionStatus", optionStatus)
   const handleClose = () => {
     setOpen(false)
   };
@@ -64,7 +63,6 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
         status: tagUpdateData.status,
         modified_date: formattedDate
       }
-      console.log("request", request)
       UpdateTag(request).then((res: any) => {
         setInputVal("")
         setIsErrorAlert({
@@ -119,7 +117,7 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
                       onChange={(e) => setInputVal(e.target.value)}
                       type="text"
                       defaultValue={inputVal}
-                      className="grow"
+                      className="grow input-primary"
                     // style={{ width: '100px' }}
                     />
                   </label>
@@ -139,7 +137,7 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
                 <div className="flex" style={{ marginLeft: " 13px" }}>
                   <div className='self-end '>
                     <button type='button' onClick={handleClose} className="btn btn-active mt-2 btn-sm">Cancel</button>
-                    <button type='submit' onClick={handleupdate} className="btn btn-active btn-info ml-2 btn-sm  bg-blue-500">Save</button>
+                    <button type='submit' onClick={handleupdate} className="btn btn-primary btn-info ml-2 btn-sm  bg-blue-500">Save</button>
                   </div>
                 </div>
               </div>

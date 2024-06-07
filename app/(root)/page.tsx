@@ -18,7 +18,6 @@ export default function Home() {
 
   const disptach_session = async () => {
     try {
-      console.log("session work");
       const session = await getSession();
       dispatch(get_session(session));
     } catch (error) {
@@ -89,17 +88,9 @@ export default function Home() {
     setOpen(false);
   };
 
-  const [mode, setMode] = useState("light")
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setMode(localStorage.getItem("mode") || "light")
-      dispatch(isMode(false));
-    }
-  }, [isMode_theme])
-
   return (
     <>
-      <div className="flex" data-theme={mode}>
+      <div className="flex">
         <SideBar
           isLoading={isLoading}
           ARTICLES={menudata?.articleList}
