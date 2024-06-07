@@ -35,8 +35,8 @@ function InputTitleComponent(props: any) {
 
     const dispatch = useDispatch()
     const optionGETdata = useSelector((state: RootState) => state?.article.getOptionData);
-
-
+    console.log("optionGETdata",optionGETdata)
+    
     useEffect(() => {
         setSelectedValue(convertStringToStatus(optionGETdata))
     }, [])

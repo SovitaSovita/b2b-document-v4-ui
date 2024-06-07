@@ -265,10 +265,10 @@ export default function EditorCustum({ handleClose, session, articleData, handle
               setTitle={setTitle}
               inputValue={inputValue}
               setInputValue={setInputValue}
-              //tagValue={tagValue}
-              //setTagValue={setTagValue}
-              //selectedValue={selectedValue}
-              //setSelectedValue={setSelectedValue}
+              tagValue={tagValue}
+              setTagValue={setTagValue}
+              selectedValue={selectedValue}
+              setSelectedValue={setSelectedValue}
               isLoading={isLoading}
             />
             <div className='px-6'>
