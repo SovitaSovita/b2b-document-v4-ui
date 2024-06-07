@@ -23,8 +23,6 @@ function InputTitleComponent(props: any) {
         setTagData,
         title,
         setTitle,
-        inputValue,
-        setInputValue,
         tagValue,
         setTagValue,
         setStatusTag,
@@ -35,12 +33,15 @@ function InputTitleComponent(props: any) {
     } = props
 
 
+    const [inputValue, setInputValue] = React.useState('');
     const dispatch = useDispatch()
     const optionGETdata = useSelector((state: RootState) => state?.article.getOptionData);
 
 
     useEffect(() => {
-        setSelectedValue(convertStringToStatus(optionGETdata))
+        if (articleData) {
+            setSelectedValue(convertStringToStatus(optionGETdata))
+        }
     }, [])
 
     const [openTag, setOpenTag] = React.useState(false);

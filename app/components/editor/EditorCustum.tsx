@@ -50,9 +50,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
   const [tagData, setTagData] = useState([]);
   const [title, setTitle] = useState("");
   const [tagValue, setTagValue] = React.useState<TagType | any>();
-  const [inputValue, setInputValue] = React.useState('');
-  const [selectedValue, setSelectedValue] = useState(1); // Defaulting to "Public"
-  console.log("inputValue",inputValue)
+  const [selectedValue, setSelectedValue] = useState<number>(1); // Defaulting to "Public"
 
   const [isErrorInput, setIsErrorInput] = useState({
     error: false,
@@ -158,7 +156,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
         "modifiedBy": session?.userId,
         "modified_date": formattedDate,
       }
-      console.log("vimean---",input)
+      console.log("vimean---", input)
       setIsLoading(true)
       UpdateArticle(input).then((rec: any) => {
         if (rec.status == 200) {
@@ -186,10 +184,23 @@ export default function EditorCustum({ handleClose, session, articleData, handle
   }
 
   const convertStatusToString = (status: number) => {
-    let getOptionData = "PRIVATE";
-    if (status === 0) getOptionData = "PRIVATE";
-    else if (status === 1) getOptionData = "PUBLIC";
-    else if (status === 2) getOptionData = "DEPARTMENT";
+    if (typeof (status) == "string") {
+      status = parseInt(status);
+    }
+    let getOptionData = "";
+    switch (status) {
+      case 0:
+        getOptionData = "PRIVATE";
+        break;
+      case 1:
+        getOptionData = "PUBLIC";
+        break;
+      case 2:
+        getOptionData = "DEPARTMENT";
+        break;
+      default:
+        break;
+    }
     return getOptionData;
   }
 
@@ -206,12 +217,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
         getTagAndArticleFunction(null, 1, session?.userId);
       }
     }
-  }, [session])
-
-  useEffect(() => {
-    getTagAndArticleFunction(null, 0, session?.userId);
-  }, [])
-
+  }, [session, optionGETdata])
 
   const getTagAndArticleFunction = (dept_id: number | null, status: number, userId: string | null) => {
     GetTagAndArticle(dept_id, status, userId).then((res: any) => {
@@ -262,8 +268,6 @@ export default function EditorCustum({ handleClose, session, articleData, handle
               setTagData={setTagData}
               title={title}
               setTitle={setTitle}
-              inputValue={inputValue}
-              setInputValue={setInputValue}
               tagValue={tagValue}
               setTagValue={setTagValue}
               selectedValue={selectedValue}

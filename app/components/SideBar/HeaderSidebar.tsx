@@ -22,25 +22,14 @@ const StyledMenu = styled((props: MenuProps) => (
         {...props}
     />
 ))(({ theme }) => {
-    const [mode, setMode] = useState('light'); // Default mode
-
-    useEffect(() => {
-        // Access localStorage only on the client-side
-        if (typeof window !== 'undefined') {
-            const storedMode = localStorage.getItem("mode");
-            if (storedMode) {
-                setMode(storedMode);
-            }
-        }
-    }, []);
 
     return {
         '& .MuiPaper-root': {
             borderRadius: 6,
             marginTop: theme.spacing(2),
             minWidth: 285,
-            color: mode === 'light' ? 'rgb(55, 65, 81)' : theme.palette.grey[300],
-            background: mode === 'light' ? "" : 'oklch(0.232607 0.013807 253.101)',
+            // color: mode === 'light' ? 'rgb(55, 65, 81)' : theme.palette.grey[300],
+            // background: mode === 'light' ? "" : 'oklch(0.232607 0.013807 253.101)',
             borderWidth: '1.5px',
             boxShadow: '0px 0px 3px 0px rgba(0,0,0,0.1)',
             '& .MuiMenu-list': {
@@ -64,7 +53,9 @@ function HeaderSidebar({ handleOpenArticle }: any) {
     const dispatch = useDispatch();
     const session: UserData = useSelector((state: RootState) => state?.article.session);
 
-    const [activeItems, setActiveItem] = useState("PUBLIC");
+    const [activeItems, setActiveItem] = useState("PRIVATE");
+    const optionGETdata = useSelector((state: RootState) => state?.article.getOptionData);
+
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -134,10 +125,10 @@ function HeaderSidebar({ handleOpenArticle }: any) {
                             <div className='w-7 h-7 bg-teal-400 rounded-md flex justify-center items-center text-base-100 text-xs font-medium'>
                                 {splitString(session?.flnm)}
                             </div>
-                            <div className='ml-2 text-sm font-medium'>Personal</div>
+                            <div className='ml-2 text-sm font-medium'>Private</div>
                         </div>
                         {
-                            activeItems == "PRIVATE" && <CheckOutlinedIcon />
+                            optionGETdata == "PRIVATE" && <CheckOutlinedIcon />
                         }
                     </div>
                 </MenuItem>
@@ -150,7 +141,7 @@ function HeaderSidebar({ handleOpenArticle }: any) {
                             <div className='ml-2 text-sm font-medium'>{session?.dvsn_NM ? session?.dvsn_NM : "Department"}</div>
                         </div>
                         {
-                            activeItems == "DEPARTMENT" && <CheckOutlinedIcon />
+                            optionGETdata == "DEPARTMENT" && <CheckOutlinedIcon />
                         }
                     </div>
                 </MenuItem>

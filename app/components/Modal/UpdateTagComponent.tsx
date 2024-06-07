@@ -38,7 +38,6 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
       setStatusVal(TAGS.status)
     }
   }, [tagUpdateData, TAGS]);
-  console.log("optionStatus", optionStatus)
   const handleClose = () => {
     setOpen(false)
   };
@@ -65,7 +64,6 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
         status: tagUpdateData.status,
         modified_date: formattedDate
       }
-      console.log("request", request)
       UpdateTag(request).then((res: any) => {
         setInputVal("")
         setIsErrorAlert({
