@@ -25,6 +25,8 @@ function InputTitleComponent(props: any) {
         setTitle,
         tagValue,
         setTagValue,
+        setStatusTag,
+        statusTag,
         selectedValue,
         setSelectedValue,
         isLoading
@@ -43,7 +45,8 @@ function InputTitleComponent(props: any) {
     }, [])
 
     const [openTag, setOpenTag] = React.useState(false);
-    const handleOpenTag = () => {
+    const handleOpenTag = (va:any) => {
+        console.log("vanafaf")
         setOpenTag(true);
     }
     const onchange = (e: any) => {
@@ -76,8 +79,6 @@ function InputTitleComponent(props: any) {
         })
     }
 
-
-
     const convertStringToStatus = (option: string) => {
         let status = 0;
         if (option === "PRIVATE") status = 0;
@@ -86,9 +87,11 @@ function InputTitleComponent(props: any) {
         return status;
     }
 
+
     const handleChildData = (dataFromChild: any) => {
         setShowDefaultValue(true);
         setTagValue(dataFromChild);
+        console.log("VandaVanda:",dataFromChild?.status);
 
         if (dataFromChild?.status === 0) {
             setSelectedValue(0)
@@ -113,28 +116,18 @@ function InputTitleComponent(props: any) {
         <>
             <div className='flex justify-between px-6 mb-5'>
                 <div className='flex items-center'>
-                    <div className='flex bg-base-100 p-3 rounded-lg border mr-4'>
-                        <select
-                            disabled={disableSelectArticle}
-                            value={selectedValue} // Bind the selected value to state
-                            onChange={handleSelectChange}
-
-                            className="select select-neutral select-sm select-bordered w-full ml-3 max-w-40">
-                            <option value={1}>Public</option>
-                            <option value={0}>Private</option>
-                            <option value={2}>Department</option>
-                        </select>
-                        <input
-                            onChange={onchange}
-                            defaultValue={articleData?.title}
-                            autoFocus
-                            placeholder="Enter Sub Title"
-                            className='input input-neutral input-bordered ml-3 input-sm w-full max-w-xs'
-                        />
-                    </div>
                     {
                         !articleData ? (
-                            <div className='flex p-3 rounded-lg border items-center bg-base-100' style={{ margin: "auto 35px;" }}>
+                            <div className='flex p-3 rounded-lg border items-center mr-4 bg-base-100' style={{ margin: "auto 25px;" }}>
+                                <select
+                                    disabled={disableSelectArticle}
+                                    value={selectedValue} // Bind the selected value to state
+                                    onChange={handleSelectChange}
+                                    className="select select-neutral select-sm select-bordered w-full ml-3 max-w-40" style={{margin: "auto 10px"}}>
+                                    <option value={0}>Private</option>
+                                    <option value={2}>Department</option>
+                                    <option value={1}>Public</option>
+                                </select>
                                 <Autocomplete
                                     value={showDefaultValue ? tagValue : null}
                                     onChange={(event: any, newValue: any | null) => {
@@ -175,7 +168,15 @@ function InputTitleComponent(props: any) {
                             </div>
                         )
                     }
-
+                    <div className='flex bg-base-100 p-3 rounded-lg border'>
+                        <input
+                            onChange={onchange}
+                            value={title}
+                            autoFocus
+                            placeholder="Enter Sub Title"
+                            className='input input-neutral input-bordered input-sm w-full max-w-xs'
+                            />
+                    </div>
 
                     <div className='flex bg-base-100 ml-4 p-3 rounded-lg border' style={{ margin: "auto 75px auto;" }}>
                         <button
