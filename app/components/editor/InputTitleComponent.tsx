@@ -41,11 +41,12 @@ function InputTitleComponent(props: any) {
     useEffect(() => {
         if (articleData) {
             setSelectedValue(convertStringToStatus(optionGETdata))
+            setTitle(articleData?.title)
         }
     }, [])
 
     const [openTag, setOpenTag] = React.useState(false);
-    const handleOpenTag = (va:any) => {
+    const handleOpenTag = (va: any) => {
         console.log("vanafaf")
         setOpenTag(true);
     }
@@ -91,7 +92,7 @@ function InputTitleComponent(props: any) {
     const handleChildData = (dataFromChild: any) => {
         setShowDefaultValue(true);
         setTagValue(dataFromChild);
-        console.log("VandaVanda:",dataFromChild?.status);
+        console.log("VandaVanda:", dataFromChild?.status);
 
         if (dataFromChild?.status === 0) {
             setSelectedValue(0)
@@ -123,7 +124,7 @@ function InputTitleComponent(props: any) {
                                     disabled={disableSelectArticle}
                                     value={selectedValue} // Bind the selected value to state
                                     onChange={handleSelectChange}
-                                    className="select select-neutral select-sm select-bordered w-full ml-3 max-w-40" style={{margin: "auto 10px"}}>
+                                    className="select select-neutral select-sm select-bordered w-full ml-3 max-w-40" style={{ margin: "auto 10px" }}>
                                     <option value={0}>Private</option>
                                     <option value={2}>Department</option>
                                     <option value={1}>Public</option>
@@ -171,11 +172,11 @@ function InputTitleComponent(props: any) {
                     <div className='flex bg-base-100 p-3 rounded-lg border'>
                         <input
                             onChange={onchange}
-                            value={title}
+                            defaultValue={title}
                             autoFocus
                             placeholder="Enter Sub Title"
                             className='input input-neutral input-bordered input-sm w-full max-w-xs'
-                            />
+                        />
                     </div>
 
                     <div className='flex bg-base-100 ml-4 p-3 rounded-lg border' style={{ margin: "auto 75px auto;" }}>

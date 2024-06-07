@@ -155,7 +155,7 @@ function HeaderSidebar({ handleOpenArticle }: any) {
                             <div className='ml-2 text-sm font-medium'>Public</div>
                         </div>
                         {
-                            activeItems == "PUBLIC" && <CheckOutlinedIcon />
+                            optionGETdata === "PUBLIC" && <CheckOutlinedIcon />
                         }
                     </div>
                 </MenuItem>
