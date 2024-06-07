@@ -78,7 +78,7 @@ function SideBar(props: any) {
     const [openTagDelete, setopenTagDelete] = React.useState(false);
     const handleOpenArticle = () => setOpenArticle(true);
     const [bg_color, setBg_color] = useState("");
-    
+
 
     return (
         <Drawer

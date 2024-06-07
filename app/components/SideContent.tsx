@@ -292,7 +292,22 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                                 <div className='flex flex-col'>
                                     <div className='mb-4 flex items-center justify-between'>
                                         {/* Left side icons */}
-                                        <div></div>
+                                        <div className=''>
+                                            <div className="stat flex justify-between">
+                                                <div className="text-secondary">
+                                                    <div className="avatar">
+                                                        <div className="w-10 border rounded-full">
+                                                            <img src={article?.image} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div className="stat-value font-semibold text-sm">{article?.username}</div>
+                                                    <div className="stat-title text-xs">{article?.modified_date}</div>
+                                                    <div className="stat-desc text-secondary">{article?.create_date}</div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         {/* Right side icons */}
                                         <div className="flex items-center bg-primary rounded-bl-lg p-2 border">
                                             {/* Favorite icons*/}

@@ -127,7 +127,7 @@ function DrawerTemplate({ open, setOpen, handleDrawerClose, editorRef }: any) {
             templates?.map((item: TemplateType) => (
               < div
                 key={item?.id}
-                onClick={() => handleOpenAskToReplace}
+                onClick={() => handleSetTemplate(item?.htmlContent)}
                 className='border rounded-md w-full h-60 p-1 mb-3 cursor-pointer'>
                 <Image
                   width={500}

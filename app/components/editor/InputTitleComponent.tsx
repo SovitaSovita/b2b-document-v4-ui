@@ -179,7 +179,7 @@ function InputTitleComponent(props: any) {
 
                     <div className='flex bg-base-100 ml-4 p-3 rounded-lg border' style={{ margin: "auto 75px auto;" }}>
                         <button
-                            disabled
+                            // disabled
                             type='button'
                             onClick={handleDrawerOpen}
                             className='btn btn-secondary btn-sm'
