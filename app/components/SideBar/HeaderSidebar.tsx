@@ -93,8 +93,6 @@ function HeaderSidebar({ handleOpenArticle }: any) {
 
         handleClose()
     }
-    console.log("data",handleGetTagNArticle);
-
     const splitString = (username: string) => {
         if (username) {
             const parts = username?.split(" ");

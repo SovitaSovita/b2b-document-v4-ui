@@ -45,6 +45,7 @@ function InputTitleComponent(props: any) {
 
     const [openTag, setOpenTag] = React.useState(false);
     const handleOpenTag = (va:any) => {
+        console.log("vanafaf")
         setOpenTag(true);
     }
     const onchange = (e: any) => {
@@ -85,11 +86,6 @@ function InputTitleComponent(props: any) {
         return status;
     }
 
-
-    const handleStatusAffect = (statusAffect : any) => {
-        setStatusTag(statusAffect.target.value);
-        console.log("muymuy:",statusAffect);
-    }
 
     const handleChildData = (dataFromChild: any) => {
         setShowDefaultValue(true);
@@ -160,7 +156,7 @@ function InputTitleComponent(props: any) {
                                     sx={{ width: 300, mr: 2 }}
                                     renderInput={(params) => <TextField {...params} placeholder="Search Tag name" />}
                                 />
-                                < div onClick={handleOpenTag} onChange={handleStatusAffect}>
+                                < div onClick={handleOpenTag}>
                                     <AddSquare size="28" className='hover:scale-110 transition-all' style={{ cursor: "pointer" }} />
                                 </div>
                             </div>
@@ -183,6 +179,7 @@ function InputTitleComponent(props: any) {
 
                     <div className='flex bg-base-100 ml-4 p-3 rounded-lg border' style={{ margin: "auto 75px auto;" }}>
                         <button
+                            disabled
                             type='button'
                             onClick={handleDrawerOpen}
                             className='btn btn-secondary btn-sm'
