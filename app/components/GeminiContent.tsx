@@ -45,7 +45,9 @@ function GeminiContent() {
             <div id='render' ref={renderRef} className='hidden'>
                 <Marked>{aiResponse}</Marked>
             </div>
-            <button type='button' disabled onClick={getResponseFromGemini} className='btn btn-sm btn-secondary ml-3'>
+            <button type='button'
+                // disabled
+                onClick={getResponseFromGemini} className='btn btn-sm btn-secondary ml-3'>
                 <Gemini size="20" className='text-primary' />
                 Gemini AI
             </button>

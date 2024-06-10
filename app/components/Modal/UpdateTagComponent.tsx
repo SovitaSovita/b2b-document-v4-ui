@@ -24,7 +24,8 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
   });
   const [selectedValue, setSelectedValue] = useState(1);
   const handleSelectChange = (event: any) => {
-    setSelectedValue(parseInt(event.target.value));
+    const newValue = event.target.value
+    setSelectedValue(parseInt(newValue));
   };
 
   // new code
@@ -37,7 +38,6 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
       setStatusVal(TAGS.status)
     }
   }, [tagUpdateData, TAGS]);
-  console.log("optionStatus", optionStatus)
   const handleClose = () => {
     setOpen(false)
   };
@@ -64,7 +64,6 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
         status: tagUpdateData.status,
         modified_date: formattedDate
       }
-      console.log("request", request)
       UpdateTag(request).then((res: any) => {
         setInputVal("")
         setIsErrorAlert({
@@ -129,9 +128,9 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
                       value={tagUpdateData.status}
                       onChange={handleSelectChange}
                       className="select select-sm select-bordered w-full ml-3 max-w-40" style={{ width: '125px' }}>
-                      <option selected value={1}>Public</option>
                       <option value={0}>Private</option>
                       <option value={2}>Department</option>
+                      <option selected value={1}>Public</option>
                     </select>
                   </div>
                 </div>

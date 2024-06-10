@@ -30,8 +30,6 @@ function SideBar(props: any) {
     const { isLoading, handleDrawerClose, openMainDrawer }: any = props
     const session: UserData = useSelector((state: RootState) => state?.article.session);
     const [activeItemId, setActiveItemId] = useState("");
-    console.log("")
-
 
     //const handleOpenTag = () => setOpenTag(true);
     const [openTag, setOpenTag] = React.useState(false);
@@ -80,7 +78,7 @@ function SideBar(props: any) {
     const [openTagDelete, setopenTagDelete] = React.useState(false);
     const handleOpenArticle = () => setOpenArticle(true);
     const [bg_color, setBg_color] = useState("");
-    
+
 
     return (
         <Drawer
@@ -97,7 +95,7 @@ function SideBar(props: any) {
             variant="persistent"
             anchor="left"
             open={openMainDrawer}>
-            <ul className="menu menu-dropdown-show w-full bg-primary text-base-content pt-0">
+            <ul className="menu menu-dropdown-show w-full bg-primary h-full text-base-content pt-0">
                 <div className='sticky top-0 bg-primary z-50'>
                     <HeaderSidebar handleOpenArticle={handleOpenArticle} />
 

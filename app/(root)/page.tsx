@@ -18,7 +18,6 @@ export default function Home() {
 
   const disptach_session = async () => {
     try {
-      console.log("session work");
       const session = await getSession();
       dispatch(get_session(session));
     } catch (error) {

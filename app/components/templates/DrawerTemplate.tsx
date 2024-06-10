@@ -28,19 +28,50 @@ function DrawerTemplate({ open, setOpen, handleDrawerClose, editorRef }: any) {
   const templates = [
     {
       id: 1,
-      title: "C day Form",
+      title: "C Day Form",
       cover: "https://cdn.create.microsoft.com/catalog-assets/en-us/ce343500-4aff-4dfa-b337-57c78459c6ee/thumbnails/616/modern-nursing-resume-orange-modern-geometric-2-1-b3fad7d361c3.webp",
       htmlContent: `
-      <div style="display: flex; align-items: center; justify-content: center; padding: 48px;">
-            <div style="margin: auto; width: 100%; max-width: 550px; background-color: #fff;">
-                    <div style="margin-bottom: 20px;">
-                        <label style="margin-bottom: 12px; display: block; font-size: 1rem; font-weight: 500; color: #07074D;">Full Name</label>
-                        <div style="width: 100%; border-radius: 0.375rem; border: 1px solid #e0e0e0; background-color: #fff; padding: 12px; font-size: 1rem; font-weight: 500; color: #6B7280; outline: none; border-color: #6A64F1; box-shadow: 0 0 0 2px #6A64F1;">
-                            Pich Chantha
-                        </div>
-                    </div>
-            </div>
-        </div>`,
+                <div style="">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                      <img src="https://via.placeholder.com/150x50.png?text=KOSIGN" alt="KOSIGN" style="height: 50px;">
+                      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; text-align: center;">
+                          <div>
+                              <span style="font-weight: bold;">Requester</span>
+                              <div style="border-top: 1px solid black; margin-top: 10px;"></div>
+                          </div>
+                          <div>
+                              <span style="font-weight: bold;">Manager 1</span>
+                              <div style="border-top: 1px solid black; margin-top: 10px;"></div>
+                          </div>
+                          <div>
+                              <span style="font-weight: bold;">Checker</span>
+                              <div style="border-top: 1px solid black; margin-top: 10px;"></div>
+                          </div>
+                          <div>
+                              <span style="font-weight: bold;">Approver</span>
+                              <div style="border-top: 1px solid black; margin-top: 10px;"></div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <h2 style="text-align: center; margin-bottom: 20px;">Cash Advances Statement</h2>
+
+                  <div style="margin-bottom: 20px;">
+                      <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                          <span style="font-weight: bold;">Document No.</span>
+                          <span>ADV_202401_00004</span>
+                      </div>
+                      <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                          <span style="font-weight: bold;">Ledger</span>
+                          <span>B2B-Employee Meal</span>
+                      </div>
+                      <div style="display: flex; justify-content: space-between;">
+                          <span style="font-weight: bold;">Author</span>
+                          <span>Sann Puthy</span>
+                      </div>
+                  </div>
+              </div>
+        `,
       status: 1,
     },
     {
@@ -127,7 +158,7 @@ function DrawerTemplate({ open, setOpen, handleDrawerClose, editorRef }: any) {
             templates?.map((item: TemplateType) => (
               < div
                 key={item?.id}
-                onClick={() => handleOpenAskToReplace}
+                onClick={() => handleSetTemplate(item?.htmlContent)}
                 className='border rounded-md w-full h-60 p-1 mb-3 cursor-pointer'>
                 <Image
                   width={500}

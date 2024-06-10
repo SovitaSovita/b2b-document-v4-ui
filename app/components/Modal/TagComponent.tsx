@@ -11,7 +11,9 @@ import { RootState } from '@/app/service/Redux/store/store';
 function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
     const [selectedValue, setSelectedValue] = useState(1);
     const handleSelectChange = (event: any) => {
-        setSelectedValue(parseInt(event.target.value));
+        const newInputValue = event.target.value;
+        setSelectedValue(parseInt(newInputValue));
+        console.log("dadaw3",newInputValue);
     };
 
     const dispatch = useDispatch()
@@ -104,7 +106,7 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
                 }}
             >
                 <Fade in={open}>
-                    <div className='w-1/3 bg-base-100 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg p-6 rounded-lg' style={{ width: '455px' }}>
+                    <div className='w-1/3 bg-base-100 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg p-6 rounded-lg' style={{ width: '350px' }}>
                         <form onSubmit={handleSubmit} className='flex flex-col justify-between items-center'>
                             <div className=''>
                                 {/* Left side icons */}
@@ -112,16 +114,16 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
                                     <label className="input w-full input-bordered flex items-cent input-sm er gap-2">
                                         <input onChange={onChange} type="text" className="grow" placeholder="Enter new Tag name" />
                                     </label> 
-                                    <div className='self-start'>
+                                    {/* <div className='self-start'>
                                         <select
                                             value={selectedValue}
                                             onChange={handleSelectChange}
                                             className="select select-sm select-bordered w-full ml-3 max-w-40" style={{ width: '125px' }}>
-                                            <option selected value={1}>Public</option>
                                             <option value={0}>Private</option>
                                             <option value={2}>Department</option>
+                                            <option selected value={1}>Public</option>
                                         </select>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 {/* Right side icons */}
                                 <div className="flex" style={{ marginLeft: " 13px" }}>
