@@ -22,6 +22,7 @@ import HeaderSidebar from './HeaderSidebar';
 import { RootState } from '@/app/service/Redux/store/store';
 import { getSession } from '@/app/utils/xhttp';
 import LoadingCustom from '../Material/Loading';
+import { Tooltip } from '@nextui-org/react';
 
 const drawerWidth = 320;
 
@@ -164,7 +165,9 @@ function SideBar(props: any) {
                                             <li key={index + 1} className='w-[260px]'>
                                                 <details>
                                                     <summary className="mt-1 font-medium">
-                                                        <p className='line-clamp-1'>{item.title}</p>
+                                                        <Tooltip showArrow={true} content={item.title}>
+                                                            <p data-tip="This is a tooltip" data-for="tooltipId" className='line-clamp-1'>{item.title}</p>
+                                                        </Tooltip>
                                                     </summary>
                                                     <ul>
                                                         {
