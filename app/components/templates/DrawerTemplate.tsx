@@ -1,22 +1,26 @@
-import React, { useState } from 'react'
-import { styled, useTheme } from '@mui/material/styles';
-import Drawer from '@mui/material/Drawer';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import Image from 'next/image';
-import { ArrowCircleRight, ArrowSquareRight } from 'iconsax-react';
-import AskToReplaceTemplate from '../Modal/AskToReplaceTemplate';
+import React, { useState } from "react";
+import { styled, useTheme } from "@mui/material/styles";
+import Drawer from "@mui/material/Drawer";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import Image from "next/image";
+import { ArrowCircleRight, ArrowSquareRight } from "iconsax-react";
+import AskToReplaceTemplate from "../Modal/AskToReplaceTemplate";
+import { Backdrop, Box, Fade, Modal } from "@mui/material";
 
 const drawerWidth = 240;
 
+interface TemplateType {
+  id: number;
+  title: string;
+  cover: string;
+  htmlContent: string;
+  status: number;
+}
+
 function DrawerTemplate({ open, setOpen, handleDrawerClose, editorRef }: any) {
-
-  const handleSetTemplate = (templatesForm: string) => {
-    editorRef?.current?.setContent(editorRef.current.getContent() + templatesForm);
-  }
-
   const templates = [
     {
       id: 1,
@@ -69,7 +73,8 @@ function DrawerTemplate({ open, setOpen, handleDrawerClose, editorRef }: any) {
     {
       id: 2,
       title: "LMS Form",
-      cover: "https://bizweb-doc.kosign.dev/api/v1/files/view_images?fileName=0efc6a93-293e-4ecb-98ae-167611635687.jpg",
+      cover:
+        "https://bizweb-doc.kosign.dev/api/v1/files/view_images?fileName=0efc6a93-293e-4ecb-98ae-167611635687.jpg",
       htmlContent: `
       <table>
         <thead>
@@ -195,7 +200,8 @@ function DrawerTemplate({ open, setOpen, handleDrawerClose, editorRef }: any) {
     {
       id: 3,
       title: "LMS Form",
-      cover: "https://uxdt.nic.in/wp-content/uploads/2020/07/Feedback-Form-1_p.png?x38773",
+      cover:
+        "https://uxdt.nic.in/wp-content/uploads/2020/07/Feedback-Form-1_p.png?x38773",
       htmlContent: `
       <div class="h-full w-full">
     <div key="0" style="width: 100%; font-size: 12px; padding-left: 8px; padding-right: 8px;">
@@ -216,13 +222,38 @@ function DrawerTemplate({ open, setOpen, handleDrawerClose, editorRef }: any) {
       `,
       status: 1,
     },
-  ]
+  ];
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const [storeItem, setStoreItem] = useState<TemplateType>();
+
+  const handleOpenModal = (item: any) => {
+    setStoreItem(item);
+    handleOpenAskToReplace();
+  };
+
+  const handleAppendTemplate = () => {
+    editorRef?.current?.setContent(
+      editorRef.current.getContent() + storeItem?.htmlContent
+    );
+    handleCloseAskToReplace();
+  };
+
+  const handleReplaceTemplate = () => {
+    editorRef?.current?.setContent(storeItem?.htmlContent);
+    handleCloseAskToReplace();
+  };
 
   const [openAskToReplace, setOpenAskToReplace] = useState(false);
   const handleOpenAskToReplace = () => {
     setOpenAskToReplace(true);
-  }
-
+  };
+  const handleCloseAskToReplace = () => {
+    setOpenAskToReplace(false);
+  };
 
   return (
     <>
@@ -230,7 +261,7 @@ function DrawerTemplate({ open, setOpen, handleDrawerClose, editorRef }: any) {
         sx={{
           width: drawerWidth,
           flexShrink: 0,
-          '& .MuiDrawer-paper': {
+          "& .MuiDrawer-paper": {
             width: drawerWidth,
             paddingTop: 3,
           },
@@ -239,34 +270,81 @@ function DrawerTemplate({ open, setOpen, handleDrawerClose, editorRef }: any) {
         anchor="right"
         open={open}
       >
-        <div className='border-b px-4 pb-4 flex justify-between'>
-          <div className='card-title text-[16px]'>Templates</div>
-          <div className='tooltip tooltip-left tooltip-secondary' data-tip="close">
-            <ArrowSquareRight onClick={handleDrawerClose} size="30" className="text-base-content hover:scale-110 transition-all" />
+        <div className="border-b px-4 pb-4 flex justify-between">
+          <div className="card-title text-[16px]">Templates</div>
+          <div
+            className="tooltip tooltip-left tooltip-secondary"
+            data-tip="close"
+          >
+            <ArrowSquareRight
+              onClick={handleDrawerClose}
+              size="30"
+              className="text-base-content hover:scale-110 transition-all"
+            />
           </div>
         </div>
-        <div className='px-4 py-4 bg-base-100'>
-          {
-            templates?.map((item: TemplateType) => (
-              < div
-                key={item?.id}
-                onClick={() => handleSetTemplate(item?.htmlContent)}
-                className='border rounded-md w-full h-60 p-1 mb-3 cursor-pointer'>
-                <Image
-                  width={500}
-                  height={500}
-                  alt={item?.title}
-                  className='w-full rounded-md object-cover h-full'
-                  src={item?.cover} />
+        <div className="px-4 py-4 bg-base-100">
+          {templates?.map((item: TemplateType) => (
+            <div
+              key={item?.id}
+              onClick={() => handleOpenModal(item)}
+              className="border rounded-md w-full h-60 p-1 mb-3 cursor-pointer"
+            >
+              <Image
+                width={500}
+                height={500}
+                alt={item?.title}
+                className="w-full rounded-md object-cover h-full"
+                src={item?.cover}
+              />
+            </div>
+          ))}
+        </div>
+      </Drawer>
+      {/* <AskToReplaceTemplate open={openAskToReplace} setOpen={setOpenAskToReplace} /> */}
+      {/* modal */}
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={openAskToReplace}
+        onClose={handleCloseAskToReplace}
+        closeAfterTransition
+        slots={{ backdrop: Backdrop }}
+        slotProps={{
+          backdrop: {
+            timeout: 500,
+          },
+        }}
+      >
+        <Fade in={openAskToReplace}>
+          <div className="w-1/4 bg-base-100 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg p-5 rounded-lg">
+            <h3 className="text-base/7 font-medium">
+              Do you want to replace or append ?
+            </h3>
+            <p className="mt-2 text-sm/6"></p>
+            <form className="flex flex-col justify-between items-center">
+              <div className="self-end">
+                <button
+                  type="button"
+                  onClick={handleAppendTemplate}
+                  className="btn btn-active mt-2 btn-sm"
+                >
+                  Append
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleReplaceTemplate()}
+                  className="btn btn-active btn-error ml-2 mt-3 btn-sm"
+                >
+                  Replace
+                </button>
               </div>
-            ))
-          }
-        </div >
-      </Drawer >
-      <AskToReplaceTemplate open={openAskToReplace} setOpen={setOpenAskToReplace} />
-
+            </form>
+          </div>
+        </Fade>
+      </Modal>
     </>
-  )
+  );
 }
 
-export default DrawerTemplate
+export default DrawerTemplate;
