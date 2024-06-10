@@ -79,24 +79,125 @@ function DrawerTemplate({ open, setOpen, handleDrawerClose, editorRef }: any) {
       title: "LMS Form",
       cover: "https://bizweb-doc.kosign.dev/api/v1/files/view_images?fileName=0efc6a93-293e-4ecb-98ae-167611635687.jpg",
       htmlContent: `
-                <table style="width:100%; border: 1px solid black">
-              <tr>
-                <th>Company</th>
-                <th>Contact</th>
-                <th>Country</th>
-              </tr>
-              <tr>
-                <td>Alfreds Futterkiste</td>
-                <td>Maria Anders</td>
-                <td>Germany</td>
-              </tr>
-              <tr>
-                <td>Centro comercial Moctezuma</td>
-                <td>Francisco Chang</td>
-                <td>Mexico</td>
-              </tr>
-            </table>
-            <input type="text">`,
+      <table>
+        <thead>
+            <tr>
+                <th>Task(14)</th>
+                <th>P.I.C</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>% Done</th>
+                <th>Remark</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Generate the application form template by AI</td>
+                <td>Sovita</td>
+                <td>31/05/2024</td>
+                <td>est 10/06/2024</td>
+                <td>80%</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Update status when update tag</td>
+                <td>vimean</td>
+                <td>29/05/2024</td>
+                <td>03/06/2024</td>
+                <td>100%</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Fixed bug add new article (auto select to current category)</td>
+                <td>vanda</td>
+                <td>05/06/2024</td>
+                <td>est 07/06/2024</td>
+                <td>80%</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Fixed bug dropdown status (move category option to front)</td>
+                <td>vanda</td>
+                <td>05/06/2024</td>
+                <td>07/06/2024</td>
+                <td>100%</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Implement drawer to display Template</td>
+                <td>Sovita</td>
+                <td>05/06/2024</td>
+                <td>05/06/2024</td>
+                <td>100%</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Update status when update article</td>
+                <td>vimean</td>
+                <td>28/05/2024</td>
+                <td>03/06/2024</td>
+                <td>100%</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>When deleted, it still shows until page is refreshed. (Bug)</td>
+                <td>Sovita</td>
+                <td>05/06/2024</td>
+                <td>05/06/2024</td>
+                <td>100%</td>
+                <td class="remark">UI (Nextjs)</td>
+            </tr>
+            <tr>
+                <td>After save > move to main page (Bug)</td>
+                <td>Sovita</td>
+                <td>05/06/2024</td>
+                <td>05/06/2024</td>
+                <td>100%</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Cannot save case Update (Bug)</td>
+                <td>Sovita</td>
+                <td>05/06/2024</td>
+                <td>05/06/2024</td>
+                <td>100%</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Remove dark mode</td>
+                <td>Sarayuth</td>
+                <td></td>
+                <td></td>
+                <td>100%</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Fixed bug (Insert article)</td>
+                <td>Sovita</td>
+                <td>29/05/2024</td>
+                <td>29/05/2024</td>
+                <td>100%</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Fixed Bug (Delete Tag)</td>
+                <td>vimean</td>
+                <td>05/06/2024</td>
+                <td>05/06/2024</td>
+                <td>100%</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Fixed Bug (when delete tag the article in that tag still exists(article not delete)</td>
+                <td>vimean</td>
+                <td>06/06/2024</td>
+                <td>07/06/2024</td>
+                <td>100%</td>
+                <td class="remark">Service (Spring)</td>
+            </tr>
+        </tbody>
+    </table>          
+      `,
       status: 1,
     },
     {

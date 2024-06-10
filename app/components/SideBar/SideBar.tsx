@@ -95,8 +95,8 @@ function SideBar(props: any) {
             variant="persistent"
             anchor="left"
             open={openMainDrawer}>
-            <ul className="menu menu-dropdown-show w-full bg-primary h-full text-base-content pt-0">
-                <div className='sticky top-0 bg-primary z-50'>
+            <ul className="menu menu-dropdown-show w-full bg-base-100 text-base-content pt-0">
+                <div className='sticky top-0 z-50'>
                     <HeaderSidebar handleOpenArticle={handleOpenArticle} />
 
                     {/* Favorite */}
