@@ -78,7 +78,7 @@ function SideBar(props: any) {
     const [openTagDelete, setopenTagDelete] = React.useState(false);
     const handleOpenArticle = () => setOpenArticle(true);
     const [bg_color, setBg_color] = useState("");
-    
+
 
     return (
         <Drawer
@@ -95,8 +95,8 @@ function SideBar(props: any) {
             variant="persistent"
             anchor="left"
             open={openMainDrawer}>
-            <ul className="menu menu-dropdown-show w-full bg-primary text-base-content pt-0">
-                <div className='sticky top-0 bg-primary z-50'>
+            <ul className="menu menu-dropdown-show w-full bg-base-100 text-base-content pt-0">
+                <div className='sticky top-0 z-50'>
                     <HeaderSidebar handleOpenArticle={handleOpenArticle} />
 
                     {/* Favorite */}

@@ -50,7 +50,6 @@ export default function EditorCustum({ handleClose, session, articleData, handle
   const [tagData, setTagData] = useState([]);
   const [title, setTitle] = useState("");
   const [tagValue, setTagValue] = React.useState<TagType | any>();
-  const [inputValue, setInputValue] = React.useState('');
   const [selectedValue, setSelectedValue] = useState<number>(1); // Defaulting to "Public"
 
   const [isErrorInput, setIsErrorInput] = useState({
@@ -131,7 +130,6 @@ export default function EditorCustum({ handleClose, session, articleData, handle
             type: "success",
             message: "Created Successfully.",
           });
-          console.log("HEY a", selectedValue, " >>> ", convertStatusToString(selectedValue));
           dispatch(getOptionData(convertStatusToString(selectedValue)))
           dispatch(isRender(true))
           handleClose()
@@ -270,8 +268,6 @@ export default function EditorCustum({ handleClose, session, articleData, handle
               setTagData={setTagData}
               title={title}
               setTitle={setTitle}
-              inputValue={inputValue}
-              setInputValue={setInputValue}
               tagValue={tagValue}
               setTagValue={setTagValue}
               selectedValue={selectedValue}
