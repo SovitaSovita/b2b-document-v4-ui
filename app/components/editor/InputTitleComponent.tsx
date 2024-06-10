@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getOptionData } from '@/app/service/Redux/articleDetailSlice';
 import { GetTagAndArticle } from '@/app/service/TagService';
 import { RootState } from '@/app/service/Redux/store/store';
+import { Button, Input } from '@nextui-org/react';
 
 
 function InputTitleComponent(props: any) {
@@ -87,8 +88,7 @@ function InputTitleComponent(props: any) {
         else if (option === "DEPARTMENT") status = 2;
         return status;
     }
-
-
+    const [disableSelectArticle, setDisableSelectArticle] = useState<boolean>(false);
     const handleChildData = (dataFromChild: any) => {
         setShowDefaultValue(true);
         setTagValue(dataFromChild);
@@ -111,11 +111,22 @@ function InputTitleComponent(props: any) {
         }
     };
 
-    const [disableSelectArticle, setDisableSelectArticle] = useState<boolean>(false);
+    const [isHideClass, setIsHideClass] = useState("");
+    const handleOpenAIInput = (fromChild: string) => {
+        setIsHideClass(fromChild)
+    }
+
 
     return (
         <>
-            <div className='flex justify-between px-6 mb-5'>
+            <div className='flex justify-between items-center px-6 mb-5'>
+                <Button
+                    onClick={handleClose}
+                    type='button'
+                    className="btn btn-active btn-sm btn-ghost mr-3"
+                >
+                    Close
+                </Button>
                 <div className='flex items-center'>
                     {
                         !articleData ? (
@@ -170,39 +181,39 @@ function InputTitleComponent(props: any) {
                         )
                     }
                     <div className='flex bg-base-100 p-3 rounded-lg border'>
-                        <input
+                        <Input
+                            size='sm'
                             onChange={onchange}
                             defaultValue={title}
                             autoFocus
                             placeholder="Enter Sub Title"
-                            className='input input-neutral input-bordered input-sm w-full max-w-xs'
                         />
                     </div>
 
-                    <div className='flex bg-base-100 ml-4 p-3 rounded-lg border' style={{ margin: "auto 75px auto;" }}>
+                    <div className='flex items-center bg-base-100 ml-4 p-3 rounded-lg border' style={{ margin: "auto 75px auto;" }}>
                         <button
                             // disabled
                             type='button'
                             onClick={handleDrawerOpen}
-                            className='btn btn-secondary btn-sm'
+                            className={`btn btn-secondary btn-sm ${isHideClass}`}
                             style={{ ...(openTemplate && { display: 'none' }) }}
                         >
                             <BrushBig size="24" className='text-base-100' />
                             <label>Templates</label>
                         </button>
-                        <GeminiContent />
+                        <GeminiContent setIsHideClass={setIsHideClass} isHideClass={isHideClass} />
                     </div>
                 </div>
 
                 <div className='flex items-center'>
-                    <button onClick={handleClose} type='button' className="btn btn-active btn-sm btn-ghost mr-3">Exit</button>
-                    <button
+                    <Button
                         disabled={isLoading}
                         type='submit'
-                        className="btn btn-secondary btn-sm text-base-100">
+                        color='secondary'
+                    >
                         <DocumentText size="20" className='' />
                         Save
-                    </button>
+                    </Button>
                 </div>
             </div>
             <TagComponent open={openTag} setOpen={setOpenTag} user={session} sendDataToParent={handleChildData} selectedValue={selectedValue} />

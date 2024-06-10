@@ -10,14 +10,6 @@ import { ArrowCircleRight, ArrowSquareRight } from 'iconsax-react';
 import AskToReplaceTemplate from '../Modal/AskToReplaceTemplate';
 
 const drawerWidth = 240;
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-  justifyContent: 'flex-start',
-}));
 
 function DrawerTemplate({ open, setOpen, handleDrawerClose, editorRef }: any) {
 
@@ -29,7 +21,7 @@ function DrawerTemplate({ open, setOpen, handleDrawerClose, editorRef }: any) {
     {
       id: 1,
       title: "C Day Form",
-      cover: "https://cdn.create.microsoft.com/catalog-assets/en-us/ce343500-4aff-4dfa-b337-57c78459c6ee/thumbnails/616/modern-nursing-resume-orange-modern-geometric-2-1-b3fad7d361c3.webp",
+      cover: "https://bizweb-doc.kosign.dev//api/v1/files/view_images?fileName=1039874b-0bf5-4e82-9a89-d783a176a41a.png",
       htmlContent: `
                 <div style="">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
@@ -205,24 +197,23 @@ function DrawerTemplate({ open, setOpen, handleDrawerClose, editorRef }: any) {
       title: "LMS Form",
       cover: "https://uxdt.nic.in/wp-content/uploads/2020/07/Feedback-Form-1_p.png?x38773",
       htmlContent: `
-                <table style="width:100%; border: 1px solid black">
-              <tr>
-                <th>Company</th>
-                <th>Contact</th>
-                <th>Country</th>
-              </tr>
-              <tr>
-                <td>Alfreds Futterkiste</td>
-                <td>Maria Anders</td>
-                <td>Germany</td>
-              </tr>
-              <tr>
-                <td>Centro comercial Moctezuma</td>
-                <td>Francisco Chang</td>
-                <td>Mexico</td>
-              </tr>
-            </table>
-            <input type="text">`,
+      <div class="h-full w-full">
+    <div key="0" style="width: 100%; font-size: 12px; padding-left: 8px; padding-right: 8px;">
+        <div style="display: grid; width: 100%; grid-template-columns: repeat(12, 1fr); align-items: center; padding-bottom: 8px; padding-top: 8px; font-weight: 500;">
+            <p style="grid-column: span 3; padding-left: 8px;">Spring</p>
+            <p style="grid-column: span 1; text-align: center;">100%</p>
+            <p style="grid-column: span 2; text-align: center;">Morn Moniroit</p>
+            <p style="grid-column: span 1; text-align: center;">-</p>
+            <p style="grid-column: span 1; text-align: center;">-</p>
+            <p style="grid-column: span 1; text-align: center;">2024-04-09</p>
+            <p style="grid-column: span 2; text-align: center;">20384</p>
+        </div>
+        <hr style="margin-top: 1px; height: 1px;">
+    </div>
+</div>
+
+          
+      `,
       status: 1,
     },
   ]
