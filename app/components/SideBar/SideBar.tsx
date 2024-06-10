@@ -164,14 +164,14 @@ function SideBar(props: any) {
                                             <li key={index + 1} className='w-[260px]'>
                                                 <details>
                                                     <summary className="mt-1 font-medium">
-                                                        <p className='line-clamp-1'>{item.title}</p>
+                                                        <p data-tip="This is a tooltip" data-for="tooltipId" className='line-clamp-1'>{item.title}</p>
                                                     </summary>
                                                     <ul>
                                                         {
                                                             filterArticlesByTagId(item.id).length > 0 ?
                                                                 filterArticlesByTagId(item.id).map(item => (
                                                                     <li key={item?.id} onClick={() => handleViewArticle(item.id.toString())}>
-                                                                        <a className={activeItemId === item.id.toString()
+                                                                        <a  className={activeItemId === item.id.toString()
                                                                             ? "hover:bg-base-100 line-clamp-1 bg-base-100 border-r-4 border-secondary rounded-none"
                                                                             : "hover:bg-base-100 line-clamp-1 hover:border-l-4 border-secondary rounded-none transition-all"}>
                                                                             {item?.title}
