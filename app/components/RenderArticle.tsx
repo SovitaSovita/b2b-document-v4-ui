@@ -27,9 +27,9 @@ const RenderArticle: React.FC<RenderArticleProps> = ({ body } , props) => {
                 <LoadingCustom />
             ) : (
                 <>
-                    <span onClick={handlePrint} style={{ cursor: 'pointer', margin: '15px' }}>
+                    {/* <span onClick={handlePrint} style={{ cursor: 'pointer', margin: '15px' }}>
                         <Printer size="32" color="black" />
-                    </span>
+                    </span> */}
                     <div className="content-wrapper">
                         <div>
                             <div className="my-tinymce-container">
