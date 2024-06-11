@@ -26,6 +26,7 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
   const handleSelectChange = (event: any) => {
     const newValue = event.target.value
     setSelectedValue(parseInt(newValue));
+    
   };
 
   // new code
