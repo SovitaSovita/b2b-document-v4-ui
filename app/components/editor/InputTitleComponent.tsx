@@ -57,7 +57,6 @@ function InputTitleComponent(props: any) {
     const handleSelectChange = (event: any) => {
         const newValue = event.target.value
         setSelectedValue(newValue);
-
         if (newValue == 0) {
             getTagAndArticleFunction(null, 0, session?.userId);
         }

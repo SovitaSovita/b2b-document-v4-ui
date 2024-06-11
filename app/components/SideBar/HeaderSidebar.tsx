@@ -68,6 +68,7 @@ function HeaderSidebar({ handleOpenArticle }: any) {
 
     //To filter tag and article data for 3 option
     const handleGetTagNArticle = (option: string) => {
+        console.log("getOptionData",option);
         if (option == "DEPARTMENT") {
             setActiveItem(option)
             dispatch(getOptionData(option));
