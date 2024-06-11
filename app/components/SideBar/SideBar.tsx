@@ -85,6 +85,7 @@ function SideBar(props: any) {
         <Drawer
             sx={{
                 width: drawerWidth,
+                height: "100%",
                 flexShrink: 0,
                 '& .MuiDrawer-paper': {
                     width: drawerWidth,
@@ -97,7 +98,7 @@ function SideBar(props: any) {
             anchor="left"
             open={openMainDrawer}>
             <ul className="menu menu-dropdown-show w-full bg-base-100 text-base-content pt-0">
-                <div className='sticky top-0 z-50'>
+                <div className='sticky bg-base-100 top-0 z-50'>
                     <HeaderSidebar handleOpenArticle={handleOpenArticle} />
 
                     {/* Favorite */}
