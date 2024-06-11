@@ -29,24 +29,27 @@ const RenderArticle: React.FC<RenderArticleProps> = ({ body }, props) => {
                         <Printer size="32" color="black" />
                     </span> */}
                     <div className="content-wrapper">
-                        <div className="my-tinymce-container">
-                            <Editor
-                                apiKey="51cakyf7l011kd34r23bib5jrvh79lb520v82wpid72wq92n"
-                                initialValue={body}
-                                init={{
-                                    height: 800,
-                                    readonly: true as any,
-                                    plugins: 'false',
-                                    toolbar: false,
-                                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
-                                    setup: (editor) => {
-                                        editor.on('init', () => {
-                                            editor.getBody().setAttribute('contenteditable', 'false');
-                                        });
-                                    },
-                                }}
+                        <div>
+                            <div className="my-tinymce-container">
+                                <Editor
+                                    apiKey="51cakyf7l011kd34r23bib5jrvh79lb520v82wpid72wq92n"
+                                    initialValue={body}
+                                    init={{
+                                        height: 800,
+                                        readonly: true as any,
+                                        plugins: 'false',
+                                        toolbar: false,
+                                        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                                        setup: (editor) => {
+                                            editor.on('init', () => {
+                                                editor.getBody().setAttribute('contenteditable', 'false');
+                                            });
+                                        },
+                                    }}
 
-                            />
+                                />
+                            </div>
+                            {/* <div ref={printRef} className="print-content" dangerouslySetInnerHTML={{ __html: body }} /> */}
                         </div>
                         {/* <div ref={printRef} className="print-content" dangerouslySetInnerHTML={{ __html: body }} /> */}
                     </div>
