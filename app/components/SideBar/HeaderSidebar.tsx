@@ -150,9 +150,9 @@ function HeaderSidebar({ handleOpenArticle }: any) {
                     <div className='flex justify-between w-full items-center'>
                         <div className='flex items-center'>
                             <div className='w-7 h-7 bg-blue-500 rounded-md flex justify-center items-center text-base-100 text-sm font-medium'>
-                                P
+                                C
                             </div>
-                            <div className='ml-2 text-sm font-medium'>Public</div>
+                            <div className='ml-2 text-sm font-medium'>Company</div>
                         </div>
                         {
                             optionGETdata === "PUBLIC" && <CheckOutlinedIcon />

@@ -26,7 +26,7 @@ const LeftDrawerCustom = ({ children }: { children: ReactNode }) => {
                 role="button"
                 className="btn btn-ghost btn-circle avatar"
               >
-                <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-1">
+                <div className="w-10 rounded-full ring ring-secondary ring-offset-base-100 ring-offset-1">
                   <Image src={session?.prfl_PHTG} alt="pf" width={140} height={100} loading="lazy" />
                 </div>
               </div>

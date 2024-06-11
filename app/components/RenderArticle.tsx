@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useReactToPrint } from 'react-to-print';
+// import { useReactToPrint } from 'react-to-print';
 import '../style/reset.css';
 import { Editor } from '@tinymce/tinymce-react';
 import '../style/tiny.css';
@@ -10,16 +10,14 @@ interface RenderArticleProps {
     body: string;
 }
 
-const RenderArticle: React.FC<RenderArticleProps> = ({ body } , props) => {
+const RenderArticle: React.FC<RenderArticleProps> = ({ body }, props) => {
     const { isLoading, handleDrawerClose, openMainDrawer }: any = props
     const printRef = useRef<HTMLDivElement>(null);
 
-    
-
-    const handlePrint = useReactToPrint({
-        content: () => printRef.current,
-        documentTitle: 'Article Print',
-    });
+    // const handlePrint = useReactToPrint({
+    //     content: () => printRef.current,
+    //     documentTitle: 'Article Print',
+    // });
 
     return (
         <>
@@ -48,7 +46,7 @@ const RenderArticle: React.FC<RenderArticleProps> = ({ body } , props) => {
                                             });
                                         },
                                     }}
-                                    
+
                                 />
                             </div>
                             <div ref={printRef} className="print-content" dangerouslySetInnerHTML={{ __html: body }} />

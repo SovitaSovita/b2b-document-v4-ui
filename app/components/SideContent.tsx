@@ -263,7 +263,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
 
                 <div className="rounded-lg bg-base-100 border w-full min-h-screen">
                     {
-                        article?.content_body == null ? (<HomeContent />)
+                        article?.content_body == null ? (<HomeContent handleOpenArticle={handleOpenArticle} />)
                             : (
                                 <div className='flex flex-col'>
                                     <div className='mb-4 flex items-center justify-between'>
