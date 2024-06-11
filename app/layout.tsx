@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Provider from "./Provider";
+import { NextUIProvider } from "@nextui-org/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,9 +23,11 @@ export default function RootLayout({
         <link rel="icon" href="https://www.kosign.com.kh/images/Vectors-Wrapper.svg" />
       </head>
       <body className={inter.className}>
-        <Provider>
-          {children}
-        </Provider>
+        <NextUIProvider>
+          <Provider>
+            {children}
+          </Provider>
+        </NextUIProvider>
       </body>
     </html>
   );

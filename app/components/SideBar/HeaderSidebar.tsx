@@ -25,13 +25,14 @@ const StyledMenu = styled((props: MenuProps) => (
 
     return {
         '& .MuiPaper-root': {
-            borderRadius: 6,
-            marginTop: theme.spacing(2),
-            minWidth: 285,
-            // color: mode === 'light' ? 'rgb(55, 65, 81)' : theme.palette.grey[300],
-            // background: mode === 'light' ? "" : 'oklch(0.232607 0.013807 253.101)',
-            borderWidth: '1.5px',
-            boxShadow: '0px 0px 3px 0px rgba(0,0,0,0.1)',
+            borderRadius: '0 0 6px 6px',
+            marginTop: theme.spacing(0.3),
+            minWidth: 305,
+            paddingTop: "7px",
+            marginLeft: "-8px",
+            borderWidth: '1px',
+            borderTop: 'none',
+            // boxShadow: '0px 0px 3px 0px rgba(0,0,0,0.1)',
             '& .MuiMenu-list': {
                 padding: '4px 0',
             },
@@ -98,7 +99,7 @@ function HeaderSidebar({ handleOpenArticle }: any) {
     }
 
     return (
-        <div className="p-2 mt-3 pl-1 bg-base-100 border rounded-lg flex justify-between">
+        <div className="p-2 mt-3 pl-1 bg-base-100 border rounded-lg w-[305px] flex justify-between">
             <div className='flex items-center cursor-pointer' onClick={handleClick}>
                 <UnfoldMoreRoundedIcon className='text-gray-500 text-[19px]' />
                 <Image src={logoDocument} alt="" width={50} height={50} />
@@ -126,7 +127,7 @@ function HeaderSidebar({ handleOpenArticle }: any) {
                             <div className='w-7 h-7 bg-teal-400 rounded-md flex justify-center items-center text-base-100 text-xs font-medium'>
                                 {splitString(session?.flnm)}
                             </div>
-                            <div className='ml-2 text-sm font-medium'>Private</div>
+                            <div className='ml-2 text-sm font-medium'>Me</div>
                         </div>
                         {
                             optionGETdata == "PRIVATE" && <CheckOutlinedIcon />
@@ -155,7 +156,7 @@ function HeaderSidebar({ handleOpenArticle }: any) {
                             <div className='ml-2 text-sm font-medium'>Public</div>
                         </div>
                         {
-                            activeItems == "PUBLIC" && <CheckOutlinedIcon />
+                            optionGETdata === "PUBLIC" && <CheckOutlinedIcon />
                         }
                     </div>
                 </MenuItem>

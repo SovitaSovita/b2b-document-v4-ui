@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from 'react'
+import React, { FormEvent, useEffect, useRef, useState } from 'react'
 
 import LeftDrawerCustom from './Profile/LeftDrawerCustom'
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,6 +30,8 @@ import { styled } from '@mui/material';
 import { getArticleDetail } from '../service/ArticleService';
 import RenderArticle from './RenderArticle';
 import CKEditorComponent from './editor/CKEditorComponent';
+import { User } from '@nextui-org/react';
+
 
 
 
@@ -207,6 +209,20 @@ function SideContent({ openMainDrawer, setOpen }: any) {
         }
     }
 
+    const convertTimestamp = (value: any) => {
+        const date = new Date(value);
+
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+
+        return `${year}-${month}-${day} ${hours}:${minutes}`;
+
+    }
+
+
     return (
         <Main open={openMainDrawer}>
             <div className="drawer-content bg-primary flex flex-col items-center justify-center py-2 px-4">
@@ -228,35 +244,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                         <LeftDrawerCustom>
                             {/*left Sidebar content here */}
                             <Profile userInfo={session} />
-                            {/* <li className="border shadow rounded-lg mb-5">
-                                <label className="swap swap-rotate">
-                                    <input
-                                        type="checkbox"
-                                        name="mode"
-                                        onChange={onChange}
-                                        className="theme-controller"
-                                        value={"light"}
-                                    />
-                                    <svg
-                                        className="swap-off fill-current w-7 h-7"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z" />
-                                    </svg>
-                                    <svg
-                                        className="swap-on fill-current w-7 h-8=7"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
-                                    </svg>
-                                </label>
-                            </li> */}
                             <ProfileDrawer userInfo={session} />
-                            {/* <li>
-                            <Link href={"/manage_users"}>Manage User</Link>
-                        </li> */}
                             <li>
                                 <div
                                     role="button"
@@ -273,18 +261,6 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                     </div>
                 </div>
 
-                {/* <img src={article?.img_path} alt="content" width={500} className='mt-6 ml-6' /> */}
-                {/* <div>
-                <div data-dial-init className="fixed start-4 z-50 bottom-4 group">
-                    <button type="button" onClick={handleOpenArticle} data-dial-toggle="speed-dial-menu-default" aria-controls="speed-dial-menu-default" aria-expanded="false" className="flex items-center justify-center text-white bg-blue-700 rounded-full w-10 h-10 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800" style={{ width: '2.5rem !important', height: '2.5rem !important' }}>
-                        <svg className="w-5 h-5 transition-transform group-hover:rotate-45" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
-                        </svg>
-                        <span className="sr-only">Open actions menu</span>
-                    </button>
-                </div>
-            </div> */}
-
                 <div className="rounded-lg bg-base-100 border w-full min-h-screen">
                     {
                         article?.content_body == null ? (<HomeContent />)
@@ -292,7 +268,15 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                                 <div className='flex flex-col'>
                                     <div className='mb-4 flex items-center justify-between'>
                                         {/* Left side icons */}
-                                        <div></div>
+                                        <div className='p-2'>
+                                            <User
+                                                name={article?.username}
+                                                description={article?.create_date ? convertTimestamp(article?.create_date) : convertTimestamp(article?.modified_date)}
+                                                avatarProps={{
+                                                    src: article?.image
+                                                }}
+                                            />
+                                        </div>
                                         {/* Right side icons */}
                                         <div className="flex items-center bg-primary rounded-bl-lg p-2 border">
                                             {/* Favorite icons*/}

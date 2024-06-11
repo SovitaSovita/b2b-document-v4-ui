@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getOptionData } from '@/app/service/Redux/articleDetailSlice';
 import { GetTagAndArticle } from '@/app/service/TagService';
 import { RootState } from '@/app/service/Redux/store/store';
+import { Button, Input } from '@nextui-org/react';
 
 
 function InputTitleComponent(props: any) {
@@ -41,11 +42,12 @@ function InputTitleComponent(props: any) {
     useEffect(() => {
         if (articleData) {
             setSelectedValue(convertStringToStatus(optionGETdata))
+            setTitle(articleData?.title)
         }
     }, [])
 
     const [openTag, setOpenTag] = React.useState(false);
-    const handleOpenTag = (va:any) => {
+    const handleOpenTag = (va: any) => {
         console.log("vanafaf")
         setOpenTag(true);
     }
@@ -85,12 +87,11 @@ function InputTitleComponent(props: any) {
         else if (option === "DEPARTMENT") status = 2;
         return status;
     }
-
-
+    const [disableSelectArticle, setDisableSelectArticle] = useState<boolean>(false);
     const handleChildData = (dataFromChild: any) => {
         setShowDefaultValue(true);
         setTagValue(dataFromChild);
-        console.log("VandaVanda:",dataFromChild?.status);
+        console.log("VandaVanda:", dataFromChild?.status);
 
         if (dataFromChild?.status === 0) {
             setSelectedValue(0)
@@ -109,11 +110,22 @@ function InputTitleComponent(props: any) {
         }
     };
 
-    const [disableSelectArticle, setDisableSelectArticle] = useState<boolean>(false);
+    const [isHideClass, setIsHideClass] = useState("");
+    const handleOpenAIInput = (fromChild: string) => {
+        setIsHideClass(fromChild)
+    }
+
 
     return (
         <>
-            <div className='flex justify-between px-6 mb-5'>
+            <div className='flex justify-between items-center px-6 mb-5'>
+                <Button
+                    onClick={handleClose}
+                    type='button'
+                    className="btn btn-active btn-sm btn-ghost mr-3"
+                >
+                    Close
+                </Button>
                 <div className='flex items-center'>
                     {
                         !articleData ? (
@@ -122,7 +134,7 @@ function InputTitleComponent(props: any) {
                                     disabled={disableSelectArticle}
                                     value={selectedValue} // Bind the selected value to state
                                     onChange={handleSelectChange}
-                                    className="select select-neutral select-sm select-bordered w-full ml-3 max-w-40" style={{margin: "auto 10px"}}>
+                                    className="select select-neutral select-sm select-bordered w-full ml-3 max-w-40" style={{ margin: "auto 10px" }}>
                                     <option value={0}>Private</option>
                                     <option value={2}>Department</option>
                                     <option value={1}>Public</option>
@@ -168,39 +180,39 @@ function InputTitleComponent(props: any) {
                         )
                     }
                     <div className='flex bg-base-100 p-3 rounded-lg border'>
-                        <input
+                        <Input
+                            size='sm'
                             onChange={onchange}
-                            value={title}
+                            defaultValue={title}
                             autoFocus
                             placeholder="Enter Sub Title"
-                            className='input input-neutral input-bordered input-sm w-full max-w-xs'
-                            />
+                        />
                     </div>
 
-                    <div className='flex bg-base-100 ml-4 p-3 rounded-lg border' style={{ margin: "auto 75px auto;" }}>
+                    <div className='flex items-center bg-base-100 ml-4 p-3 rounded-lg border' style={{ margin: "auto 75px auto;" }}>
                         <button
-                            disabled
+                            // disabled
                             type='button'
                             onClick={handleDrawerOpen}
-                            className='btn btn-secondary btn-sm'
+                            className={`btn btn-secondary btn-sm ${isHideClass}`}
                             style={{ ...(openTemplate && { display: 'none' }) }}
                         >
                             <BrushBig size="24" className='text-base-100' />
                             <label>Templates</label>
                         </button>
-                        <GeminiContent />
+                        <GeminiContent setIsHideClass={setIsHideClass} isHideClass={isHideClass} />
                     </div>
                 </div>
 
                 <div className='flex items-center'>
-                    <button onClick={handleClose} type='button' className="btn btn-active btn-sm btn-ghost mr-3">Exit</button>
-                    <button
+                    <Button
                         disabled={isLoading}
                         type='submit'
-                        className="btn btn-secondary btn-sm text-base-100">
+                        color='secondary'
+                    >
                         <DocumentText size="20" className='' />
                         Save
-                    </button>
+                    </Button>
                 </div>
             </div>
             <TagComponent open={openTag} setOpen={setOpenTag} user={session} sendDataToParent={handleChildData} selectedValue={selectedValue} />

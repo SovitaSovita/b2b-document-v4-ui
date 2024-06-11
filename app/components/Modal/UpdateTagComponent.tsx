@@ -108,7 +108,7 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
         }}
       >
         <Fade in={open}>
-          <div className='w-1/3 bg-base-100 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg p-6 rounded-lg' style={{ width: '455px' }}>
+          <div className='w-1/3 bg-base-100 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg p-6 rounded-lg' style={{ width: '300px' }}>
             <form className='flex flex-col justify-between items-center'>
               <div className=''>
                 {/* Left side icons */}
@@ -123,7 +123,7 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
                     // style={{ width: '100px' }}
                     />
                   </label>
-                  <div className='self-start'>
+                  {/* <div className='self-start'>
                     <select
                       disabled
                       value={tagUpdateData.status}
@@ -133,7 +133,7 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
                       <option value={2}>Department</option>
                       <option selected value={1}>Public</option>
                     </select>
-                  </div>
+                  </div> */}
                 </div>
                 {/* Right side icons */}
                 <div className="flex" style={{ marginLeft: " 13px" }}>

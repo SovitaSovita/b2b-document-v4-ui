@@ -22,6 +22,7 @@ import HeaderSidebar from './HeaderSidebar';
 import { RootState } from '@/app/service/Redux/store/store';
 import { getSession } from '@/app/utils/xhttp';
 import LoadingCustom from '../Material/Loading';
+import { Tooltip } from '@nextui-org/react';
 
 const drawerWidth = 320;
 
@@ -78,7 +79,7 @@ function SideBar(props: any) {
     const [openTagDelete, setopenTagDelete] = React.useState(false);
     const handleOpenArticle = () => setOpenArticle(true);
     const [bg_color, setBg_color] = useState("");
-    
+
 
     return (
         <Drawer
@@ -95,8 +96,8 @@ function SideBar(props: any) {
             variant="persistent"
             anchor="left"
             open={openMainDrawer}>
-            <ul className="menu menu-dropdown-show w-full bg-primary text-base-content pt-0">
-                <div className='sticky top-0 bg-primary z-50'>
+            <ul className="menu menu-dropdown-show w-full bg-base-100 text-base-content pt-0">
+                <div className='sticky top-0 z-50'>
                     <HeaderSidebar handleOpenArticle={handleOpenArticle} />
 
                     {/* Favorite */}
@@ -164,7 +165,9 @@ function SideBar(props: any) {
                                             <li key={index + 1} className='w-[260px]'>
                                                 <details>
                                                     <summary className="mt-1 font-medium">
-                                                        <p className='line-clamp-1'>{item.title}</p>
+                                                        <Tooltip showArrow={true} content={item.title}>
+                                                            <p data-tip="This is a tooltip" data-for="tooltipId" className='line-clamp-1'>{item.title}</p>
+                                                        </Tooltip>
                                                     </summary>
                                                     <ul>
                                                         {
