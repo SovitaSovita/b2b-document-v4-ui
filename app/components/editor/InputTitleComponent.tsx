@@ -45,6 +45,7 @@ function InputTitleComponent(props: any) {
             setTitle(articleData?.title)
         }
     }, [])
+    console.log("testSelect",setSelectedValue)
 
     const [openTag, setOpenTag] = React.useState(false);
     const handleOpenTag = (va: any) => {
@@ -59,7 +60,7 @@ function InputTitleComponent(props: any) {
     const handleSelectChange = (event: any) => {
         const newValue = event.target.value
         setSelectedValue(newValue);
-
+        console.log("testSelect1>>",newValue)
         if (newValue == 0) {
             getTagAndArticleFunction(null, 0, session?.userId);
         }
