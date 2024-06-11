@@ -322,7 +322,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                 />
 
                 <SearchComponent open={openSearch} setOpen={setOpenSearch} />
-                <TagComponent open={openTag} setOpen={setOpenTag} user={session} />
+                <TagComponent open={openTag} setOpen={setOpenTag} user={session} sendDataToParent={null} selectedValue={null} setSelectedValue={null}/>
                 <AskToConfirmModal
                     open={openAskCf}
                     setOpen={setOpenAskCf}

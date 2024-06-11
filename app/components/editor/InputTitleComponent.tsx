@@ -217,7 +217,7 @@ function InputTitleComponent(props: any) {
                     </Button>
                 </div>
             </div>
-            <TagComponent open={openTag} setOpen={setOpenTag} user={session} sendDataToParent={handleChildData} selectedValue={selectedValue}  />
+            <TagComponent open={openTag} setOpen={setOpenTag} user={session} sendDataToParent={handleChildData} selectedValue={selectedValue}  setSelectedValue={setSelectedValue}/>
         </>
     )
 }
