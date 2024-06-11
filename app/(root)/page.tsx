@@ -48,6 +48,7 @@ export default function Home() {
     let status = 1;
     let username = null;
     let departmentId = null;
+    console.log("gigi>>>>",optionGETdata);
     if (session?.dvsn_CD != "") {
       if (optionGETdata == "PRIVATE") {
         status = 0
@@ -69,7 +70,7 @@ export default function Home() {
     }
   }, [reRederMenu, session, optionGETdata])
 
-  console.log("gigi>>>>",optionGETdata);
+  
 
   // Favorote
   function handleViewFavorite(user_id: string) {

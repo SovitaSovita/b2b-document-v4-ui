@@ -50,12 +50,28 @@ export default function EditorCustum({ handleClose, session, articleData, handle
   const [tagData, setTagData] = useState([]);
   const [title, setTitle] = useState("");
   const [tagValue, setTagValue] = React.useState<TagType | any>();
-  const [selectedValue, setSelectedValue] = useState<number>(1); // Defaulting to "Public"
+  const [selectedValue, setSelectedValue] = useState<number>(0); // Defaulting to "Public"
+  
 
   const [isErrorInput, setIsErrorInput] = useState({
     error: false,
     label: "Enter Sub title",
   });
+
+  useEffect(() => {
+    if(!articleData){
+      setSelectedValue(convertStringToStatus(optionGETdata))
+    }
+  }, [])
+
+  
+  const convertStringToStatus = (option: string) => {
+    let status = 0;
+    if (option === "PRIVATE") status = 0;
+    else if (option === "PUBLIC") status = 1;
+    else if (option === "DEPARTMENT") status = 2;
+    return status;
+}
 
   const [isUpdateArticle, setIsUpdateArticle] = useState({
     open: false,

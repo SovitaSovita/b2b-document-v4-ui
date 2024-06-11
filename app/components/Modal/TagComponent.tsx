@@ -1,20 +1,61 @@
 'use client'
 
 import { Backdrop, Fade, Modal } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { SaveNewTag } from '@/app/service/TagService';
+import { GetTagAndArticle, SaveNewTag } from '@/app/service/TagService';
 import CustomAlert from '../Material/CustomAlert';
 import { isRender } from '@/app/service/Redux/articleDetailSlice';
 import { RootState } from '@/app/service/Redux/store/store';
 
-function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
-    const [selectedValue, setSelectedValue] = useState(1);
+
+
+function TagComponent({ open, setOpen, user, sendDataToParent, articleData ,setTagData}: any) {
+    const [selectedValue, setSelectedValue] = useState<number>(0); // Defaulting to "Public"
+    const optionGETdata = useSelector((state: RootState) => state?.article.getOptionData);
+    
     const handleSelectChange = (event: any) => {
-        const newInputValue = event.target.value;
-        setSelectedValue(parseInt(newInputValue));
-        console.log("dadaw3",newInputValue);
+        const newValue = event.target.value
+        console.log("dydy",newValue)
+        setSelectedValue(newValue);
+        if (newValue == 0) {
+            getTagAndArticleFunction(null, 0, session?.userId);
+        }
+        if (newValue == 1) {
+            getTagAndArticleFunction(null, 1, session?.userId);
+        }
+        if (newValue == 2) {
+            getTagAndArticleFunction(parseInt(session?.dvsn_CD, 10), 2, null);
+        }
     };
+    
+    useEffect(() => {
+        if(!articleData){
+          setSelectedValue(convertStringToStatus(optionGETdata))
+          console.log("vanda",optionGETdata)
+        }
+    }, [])
+
+    const getTagAndArticleFunction = (dept_id: number | null, status: number, userId: string | null) => {
+        GetTagAndArticle(dept_id, status, userId).then((res: any) => {
+            const updatedTagList = res?.data?.rec?.tagList.map((tag: any) => ({
+                ...tag,
+                label: tag.title,
+            }));
+            setTagData(updatedTagList)
+        })
+    }
+
+    
+    
+
+    const convertStringToStatus = (option: string) => {
+        let status = 0;
+        if (option === "PRIVATE") status = 0;
+        else if (option === "PUBLIC") status = 1;
+        else if (option === "DEPARTMENT") status = 2;
+        return status;
+    }
 
     const dispatch = useDispatch()
     const [inputVal, setInputVal] = useState<string>();
