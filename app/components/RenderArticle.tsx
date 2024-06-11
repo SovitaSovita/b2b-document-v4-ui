@@ -51,7 +51,7 @@ const RenderArticle: React.FC<RenderArticleProps> = ({ body } , props) => {
                                     
                                 />
                             </div>
-                            <div ref={printRef} className="print-content" dangerouslySetInnerHTML={{ __html: body }} />
+                            {/* <div ref={printRef} className="print-content" dangerouslySetInnerHTML={{ __html: body }} /> */}
                         </div>
                     </div>
                     <style>
