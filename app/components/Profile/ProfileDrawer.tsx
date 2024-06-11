@@ -25,7 +25,7 @@ function ProfileDrawer({ userInfo }: { userInfo: any }) {
                     aria-label="close sidebar"
                     className="drawer-overlay"
                 ></label>
-                <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+                <ul className="menu p-4 w-80 min-h-full bg-base-100 text-base-content">
                     <label htmlFor="my-drawer-3" aria-label="close sidebar">
                         <div tabIndex={20} role="button" className="btn btn-ghost btn-circle">
                             <KeyboardReturnOutlinedIcon />

@@ -225,9 +225,9 @@ function SideContent({ openMainDrawer, setOpen }: any) {
 
     return (
         <Main open={openMainDrawer}>
-            <div className="drawer-content bg-primary flex flex-col items-center justify-center py-2 px-4">
+            <div className="drawer-content bg-primary min-h-screen flex flex-col items-center py-2 px-4">
                 {/* Page content here */}
-                <div className='flex justify-between items-center w-full mb-3'>
+                <div className='flex justify-between items-center w-full h-full mb-3'>
                     {/* <Breadcrumbs /> */}
                     <div data-tip="Create new" className='tooltip tooltip-left'>
                         {/* <div className='btn btn-ghost btn-circle' onClick={handleOpenTag}>
@@ -261,9 +261,9 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                     </div>
                 </div>
 
-                <div className="rounded-lg bg-base-100 border w-full min-h-screen">
+                <div className="rounded-lg bg-base-100 border w-full h-full">
                     {
-                        article?.content_body == null ? (<HomeContent />)
+                        article?.content_body == null ? (<HomeContent handleOpenArticle={handleOpenArticle} />)
                             : (
                                 <div className='flex flex-col'>
                                     <div className='mb-4 flex items-center justify-between'>

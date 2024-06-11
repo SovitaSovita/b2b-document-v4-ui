@@ -27,56 +27,7 @@ function DrawerTemplate({ open, setOpen, handleDrawerClose, editorRef }: any) {
       title: "C Day Form",
       cover: "https://bizweb-doc.kosign.dev//api/v1/files/view_images?fileName=1039874b-0bf5-4e82-9a89-d783a176a41a.png",
       htmlContent: `
-                <div style="">
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                      <img src="https://via.placeholder.com/150x50.png?text=KOSIGN" alt="KOSIGN" style="height: 50px;">
-                      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; text-align: center;">
-                          <div>
-                              <span style="font-weight: bold;">Requester</span>
-                              <div style="border-top: 1px solid black; margin-top: 10px;"></div>
-                          </div>
-                          <div>
-                              <span style="font-weight: bold;">Manager 1</span>
-                              <div style="border-top: 1px solid black; margin-top: 10px;"></div>
-                          </div>
-                          <div>
-                              <span style="font-weight: bold;">Checker</span>
-                              <div style="border-top: 1px solid black; margin-top: 10px;"></div>
-                          </div>
-                          <div>
-                              <span style="font-weight: bold;">Approver</span>
-                              <div style="border-top: 1px solid black; margin-top: 10px;"></div>
-                          </div>
-                      </div>
-                  </div>
-
-                  <h2 style="text-align: center; margin-bottom: 20px;">Cash Advances Statement</h2>
-
-                  <div style="margin-bottom: 20px;">
-                      <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                          <span style="font-weight: bold;">Document No.</span>
-                          <span>ADV_202401_00004</span>
-                      </div>
-                      <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                          <span style="font-weight: bold;">Ledger</span>
-                          <span>B2B-Employee Meal</span>
-                      </div>
-                      <div style="display: flex; justify-content: space-between;">
-                          <span style="font-weight: bold;">Author</span>
-                          <span>Sann Puthy</span>
-                      </div>
-                  </div>
-              </div>
-        `,
-      status: 1,
-    },
-    {
-      id: 2,
-      title: "LMS Form",
-      cover:
-        "https://bizweb-doc.kosign.dev/api/v1/files/view_images?fileName=0efc6a93-293e-4ecb-98ae-167611635687.jpg",
-      htmlContent: `
-      <table>
+                <table>
         <thead>
             <tr>
                 <th>Task(14)</th>
@@ -193,7 +144,56 @@ function DrawerTemplate({ open, setOpen, handleDrawerClose, editorRef }: any) {
                 <td class="remark">Service (Spring)</td>
             </tr>
         </tbody>
-    </table>          
+    </table>
+        `,
+      status: 1,
+    },
+    {
+      id: 2,
+      title: "LMS Form",
+      cover:
+        "https://bizweb-doc.kosign.dev/api/v1/files/view_images?fileName=0efc6a93-293e-4ecb-98ae-167611635687.jpg",
+      htmlContent: `
+      <div style="">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                      <img src="https://via.placeholder.com/150x50.png?text=KOSIGN" alt="KOSIGN" style="height: 50px;">
+                      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; text-align: center;">
+                          <div>
+                              <span style="font-weight: bold;">Requester</span>
+                              <div style="border-top: 1px solid black; margin-top: 10px;"></div>
+                          </div>
+                          <div>
+                              <span style="font-weight: bold;">Manager 1</span>
+                              <div style="border-top: 1px solid black; margin-top: 10px;"></div>
+                          </div>
+                          <div>
+                              <span style="font-weight: bold;">Checker</span>
+                              <div style="border-top: 1px solid black; margin-top: 10px;"></div>
+                          </div>
+                          <div>
+                              <span style="font-weight: bold;">Approver</span>
+                              <div style="border-top: 1px solid black; margin-top: 10px;"></div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <h2 style="text-align: center; margin-bottom: 20px;">Cash Advances Statement</h2>
+
+                  <div style="margin-bottom: 20px;">
+                      <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                          <span style="font-weight: bold;">Document No.</span>
+                          <span>ADV_202401_00004</span>
+                      </div>
+                      <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                          <span style="font-weight: bold;">Ledger</span>
+                          <span>B2B-Employee Meal</span>
+                      </div>
+                      <div style="display: flex; justify-content: space-between;">
+                          <span style="font-weight: bold;">Author</span>
+                          <span>Sann Puthy</span>
+                      </div>
+                  </div>
+              </div>          
       `,
       status: 1,
     },

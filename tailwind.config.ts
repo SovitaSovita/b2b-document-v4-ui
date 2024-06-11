@@ -36,15 +36,9 @@ const config: Config = {
         ...require("daisyui/src/theming/themes")["light"],
         primary: "rgb(246, 248, 252)",
         secondary: "#2b67e8",
-        neutral: "rgb(107 114 128 / 1",
+        neutral: "rgb(107 114 128 / 1)",
       },
-      dark: {
-        ...require("daisyui/src/theming/themes")["dark"],
-        primary: "oklch(0.232607 0.013807 253.101)",
-        secondary: "teal",
-        neutral: "#1f29371a"
-      },
-    }, "dark", "cupcake", "cyberpunk"],
+    }, "light"],
   },
 };
 export default config;

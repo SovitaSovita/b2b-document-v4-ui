@@ -12,7 +12,7 @@ const Profile = ({ userInfo }: { userInfo: any }) => {
                             <div className="avatar card-actions justify-start">
                                 {
                                     userInfo?.prfl_PHTG != "" ? (
-                                        <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-1">
+                                        <div className="w-10 rounded-full ring ring-secondary ring-offset-base-100 ring-offset-1">
                                             <Image src={userInfo?.image ? userInfo.image : userInfo?.prfl_PHTG} alt="pf" width={140} height={100} loading="lazy" />
                                         </div>
                                     ) : (
