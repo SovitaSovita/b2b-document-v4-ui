@@ -43,8 +43,8 @@ function SearchComponent({ open, setOpen }: any) {
 
     function handleViewArticle(id: string) {
         getArticleDetail(id).then((res: any) => {
-            dispatch(getArticle(res))
-            addRecentSearch(res)
+            dispatch(getArticle(res.rec))
+            addRecentSearch(res.rec)
             handleClose()
         })
     }

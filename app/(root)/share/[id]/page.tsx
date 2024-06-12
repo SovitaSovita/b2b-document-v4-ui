@@ -11,8 +11,11 @@ export default function Page({ params }: { params: { id: string } }) {
 
     function handleViewArticle() {
         getArticleDetail(params?.id).then((res) => {
-            if (res) {
-                setArticleData(res)
+            if (res.code == "200") {
+                setArticleData(res.rec)
+            }
+            else if (res.code == "401") {
+                alert("No Permission")
             }
             else {
                 setArticleData(null)

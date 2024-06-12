@@ -1,5 +1,5 @@
 .tox-tinymce {
-    height: 100vh !important;
+    height: 100% !important;
 }
 
 .my-tinymce-container .tox-editor-header {

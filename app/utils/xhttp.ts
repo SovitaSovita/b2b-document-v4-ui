@@ -34,9 +34,9 @@ export async function getSession() {
   try {
     const headers = { 'Authorization': `Bearer ${token}` };
     const res = await fetch(`${API_M_BASE_URL}/session?token=${encodeURIComponent(token!)}&key=${encodeURIComponent(KEY!)}`, { headers });
-    if (!res.ok) {
+    if (res.status == 401) {
       if (typeof window !== "undefined") {
-        window.location.href = "/error";
+        window.location.href = "https://bizweb.kosign.dev/signin";
       }
     }
     const data = await res.json();
@@ -45,7 +45,7 @@ export async function getSession() {
     return session;
   } catch (e) {
     if (typeof window !== "undefined") {
-      window.location.href = "/error";
+      // window.location.href = "/error";
     }
   }
 }
@@ -77,7 +77,7 @@ async function responseErrorInterceptor({ status, code, ...err }: AxiosError) {
   if (isNotWorkError) {
     try {
       //
-      window.location.pathname = "/error"
+      // window.location.pathname = "/error"
     } catch {
       /** in case called from server ignore client side function*/
     }

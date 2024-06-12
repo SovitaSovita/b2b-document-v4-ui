@@ -5,7 +5,7 @@ import ihttpFile from "../utils/xhttp-file";
 export const getArticleDetail = async (id: string) => {
     try {
         const response = await ihttp.get(`/articles/listById?id=${id}`);
-        return response.data.rec.rec.rec;
+        return response.data.rec.rec;
     } catch (error) {
         return error;
     }

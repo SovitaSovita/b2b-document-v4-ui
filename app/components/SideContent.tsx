@@ -132,7 +132,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
 
     function handleViewArticle(id: string) {
         getArticleDetail(id).then((res) => {
-            dispatch(getArticle(res))
+            dispatch(getArticle(res.rec))
         })
         checkIsFavorite(session.userId, parseInt(id, 10), session.dvsn_CD).then((data) => {
             if (data != null) {
@@ -225,9 +225,9 @@ function SideContent({ openMainDrawer, setOpen }: any) {
 
     return (
         <Main open={openMainDrawer}>
-            <div className="drawer-content bg-primary min-h-screen flex flex-col items-center py-2 px-4">
+            <div className="drawer-content bg-primary h-screen flex flex-col items-center py-2 px-4">
                 {/* Page content here */}
-                <div className='flex justify-between items-center w-full h-full mb-3'>
+                <div className='flex justify-between items-center w-full mb-3'>
                     {/* <Breadcrumbs /> */}
                     <div data-tip="Create new" className='tooltip tooltip-left'>
                         {/* <div className='btn btn-ghost btn-circle' onClick={handleOpenTag}>
@@ -265,7 +265,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                     {
                         article?.content_body == null ? (<HomeContent handleOpenArticle={handleOpenArticle} />)
                             : (
-                                <div className='flex flex-col'>
+                                <div className='flex flex-col w-full h-full'>
                                     <div className='mb-4 flex items-center justify-between'>
                                         {/* Left side icons */}
                                         <div className='p-2'>
@@ -322,7 +322,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                 />
 
                 <SearchComponent open={openSearch} setOpen={setOpenSearch} />
-                <TagComponent open={openTag} setOpen={setOpenTag} user={session} sendDataToParent={null} selectedValue={null} setSelectedValue={null}/>
+                <TagComponent open={openTag} setOpen={setOpenTag} user={session} sendDataToParent={null} selectedValue={null} setSelectedValue={null} />
                 <AskToConfirmModal
                     open={openAskCf}
                     setOpen={setOpenAskCf}
