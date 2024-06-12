@@ -4,10 +4,14 @@ import { getArticleDetail } from "@/app/service/ArticleService";
 import { Editor } from "@tinymce/tinymce-react";
 import { useEffect, useState } from "react";
 import '../../../style/tiny.css'
+import { RootState } from "@/app/service/Redux/store/store";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 export default function Page({ params }: { params: { id: string } }) {
 
     const [articleData, setArticleData] = useState<any>();
+    const router = useRouter()
 
     function handleViewArticle() {
         getArticleDetail(params?.id).then((res) => {
@@ -22,8 +26,18 @@ export default function Page({ params }: { params: { id: string } }) {
             }
         })
     }
+    // const session: UserData = useSelector((state: RootState) => state?.article.session);
+
     useEffect(() => {
-        handleViewArticle()
+        console.log("session", localStorage.getItem("tid"));
+        if (localStorage.getItem("tid")) {
+            console.log("work");
+            handleViewArticle()
+        }
+        else {
+            alert("No Token")
+            // router.push("/error");
+        }
     }, [params?.id])
 
 
@@ -38,9 +52,9 @@ export default function Page({ params }: { params: { id: string } }) {
                                 <span>Article ID [{params?.id}] is not Found</span>
                             </div>
                             : (
-                                <div className="my-tinymce-container">
+                                <div className="my-tinymce-containers">
                                     <Editor
-                                        apiKey='51cakyf7l011kd34r23bib5jrvh79lb520v82wpid72wq92n'
+                                        apiKey='y7nhfoq6rca9j1otxq92aqdc64f3rm36gq92ebilc67dm6ni'
                                         initialValue={articleData?.content_body}
                                         init={{
                                             height: 800,
