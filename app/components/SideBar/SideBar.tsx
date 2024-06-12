@@ -58,7 +58,7 @@ function SideBar(props: any) {
     function handleViewArticle(id: string) {
         getArticleDetail(id).then((data) => {
             setActiveItemId(id)
-            dispatch(getArticle(data))
+            dispatch(getArticle(data.rec))
         })
 
         // favorite
@@ -85,6 +85,7 @@ function SideBar(props: any) {
         <Drawer
             sx={{
                 width: drawerWidth,
+                height: "100%",
                 flexShrink: 0,
                 '& .MuiDrawer-paper': {
                     width: drawerWidth,
@@ -96,8 +97,8 @@ function SideBar(props: any) {
             variant="persistent"
             anchor="left"
             open={openMainDrawer}>
-            <ul className="menu menu-dropdown-show w-full bg-base-100 text-base-content pt-0">
-                <div className='sticky top-0 z-50'>
+            <ul className="menu pb-0 menu-dropdown-show w-full bg-base-100 text-base-content pt-0">
+                <div className='sticky bg-base-100 top-0 z-50'>
                     <HeaderSidebar handleOpenArticle={handleOpenArticle} />
 
                     {/* Favorite */}
@@ -128,7 +129,8 @@ function SideBar(props: any) {
                         </details >
                     </li >
 
-                    <div className="css-o2c9dn my-3"></div></div>
+                    <div className="css-o2c9dn my-3"></div>
+                </div>
 
                 {
                     isLoading ? <LoadingCustom /> :
@@ -175,8 +177,8 @@ function SideBar(props: any) {
                                                                 filterArticlesByTagId(item.id).map(item => (
                                                                     <li key={item?.id} onClick={() => handleViewArticle(item.id.toString())}>
                                                                         <a className={activeItemId === item.id.toString()
-                                                                            ? "hover:bg-base-100 line-clamp-1 bg-base-100 border-r-4 border-secondary rounded-none"
-                                                                            : "hover:bg-base-100 line-clamp-1 hover:border-l-4 border-secondary rounded-none transition-all"}>
+                                                                            ? "line-clamp-1 rounded-lg"
+                                                                            : "line-clamp-1 hover:bg-transparent hover:font-semibold hover:ml-2 hover:text-secondary rounded-lg transition"}>
                                                                             {item?.title}
                                                                         </a>
                                                                     </li>
@@ -199,6 +201,9 @@ function SideBar(props: any) {
                         )
                 }
             </ul >
+            {/* <div className='sticky bottom-0 bg-secondary border-t p-4'>
+                Hello
+            </div> */}
             <UpdateTagComponent open={openTag} setOpen={setOpenTag} tagUpdateData={tagUpdateData} TAGS={TAGS} />
             <UpdateArticleModal open={openArticle} setOpen={setOpenArticle} session={session} articleData={null} />
             <DeleteTagComponent open={openTags} setOpen={setOpenTags} session={session} tagDeleteData={tagDeleteData} />

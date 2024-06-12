@@ -321,3 +321,9 @@
   width: 100%;
   filter: drop-shadow(0 0 23px var(--animation-color))
 }
+
+
+.menu :where(li > details > summary):after,
+.menu :where(li > .menu-dropdown-toggle):after {
+  /* display: none; */
+}

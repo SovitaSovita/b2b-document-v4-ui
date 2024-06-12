@@ -77,7 +77,7 @@ function CKEditorComponent(props: any) {
         fileInput.click();
     };
 
-    
+
 
     return (
         <div>
@@ -97,13 +97,13 @@ function CKEditorComponent(props: any) {
                         });
                     },
                     plugins: [
-                        'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export',
+                        'autolink',
                         'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
-                        'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
+                        'fullscreen', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
                     ],
                     toolbar: 'undo redo | casechange blocks | bold italic backcolor | ' +
                         'alignleft aligncenter alignright alignjustify | ' +
-                        'bullist numlist checklist outdent indent | removeformat | insertFileBtn a11ycheck code table help',
+                        'bullist numlist checklist outdent indent | removeformat | insertFileBtn code table help',
                     images_upload_handler: handleImageUpload,
                     // content_style: 'body {font - family:Helvetica,Arial,sans-serif; font-size:14px }',
                 }}

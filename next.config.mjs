@@ -6,6 +6,14 @@ const nextConfig = {
             'platform.bizplay.co.kr',
             'lh3.googleusercontent.com',
             'cdn.create.microsoft.com'],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'bizweb-doc.kosign.dev',
+                port: '',
+                pathname: '/api/v1/files/view_images',
+            },
+        ],
         loader: 'default',
     },
     env: {

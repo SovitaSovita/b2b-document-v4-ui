@@ -54,10 +54,9 @@ function HeaderSidebar({ handleOpenArticle }: any) {
     const dispatch = useDispatch();
     const session: UserData = useSelector((state: RootState) => state?.article.session);
 
-    const [activeItems, setActiveItem] = useState("PRIVATE");
+    //const [activeItems, setActiveItem] = useState("PRIVATE");
     const optionGETdata = useSelector((state: RootState) => state?.article.getOptionData);
-
-
+    
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -69,22 +68,24 @@ function HeaderSidebar({ handleOpenArticle }: any) {
 
     //To filter tag and article data for 3 option
     const handleGetTagNArticle = (option: string) => {
+        console.log("getOptionDataVanda",option);
         if (option == "DEPARTMENT") {
-            setActiveItem(option)
+            optionGETdata
             dispatch(getOptionData(option));
         }
         else if (option == "PRIVATE") {
-            setActiveItem(option)
+            optionGETdata
             dispatch(getOptionData(option));
         }
         else if (option == "PUBLIC") {
-            setActiveItem(option)
+            optionGETdata
             dispatch(getOptionData(option));
         }
         else dispatch(getOptionData(option));
 
         handleClose()
     }
+    
     const splitString = (username: string) => {
         if (username) {
             const parts = username?.split(" ");
@@ -150,9 +151,9 @@ function HeaderSidebar({ handleOpenArticle }: any) {
                     <div className='flex justify-between w-full items-center'>
                         <div className='flex items-center'>
                             <div className='w-7 h-7 bg-blue-500 rounded-md flex justify-center items-center text-base-100 text-sm font-medium'>
-                                P
+                                C
                             </div>
-                            <div className='ml-2 text-sm font-medium'>Public</div>
+                            <div className='ml-2 text-sm font-medium'>Company</div>
                         </div>
                         {
                             optionGETdata === "PUBLIC" && <CheckOutlinedIcon />

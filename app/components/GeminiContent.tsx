@@ -15,6 +15,7 @@ function GeminiContent({ setIsHideClass, isHideClass }: any) {
     const [promptValue, setPromptValue] = useState("");
     const handleChange = (event: any) => {
         setPromptValue(event.target.value)
+        console.log("dydy>>>",event.target.value)
     }
 
     const getResponseFromGemini = () => {

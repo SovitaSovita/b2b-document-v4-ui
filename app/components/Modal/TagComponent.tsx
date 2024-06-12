@@ -8,13 +8,15 @@ import CustomAlert from '../Material/CustomAlert';
 import { isRender } from '@/app/service/Redux/articleDetailSlice';
 import { RootState } from '@/app/service/Redux/store/store';
 
-function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
-    const [selectedValue, setSelectedValue] = useState(1);
+
+function TagComponent({ open, setOpen, user, sendDataToParent, selectedValue, setSelectedValue }: any) {
     const handleSelectChange = (event: any) => {
         const newInputValue = event.target.value;
         setSelectedValue(parseInt(newInputValue));
         console.log("dadaw3",newInputValue);
     };
+
+    
 
     const dispatch = useDispatch()
     const [inputVal, setInputVal] = useState<string>();
@@ -29,6 +31,9 @@ function TagComponent({ open, setOpen, user, sendDataToParent }: any) {
     const handleClose = () => {
         setOpen(false)
     };
+    
+
+
 
     const onChange = (e: any) => {
         const inputData = e.target.value;

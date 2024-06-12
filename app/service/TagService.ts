@@ -17,7 +17,7 @@ export const GetTagAndArticle = async (dep_id: any, status: number, username: an
             plusUserName = `&username=${username}`;
         }
         if (dep_id != null) {
-            plusDept_id = `&dep_id=${dep_id}`;
+            plusDept_id = `&dept_id=${dep_id}`;
         }
         const response = await ihttp.get(`/DocTag/listTagAndAtricle?status=${status}${plusDept_id}${plusUserName}`); //&username=sovita
         // const response = await ihttp.get(`/DocTag/listTagAndAtricle?dept_id=50&status=1`);

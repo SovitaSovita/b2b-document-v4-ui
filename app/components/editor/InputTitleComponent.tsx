@@ -30,6 +30,8 @@ function InputTitleComponent(props: any) {
         statusTag,
         selectedValue,
         setSelectedValue,
+        selectVal,
+        setSelectVal,
         isLoading
     } = props
 
@@ -48,7 +50,6 @@ function InputTitleComponent(props: any) {
 
     const [openTag, setOpenTag] = React.useState(false);
     const handleOpenTag = (va: any) => {
-        console.log("vanafaf")
         setOpenTag(true);
     }
     const onchange = (e: any) => {
@@ -59,7 +60,7 @@ function InputTitleComponent(props: any) {
     const handleSelectChange = (event: any) => {
         const newValue = event.target.value
         setSelectedValue(newValue);
-
+        console.log("testSelect",newValue)
         if (newValue == 0) {
             getTagAndArticleFunction(null, 0, session?.userId);
         }
@@ -170,7 +171,7 @@ function InputTitleComponent(props: any) {
                                     renderInput={(params) => <TextField {...params} placeholder="Search Tag name" />}
                                 />
                                 < div onClick={handleOpenTag}>
-                                    <AddSquare size="28" className='hover:scale-110 transition-all' style={{ cursor: "pointer" }} />
+                                    <AddSquare size="28" className='hover:scale-110 transition-all' style={{ cursor: "pointer" }}/>
                                 </div>
                             </div>
                         ) : (
@@ -184,7 +185,7 @@ function InputTitleComponent(props: any) {
                         <Input
                             size='sm'
                             onChange={onchange}
-                            defaultValue={title}
+                            defaultValue={articleData?.title}
                             autoFocus
                             placeholder="Enter Sub Title"
                         />
@@ -216,7 +217,7 @@ function InputTitleComponent(props: any) {
                     </Button>
                 </div>
             </div>
-            <TagComponent open={openTag} setOpen={setOpenTag} user={session} sendDataToParent={handleChildData} selectedValue={selectedValue} />
+            <TagComponent open={openTag} setOpen={setOpenTag} user={session} sendDataToParent={handleChildData} selectedValue={selectedValue}  setSelectedValue={setSelectedValue}/>
         </>
     )
 }
