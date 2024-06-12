@@ -12,8 +12,8 @@ function NoProfileComponent({ username, size }: any) {
 
     return (
         <div className="avatar placeholder">
-            <div className={`bg-neutral text-neutral-content rounded-full ${size}`}>
-                <span>{result}</span>
+            <div className={`bg-gradient-to-r from-cyan-500 to-blue-500 text-neutral-content rounded-full ${size}`}>
+                <span className='font-bold'>{result}</span>
             </div>
         </div>
     )

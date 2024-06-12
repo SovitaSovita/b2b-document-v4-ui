@@ -23,6 +23,8 @@ import { RootState } from '@/app/service/Redux/store/store';
 import { getSession } from '@/app/utils/xhttp';
 import LoadingCustom from '../Material/Loading';
 import { Tooltip } from '@nextui-org/react';
+import { MenuBoard } from 'iconsax-react';
+import { useRouter } from 'next/navigation';
 
 const drawerWidth = 320;
 
@@ -79,6 +81,7 @@ function SideBar(props: any) {
     const [openTagDelete, setopenTagDelete] = React.useState(false);
     const handleOpenArticle = () => setOpenArticle(true);
     const [bg_color, setBg_color] = useState("");
+    const router = useRouter()
 
 
     return (
@@ -97,9 +100,14 @@ function SideBar(props: any) {
             variant="persistent"
             anchor="left"
             open={openMainDrawer}>
-            <ul className="menu pb-0 menu-dropdown-show w-full bg-base-100 text-base-content pt-0">
+            <ul className="menu pb-0 menu-dropdown-show w-full bg-base-100 text-base-content pt-0 font-Figtree">
                 <div className='sticky bg-base-100 top-0 z-50'>
-                    <HeaderSidebar handleOpenArticle={handleOpenArticle} />
+                    <HeaderSidebar handleOpenArticle={handleOpenArticle} isForm={false} />
+
+                    <div onClick={() => router.push("/form")} className='mt-3 flex items-center cursor-pointer rounded-lg border py-2 px-4'>
+                        <MenuBoard />
+                        <span className='ml-3'>My Form</span>
+                    </div>
 
                     {/* Favorite */}
                     <li className='mb-2 mt-4'>
@@ -176,11 +184,11 @@ function SideBar(props: any) {
                                                             filterArticlesByTagId(item.id).length > 0 ?
                                                                 filterArticlesByTagId(item.id).map(item => (
                                                                     <li key={item?.id} onClick={() => handleViewArticle(item.id.toString())}>
-                                                                        <a className={activeItemId === item.id.toString()
-                                                                            ? "line-clamp-1 rounded-lg"
-                                                                            : "line-clamp-1 hover:bg-transparent hover:font-semibold hover:ml-2 hover:text-secondary rounded-lg transition"}>
+                                                                        <div className={activeItemId === item.id.toString()
+                                                                            ? "line-clamp-1 rounded-lg hover:bg-transparent text-secondary ml-2 font-semibold"
+                                                                            : "line-clamp-1 hover:bg-transparent hover:font-semibold hover:ml-2 hover:text-secondary rounded-lg"}>
                                                                             {item?.title}
-                                                                        </a>
+                                                                        </div>
                                                                     </li>
                                                                 )) : (
                                                                     <div className='cursor-default flex flex-col justify-center items-center'>

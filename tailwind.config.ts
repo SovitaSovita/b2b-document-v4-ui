@@ -36,7 +36,7 @@ const config: Config = {
         ...require("daisyui/src/theming/themes")["light"],
         primary: "rgb(246, 248, 252)",
         secondary: "#2b67e8",
-        neutral: "rgb(107 114 128 / 1)",
+        neutral: "#fff",
       },
     }, "light"],
   },
