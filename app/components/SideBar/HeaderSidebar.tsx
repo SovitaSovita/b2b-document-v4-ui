@@ -71,7 +71,6 @@ function HeaderSidebar({ handleOpenArticle, isForm }: any) {
 
     //To filter tag and article data for 3 option
     const handleGetTagNArticle = (option: string) => {
-        console.log("getOptionDataVanda", option);
         if (option == "DEPARTMENT") {
             optionGETdata
             dispatch(getOptionData(option));
@@ -102,7 +101,7 @@ function HeaderSidebar({ handleOpenArticle, isForm }: any) {
     }
 
     return (
-        <div className="p-2 mt-3 pl-1 bg-base-100 border rounded-lg w-[305px] flex justify-between">
+        <div className="p-2 mt-3 pl-1 border rounded-lg w-[305px] flex justify-between">
             <div className='flex items-center cursor-pointer' onClick={handleClick}>
                 {
                     handleOpenArticle && <UnfoldMoreRoundedIcon className='text-gray-500 text-[19px]' />
@@ -117,6 +116,7 @@ function HeaderSidebar({ handleOpenArticle, isForm }: any) {
                 </span>
                 {/* <Button onClick={handleDrawerClose}>Open drawer</Button> */}
             </div>
+
             {
                 handleOpenArticle && (
                     <div>

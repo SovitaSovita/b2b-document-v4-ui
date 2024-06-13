@@ -8,7 +8,7 @@ import Profile from './Profile/Profile';
 import ProfileDrawer from './Profile/ProfileDrawer';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import ReplyAllOutlinedIcon from '@mui/icons-material/ReplyAllOutlined';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import HomeContent from './HomeContent';
 
 import {
@@ -31,6 +31,7 @@ import { getArticleDetail } from '../service/ArticleService';
 import RenderArticle from './RenderArticle';
 import CKEditorComponent from './editor/CKEditorComponent';
 import { User } from '@nextui-org/react';
+import { Chart21, ChartSuccess, ClipboardExport } from 'iconsax-react';
 
 
 
@@ -74,9 +75,6 @@ function SideContent({ openMainDrawer, setOpen }: any) {
     const handleClose = () => {
         setOpen(false)
     };
-
-    const [openSearch, setOpenSearch] = React.useState(false);
-    const handleOpenSearch = () => setOpenSearch(true);
 
     const [openTag, setOpenTag] = React.useState(false);
     const handleOpenTag = () => setOpenTag(true);
@@ -222,114 +220,75 @@ function SideContent({ openMainDrawer, setOpen }: any) {
 
     }
 
+    const pathname = usePathname()
+
 
     return (
         <Main open={openMainDrawer}>
-            <div className="drawer-content bg-primary h-screen flex flex-col items-center py-2 px-4">
-                {/* Page content here */}
-                <div className='flex justify-between items-center w-full mb-3'>
-                    {/* <Breadcrumbs /> */}
-                    <div data-tip="Create new" className='tooltip tooltip-left'>
-                        {/* <div className='btn btn-ghost btn-circle' onClick={handleOpenTag}>
-                        <CreateNewFolderOutlinedIcon />
-                    </div> */}
-                    </div>
-
-                    <label className="input input-bordered flex items-center gap-2 bordered input-sm w-full max-w-[200px]">
-                        <input type="button" onClick={handleOpenSearch} className="grow" value="Search" />
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" /></svg>
-                    </label>
-
-                    <div className='flex items-center'>
-                        <LeftDrawerCustom>
-                            {/*left Sidebar content here */}
-                            <Profile userInfo={session} />
-                            <ProfileDrawer userInfo={session} />
-                            <li>
-                                <div
-                                    role="button"
-                                    onClick={() => {
-                                        localStorage.removeItem("tid");
-                                        router.push("/error");
-                                    }}
-                                    className="text-red-500"
-                                >
-                                    Sign out
+            {
+                article?.content_body == null ? (<HomeContent handleOpenArticle={handleOpenArticle} />)
+                    : (
+                        <div className='flex flex-col w-full h-full'>
+                            <div className='mb-4 flex items-center justify-between'>
+                                {/* Left side icons */}
+                                <div className='p-2'>
+                                    <User
+                                        name={article?.username}
+                                        description={article?.create_date ? convertTimestamp(article?.create_date) : convertTimestamp(article?.modified_date)}
+                                        avatarProps={{
+                                            src: article?.image
+                                        }}
+                                    />
                                 </div>
-                            </li>
-                        </LeftDrawerCustom>
-                    </div>
-                </div>
-
-                <div className="rounded-lg bg-base-100 border w-full h-full">
-                    {
-                        article?.content_body == null ? (<HomeContent handleOpenArticle={handleOpenArticle} />)
-                            : (
-                                <div className='flex flex-col w-full h-full'>
-                                    <div className='mb-4 flex items-center justify-between'>
-                                        {/* Left side icons */}
-                                        <div className='p-2'>
-                                            <User
-                                                name={article?.username}
-                                                description={article?.create_date ? convertTimestamp(article?.create_date) : convertTimestamp(article?.modified_date)}
-                                                avatarProps={{
-                                                    src: article?.image
-                                                }}
-                                            />
-                                        </div>
-                                        {/* Right side icons */}
-                                        <div className="flex items-center bg-primary rounded-bl-lg p-2 border">
-                                            {/* Favorite icons*/}
-                                            {
-                                                isFavorites ? (
-                                                    <FavoriteBorderOutlinedIcon onClick={() => handleDeleteFavorite(article?.id, session.userId)} className='mr-3' style={{ cursor: 'pointer', color: 'red' }} />
-                                                ) : (
-                                                    <FavoriteBorderOutlinedIcon onClick={() => handleAddFavorite(article?.id)} className='mr-3' style={{ cursor: 'pointer', color: 'black' }} />
-                                                )
-                                            }
-                                            <TelegramShareButton
-                                                url={`${UI_BASE_URL}share/${article?.id}`}
-                                            >
-                                                <ReplyAllOutlinedIcon className='mr-3' />
-                                            </TelegramShareButton>
-                                            {
-                                                session?.userId === article?.username && (
-                                                    <div className='flex justify-between w-10'>
-                                                        <EditIcon className="cursor-pointer" variant="text" onClick={() => handleOpenArticle(article)} />
-                                                        <DeleteIcon className="cursor-pointer" onClick={() => handleOpenAskCf(article?.id)} />
-                                                    </div>
-                                                )
-                                            }
-                                        </div>
-                                    </div>
-                                    <RenderArticle body={article?.content_body} />
+                                {/* Right side icons */}
+                                <div className="flex items-center bg-primary rounded-bl-lg p-2 border">
+                                    {/* Favorite icons*/}
+                                    {
+                                        isFavorites ? (
+                                            <FavoriteBorderOutlinedIcon onClick={() => handleDeleteFavorite(article?.id, session.userId)} className='mr-3' style={{ cursor: 'pointer', color: 'red' }} />
+                                        ) : (
+                                            <FavoriteBorderOutlinedIcon onClick={() => handleAddFavorite(article?.id)} className='mr-3' style={{ cursor: 'pointer', color: 'black' }} />
+                                        )
+                                    }
+                                    <TelegramShareButton
+                                        url={`${UI_BASE_URL}share/${article?.id}`}
+                                    >
+                                        <ReplyAllOutlinedIcon className='mr-3' />
+                                    </TelegramShareButton>
+                                    {
+                                        session?.userId === article?.username && (
+                                            <div className='flex justify-between w-10'>
+                                                <EditIcon className="cursor-pointer" variant="text" onClick={() => handleOpenArticle(article)} />
+                                                <DeleteIcon className="cursor-pointer" onClick={() => handleOpenAskCf(article?.id)} />
+                                            </div>
+                                        )
+                                    }
                                 </div>
-                            )
-                    }
-                </div>
-
-                {/* <label htmlFor="my-drawer-2" className="btn btn-circle drawer-button lg:hidden">
+                            </div>
+                            <RenderArticle body={article?.content_body} />
+                        </div>
+                    )
+            }
+            {/* <label htmlFor="my-drawer-2" className="btn btn-circle drawer-button lg:hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </label> */}
-                <CustomAlert
-                    open={isErrorAlert.open}
-                    setOpen={(open: boolean) => {
-                        setIsErrorAlert({ ...isErrorAlert, open });
-                    }}
-                    message={isErrorAlert.message}
-                    type={isErrorAlert.type}
-                    duration={isErrorAlert.duration}
-                />
+            <CustomAlert
+                open={isErrorAlert.open}
+                setOpen={(open: boolean) => {
+                    setIsErrorAlert({ ...isErrorAlert, open });
+                }}
+                message={isErrorAlert.message}
+                type={isErrorAlert.type}
+                duration={isErrorAlert.duration}
+            />
 
-                <SearchComponent open={openSearch} setOpen={setOpenSearch} />
-                <TagComponent open={openTag} setOpen={setOpenTag} user={session} sendDataToParent={null} selectedValue={null} setSelectedValue={null} />
-                <AskToConfirmModal
-                    open={openAskCf}
-                    setOpen={setOpenAskCf}
-                    handleSubmitCallback={handleDeleteArticle}
-                />
-                <UpdateArticleModal open={openArticle} setOpen={setOpenArticle} session={session} articleData={articleData} handleViewArticle={handleViewArticle} />
-            </div>
+            <TagComponent open={openTag} setOpen={setOpenTag} user={session} sendDataToParent={null} selectedValue={null} setSelectedValue={null} />
+            <AskToConfirmModal
+                open={openAskCf}
+                setOpen={setOpenAskCf}
+                handleSubmitCallback={handleDeleteArticle}
+            />
+            <UpdateArticleModal open={openArticle} setOpen={setOpenArticle} session={session} articleData={articleData} handleViewArticle={handleViewArticle} />
         </Main>
     )
 }
