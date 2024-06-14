@@ -106,7 +106,7 @@ function Page() {
             </td>
             {/* <td>  Agile/Fast Work Speed, Persistence regardless of works' difficulty, Efficiency in handling works</td> */}
             <td style={{background:"#cadbca"}}>
-              {/* <input type="text" style={{background:"#cadbca"}} value={value} onChange={handleChange} /> */}
+              {/* <input type="text" style={{background:"#cadbca"}} className="font-bold" value={value} onChange={handleChange} /> */}
             </td>
           </tr>
           {/* row 3 */}
@@ -155,7 +155,7 @@ function Page() {
             </td>
             <td> Ability to accurately understand the nature of the complex problems, and establish direction and countermeasures to make quick decisions</td>
             <td style={{background:"#cadbca"}}>
-              {/* <input type="text" style={{background:"#cadbca"}} value={value} onChange={handleChange} /> */}
+              {/* <input type="text" style={{background:"#cadbca"}} className="font-bold" value={value} onChange={handleChange} /> */}
             </td>
           </tr>
 
