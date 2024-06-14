@@ -17,7 +17,7 @@ import UpdateTagComponent from '../Modal/UpdateTagComponent';
 import { checkIsFavorite } from '../../service/FavouriteService';
 import DeleteTagComponent from '../Modal/DeleteTagComponent';
 import UpdateArticleModal from '../Modal/ArticleModal';
-import { Drawer } from '@mui/material';
+import { Box, Drawer } from '@mui/material';
 import HeaderSidebar from './HeaderSidebar';
 import { RootState } from '@/app/service/Redux/store/store';
 import { getSession } from '@/app/utils/xhttp';
@@ -85,11 +85,11 @@ function SideBar(props: any) {
 
 
     return (
-        <Drawer
+        <Box
             sx={{
                 width: drawerWidth,
                 height: "100%",
-                flexShrink: 0,
+                // flexShrink: 0,
                 '& .MuiDrawer-paper': {
                     width: drawerWidth,
                     boxSizing: 'border-box',
@@ -97,22 +97,18 @@ function SideBar(props: any) {
                     zIndex: 40
                 },
             }}
-            variant="persistent"
-            anchor="left"
-            open={openMainDrawer}>
-            <ul className="menu pb-0 menu-dropdown-show w-full bg-base-100 text-base-content pt-0 font-Figtree">
-                <div className='sticky bg-base-100 top-0 z-50'>
+        // variant="persistent"
+        // anchor="left"
+        // open={openMainDrawer}
+        >
+            <ul className="menu pb-0 menu-dropdown-show w-full text-base-content pt-0 font-Figtree">
+                <div className='sticky top-0 z-50'>
                     <HeaderSidebar handleOpenArticle={handleOpenArticle} isForm={false} />
-
-                    <div onClick={() => router.push("/form")} className='mt-3 flex items-center cursor-pointer rounded-lg border py-2 px-4'>
-                        <MenuBoard />
-                        <span className='ml-3'>My Form</span>
-                    </div>
 
                     {/* Favorite */}
                     <li className='mb-2 mt-4'>
                         <details>
-                            <summary className="border bg-base-100 font-semibold text-[15px] font-mono">
+                            <summary className="border font-semibold text-[15px] font-mono">
                                 <FavoriteBorderOutlinedIcon className='text-[18px]' />
                                 Favorites
                             </summary>
@@ -215,7 +211,7 @@ function SideBar(props: any) {
             <UpdateTagComponent open={openTag} setOpen={setOpenTag} tagUpdateData={tagUpdateData} TAGS={TAGS} />
             <UpdateArticleModal open={openArticle} setOpen={setOpenArticle} session={session} articleData={null} />
             <DeleteTagComponent open={openTags} setOpen={setOpenTags} session={session} tagDeleteData={tagDeleteData} />
-        </Drawer>
+        </Box>
 
     )
 }
