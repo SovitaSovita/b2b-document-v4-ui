@@ -31,7 +31,8 @@ import { getArticleDetail } from '../service/ArticleService';
 import RenderArticle from './RenderArticle';
 import CKEditorComponent from './editor/CKEditorComponent';
 import { User } from '@nextui-org/react';
-import { Chart21, ChartSuccess, ClipboardExport } from 'iconsax-react';
+import { Chart21, ChartSuccess, ClipboardExport, Printer } from 'iconsax-react';
+import { useReactToPrint } from 'react-to-print';
 
 
 
@@ -57,6 +58,11 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
 }));
 
 function SideContent({ openMainDrawer, setOpen }: any) {
+    // Print
+    const componentRef = useRef<HTMLDivElement>(null);
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current || null
+    })
 
     const { article }: { article: any } = useSelector((state: RootState) => state?.article);
     const router = useRouter();
@@ -242,6 +248,10 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                                 </div>
                                 {/* Right side icons */}
                                 <div className="flex items-center bg-primary rounded-bl-lg p-2 border">
+                                    {/* Print */}
+                                    <span style={{ cursor: 'pointer' }} onClick={handlePrint}>
+                                        <Printer size='22' color='black' className='mr-3' />
+                                    </span>
                                     {/* Favorite icons*/}
                                     {
                                         isFavorites ? (
@@ -265,7 +275,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                                     }
                                 </div>
                             </div>
-                            <RenderArticle body={article?.content_body} />
+                            <RenderArticle ref={componentRef} body={article?.content_body} />
                         </div>
                     )
             }
