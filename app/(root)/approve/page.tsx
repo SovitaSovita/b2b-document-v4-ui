@@ -3,7 +3,7 @@ import { POST } from '@/app/api/test/route';
 import { Button } from '@nextui-org/react'
 import React, { useEffect, useState } from 'react'
 
-function page() {
+function Page() {
     const handleSubmit = () => {
         // Create a form element
         const form = document.createElement('form');
@@ -66,4 +66,4 @@ function page() {
     )
 }
 
-export default page
+export default Page
