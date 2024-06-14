@@ -4,7 +4,7 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 const xhttpClient = axios.create({
-  baseURL: 'https://generativelanguage.googleapis.com',
+  baseURL: 'https://',
 });
 
 async function requestInterceptor(config: InternalAxiosRequestConfig) {
@@ -21,7 +21,7 @@ async function responseErrorInterceptor({ status, code, ...err }: AxiosError) {
   if (isNotWorkError) {
     try {
       //
-      window.location.pathname = "/error"
+      // window.location.pathname = "/error"
     } catch {
       /** in case called from server ignore client side function*/
     }

@@ -1,4 +1,5 @@
 import React from 'react'
+import image from '../myform/K.O.S.I.G.N-CAMBODIA-INVESTMENT-CO.-LTD-300x300.webp'
 import { Table, TableColumn, TableHeader } from '@nextui-org/react'
 
 

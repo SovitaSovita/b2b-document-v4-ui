@@ -19,9 +19,9 @@ function FormSideBar() {
 
             <ul className="rounded-box mt-6 px-2 text-gray-600 text-sm">
                 <li className='mb-6'>
-                    <Link href={"/form/myform"}
+                    <Link href={"/myform"}
                         className={
-                            pathname === "/form/myform" ?
+                            pathname === "/myform" ?
                                 `text-secondary bg-primary-50 py-1.5 px-4 rounded-lg flex items-center`
                                 : `hover:border-none hover:text-secondary hover:ml-2 transition-all flex items-center`}>
                         <Chart21 className='mr-2' />
@@ -29,9 +29,9 @@ function FormSideBar() {
                     </Link>
                 </li>
                 <li className='mb-6'>
-                    <Link href={"/form/request"}
+                    <Link href={"/request"}
                         className={
-                            pathname === "/form/request" ?
+                            pathname === "/request" ?
                                 `text-secondary bg-primary-50 py-1.5 px-4 rounded-lg flex items-center`
                                 : `hover:border-none hover:text-secondary hover:ml-2 transition-all flex items-center`}
                     >
@@ -40,9 +40,9 @@ function FormSideBar() {
                     </Link>
                 </li>
                 <li className=''>
-                    <Link href={"/form/approve"}
+                    <Link href={"/approve"}
                         className={
-                            pathname === "/form/approve" ?
+                            pathname === "/approve" ?
                                 `text-secondary bg-primary-50 py-1.5 px-4 rounded-lg flex items-center`
                                 : `hover:border-none hover:text-secondary hover:ml-2 transition-all flex items-center`}
                     >
