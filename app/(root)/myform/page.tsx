@@ -3,7 +3,7 @@ import image from '../myform/K.O.S.I.G.N-CAMBODIA-INVESTMENT-CO.-LTD-300x300.web
 import { Table, TableColumn, TableHeader } from '@nextui-org/react'
 
 
-function page() {
+function Page() {
     return (
         <div>
             <img style={{ width: '150px', marginTop: '-55px' }} src='https://www.caftkh.org/wp-content/uploads/2021/08/K.O.S.I.G.N-CAMBODIA-INVESTMENT-CO.-LTD-300x300.png' />
@@ -22,4 +22,4 @@ function page() {
     )
 }
 
-export default page
+export default Page
