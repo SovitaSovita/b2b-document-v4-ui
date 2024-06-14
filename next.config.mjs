@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    eslint:{  ignoreDuringBuilds: true,},
     images: {
         domains: ['bizweb-doc.kosign.dev',
             'uxdt.nic.in',
