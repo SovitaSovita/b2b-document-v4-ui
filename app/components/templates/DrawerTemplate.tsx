@@ -9,6 +9,7 @@ import Image from "next/image";
 import { ArrowCircleRight, ArrowSquareRight } from "iconsax-react";
 import AskToReplaceTemplate from "../Modal/AskToReplaceTemplate";
 import { Backdrop, Box, Fade, Modal } from "@mui/material";
+import { HtmlContext } from "next/dist/shared/lib/html-context.shared-runtime";
 
 const drawerWidth = 240;
 
@@ -222,6 +223,7 @@ function DrawerTemplate({ open, setOpen, handleDrawerClose, editorRef }: any) {
       `,
       status: 1,
     },
+
   ];
 
   const handleClose = () => {

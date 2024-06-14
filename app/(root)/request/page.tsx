@@ -1,12 +1,12 @@
 "use client";
 import React, { useState } from 'react'
 
-function page() {
-  const [value, setValue] = useState("0");
-  const handleChange = (e:any) => {
-    const inputVal = e.target.value 
-    setValue(inputVal);
-  };
+function Page() {
+  // const [value, setValue] = useState("0");
+  // const handleChange = (e:any) => {
+  //   const inputVal = e.target.value 
+  //   setValue(inputVal);
+  // };
   return (
     <div className="overflow-x-auto">
       <table className="table">
@@ -17,7 +17,7 @@ function page() {
             <th></th>
             <th></th>
             <th style={{background: "#efefef"}} className="font-bold">
-              <input type="text" style={{background: "#efefef"}} className="font-bold" value={value} onChange={handleChange} />
+              {/* <input type="text" style={{background: "#efefef"}} className="font-bold" value={value} onChange={handleChange} /> */}
             </th>
             
           </tr>
@@ -80,7 +80,7 @@ function page() {
 
             </td>
             <td style={{background: "#efefef"}}>
-              <input type="text" style={{background: "#efefef"}} className="font-bold" value={value} onChange={handleChange} />
+              {/* <input type="text" style={{background: "#efefef"}} className="font-bold" value={value} onChange={handleChange} /> */}
             </td>
           </tr>
           {/* row 2 */}
@@ -104,9 +104,9 @@ function page() {
                 </div>
               </div>
             </td>
-            <td>  Agile/Fast Work Speed, Persistence regardless of works' difficulty, Efficiency in handling works</td>
+            {/* <td>  Agile/Fast Work Speed, Persistence regardless of works' difficulty, Efficiency in handling works</td> */}
             <td style={{background:"#cadbca"}}>
-              <input type="text" style={{background:"#cadbca"}} className="font-bold" value={value} onChange={handleChange} />
+              {/* <input type="text" style={{background:"#cadbca"}} className="font-bold" value={value} onChange={handleChange} /> */}
             </td>
           </tr>
           {/* row 3 */}
@@ -131,7 +131,7 @@ function page() {
             </td>
             <td> Handle works with attention to detail, deliver high quality result within deadline</td>
             <td style={{background:"#cadbca"}}>
-              <input type="text" className="font-bold" style={{background:"#cadbca"}} value={value} onChange={handleChange} />
+              {/* <input type="text" className="font-bold" style={{background:"#cadbca"}} value={value} onChange={handleChange} /> */}
             </td>
           </tr>
           {/* row 4 */}
@@ -155,7 +155,7 @@ function page() {
             </td>
             <td> Ability to accurately understand the nature of the complex problems, and establish direction and countermeasures to make quick decisions</td>
             <td style={{background:"#cadbca"}}>
-              <input type="text" style={{background:"#cadbca"}} className="font-bold" value={value} onChange={handleChange} />
+              {/* <input type="text" style={{background:"#cadbca"}} className="font-bold" value={value} onChange={handleChange} /> */}
             </td>
           </tr>
 
@@ -180,7 +180,7 @@ function page() {
             </td>
             <td >  Ability to learn and adapt quickly especially to new works, and possess high self-development efforts</td>
             <td style={{background:"#cadbca"}}>
-              <input type="text" style={{background:"#cadbca"}} className="font-bold" value={value} onChange={handleChange} />
+              {/* <input type="text" style={{background:"#cadbca"}} className="font-bold" value={value} onChange={handleChange} /> */}
             </td>
           </tr>
         </tbody>
@@ -189,4 +189,4 @@ function page() {
   )
 }
 
-export default page
+export default Page
