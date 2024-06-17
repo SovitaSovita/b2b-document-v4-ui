@@ -87,8 +87,9 @@ function SideBar(props: any) {
     return (
         <Box
             sx={{
-                width: drawerWidth,
-                height: "100%",
+                width: "30%",
+                height: "100vh",
+                overflowY: "scroll",
                 // flexShrink: 0,
                 '& .MuiDrawer-paper': {
                     width: drawerWidth,
@@ -102,7 +103,7 @@ function SideBar(props: any) {
         // open={openMainDrawer}
         >
             <ul className="menu pb-0 menu-dropdown-show w-full text-base-content pt-0 font-Figtree">
-                <div className='sticky top-0 z-50'>
+                <div className='sticky top-0 z-50 bg-primary'>
                     <HeaderSidebar handleOpenArticle={handleOpenArticle} isForm={false} />
 
                     {/* Favorite */}
@@ -139,7 +140,7 @@ function SideBar(props: any) {
                 {
                     isLoading ? <LoadingCustom /> :
                         (
-                            <div>
+                            <div className=''>
                                 {
                                     TAGS?.map((item: any, index) => (
                                         <span key={index} className='flex mainManageTag group'>
@@ -168,7 +169,7 @@ function SideBar(props: any) {
                                                     )
                                                 }
                                             </div>
-                                            <li key={index + 1} className='w-[260px]'>
+                                            <li key={index + 1} className='w-full'>
                                                 <details>
                                                     <summary className="mt-1 font-medium">
                                                         <Tooltip showArrow={true} content={item.title}>
