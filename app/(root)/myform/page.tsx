@@ -1,21 +1,29 @@
 import React from 'react'
 import image from '../myform/K.O.S.I.G.N-CAMBODIA-INVESTMENT-CO.-LTD-300x300.webp'
-import { Table, TableColumn, TableHeader } from '@nextui-org/react'
+import { DatePicker, Table, TableColumn, TableHeader } from '@nextui-org/react'
 
+import { Input } from "@nextui-org/react";
 
 function Page() {
+
     return (
         <div>
-            <img style={{ width: '150px', marginTop: '-55px' }} src='https://www.caftkh.org/wp-content/uploads/2021/08/K.O.S.I.G.N-CAMBODIA-INVESTMENT-CO.-LTD-300x300.png' />
-            <div style={{ textAlign: 'center', fontWeight: 'bold', margin: '-35px' }}>
-                B2B Department Attendance List on June 2024
-                <br />
-                <span>Communication Day </span>
-                <div className="overflow-x-auto" style={{ margin: '70px' }}>
+            <h1 style={{ fontWeight:'bold' , marginTop: '10px' , marginLeft:'50px', whiteSpace:'1px'}}>Submit an OverTime Request</h1>
+            <hr style={{width:'auto'}}/>
+            {/* <Input
+             type="email" 
+             label="Email" 
+             style={{width:'10px'}}
+             /> */}
 
-                </div>
+            {/* <div className="flex flex-col">
+                <DatePicker label="Date" id="date" />
+            </div> */}
 
-            </div>
+
+
+
+
         </div>
 
 

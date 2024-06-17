@@ -10,7 +10,6 @@ interface RenderArticleProps {
 const RenderArticle = forwardRef<HTMLDivElement, RenderArticleProps>(({ body }, ref) => {
     const editorRef = useRef<any>(null);
 
-
     return (
         <>
             <div className="content-wrapper">
@@ -18,7 +17,7 @@ const RenderArticle = forwardRef<HTMLDivElement, RenderArticleProps>(({ body }, 
                     <div className="my-tinymce-container">
                         <div ref={ref} className="print-content" dangerouslySetInnerHTML={{ __html: body }} />
                         <Editor
-                            apiKey="51cakyf7l011kd34r23bib5jrvh79lb520v82wpid72wq92n"
+                            apiKey="j5jlvquhq3p95alr8qcd16aymrzmto2lsgawim44fsm0v8ed"
                             onInit={(evt, editor) => editorRef.current = editor}
                             init={{
                                 height: 800,
@@ -34,7 +33,6 @@ const RenderArticle = forwardRef<HTMLDivElement, RenderArticleProps>(({ body }, 
                             }}
                         />
                     </div>
-
                 </div>
             </div>
             <style>
@@ -56,5 +54,7 @@ const RenderArticle = forwardRef<HTMLDivElement, RenderArticleProps>(({ body }, 
         </>
     );
 });
+
+RenderArticle.displayName = 'RenderArticle';
 
 export default RenderArticle;
