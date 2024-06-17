@@ -227,6 +227,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
     }
 
     const pathname = usePathname()
+    const getTid = localStorage.getItem("tid")
 
 
     return (
@@ -261,7 +262,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                                         )
                                     }
                                     <TelegramShareButton
-                                        url={`${UI_BASE_URL}share/${article?.id}`}
+                                        url={`${UI_BASE_URL}share/${article?.id}?${getTid}`}
                                     >
                                         <ReplyAllOutlinedIcon className='mr-3' />
                                     </TelegramShareButton>

@@ -10,6 +10,11 @@ import { useRouter } from "next/navigation";
 
 export default function Page({ params }: { params: { id: string } }) {
 
+    const getTid = localStorage.getItem("tid")
+    if (getTid == undefined) {
+        alert()
+    }
+
     const [articleData, setArticleData] = useState<any>();
     const router = useRouter()
 
