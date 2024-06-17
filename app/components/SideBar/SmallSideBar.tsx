@@ -2,13 +2,19 @@ import { Chart21, ChartSuccess, ClipboardExport, Home } from 'iconsax-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
+import logoDocument from "../../../public/icon/Document.png"
+import Image from 'next/image'
+
 
 function SmallSideBar() {
     const pathname = usePathname();
 
     return (
         <div className='bg-base-100 border-r shadow'>
-            <ul className="rounded-box mt-6 px-2 text-gray-600 text-[10px] w-20">
+            <ul className="rounded-box mt-3 px-2 text-gray-600 text-[10px] w-20">
+                <li className='mb-6'>
+                    <Image src={logoDocument} alt="" width={50} height={50} className='mx-auto' />
+                </li>
                 <li className='mb-6'>
                     <Link href={"/"}
                         className={
