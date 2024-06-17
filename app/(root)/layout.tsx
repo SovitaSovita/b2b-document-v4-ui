@@ -1,6 +1,5 @@
 'use client'
 
-import FormSideBar from '@/app/components/formComponent/FormSideBar';
 import * as React from 'react';
 import SideBar from '../components/SideBar/SideBar';
 import { GetTagAndArticle } from '../service/TagService';
@@ -10,9 +9,7 @@ import { RootState } from '../service/Redux/store/store';
 import { getSession } from '../utils/xhttp';
 import { getFavoriteDetail } from '../service/FavouriteService';
 import Navbar from '../components/Navbar';
-import Link from 'next/link';
-import { Chart21, ChartSuccess, ClipboardExport, Home } from 'iconsax-react';
-import { usePathname } from 'next/navigation';
+import SmallSideBar from '../components/SideBar/SmallSideBar';
 
 const Layout = (props: { children: React.ReactNode }) => {
 
@@ -91,58 +88,10 @@ const Layout = (props: { children: React.ReactNode }) => {
         setOpen(false);
     };
 
-    const pathname = usePathname()
-
-
     return (
         <div className='flex bg-primary w-full min-h-screen'>
             {/* <DocumentSidebar openMainDrawer={openDocDraw} /> */}
-            <div className='bg-base-100 border-r shadow'>
-                <ul className="rounded-box mt-6 px-2 text-gray-600 text-[10px] w-20">
-                    <li className='mb-6'>
-                        <Link href={"/"}
-                            className={
-                                pathname === "/" ?
-                                    `text-secondary bg-primary-50 py-1.5 px-2 rounded-lg flex flex-col items-center`
-                                    : `hover:border-none hover:text-secondary hover:ml-2 transition-all flex flex-col items-center`}>
-                            <Home className='mb-2' />
-                            Document
-                        </Link>
-                    </li>
-                    <li className='mb-6'>
-                        <Link href={"/myform"}
-                            className={
-                                pathname === "/myform" ?
-                                    `text-secondary bg-primary-50 py-1.5 px-2 rounded-lg flex flex-col items-center`
-                                    : `hover:border-none hover:text-secondary hover:ml-2 transition-all flex flex-col items-center`}>
-                            <Chart21 className='mb-2' />
-                            My Form
-                        </Link>
-                    </li>
-                    <li className='mb-6'>
-                        <Link href={"/request"}
-                            className={
-                                pathname === "/request" ?
-                                    `text-secondary bg-primary-50 py-1.5 px-4 rounded-lg flex flex-col items-center`
-                                    : `hover:border-none hover:text-secondary hover:ml-2 transition-all flex flex-col items-center`}
-                        >
-                            <ClipboardExport className='mb-2' />
-                            Request
-                        </Link>
-                    </li>
-                    <li className=''>
-                        <Link href={"/approve"}
-                            className={
-                                pathname === "/approve" ?
-                                    `text-secondary bg-primary-50 py-1.5 px-4 rounded-lg flex flex-col items-center`
-                                    : `hover:border-none hover:text-secondary hover:ml-2 transition-all flex flex-col items-center`}
-                        >
-                            <ChartSuccess className='mb-2' />
-                            Approve
-                        </Link>
-                    </li>
-                </ul>
-            </div>
+            <SmallSideBar />
             <SideBar
                 isLoading={isLoading}
                 ARTICLES={menudata?.articleList}
