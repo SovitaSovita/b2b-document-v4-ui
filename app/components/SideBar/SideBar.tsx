@@ -105,7 +105,6 @@ function SideBar(props: any) {
             <ul className="menu pb-0 menu-dropdown-show w-full text-base-content pt-0 font-Figtree">
                 <div className='sticky top-0 z-50 bg-primary'>
                     <HeaderSidebar handleOpenArticle={handleOpenArticle} isForm={false} />
-
                     {/* Favorite */}
                     <li className='mb-2 mt-4'>
                         <details>
