@@ -18,7 +18,7 @@ const RenderArticle = forwardRef<HTMLDivElement, RenderArticleProps>(({ body }, 
                     <div className="my-tinymce-container">
                         <div ref={ref} className="print-content" dangerouslySetInnerHTML={{ __html: body }} />
                         <Editor
-                            apiKey="51cakyf7l011kd34r23bib5jrvh79lb520v82wpid72wq92n"
+                            apiKey="ljeay0nexzmh217ulylzm0tanfzqr3bg17k3uc37nr3qxs61"
                             onInit={(evt, editor) => editorRef.current = editor}
                             init={{
                                 height: 800,
