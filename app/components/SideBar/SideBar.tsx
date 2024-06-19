@@ -90,6 +90,7 @@ function SideBar(props: any) {
                 width: "30%",
                 height: "100vh",
                 overflowY: "scroll",
+                transition: "all",
                 // flexShrink: 0,
                 '& .MuiDrawer-paper': {
                     width: drawerWidth,
