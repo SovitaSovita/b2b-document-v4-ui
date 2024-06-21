@@ -1,4 +1,4 @@
-import { CardAdd, Chart21, ChartSuccess, ClipboardExport, Folder, FolderAdd, Home, Stickynote, Stop, Task } from 'iconsax-react'
+import { AddCircle, Chart21, ChartSuccess, ClipboardExport, ConvertCard, Convertshape2, Danger, Folder2, FolderAdd, Home, ProfileTick } from 'iconsax-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { useState } from 'react'
@@ -57,16 +57,16 @@ const SmallSideBar: React.FC = () => {
 
     const forms: Form[][] = [
         [
-            { name: "Request history", link: "/", icon: <Folder size="10" color="black" /> },
-            { name: "New Request", link: "/", icon: <FolderAdd size="10" color="black" /> },
+            { name: "Request history", link: "/", icon: <ConvertCard size="10" color="black" /> },
+            { name: "New Request", link: "/", icon: <AddCircle size="10" color="black" /> },
         ],
         [
-            { name: "Requesting", link: "/", icon: <Folder size="10" color="black" /> },
-            { name: "Hold", link: "/", icon: <FolderAdd size="10" color="black" /> },
-            { name: "Completed", link: "/", icon: <FolderAdd size="10" color="black" /> }
+            { name: "Requesting", link: "/", icon: <Convertshape2 size="10" color="black" /> },
+            { name: "Hold", link: "/", icon: <Danger size="10" color="black" /> },
+            { name: "Completed", link: "/approveMenu", icon: <ProfileTick size="10" color="black" /> }
         ],
         [
-            { name: "Form List", link: "/myform", icon: <Folder size="10" color="black" /> },
+            { name: "Form List", link: "/myform", icon: <Folder2 size="10" color="black" /> },
             { name: "New Form", link: "/", icon: <FolderAdd size="10" color="black" /> },
         ]
     ];
