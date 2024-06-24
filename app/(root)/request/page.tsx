@@ -18,7 +18,7 @@ function Page() {
               <th></th>
               <th></th>
               <th></th>
-              <th style={{ background: "#efefef", color: "" }} className="font-bold">
+              <th style={{ background: "#efefef", color: "#e2e9ef" }} className="font-bold">
                 <input type="text" style={{ background: "#efefef" }} className="font-bold" value={value} onChange={handleChange} />
               </th>
 

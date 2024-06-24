@@ -24,7 +24,6 @@ export default function AboutUser() {
               {session?.flnm}
             </h2>
             <p className="text-sm md:text-base lg:text-lg">{session?.eml}</p>
-
           </div>
         </div>
       </div>

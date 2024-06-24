@@ -1,4 +1,5 @@
 "use client"
+import EditorBlockNote from '@/app/components/About/EditorBlockNote';
 import { useEffect, useState } from 'react';
 
 const WelcomePage = ({ }) => {
@@ -13,7 +14,7 @@ const WelcomePage = ({ }) => {
   return (
     <div>
       <h1>Welcome Page</h1>
-      {/* <p>{welcomeMessage}</p> */}
+      <EditorBlockNote/>
     </div>
   );
 };
