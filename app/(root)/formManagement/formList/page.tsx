@@ -12,29 +12,19 @@ function Page() {
     const dispatch = useDispatch;
 
     useEffect(() => {
+        ListAllFormName(0,"sovita");
+        console.log("dagaha")
+    },[])
 
-    })
-
-    function handleListCard(id: number, user_name: string) {
-        // ListAllFormName(id ,user_name).then((data) => {
-        //     setAllForm 
-        //     dispatch()
-        // })
-    }
 
     return (
         <div className='p-4'>
-            {/* <img style={{ width: '150px', marginTop: '-55px' }} src='https://www.caftkh.org/wp-content/uploads/2021/08/K.O.S.I.G.N-CAMBODIA-INVESTMENT-CO.-LTD-300x300.png' />
-            <div style={{ textAlign: 'center', fontWeight: 'bold', margin: '-35px' }}>
-                B2B Department Attendance List on June 2024
-                <br />
-                <span>Communication Day </span>
-                <div className="overflow-x-auto" style={{ margin: '70px' }}>
-
-                </div>
-
-            </div> */}
             <div className="gap-2 grid grid-cols-2 sm:grid-cols-4">
+                {
+                    // getForm.map(() =>{ 
+                    //     return 
+                    // })
+                }
                 <Card className="py-4">
                     <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
                         <p className="text-tiny uppercase font-bold">test</p>
