@@ -82,7 +82,7 @@ function CKEditorComponent(props: any) {
     return (
         <div>
             <Editor
-                apiKey='j5jlvquhq3p95alr8qcd16aymrzmto2lsgawim44fsm0v8ed'
+                apiKey='ljeay0nexzmh217ulylzm0tanfzqr3bg17k3uc37nr3qxs61'
                 onInit={(_evt, editor) => editorRef.current = editor}
                 initialValue={articleData?.content_body}
                 init={{

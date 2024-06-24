@@ -30,7 +30,7 @@ const drawerWidth = 320;
 
 function SideBar(props: any) {
     const { ARTICLES, TAGS, FAVORITE }: MenuData = props
-    const { isLoading, handleDrawerClose, openMainDrawer }: any = props
+    const { isLoading, handleDrawerClose, openMainDrawer, toggleSideBar }: any = props
     const session: UserData = useSelector((state: RootState) => state?.article.session);
     const [activeItemId, setActiveItemId] = useState("");
 
@@ -76,7 +76,7 @@ function SideBar(props: any) {
 
     }
 
-    //open modal to insert or update article
+    // open modal to insert or update article
     const [openArticle, setOpenArticle] = React.useState(false);
     const [openTagDelete, setopenTagDelete] = React.useState(false);
     const handleOpenArticle = () => setOpenArticle(true);
@@ -84,12 +84,15 @@ function SideBar(props: any) {
     const router = useRouter()
 
 
+    console.log(toggleSideBar)
+
     return (
         <Box
             sx={{
-                width: "30%",
+                width: toggleSideBar,
                 height: "100vh",
                 overflowY: "scroll",
+                transition: 'width 0.3s ease-in-out, background-color 0.3s ease-in-out', // Added transition for width and background-color
                 // flexShrink: 0,
                 '& .MuiDrawer-paper': {
                     width: drawerWidth,
@@ -105,7 +108,6 @@ function SideBar(props: any) {
             <ul className="menu pb-0 menu-dropdown-show w-full text-base-content pt-0 font-Figtree">
                 <div className='sticky top-0 z-50 bg-primary'>
                     <HeaderSidebar handleOpenArticle={handleOpenArticle} isForm={false} />
-
                     {/* Favorite */}
                     <li className='mb-2 mt-4'>
                         <details>
@@ -138,7 +140,7 @@ function SideBar(props: any) {
                 </div>
 
                 {
-                    isLoading ? <LoadingCustom /> :
+                    // isLoading ? <LoadingCustom /> :
                         (
                             <div className=''>
                                 {

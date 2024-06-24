@@ -10,6 +10,7 @@ import { getSession } from '../utils/xhttp';
 import { getFavoriteDetail } from '../service/FavouriteService';
 import Navbar from '../components/Navbar';
 import SmallSideBar from '../components/SideBar/SmallSideBar';
+import { Button } from '@nextui-org/react';
 
 const Layout = (props: { children: React.ReactNode }) => {
 
@@ -67,8 +68,6 @@ const Layout = (props: { children: React.ReactNode }) => {
         }
     }, [reRederMenu, session, optionGETdata])
 
-
-
     // Favorote
     function handleViewFavorite(user_id: string) {
         getFavoriteDetail(user_id).then((res) => {
@@ -88,10 +87,17 @@ const Layout = (props: { children: React.ReactNode }) => {
         setOpen(false);
     };
 
+    const [toggleSideBar, setToggleSideBar] = React.useState("0%")
+    const FN_toggleSideBar = () => {
+        if (toggleSideBar == "30%")
+            setToggleSideBar("0%")
+        else setToggleSideBar("30%")
+    }
+
     return (
         <div className='flex bg-primary w-full min-h-screen'>
             {/* <DocumentSidebar openMainDrawer={openDocDraw} /> */}
-            <SmallSideBar />
+            <SmallSideBar fun_toggleSideBar={FN_toggleSideBar} />
             <SideBar
                 isLoading={isLoading}
                 ARTICLES={menudata?.articleList}
@@ -99,6 +105,7 @@ const Layout = (props: { children: React.ReactNode }) => {
                 FAVORITE={favorites}
                 handleDrawerClose={handleDrawerClose}
                 openMainDrawer={open}
+                toggleSideBar={toggleSideBar}
             />
 
             <div className='w-full ml-3 bg-base-100 rounded-lg'>

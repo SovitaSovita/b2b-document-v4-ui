@@ -58,6 +58,15 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
 }));
 
 function SideContent({ openMainDrawer, setOpen }: any) {
+
+    // const myToken = localStorage.getItem('tid')
+    const [myToken, setMyToken] = useState<string | null>(null);
+    useEffect(() => {
+        // if (typeof window !== 'undefined') {
+            setMyToken(localStorage.getItem('tid'));
+        //}
+    }, []);
+
     // Print
     const componentRef = useRef<HTMLDivElement>(null);
     const handlePrint = useReactToPrint({
@@ -226,7 +235,8 @@ function SideContent({ openMainDrawer, setOpen }: any) {
 
     }
 
-    const pathname = usePathname()
+    // const pathname = usePathname()
+
 
 
     return (
@@ -261,7 +271,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
                                         )
                                     }
                                     <TelegramShareButton
-                                        url={`${UI_BASE_URL}share/${article?.id}`}
+                                        url={`${UI_BASE_URL}share/${article?.id}?token=${myToken}`}
                                     >
                                         <ReplyAllOutlinedIcon className='mr-3' />
                                     </TelegramShareButton>
