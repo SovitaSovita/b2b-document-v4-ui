@@ -1,7 +1,8 @@
-import React, { forwardRef, useEffect, useRef } from 'react';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import '../style/reset.css';
 import '../style/tiny.css';
+import LoadingCustom from './Material/Loading';
 
 interface RenderArticleProps {
     body: string;
@@ -9,7 +10,19 @@ interface RenderArticleProps {
 
 const RenderArticle = forwardRef<HTMLDivElement, RenderArticleProps>(({ body }, ref) => {
     const editorRef = useRef<any>(null);
+    const [loading, setLoading] = useState(true);
 
+    useEffect(() => {
+        // Simulate content loading
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+        }, 1000);
+    }, [body]); // Trigger effect whenever body changes
+
+    if (loading) {
+        return <LoadingCustom />
+    }
 
     return (
         <>
