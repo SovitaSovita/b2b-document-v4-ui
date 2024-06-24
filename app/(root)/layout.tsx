@@ -11,6 +11,7 @@ import { getFavoriteDetail } from '../service/FavouriteService';
 import Navbar from '../components/Navbar';
 import SmallSideBar from '../components/SideBar/SmallSideBar';
 import { Button } from '@nextui-org/react';
+import { usePathname } from 'next/navigation';
 
 const Layout = (props: { children: React.ReactNode }) => {
 
@@ -88,10 +89,16 @@ const Layout = (props: { children: React.ReactNode }) => {
     };
 
     const [toggleSideBar, setToggleSideBar] = React.useState("0%")
-    const FN_toggleSideBar = () => {
-        if (toggleSideBar == "30%")
+    const FN_toggleSideBar = (pathname: any) => {
+        console.log(pathname);
+        if (pathname == "/") {
+            if (toggleSideBar == "30%")
+                setToggleSideBar("0%")
+            else setToggleSideBar("30%")
+        }
+        else {
             setToggleSideBar("0%")
-        else setToggleSideBar("30%")
+        }
     }
 
     return (
