@@ -1,12 +1,7 @@
-'use client'
-import { useState } from "react"
-
 function Page() {
-    
-
     return (
         <>
-            
+            <p>new form</p>
         </>
     )
 }

@@ -59,8 +59,14 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
 
 function SideContent({ openMainDrawer, setOpen }: any) {
 
-    const myToken = localStorage.getItem('tid')
-    console.log("myToken", myToken)
+    // const myToken = localStorage.getItem('tid')
+    const [myToken, setMyToken] = useState<string | null>(null);
+    useEffect(() => {
+        // if (typeof window !== 'undefined') {
+            setMyToken(localStorage.getItem('tid'));
+        //}
+    }, []);
+
     // Print
     const componentRef = useRef<HTMLDivElement>(null);
     const handlePrint = useReactToPrint({
@@ -230,7 +236,7 @@ function SideContent({ openMainDrawer, setOpen }: any) {
     }
 
     // const pathname = usePathname()
-    
+
 
 
     return (
