@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation'
 import React, { useState } from 'react'
 import logoDocument from "../../../public/icon/Document.png"
 import Image from 'next/image'
+import { Button } from '@nextui-org/react'
 
 interface Form {
     name: string;
@@ -40,7 +41,11 @@ const FormSection: React.FC<FormSectionProps> = ({ index, name, isVisible, toggl
     </li>
 );
 
-const SmallSideBar: React.FC = () => {
+const SmallSideBar = ({ fun_toggleSideBar }: any) => {
+
+    const toggleSideBar = () => {
+        alert()
+    }
     const pathname = usePathname();
     const [visibleStates, setVisibleStates] = useState<boolean[]>([false, false, false]);
 
@@ -57,17 +62,17 @@ const SmallSideBar: React.FC = () => {
 
     const forms: Form[][] = [
         [
-            { name: "Request history", link: "/", icon: <ConvertCard size="10" color="black" /> },
-            { name: "New Request", link: "/", icon: <AddCircle size="10" color="black" /> },
+            { name: "Request history", link: "/requests/requestHistory", icon: <ConvertCard size="10" color="black" /> },
+            { name: "New Request", link: "/requests/newRequest", icon: <AddCircle size="10" color="black" /> },
         ],
         [
-            { name: "Requesting", link: "/", icon: <Convertshape2 size="10" color="black" /> },
-            { name: "Hold", link: "/", icon: <Danger size="10" color="black" /> },
-            { name: "Completed", link: "/approveMenu", icon: <ProfileTick size="10" color="black" /> }
+            { name: "Requesting", link: "/approvals/requesting", icon: <Convertshape2 size="10" color="black" /> },
+            { name: "Hold", link: "/approvals/holding", icon: <Danger size="10" color="black" /> },
+            { name: "Completed", link: "/approvals/completed", icon: <ProfileTick size="10" color="black" /> }
         ],
         [
-            { name: "Form List", link: "/myform", icon: <Folder2 size="10" color="black" /> },
-            { name: "New Form", link: "/", icon: <FolderAdd size="10" color="black" /> },
+            { name: "Form List", link: "/formManagement/formList", icon: <Folder2 size="10" color="black" /> },
+            { name: "New Form", link: "/formManagement/newForm", icon: <FolderAdd size="10" color="black" /> },
         ]
     ];
 
@@ -78,7 +83,9 @@ const SmallSideBar: React.FC = () => {
                     <Image src={logoDocument} alt="Document Logo" width={50} height={50} className="mx-auto" />
                 </li>
                 <li className="mb-6">
-                    <Link href={"/"} className={pathname === "/" ? "text-secondary bg-primary-50 py-1.5 px-2 rounded-lg flex flex-col items-center" : "hover:text-secondary transition-all flex flex-col items-center"}>
+                    <Link href={"/"} className={pathname === "/" ? "text-secondary bg-primary-50 py-1.5 px-2 rounded-lg flex flex-col items-center" : "hover:text-secondary transition-all flex flex-col items-center"}
+                        onClick={() => fun_toggleSideBar()}
+                    >
                         <Home className="mb-2" />
                         Document
                     </Link>
