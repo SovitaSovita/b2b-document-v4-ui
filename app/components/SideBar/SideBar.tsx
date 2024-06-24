@@ -76,7 +76,7 @@ function SideBar(props: any) {
 
     }
 
-    //open modal to insert or update article
+    // open modal to insert or update article
     const [openArticle, setOpenArticle] = React.useState(false);
     const [openTagDelete, setopenTagDelete] = React.useState(false);
     const handleOpenArticle = () => setOpenArticle(true);
@@ -140,7 +140,7 @@ function SideBar(props: any) {
                 </div>
 
                 {
-                    isLoading ? <LoadingCustom /> :
+                    // isLoading ? <LoadingCustom /> :
                         (
                             <div className=''>
                                 {
