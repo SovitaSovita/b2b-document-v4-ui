@@ -114,7 +114,7 @@ function SideBar(props: any) {
                             <summary className="border font-semibold text-[15px] font-mono">
                                 <FavoriteBorderOutlinedIcon className='text-[18px]' />
                                 Favorites
-                            </summary>
+                            </summary> 
                             {FAVORITE && FAVORITE.length > 0 ? (
                                 <ul className='pt-1'>
                                     {FAVORITE?.map((item: any, index) => (

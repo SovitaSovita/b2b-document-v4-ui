@@ -2,7 +2,7 @@ import ihttp from "../utils/xhttp";
 
 export const ListAllFormName = async (status: number,user_name:string) => {
     try {
-        const response = await ihttp.get(`form/getBy?status=${status}&username=${user_name}`);
+        const response = await ihttp.post(`/form/getBy?status=${status}&username=${user_name}`);
         return response;
     } catch (error) {
         return error;

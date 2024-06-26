@@ -79,6 +79,7 @@ function DeleteTagComponent({ open, setOpen, tagDeleteData }: any) {
               <div className='self-end'>
                 <button type='button' onClick={handleClose} className="btn btn-active mt-2 btn-sm">Cancel</button>
                 <button type='button' onClick={handleDelete} className="btn btn-active btn-error ml-2 mt-3 btn-sm">Delete</button>
+                <button type='button' className="btn btn-active ml-2 mt-3 btn-sm">Add</button>
               </div>
             </form>
           </div>
