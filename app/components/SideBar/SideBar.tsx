@@ -17,7 +17,7 @@ import UpdateTagComponent from '../Modal/UpdateTagComponent';
 import { checkIsFavorite } from '../../service/FavouriteService';
 import DeleteTagComponent from '../Modal/DeleteTagComponent';
 import UpdateArticleModal from '../Modal/ArticleModal';
-import { Box, Drawer } from '@mui/material';
+import { Box, Drawer, Icon } from '@mui/material';
 import HeaderSidebar from './HeaderSidebar';
 import { RootState } from '@/app/service/Redux/store/store';
 import { getSession } from '@/app/utils/xhttp';
@@ -25,6 +25,8 @@ import LoadingCustom from '../Material/Loading';
 import { Tooltip } from '@nextui-org/react';
 import { MenuBoard } from 'iconsax-react';
 import { useRouter } from 'next/navigation';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import EditorCustum from '../editor/EditorCustum';
 
 const drawerWidth = 320;
 
@@ -34,13 +36,13 @@ function SideBar(props: any) {
     const session: UserData = useSelector((state: RootState) => state?.article.session);
     const [activeItemId, setActiveItemId] = useState("");
 
+
     //const handleOpenTag = () => setOpenTag(true);
     const [openTag, setOpenTag] = React.useState(false);
     const [openTags, setOpenTags] = React.useState(false);
     const [tagUpdateData, setTagUpdateData] = React.useState({});
-    const [tagData, settagData] = React.useState({})
+    const [tagData, setTagData] = React.useState({})
     const [tagDeleteData, setTagDeleteData] = React.useState({});
-
 
     const handleOpenTag = (item: any) => {
         setTagUpdateData(item)
@@ -50,6 +52,14 @@ function SideBar(props: any) {
         setTagDeleteData(item)
         setOpenTags(true)
     }
+
+   
+    const handleOpenArticle = (e:any, title:"") => {
+        setTagData(title);
+        setOpenArticle(true)
+        const newVal1 = e.rec ;
+        dispatch(getArticle(newVal1))
+    };
     const dispatch = useDispatch();
 
     // Function to filter articles based on tag_id
@@ -61,6 +71,7 @@ function SideBar(props: any) {
         getArticleDetail(id).then((data) => {
             setActiveItemId(id)
             dispatch(getArticle(data.rec))
+            console.log("gaga",data.rec)
         })
 
         // favorite
@@ -75,16 +86,19 @@ function SideBar(props: any) {
         })
 
     }
+   
 
     // open modal to insert or update article
     const [openArticle, setOpenArticle] = React.useState(false);
     const [openTagDelete, setopenTagDelete] = React.useState(false);
-    const handleOpenArticle = () => setOpenArticle(true);
+    // const handleOpenArticle = () => setOpenArticle(true);
     const [bg_color, setBg_color] = useState("");
     const router = useRouter()
-
-
-    console.log(toggleSideBar)
+    console.log("openArticle",openArticle)
+     
+    // function handleOpenArticle (){
+        
+    // }
 
     return (
         <Box
@@ -144,7 +158,9 @@ function SideBar(props: any) {
                         (
                             <div className=''>
                                 {
+                                    
                                     TAGS?.map((item: any, index) => (
+                                        
                                         <span key={index} className='flex mainManageTag group'>
                                             <div className='w-6 self-start'>
                                                 {
@@ -153,7 +169,13 @@ function SideBar(props: any) {
                                                             <div tabIndex={0} role="button">
                                                                 <MoreVertIcon />
                                                             </div>
-                                                            <ul tabIndex={0} className="dropdown-content z-[100] menu p-2 shadow bg-base-100 rounded-box w-32">
+                                                            <ul tabIndex={0} className="dropdown-content z-[100] menu p-2 shadow bg-base-100 rounded-box w-40">
+                                                                <li>
+                                                                    <div className='flex items-center text-blue-400' onClick={(e)=>handleOpenArticle(e, item.title)} >
+                                                                        <AddCircleOutlineIcon className='fontSize="small"' style={{fontSize:'16px'}}/>
+                                                                        <span>Sub Article</span>
+                                                                    </div>
+                                                                </li>
                                                                 <li>
                                                                     <div className='flex items-center' onClick={() => handleOpenTag(item)}>
                                                                         <EditIcon />
@@ -212,7 +234,7 @@ function SideBar(props: any) {
                 Hello
             </div> */}
             <UpdateTagComponent open={openTag} setOpen={setOpenTag} tagUpdateData={tagUpdateData} TAGS={TAGS} />
-            <UpdateArticleModal open={openArticle} setOpen={setOpenArticle} session={session} articleData={null} />
+            <UpdateArticleModal open={openArticle} setOpen={setOpenArticle} session={session} articleData={null} tag={TAGS}  tagUpdateData={tagData}  />
             <DeleteTagComponent open={openTags} setOpen={setOpenTags} session={session} tagDeleteData={tagDeleteData} />
         </Box>
 

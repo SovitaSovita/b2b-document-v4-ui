@@ -1,8 +1,8 @@
 import ihttp from "../utils/xhttp";
 
-export const ListAllFormName = async (status: number,user_name:string) => {
+export const ListAllFormName = async (req: object) => {
     try {
-        const response = await ihttp.post(`/form/getBy?status=${status}&username=${user_name}`);
+        const response = await ihttp.post(`/form/getBy`, req);
         return response;
     } catch (error) {
         return error;
