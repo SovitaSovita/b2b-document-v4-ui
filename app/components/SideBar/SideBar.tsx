@@ -23,7 +23,7 @@ import { RootState } from '@/app/service/Redux/store/store';
 import { getSession } from '@/app/utils/xhttp';
 import LoadingCustom from '../Material/Loading';
 import { Tooltip } from '@nextui-org/react';
-import { MenuBoard } from 'iconsax-react';
+import { Building, MenuBoard, People, ProfileCircle } from 'iconsax-react';
 import { useRouter } from 'next/navigation';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import EditorCustum from '../editor/EditorCustum';
@@ -87,7 +87,7 @@ function SideBar(props: any) {
 
     }
    
-
+    const [keyToDisplay, setKeyToDisplay] = useState("Me");
     // open modal to insert or update article
     const [openArticle, setOpenArticle] = React.useState(false);
     const [openTagDelete, setopenTagDelete] = React.useState(false);
@@ -122,6 +122,33 @@ function SideBar(props: any) {
             <ul className="menu pb-0 menu-dropdown-show w-full text-base-content pt-0 font-Figtree">
                 <div className='sticky top-0 z-50 bg-primary'>
                     <HeaderSidebar handleOpenArticle={handleOpenArticle} isForm={false} />
+
+                    <li className='mb-2 mt-4'>
+                        <details>
+                            <summary className="border font-semibold text-[15px] font-mono">
+                                <People className='text-secondary text-[19px] mr-2' />
+                                Type
+                            </summary> 
+                            <ul>
+                                <label className="label cursor-pointer">
+                                    <input type="radio" name="radio-10" className="radio-xs checked:bg-blue-300"/>
+                                    <span className="label-text">Me</span>
+                                </label>  
+                            </ul>
+                            <ul>
+                                <label className="label cursor-pointer">
+                                    <input type="radio" name="radio-10" className="radio-xs checked:bg-blue-300"/>
+                                    <span className="label-text">Department</span>
+                                </label>  
+                            </ul>
+                            <ul>
+                                <label className="label cursor-pointer">
+                                    <input type="radio" name="radio-10" className="radio-xs checked:bg-blue-300"/>
+                                    <span className="label-text">Company</span>
+                                </label>  
+                            </ul>
+                        </details >
+                    </li >
                     {/* Favorite */}
                     <li className='mb-2 mt-4'>
                         <details>

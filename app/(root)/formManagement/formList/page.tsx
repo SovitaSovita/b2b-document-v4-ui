@@ -10,9 +10,8 @@ import {
     Input, Pagination, SortDescriptor, Table, TableBody,
     TableCell, TableColumn, TableHeader, TableRow
 } from "@nextui-org/react";
-import { SearchIcon } from '@/public/icon/TableIcon';
-import Link from 'next/link';
 import { getFormDetail } from '@/app/service/Redux/formDetailSlice';
+import Link from 'next/link';
 
 interface Form {
     id: number;

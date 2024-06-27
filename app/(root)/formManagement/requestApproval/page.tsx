@@ -5,7 +5,7 @@ import React, { useEffect } from "react"
 import { useSelector } from "react-redux"
 function Page() {
 
-    const formData = useSelector((state: RootState) => state.form.form)
+    const formData: any = useSelector((state: RootState) => state.form.form)
     console.log(formData)
     
     return (
@@ -22,8 +22,8 @@ function Page() {
                     </div>
                 </div>
                 <hr></hr>
-                <h1>{formData.formName}</h1>
-                <h1>{formData.formNumber}</h1>
+                <h1>{formData?.formName}</h1>
+                <h1>{formData?.formNumber}</h1>
             </div>
         </>
     )

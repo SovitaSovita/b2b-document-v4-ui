@@ -71,9 +71,9 @@ const Page: React.FC = () => {
         ListAllFormName({
             userId: 'vimean',
             status: 0,
-        }).then((response) => {
-            if (response && response.data) {
-                setUsers(response.data.rec ?? []);
+        }).then((response: any) => {
+            if (response && response?.data) {
+                setUsers(response?.data.rec ?? []);
             }
         }).catch((error) => {
             console.error("Error fetching forms:", error);
