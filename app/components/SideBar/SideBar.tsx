@@ -123,7 +123,7 @@ function SideBar(props: any) {
                 <div className='sticky top-0 z-50 bg-primary'>
                     <HeaderSidebar handleOpenArticle={handleOpenArticle} isForm={false} />
 
-                    <li className='mb-2 mt-4'>
+                    {/* <li className='mb-2 mt-4'>
                         <details>
                             <summary className="border font-semibold text-[15px] font-mono">
                                 <People className='text-secondary text-[19px] mr-2' />
@@ -148,7 +148,7 @@ function SideBar(props: any) {
                                 </label>  
                             </ul>
                         </details >
-                    </li >
+                    </li > */}
                     {/* Favorite */}
                     <li className='mb-2 mt-4'>
                         <details>
