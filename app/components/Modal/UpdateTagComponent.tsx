@@ -28,7 +28,7 @@ export default function UpdateTagComponent({ open, setOpen, tagUpdateData, TAGS 
     setSelectedValue(parseInt(newValue));
     
   };
-
+console.log("inputVal",inputVal)
   // new code
   useEffect(() => {
     if (tagUpdateData?.title) {

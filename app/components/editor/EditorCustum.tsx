@@ -34,11 +34,17 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
   position: 'relative',
 }));
 
-export default function EditorCustum({ handleClose, session, articleData, handleViewArticle }: any) {
-
+export default function EditorCustum({ handleClose, session, articleData, handleViewArticle, tagUpdateData}: any) {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const optionGETdata = useSelector((state: RootState) => state?.article.getOptionData);
+  const [inputVal, setInputVal] = useState("");
+
+  console.log("test1234",tagUpdateData)
+  useEffect(()=>{
+        
+  },[tagUpdateData])
+
 
   const [isErrorAlert, setIsErrorAlert] = useState({
     open: false,
@@ -51,7 +57,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
   const [title, setTitle] = useState("");
   const [tagValue, setTagValue] = React.useState<TagType | any>();
   const [selectedValue, setSelectedValue] = useState<number>(0); // Defaulting to "Public"
-  
+    console.log("gaga123", tagData);
 
   const [isErrorInput, setIsErrorInput] = useState({
     error: false,
@@ -285,10 +291,10 @@ export default function EditorCustum({ handleClose, session, articleData, handle
               setTagData={setTagData}
               title={title}
               setTitle={setTitle}
-              tagValue={tagValue}
+              tagValue={tagUpdateData}
               setTagValue={setTagValue}
               selectedValue={selectedValue}
-              setSelectedValue={setSelectedValue}
+              setSelectedValue={setSelectedValue}    
               isLoading={isLoading}
             />
             <div className='px-6'>

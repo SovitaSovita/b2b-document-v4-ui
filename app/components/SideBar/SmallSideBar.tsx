@@ -12,53 +12,8 @@ interface Form {
     icon: React.ReactNode;
 }
 
-interface FormSectionProps {
-    index: number;
-    name: string;
-    isVisible: boolean;
-    toggleVisibility: (index: number) => void;
-    forms: Form[];
-    icon: React.ReactNode;
-}
-
-const FormSection: React.FC<FormSectionProps> = ({ index, name, isVisible, toggleVisibility, forms, icon }) => (
-    <li className="mb-6">
-        <span className="flex flex-col items-center cursor-pointer" onClick={() => toggleVisibility(index)}>
-            {icon}
-            {name}
-        </span>
-        {isVisible && (
-            <ul className="visible h-full opacity-100 transition-all text-center menu menu-xs bg-base-100 w-20">
-                {forms.map((form, idx) => (
-                    <li key={idx}>
-                        <Link href={form.link}>
-                            {form.icon} {form.name}
-                        </Link>
-                    </li>
-                ))}
-            </ul>
-        )}
-    </li>
-);
-
 const SmallSideBar = ({ fun_toggleSideBar }: any) => {
-
-    const toggleSideBar = () => {
-        alert()
-    }
     const pathname = usePathname();
-    const [visibleStates, setVisibleStates] = useState<boolean[]>([false, false, false]);
-
-    const toggleVisibility = (index: number) => {
-        setVisibleStates((prevStates) => {
-            const newStates = [...prevStates];
-            newStates[index] = !newStates[index];
-            return newStates;
-        });
-    };
-
-    const formNames = ["My Request", "My Approve", "Form Management"];
-    const icons = [<ChartSuccess className="mb-2" />, <Chart21 className="mb-2" />, <ClipboardExport className="mb-2" />];
 
     const forms: Form[][] = [
         [
@@ -84,23 +39,36 @@ const SmallSideBar = ({ fun_toggleSideBar }: any) => {
                 </li>
                 <li className="mb-6">
                     <Link href={"/"} className={pathname === "/" ? "text-secondary bg-primary-50 py-1.5 px-2 rounded-lg flex flex-col items-center" : "hover:text-secondary transition-all flex flex-col items-center"}
-                        onClick={() => fun_toggleSideBar()}
+                        onClick={() => fun_toggleSideBar(pathname)}
                     >
                         <Home className="mb-2" />
                         Document
                     </Link>
                 </li>
-                {formNames.map((name, index) => (
-                    <FormSection
-                        key={index}
-                        index={index}
-                        name={name}
-                        isVisible={visibleStates[index]}
-                        toggleVisibility={toggleVisibility}
-                        forms={forms[index]}
-                        icon={icons[index]}
-                    />
-                ))}
+                <li className="mb-6">
+                    <Link href={"/requests/requestHistory"} className={pathname === "/requests/requestHistory" ? "text-secondary bg-primary-50 py-1.5 px-2 rounded-lg flex flex-col items-center" : "hover:text-secondary transition-all flex flex-col items-center"}
+                        onClick={() => fun_toggleSideBar("/requests/requestHistory")}
+                    >
+                        <ChartSuccess className="mb-2" />
+                        My Request
+                    </Link>
+                </li>
+                <li className="mb-6">
+                    <Link href={"/approvals/requesting"} className={pathname === "/approvals/requesting" ? "text-secondary bg-primary-50 py-1.5 px-2 rounded-lg flex flex-col items-center" : "hover:text-secondary transition-all flex flex-col items-center"}
+                        onClick={() => fun_toggleSideBar("/approvals/requesting")}
+                    >
+                        <Chart21 className="mb-2" />
+                        My Approve
+                    </Link>
+                </li>
+                <li className="mb-6">
+                    <Link href={"/formManagement/formList"} className={pathname === "/formManagement/formList" ? "text-secondary bg-primary-50 py-1.5 px-2 rounded-lg flex flex-col items-center justify-center text-center" : "hover:text-secondary py-1.5 px-2 transition-all flex flex-col items-center text-center"}
+                        onClick={() => fun_toggleSideBar("/formManagement/formList")}
+                    >
+                        <ClipboardExport className="mb-2" />
+                        Form Management
+                    </Link>
+                </li>
             </ul>
         </div>
     );
