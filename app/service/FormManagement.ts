@@ -11,7 +11,7 @@ export const ListAllFormName = async (req: object) => {
 
 export const AddForm = async () => {
     try {
-        const response = await ihttp.post(`/form/create`);
+        const response = await ihttp.post(`form/create`);
         return response;
     } catch (error) {
         return error;
@@ -20,7 +20,7 @@ export const AddForm = async () => {
 
 export const UpdateForm = async (id:number,content:string) => {
     try {
-        const response = await ihttp.put(`/form/modify?id=${id}&content=${content}`);
+        const response = await ihttp.put(`form/modify?id=${id}&content=${content}`);
         return response;
     } catch (error) {
         return error;

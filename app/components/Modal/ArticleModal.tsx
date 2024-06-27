@@ -11,7 +11,7 @@ import EditorCustum from '../editor/EditorCustum';
 import { Editor } from '@tinymce/tinymce-react';
 import { Button, Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
 
-function UpdateArticleModal({ open, setOpen, session, articleData, handleViewArticle }: any) {
+function UpdateArticleModal({ open, setOpen, session, articleData, handleViewArticle , tagUpdateData }: any) {
     const dispatch = useDispatch()
     const [inputVal, setInputVal] = useState<string>();
     const router = useRouter()
@@ -53,7 +53,7 @@ function UpdateArticleModal({ open, setOpen, session, articleData, handleViewArt
                             >
                                 <DialogPanel className="w-full h-screen bg-white p-6 backdrop-blur-2xl">
                                     <div className='w-full h-full overflow-scroll bg-primary absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg py-6'>
-                                        <EditorCustum handleClose={handleClose} session={session} articleData={articleData} tagData={articleData?.id} handleViewArticle={handleViewArticle} />
+                                        <EditorCustum handleClose={handleClose} session={session} articleData={articleData} tagData={articleData?.id} handleViewArticle={handleViewArticle} tagUpdateData={tagUpdateData}/>
                                     </div>
                                 </DialogPanel>
                             </TransitionChild>

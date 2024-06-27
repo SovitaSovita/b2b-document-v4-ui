@@ -46,7 +46,9 @@ function InputTitleComponent(props: any) {
             setSelectedValue(convertStringToStatus(optionGETdata))
             setTitle(articleData?.title)
         }
+        console.log("twegewada",articleData);
     }, [])
+    
 
     const [openTag, setOpenTag] = React.useState(false);
     const handleOpenTag = (va: any) => {
@@ -142,7 +144,8 @@ function InputTitleComponent(props: any) {
                                     <option value={1}>Public</option>
                                 </select>
                                 <Autocomplete
-                                    value={showDefaultValue ? tagValue : null}
+                                    // value={showDefaultValue ? tagValue : null}
+                                    value={tagValue}
                                     onChange={(event: any, newValue: any | null) => {
                                         setTagValue(newValue);
                                         if (newValue?.status === 0) {
