@@ -6,4 +6,6 @@ interface SearchType {
     id: number;
     title: string;
     tag_id: number;
+    tag_title : string;
+    content_body: string
 }
