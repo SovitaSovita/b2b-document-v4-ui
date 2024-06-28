@@ -20,10 +20,14 @@ const config: Config = {
         'Figtree': ['Figtree', 'sans-serif'],
         'Anton': ['Anton', 'sans-serif'],
         'Poppins': ['Poppins', 'sans-serif'],
+        'Roboto': ["Roboto", 'sans-serif'],
       },
       backgroundColor: {
         "base-main": "rgb(246, 248, 252)",
       },
+      colors: {
+        "title": "#323338"
+      }
     },
   },
   corePlugins: {

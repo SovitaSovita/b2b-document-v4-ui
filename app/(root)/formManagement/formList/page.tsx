@@ -5,14 +5,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/app/service/Redux/store/store';
 import LoadingCustom from '@/app/components/Material/Loading';
 import {
-    Button, Card, CardBody, CardFooter, CardHeader, Chip, ChipProps,
-    Image,
-    Input, Pagination, SortDescriptor, Table, TableBody,
+    Button, Card, CardBody, CardFooter, Chip,
+    Pagination, SortDescriptor, Table, TableBody,
     TableCell, TableColumn, TableHeader, TableRow
 } from "@nextui-org/react";
 import { getFormDetail } from '@/app/service/Redux/formDetailSlice';
 import Link from 'next/link';
-
+import getRandomColor from '@/app/utils/RandomColor';
+import '../../../style/card_style.css'
+import { Category, Clipboard, DocumentText, Element4, Grid5, HuobiToken, Task, UserSquare } from 'iconsax-react';
 interface Form {
     id: number;
     formName: string;
@@ -29,20 +30,10 @@ interface ApiResponse {
         rec: Form[];
     };
 }
-
-type User = Form;
-const statusColorMap: Record<string, ChipProps["color"]> = {
-    active: "success",
-    paused: "danger",
-    vacation: "warning",
-};
-
 const INITIAL_VISIBLE_COLUMNS = ["documentName", "role", "status", "actions"];
 
 const Page: React.FC = () => {
     const session = useSelector((state: RootState) => state?.article.session);
-    console.log('user', session?.userId);
-
 
     const [forms, setForms] = useState<Form[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
@@ -53,12 +44,6 @@ const Page: React.FC = () => {
         { name: "Document Name", uid: "documentName", sortable: true },
         { name: "Description", uid: "role", sortable: true },
         { name: "Document Type", uid: "status", sortable: true },
-    ];
-
-    const statusOptions = [
-        { name: "Active", uid: "active" },
-        { name: "Paused", uid: "paused" },
-        { name: "Vacation", uid: "vacation" },
     ];
 
     const [filterValue, setFilterValue] = useState("");
@@ -92,7 +77,7 @@ const Page: React.FC = () => {
         setLoading(true);
         try {
             const response = await ListAllFormName({
-                userId: 'vimean',
+                userId: session?.userId,
                 status: 0,
             }) as ApiResponse;
             setForms(response?.data?.rec ?? []);
@@ -104,8 +89,8 @@ const Page: React.FC = () => {
     };
 
     useEffect(() => {
-        fetchForms();
-    }, []);
+        if (session) fetchForms();
+    }, [session]);
 
     const pages = Math.ceil(forms.length / rowsPerPage);
 
@@ -127,18 +112,6 @@ const Page: React.FC = () => {
 
         return filteredItems.slice(start, end);
     }, [page, filteredItems, rowsPerPage]);
-
-    const classNames = useMemo(() => ({
-        wrapper: ["max-h-[382px]", "max-w-3xl"],
-        th: ["bg-transparent", "text-default-500", "border-b", "border-divider"],
-        td: [
-            "group-data-[first=true]:first:before:rounded-none",
-            "group-data-[first=true]:last:before:rounded-none",
-            "group-data-[middle=true]:before:rounded-none",
-            "group-data-[last=true]:first:before:rounded-none",
-            "group-data-[last=true]:last:before:rounded-none",
-        ],
-    }), []);
 
     const headerColumns = useMemo(() => {
         // if (visibleColumns === "all") return columns;
@@ -181,7 +154,7 @@ const Page: React.FC = () => {
     const dispatch = useDispatch();
 
     const handleCardClick = (form: Form) => {
-        console.log("object")
+        console.log(form);
         dispatch(getFormDetail(form))
     };
     const handleRowClick = (item: Form) => {
@@ -247,28 +220,70 @@ const Page: React.FC = () => {
         </div>
     ), [selectedKeys, items.length, page, pages, hasSearchFilter]);
 
+    const formsWithColors = forms.map(form => ({
+        ...form,
+        bgColor: getRandomColor(),
+    }));
     const renderGrid = () => (
-        <div className="gap-2 grid grid-cols-2 sm:grid-cols-4">
-            {forms.map((form) => (
-                <div key={form.id}>
-                    <Link href={`/formManagement/requestApproval?id=${form.id}`}> {/* Pass form.id as a query parameter */}
-                        <a className="cursor-pointer" onClick={() => handleCardClick(form)}>
-                            <Card className="py-4 shadow-none border cursor-pointer">
-                                <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-                                    <h2 className="font-bold text-lg">{form.formName}</h2>
-                                </CardHeader>
-                                <CardBody className="overflow-visible py-2">
-                                    <h5>{form.formContent}</h5>
-                                </CardBody>
-                                <CardFooter className="text-sm justify-between">
-                                    <p className="text-gray-500">{form.classification}</p>
-                                </CardFooter>
-                            </Card>
-                        </a>
+        <div className="gap-3 grid grid-cols-2 sm:grid-cols-4">
+            {formsWithColors.map((item) => (
+                <div key={item?.id}>
+                    <Link href={`/formManagement/requestApproval`} onClick={() => handleCardClick(item)}
+                    >
+                        <Card
+                            className='border w-full rounded-lg'
+                            shadow="none"
+                        >
+                            <CardBody className="overflow-visible p-0">
+                                <div className='folded-corner p-2 h-[140px]' style={{ backgroundColor: item.bgColor }}>
+                                    <p className='text-white text-xs'>
+                                        <Chip
+                                            startContent={item.status != 2 ? <Clipboard size={14} /> : <UserSquare size={14} />}
+                                            variant="flat"
+                                            color="secondary"
+                                            size='sm'
+                                        >
+                                            {item.status == 2 ? "User" : "Pre"}
+                                        </Chip>
+                                    </p>
+
+                                    <div className='flex justify-between items-end'>
+                                        <div>
+                                            <Element4
+                                                size={70}
+                                                className='opacity-15 transform rotate-12 hover:scale-110 transition-all'
+                                            />
+                                        </div>
+                                        <DocumentText
+                                            size={150}
+                                            className='opacity-15 transform rotate-12 hover:scale-110 transition-all' />
+                                    </div>
+                                </div>
+                                {/* https://cdn.monday.com/images/quick_search_recent_doc.svg */}
+                                {/* https://cdn.monday.com/images/quick_search_recent_board.svg */}
+                            </CardBody>
+                            <CardFooter className="text-small justify-between">
+                                <div className='w-3/4'>
+                                    <div className='text-title font-semibold text-lg  flex items-center '>
+                                        <DocumentText size={20} className='text-gray-500' />
+                                        <p className='ml-2 line-clamp-1'>{item?.formName}</p>
+                                    </div>
+
+                                    <div className='mt-4 flex items-center'>
+                                        <HuobiToken size={20} className='text-gray-500 mr-2' />
+                                        <p className="text-left  mt-1 text-default-500 line-clamp-2">{item?.formDescription}</p>
+                                    </div>
+                                </div>
+                                <div className='mt-2 self-start'>
+                                    <p className="text-default-500 text-xs">{item?.classification}</p>
+                                </div>
+                            </CardFooter>
+                        </Card>
                     </Link>
                 </div>
-            ))}
-        </div>
+            ))
+            }
+        </div >
     );
 
     const renderTable = () => (
@@ -335,26 +350,45 @@ const Page: React.FC = () => {
     );
 
     return (
-        <div className='p-4'>
-            <div className="navbar bg-base-100">
-                <div className="flex-1">
-                    <Button className="btn-outline btn-sm" onClick={handleNewFormClick}>New Form</Button>
+        <div className='p-4 font-Poppins'>
+            <div className="flex justify-between items-center">
+                <div className="">
+                    <Button
+                        onClick={handleNewFormClick}
+                        startContent={<Grid5 size={18} />}
+                        className='rounded-lg' color='secondary'>
+                        New Form
+                    </Button>
                 </div>
-                <div className="flex-none">
-                    <ul className="menu menu-vertical lg:menu-horizontal bg-base-100 rounded-box">
-                        <li><a onClick={() => handleViewTypeChange('grid')}>Grid</a></li>
-                        <li><a onClick={() => handleViewTypeChange('table')}>Table</a></li>
-                    </ul>
+                <div className='w-20 flex justify-around'>
+                    <Button
+                        isIconOnly
+                        size='sm'
+                        className={viewType == "grid" ? 'bg-secondary text-base-100' : 'text-gray-700'}
+                        onClick={() => handleViewTypeChange('grid')}
+                    >
+                        <Category size={18} variant={viewType == "grid" ? 'Bold' : 'Linear'} />
+                    </Button>
+                    <Button
+                        isIconOnly
+                        size='sm'
+                        className={viewType == "table" ? 'bg-secondary text-base-100' : 'text-gray-700'}
+                        onClick={() => handleViewTypeChange('table')}
+                    >
+                        <Task size={18} variant='Linear' />
+                    </Button>
                 </div>
             </div>
             <hr style={{ width: '12px' }} />
             <br />
-            {loading ? (
-                <LoadingCustom />
-            ) : (
-                viewType === 'grid' ? renderGrid() : renderTable()
-            )}
-        </div>
+            {
+                loading ? (
+                    <LoadingCustom />
+                ) : (
+                    viewType === 'grid' ? renderGrid() : renderTable()
+                )
+            }
+        </div >
     );
 };
 

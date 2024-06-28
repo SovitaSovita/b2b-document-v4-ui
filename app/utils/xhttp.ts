@@ -35,7 +35,6 @@ export async function getSession() {
     if (res.status == 401) {
       if (typeof window !== "undefined") {
         // window.location.href = "https://bizweb.kosign.dev/signin";
-        console.log("res >>> ", res);
         alert("Access Denine")
       }
     }
