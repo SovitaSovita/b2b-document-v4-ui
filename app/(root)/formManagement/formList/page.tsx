@@ -269,7 +269,7 @@ const Page: React.FC = () => {
                                         <p className='ml-2 line-clamp-1'>{item?.formName}</p>
                                     </div>
 
-                                    <div className='mt-4 flex items-center'>
+                                    <div className='mt-4 h-10 flex items-center'>
                                         <HuobiToken size={20} className='text-gray-500 mr-2' />
                                         <p className="text-left  mt-1 text-default-500 line-clamp-2">{item?.formDescription}</p>
                                     </div>
