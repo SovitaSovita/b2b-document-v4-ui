@@ -1,7 +1,7 @@
 'use client'
 
 import { getArticleDetail, searchArticle } from '@/app/service/ArticleService';
-import { Backdrop, Box, Fade, Modal } from '@mui/material'
+import { Backdrop, Box, Fade, Modal, styled } from '@mui/material'
 import React, { useEffect, useRef, useState } from 'react'
 import empty_folder from '../../../public/icon/empty-folder.png'
 import Image from 'next/image';
@@ -9,12 +9,18 @@ import { getArticle } from '@/app/service/Redux/articleDetailSlice';
 import { useDispatch } from 'react-redux';
 import CloseIcon from '@mui/icons-material/Close';
 import '../../style/search_style.css'
+import { Container } from 'postcss';
+import { Button } from '@nextui-org/react';
+import DOMPurify from 'dompurify';
 
 function SearchComponent({ open, setOpen }: any) {
 
     const [recentData, setRecentData] = useState([]);
     const [searchData, setSearchData] = useState([]);
     const [focus, setFocus] = useState(false);
+    const [data, setData] = useState<SearchType[]>([]);
+    const [htmlContent, setHtmlContent] = useState('');
+    const [contentBody, setcontentBody] = useState('');
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -25,12 +31,10 @@ function SearchComponent({ open, setOpen }: any) {
 
     const onChange = (e: any) => {
         const inputData = e.target.value;
-
         if (inputData.length < 1) {
             setSearchData([])
             return;
         }
-
         searchArticle(inputData).then((data) => {
             setSearchData(data);
         })
@@ -48,16 +52,17 @@ function SearchComponent({ open, setOpen }: any) {
             handleClose()
         })
     }
+    const stripHtmlTags = (html: string): string => {
+        return html.replace(/<\/?[^>]+(>|$)/g, "");
+    };
+
 
     function addRecentSearch(searchData: any) {
-
         if (typeof window !== 'undefined') {
             var recentData = JSON.parse(localStorage.getItem('recentData') as any) || [];
             var isDuplicate = recentData.some((item: any) => item?.id === searchData?.id);
-
             if (!isDuplicate) {
                 recentData.push(searchData);
-
                 if (recentData.length > 10) {
                     recentData = recentData.slice(recentData.length - 10);
                 }
@@ -67,6 +72,12 @@ function SearchComponent({ open, setOpen }: any) {
         }
     }
 
+    const contentStyle = {
+        '.h-text': {
+            color: 'red',
+            fontWeight: 'bold',
+        },
+    }
 
     function getRecentSearch() {
         const getRecentSearch = JSON.parse(localStorage.getItem('recentData') as any) || [];
@@ -86,6 +97,32 @@ function SearchComponent({ open, setOpen }: any) {
             getRecentSearch()
         }
     }
+    const MyComponent = () => {
+        const [htmlContent, setHtmlContent] = useState('');
+        const [contentBody, setcontentBody] = useState('');
+        useEffect(() => {
+            searchData.map((item: SearchType) => {
+                const part1 = `<p style='display: inline;'>${item.tag_title}</p>`;
+                const part2 = `<span>/</span>`
+                const part3 = `<p style='display: inline;'>${item.title}</p>`;
+                const cotentB = item.content_body
+                const fullString = part1 + part2 + part3;
+                const sanitizedString = DOMPurify.sanitize(fullString);
+                setHtmlContent(sanitizedString);
+                setcontentBody(cotentB)
+                console.log("sanitizedString", sanitizedString)
+                return (
+                    <div>
+                        <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+                        <p style={{ color: '#8F9779', marginLeft: '10px' }} dangerouslySetInnerHTML={{ __html: contentBody }}></p>
+                    </div>
+                );
+            })
+
+        }, []);
+
+
+    };
 
     return (
         <div>
@@ -103,7 +140,7 @@ function SearchComponent({ open, setOpen }: any) {
                 }}
             >
                 <Fade in={open}>
-                    <div className='w-1/3 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg'>
+                    <div className='w-1/3 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg' style={{ width: '750px' }}>
                         <div className="group1 bg-base-100 rounded-lg">
                             <svg className="icon" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
                             <input onChange={onChange} placeholder="Search here" type="search" className="inputSearch bg-base-100 rounded-lg" />
@@ -146,6 +183,18 @@ function SearchComponent({ open, setOpen }: any) {
                                                 <h2 className="mb-3 font-semibold">Search Result:</h2>
                                                 <ul>
                                                     {
+                                                        searchData.map((item: SearchType) => {  
+                                                            return (
+                                                                <div>
+                                                                    <p  style={{fontWeight:'bold'}} dangerouslySetInnerHTML={{ __html: item.tag_title }}/>                 
+                                                                    <p style={{marginLeft:'10px', textDecoration:"underline", color:'#007bff',cursor: 'pointer'}} onClick={()=> handleViewArticle(item.id.toString())} dangerouslySetInnerHTML={{ __html: item.title }}></p>
+                                                                    <p style={{color:'#8F9779',marginLeft:'10px'}}dangerouslySetInnerHTML={{ __html: item.content_body }}></p> 
+                                                                </div>
+                                                            )
+                                                        }
+                                                        )
+                                                    } 
+                                                    {/* {
                                                         searchData.map((item: SearchType) => (
                                                             <li key={item.id} className='py-2 px-3 hover:bg-neutral hover:text-base-300 text-sm rounded-lg cursor-pointer'>
                                                                 <div key={item?.id} className='flex justify-between'>
@@ -155,7 +204,7 @@ function SearchComponent({ open, setOpen }: any) {
                                                                 </div>
                                                             </li>
                                                         ))
-                                                    }
+                                                    }  */}
                                                 </ul>
                                             </li>
                                         )
