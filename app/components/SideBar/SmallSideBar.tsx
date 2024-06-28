@@ -38,34 +38,38 @@ const SmallSideBar = ({ fun_toggleSideBar }: any) => {
                     <Image src={logoDocument} alt="Document Logo" width={50} height={50} className="mx-auto" />
                 </li>
                 <li className="mb-6">
-                    <Link href={"/"} className={pathname === "/" ? "text-secondary bg-primary-50 py-1.5 px-2 rounded-lg flex flex-col items-center" : "hover:text-secondary transition-all flex flex-col items-center"}
+                    <Link href={"/"}
+                        className={pathname === "/" ? "text-secondary py-1.5 px-2 rounded-lg flex flex-col items-center" : "hover:text-secondary py-1.5 px-2 transition-all flex flex-col items-center"}
                         onClick={() => fun_toggleSideBar(pathname)}
                     >
-                        <Home className="mb-2" />
+                        <Home className="mb-2 text-secondary" variant={pathname === "/" ? "Bold" : "Linear"} />
                         Document
                     </Link>
                 </li>
                 <li className="mb-6">
-                    <Link href={"/requests/requestHistory"} className={pathname === "/requests/requestHistory" ? "text-secondary bg-primary-50 py-1.5 px-2 rounded-lg flex flex-col items-center" : "hover:text-secondary transition-all flex flex-col items-center"}
+                    <Link href={"/requests/requestHistory"}
+                        className={pathname === "/requests/requestHistory" ? "text-secondary py-1.5 px-2 rounded-lg flex flex-col items-center" : "hover:text-secondary py-1.5 px-2 transition-all flex flex-col items-center"}
                         onClick={() => fun_toggleSideBar("/requests/requestHistory")}
                     >
-                        <ChartSuccess className="mb-2" />
+                        <ChartSuccess className="mb-2 text-secondary" variant={pathname === "/requests/requestHistory" ? "Bold" : "Linear"} />
                         My Request
                     </Link>
                 </li>
                 <li className="mb-6">
-                    <Link href={"/approvals/requesting"} className={pathname === "/approvals/requesting" ? "text-secondary bg-primary-50 py-1.5 px-2 rounded-lg flex flex-col items-center" : "hover:text-secondary transition-all flex flex-col items-center"}
+                    <Link href={"/approvals/requesting"}
+                        className={pathname === "/approvals/requesting" ? "text-secondary py-1.5 px-2 rounded-lg flex flex-col items-center" : "hover:text-secondary py-1.5 px-2 transition-all flex flex-col items-center"}
                         onClick={() => fun_toggleSideBar("/approvals/requesting")}
                     >
-                        <Chart21 className="mb-2" />
+                        <Chart21 className="mb-2 text-secondary" variant={pathname === "/approvals/requesting" ? "Bold" : "Linear"} />
                         My Approve
                     </Link>
                 </li>
                 <li className="mb-6">
-                    <Link href={"/formManagement/formList"} className={pathname === "/formManagement/formList" ? "text-secondary bg-primary-50 py-1.5 px-2 rounded-lg flex flex-col items-center justify-center text-center" : "hover:text-secondary py-1.5 px-2 transition-all flex flex-col items-center text-center"}
+                    <Link href={"/formManagement/formList"}
+                        className={pathname === "/formManagement/formList" ? "text-secondary py-1.5 px-2 rounded-lg flex flex-col items-center justify-center text-center" : "hover:text-secondary py-1.5 px-2 transition-all flex flex-col items-center text-center"}
                         onClick={() => fun_toggleSideBar("/formManagement/formList")}
                     >
-                        <ClipboardExport className="mb-2" />
+                        <ClipboardExport className="mb-2 text-secondary" variant={pathname === "/formManagement/formList" ? "Bold" : "Linear"} />
                         Form Management
                     </Link>
                 </li>
