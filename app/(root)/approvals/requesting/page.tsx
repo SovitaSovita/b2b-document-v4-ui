@@ -25,7 +25,7 @@ import { VerticalDotsIcon } from "@/public/icon/TableIcon";
 import Link from "next/link";
 
 /* Format date */
-const formatDate = (dateString: string): string => {
+const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleString("en-GB", {
         year: "numeric",
@@ -51,7 +51,7 @@ const columns = [
 
 const INITIAL_VISIBLE_COLUMNS = ["formName", "requestId", "formContent", "requestFrom", "requestTo", "requestDate", "requestStatus", "actions"];
 
-const ApprovedRequestsTable = ({ userId }: { userId: string }) => {
+const Page = ({ userId } : any) => {
     const [requests, setRequests] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -214,4 +214,4 @@ const ApprovedRequestsTable = ({ userId }: { userId: string }) => {
     );
 }
 
-export default ApprovedRequestsTable;
+export default Page;

@@ -46,12 +46,12 @@ const columns = [
     { uid: "requestTo", name: "Request To" },
     { uid: "requestDate", name: "Request Date" },
     { uid: "requestStatus", name: "Status" },
-    // { uid: "actions", name: "Actions", sortable: false },
+    { uid: "actions", name: "Actions", sortable: false },
 ];
 
 const INITIAL_VISIBLE_COLUMNS = ["formName", "requestId", "formContent", "requestFrom", "requestTo", "requestDate", "requestStatus", "actions"];
 
-const ListApproval = ({ userId }: { userId: string }) => {
+const ListApproval = ({ userId } : any) => {
     const [requests, setRequests] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -67,7 +67,7 @@ const ListApproval = ({ userId }: { userId: string }) => {
     useEffect(() => {
         const fetchApprovedRequests = async () => {
             try {
-                const data = await listApproved('sararuth');
+                const data = await listApproved('sovita');
                 setRequests(data.rec);
                 setError(null);
             } catch (error) {
@@ -77,8 +77,7 @@ const ListApproval = ({ userId }: { userId: string }) => {
             }
         };
         fetchApprovedRequests();
-
-    }, []);
+    }, [userId]);
 
     const headerColumns = useMemo(() => {
         if (visibleColumns === "all") return columns;
@@ -149,7 +148,7 @@ const ListApproval = ({ userId }: { userId: string }) => {
                 {/* Left Content */}
             </span>
             <span></span>
-            <div className="hidden sm:flex w-[30%] justify-end gap-2">
+            <div className="flex w-full sm:w-[30%] justify-end gap-2">
                 <Pagination
                     isCompact
                     showControls
@@ -167,12 +166,12 @@ const ListApproval = ({ userId }: { userId: string }) => {
         <div className="p-4">
             <div className="navbar bg-base-100">
                 <div className="flex-1">
-                    <Link href={"/approvals/holding"} className="btn btn-ghost tex-sm">Holding</Link>
-                    <Link href={"/approvals/completed"} className="btn btn-ghost tex-sm">Completed</Link>
+                    <Link href={"/approvals/holding"} className="btn btn-ghost text-sm">Holding</Link>
+                    <Link href={"/approvals/completed"} className="btn btn-ghost text-sm">Completed</Link>
                 </div>
                 <div className="flex-none">
                     <ul className="menu menu-horizontal px-1">
-                        <a className="btn btn-ghost tex-sm">Approval</a>
+                        <a className="btn btn-ghost text-sm">Approval</a>
                     </ul>
                 </div>
             </div>
