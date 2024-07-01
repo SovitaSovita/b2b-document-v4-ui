@@ -33,7 +33,8 @@ const config: Config = {
   corePlugins: {
     preflight: true,
   },
-  plugins: [require("daisyui"), nextui()],
+  plugins: [require("daisyui"), nextui(), require('@tailwindcss/typography'),
+  ],
   daisyui: {
     themes: [{
       light: {

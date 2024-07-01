@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import React, { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { DirectboxSend } from "iconsax-react";
+import EditorBlockNote from "@/app/components/About/EditorBlockNote";
 
 function Page() {
     const formData: Rec = useSelector((state: RootState) => state.form.form)
@@ -35,7 +36,7 @@ function Page() {
                         <span>Request</span>
                     </Button>
                 </div>
-                <div className="mt-4 m-4 border p-4">
+                <div className="mt-4 m-4 border p-4 rounded-lg">
                     <h1 className="text-title text-center font-semibold text-xl">{formData?.formName}</h1>
                     <div className="flex justify-between">
                         <span className="text-xs">Form number : {formData?.formNumber}</span>
@@ -83,6 +84,10 @@ function Page() {
                                 </div>
                             </div>
                         ))}
+
+                        <div className="mt-6 border-t p-4">
+                            <EditorBlockNote />
+                        </div>
                     </div>
                 </div>
             </div>

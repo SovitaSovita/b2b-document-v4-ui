@@ -64,7 +64,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
   });
  
   useEffect(() => {
-    if(!articleData){
+    if (!articleData) {
       setSelectedValue(convertStringToStatus(optionGETdata))
     }
   }, [])
@@ -81,7 +81,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
     else if (option === "PUBLIC") status = 1;
     else if (option === "DEPARTMENT") status = 2;
     return status;
-}
+  }
 
   const [isUpdateArticle, setIsUpdateArticle] = useState({
     open: false,
@@ -139,7 +139,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
     }
 
     if (articleData == null) {
-      const request = { 
+      const request = {
         "tag_id": tagValue?.id,
         "title": title,
         "content_body": content,
@@ -300,7 +300,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
               tagValue={tagUpdateData}
               setTagValue={setTagValue}
               selectedValue={selectedValue}
-              setSelectedValue={setSelectedValue}    
+              setSelectedValue={setSelectedValue}
               isLoading={isLoading}
             />
             <div className='px-6'>
@@ -314,5 +314,4 @@ export default function EditorCustum({ handleClose, session, articleData, handle
   )
 
 }
-
 

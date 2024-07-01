@@ -10,6 +10,13 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+/* styles/markdown.css */
+
+.markdown {
+  @apply prose;
+}
+
+
 body {
   font-family: "Poppins", "Roboto", sans-serif;
 }
