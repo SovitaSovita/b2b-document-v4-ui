@@ -90,42 +90,29 @@ function SideBar(props: any,isForm :any) {
 
     }
 
-    const [selectedKeys, setSelectedKeys] = React.useState<any>(new Set(["text"]));
-    const selectedValue = React.useMemo(
-        () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
-        [selectedKeys]
-    );
-
+    const [selectedKeys, setSelectedKeys] = useState('PRIVATE');
+    const [data, setData] = useState(null);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         if (isForm) router.push("/")
         else setAnchorEl(event.currentTarget);
     };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    //To filter tag and article data for 3 option
-    const handleGetTagNArticle = (option: string) => {
-        if (option == "DEPARTMENT") {
-            dispatch(getOptionData(option));
+    //To select filter tag and article data for 3 option
+    const handleClickSelArticle = (optionSel: string) => {
+        if (optionSel == "DEPARTMENT") {
+            dispatch(getOptionData(optionSel));
         }
-        else if (option == "PRIVATE") {
-            dispatch(getOptionData(option));
+        else if (optionSel == "PRIVATE") {
+            dispatch(getOptionData(optionSel));
         }
-        else if (option == "PUBLIC") {
-            dispatch(getOptionData(option));
+        else if (optionSel == "PUBLIC") {
+            dispatch(getOptionData(optionSel));
         }
-        else dispatch(getOptionData(option));
-
-        handleClose()
+        else dispatch(getOptionData(optionSel));
     }
-    console.log("vaba")
-
-
     useEffect(() => {
-        handleGetTagNArticle(selectedKeys?.anchorKey);
+        handleClickSelArticle(selectedKeys);
     }, [selectedKeys])
 
     // open modal to insert or update article
@@ -134,11 +121,6 @@ function SideBar(props: any,isForm :any) {
     // const handleOpenArticle = () => setOpenArticle(true);
     const [bg_color, setBg_color] = useState("");
     const router = useRouter()
-
-    // function handleOpenArticle (){
-
-    // }
-
     return (
         <Box
             sx={{
@@ -154,11 +136,9 @@ function SideBar(props: any,isForm :any) {
                     zIndex: 40
                 },
             }}
-        // variant="persistent"
-        // anchor="left"
-        // open={openMainDrawer}
+        
         >
-            <ul className="menu pb-0 menu-dropdown-show w-full text-base-content pt-0 font-Figtree">
+            <ul className="menu pb-0 menu-dropdown-show w-full text-base-content pt-0 font-Poppins">
                 <div className='sticky top-0 z-50 bg-primary'>
                     <HeaderSidebar handleOpenArticle={handleOpenArticle} isForm={false} />
 
@@ -174,7 +154,7 @@ function SideBar(props: any,isForm :any) {
                                     aria-label="selection"
                                     name="selection"
                                     value={selectedKeys}
-                                    onChange={setSelectedKeys}
+                                    onChange={(e) => setSelectedKeys(e.target.value)}
                                 >
                                     <FormControlLabel value="PRIVATE" control={<Radio />} label="Me" />
                                     <FormControlLabel value="DEPARTMENT" control={<Radio />} label={session?.dvsn_NM || "Department"} />

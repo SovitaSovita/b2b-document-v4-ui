@@ -139,7 +139,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
     }
 
     if (articleData == null) {
-      const request = {
+      const request = { 
         "tag_id": tagValue?.id,
         "title": title,
         "content_body": content,

@@ -33,9 +33,10 @@ export const AddArticleBy = async (request: object) => {
 
 
 
-export const searchArticle = async (title: string) => {
+export const searchArticle = async (srch_wd : string) => {
     try {
-        const response = await ihttp.get(`/articles/doc_search_r01?title=${title}`);
+        const response = await ihttp.get(`/articles/doc_search_all?srch_wd=${srch_wd}`);
+        console.log("response",response)
         return response.data?.rec;
     } catch (error) {
         return error;
