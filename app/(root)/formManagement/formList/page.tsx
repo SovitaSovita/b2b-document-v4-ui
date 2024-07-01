@@ -7,13 +7,15 @@ import LoadingCustom from '@/app/components/Material/Loading';
 import {
     Button, Card, CardBody, CardFooter, Chip,
     Pagination, SortDescriptor, Table, TableBody,
-    TableCell, TableColumn, TableHeader, TableRow
+    TableCell, TableColumn, TableHeader, TableRow,
+    useDisclosure
 } from "@nextui-org/react";
 import { getFormDetail } from '@/app/service/Redux/formDetailSlice';
 import Link from 'next/link';
 import getRandomColor from '@/app/utils/RandomColor';
 import '../../../style/card_style.css'
 import { Category, Clipboard, DocumentText, Element4, Grid5, HuobiToken, Task, UserSquare } from 'iconsax-react';
+import NewFormModal from '@/app/components/Modal/NewFormModal';
 interface Form {
     id: number;
     formName: string;
@@ -159,8 +161,13 @@ const Page: React.FC = () => {
     };
     const handleRowClick = (item: Form) => {
         console.log('Row clicked:', item);
+        dispatch(getFormDetail(item))
     };
+
+    //open new form modal
+    const { isOpen, onOpen, onClose }: any = useDisclosure();
     const handleNewFormClick = () => {
+        onOpen();
     };
 
     const handleViewTypeChange = (viewType: 'grid' | 'table') => {
@@ -195,7 +202,7 @@ const Page: React.FC = () => {
 
     ), [
         filterValue,
-        //statusFilter,
+        // statusFilter,
         visibleColumns,
         onSearchChange,
         onRowsPerPageChange,
@@ -336,15 +343,20 @@ const Page: React.FC = () => {
                         </TableRow>
                     ) : (
                         sortedItems.map((item) => (
-                            <TableRow key={item.id} onClick={() => handleRowClick(item)} className="cursor-pointer hover:bg-accent-hover">
+                            <TableRow onClick={() => handleRowClick(item)} className="cursor-pointer hover:bg-accent-hover">
                                 {headerColumns.map((column) => (
-                                    <TableCell key={column.uid}>{renderCell(item, column.uid as keyof Form)}</TableCell>
+
+                                    <TableCell key={column.uid}>
+                                        <Link key={item.id} href="/formManagement/requestApproval" passHref>
+                                            {renderCell(item, column.uid as keyof Form)}
+                                        </Link>
+
+                                    </TableCell>
                                 ))}
                             </TableRow>
                         ))
                     )}
                 </TableBody>
-
             </Table>
         </div>
     );
@@ -354,7 +366,7 @@ const Page: React.FC = () => {
             <div className="flex justify-between items-center">
                 <div className="">
                     <Button
-                        onClick={handleNewFormClick}
+                        onPress={handleNewFormClick}
                         startContent={<Grid5 size={18} />}
                         className='rounded-lg' color='secondary'>
                         New Form
@@ -388,6 +400,8 @@ const Page: React.FC = () => {
                     viewType === 'grid' ? renderGrid() : renderTable()
                 )
             }
+
+            <NewFormModal isOpen={isOpen} onClose={onClose} />
         </div >
     );
 };

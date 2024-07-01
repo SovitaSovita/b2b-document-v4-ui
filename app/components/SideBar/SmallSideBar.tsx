@@ -21,7 +21,7 @@ const SmallSideBar = ({ fun_toggleSideBar }: any) => {
             { name: "New Request", link: "/requests/newRequest", icon: <AddCircle size="10" color="black" /> },
         ],
         [
-            { name: "Requesting", link: "/approvals/requesting", icon: <Convertshape2 size="10" color="black" /> },
+            { name: "Requesting", link: "/approvals/listAllApproval", icon: <Convertshape2 size="10" color="black" /> },
             { name: "Hold", link: "/approvals/holding", icon: <Danger size="10" color="black" /> },
             { name: "Completed", link: "/approvals/completed", icon: <ProfileTick size="10" color="black" /> }
         ],
@@ -56,11 +56,11 @@ const SmallSideBar = ({ fun_toggleSideBar }: any) => {
                     </Link>
                 </li>
                 <li className="mb-6">
-                    <Link href={"/approvals/requesting"}
-                        className={pathname === "/approvals/requesting" ? "text-secondary py-1.5 px-2 rounded-lg flex flex-col items-center" : "hover:text-secondary py-1.5 px-2 transition-all flex flex-col items-center"}
-                        onClick={() => fun_toggleSideBar("/approvals/requesting")}
+                    <Link href={"/approvals/listAllApproval"}
+                        className={pathname === "/approvals/listAllApproval" ? "text-secondary py-1.5 px-2 rounded-lg flex flex-col items-center" : "hover:text-secondary py-1.5 px-2 transition-all flex flex-col items-center"}
+                        onClick={() => fun_toggleSideBar("/approvals/listAllApproval")}
                     >
-                        <Chart21 className="mb-2 text-secondary" variant={pathname === "/approvals/requesting" ? "Bold" : "Linear"} />
+                        <Chart21 className="mb-2 text-secondary" variant={pathname === "/approvals/listAllApproval" ? "Bold" : "Linear"} />
                         My Approve
                     </Link>
                 </li>

@@ -51,7 +51,7 @@ const columns = [
 
 const INITIAL_VISIBLE_COLUMNS = ["formName", "requestId", "formContent", "requestFrom", "requestTo", "requestDate", "requestStatus", "actions"];
 
-const ApprovedRequestsTable = ({ userId }: { userId: string }) => {
+const ListApproval = ({ userId }: { userId: string }) => {
     const [requests, setRequests] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -166,12 +166,12 @@ const ApprovedRequestsTable = ({ userId }: { userId: string }) => {
         <div className="p-4">
             <div className="navbar bg-base-100">
                 <div className="flex-1">
-                    {/* <a className="btn btn-ghost text-xl"></a> */}
+                    <Link href={"/approvals/holding"} className="btn btn-ghost tex-sm">Holding</Link>
+                    <Link href={"/approvals/completed"} className="btn btn-ghost tex-sm">Completed</Link>
                 </div>
                 <div className="flex-none">
                     <ul className="menu menu-horizontal px-1">
-                        <Link href={"/approvals/holding"} className="btn btn-ghost tex-sm">Holding</Link>
-                        <Link href={"/approvals/completed"} className="btn btn-ghost tex-sm">Completed</Link>
+                        <a className="btn btn-ghost tex-sm">Approval</a>
                     </ul>
                 </div>
             </div>
@@ -196,7 +196,7 @@ const ApprovedRequestsTable = ({ userId }: { userId: string }) => {
                         <TableColumn
                             key={column.uid}
                             align={column.uid === "actions" ? "center" : "start"}
-                            // allowsSorting={column.sortable}
+                        // allowsSorting={column.sortable}
                         >
                             {column.name}
                         </TableColumn>
@@ -214,4 +214,4 @@ const ApprovedRequestsTable = ({ userId }: { userId: string }) => {
     );
 }
 
-export default ApprovedRequestsTable;
+export default ListApproval;
