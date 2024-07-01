@@ -1,0 +1,29 @@
+.folded-corner {
+    position: relative;
+    overflow: hidden;
+}
+
+.folded-corner::before,
+.folded-corner::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    /* Adjust this to change the size of the folded corner */
+    height: 50px;
+    /* Adjust this to change the size of the folded corner */
+    background-color: none;
+    border: 1px solid #fff;
+    /* Adjust this to change the border color of the folded corner */
+}
+
+.folded-corner::before {
+    transform: translate(25px, -25px) rotate(45deg);
+}
+
+.folded-corner::after {
+    transform: translate(25px, -25px) rotate(45deg);
+    z-index: -1;
+    /* Send the ::after element to the back */
+}

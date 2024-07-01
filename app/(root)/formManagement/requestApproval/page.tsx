@@ -1,91 +1,88 @@
 'use client'
-import { RootState } from "@/app/service/Redux/store/store";
-import { Button } from "@nextui-org/react";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import Link from 'next/link';
-import { ArrowLeft2 } from "iconsax-react";
+import { RootState } from "@/app/service/Redux/store/store"
+import { Button, DatePicker, Input, Radio, RadioGroup } from "@nextui-org/react"
+import KeyboardReturnOutlinedIcon from '@mui/icons-material/KeyboardReturnOutlined';
+import { useRouter } from "next/navigation"
+import React, { useEffect } from "react"
+import { useSelector } from "react-redux"
+import { DirectboxSend } from "iconsax-react";
 
-interface FormData {
-    response: Response; // Assuming Response is defined somewhere
-    formNumber: string;
-    formName: string
-}
-
-const Page: React.FC = () => {
-    const formDatas = useSelector((state: RootState) => state.form.form as FormData);
-    console.log('page request approval', formDatas);
-    const handleRequestApproval = () => {
-        // Create form
-        const form = document.createElement('form')
-        form.setAttribute('method', 'post')
-        form.setAttribute('action', 'https://emplinfo-dev.appplay.co.kr/com_empl_02.act')
-        form.setAttribute('target', '_blank')
-        form.style.display = 'none';
-        const inputData: any = {
-            "POP_TYPE": "A",
-            "SECR_KEY": "0e5dddb4-79b8-814b-9701-3d5ebe625455",
-            "USE_INTT_ID": "UTLZ_590",
-            "POP_OPT": "M",
-            "EMPL_DSNC": "U",
-            "USER_ID": "sovita",
-            "POST_CALLBACK_PAGE": "http://localhost:3000/api/test",
-            "LNGG_DSNC": "EN"
-        }
-        for (const key in inputData) {
-            if (inputData.hasOwnProperty(key)) {
-                const input = document.createElement('input');
-                input.setAttribute('type', 'hidden');
-                input.setAttribute('name', key);
-                input.setAttribute('value', inputData[key]);
-                form.appendChild(input);
-            }
-        }
-        document.body.appendChild(form)
-        form.submit()
-    }
-    const [response, setResponse] = useState(null)
+function Page() {
+    const formData: Rec = useSelector((state: RootState) => state.form.form)
+    const router = useRouter();
     useEffect(() => {
-        const handleMessage = (event: any) => {
-            if (event.origin === 'http://localhost:3000/api/test' && event.data.RESP_DATA) {
-                setResponse(event.data.RESP_DATA);
-            }
+        if (!formData?.formName) {
+            router.push('/formManagement/formList')
         }
-        window.addEventListener('message', handleMessage);
-        return () => {
-            window.removeEventListener('message', handleMessage);
-        };
-    }, [response])
-    console.log('response ', response)
-
-    const formData: any = useSelector((state: RootState) => state.form.form)
-    console.log(formData)
-
+    }, [formData?.formName])
     return (
         <>
-            {/* <div className="p-4">
-                <div className="navbar bg-base-100">
-                    <div className="flex-1">                      
-                        <Link href="/formManagement/formList">
-                            <ArrowLeft2 size={32} color="black" />
-                        </Link>
-
-                    </div>
-                    <div className="flex-none">
-                        <ul className="menu menu-horizontal px-1">
-                            <button onClick={handleRequestApproval}>Request approval</button>
-                        </ul>
-                    </div>
+            <div className="">
+                <div className="mt-3 ml-4 mr-4 flex justify-between">
+                    <Button size="sm"
+                        variant="ghost"
+                        className="border-none rounded-lg group"
+                        onClick={() => router.back()}
+                    >
+                        <KeyboardReturnOutlinedIcon className="text-gray-600 text-base" />
+                        <span>Go Back</span>
+                    </Button>
+                    <Button size="sm"
+                        color="secondary"
+                        className="border-none rounded-lg group"
+                    >
+                        <DirectboxSend size={18} />
+                        <span>Request</span>
+                    </Button>
                 </div>
-                <hr></hr>
-                <br></br>
-                <h1>{formData?.formName}</h1>
-                <h1>Document No: {formData?.formNumber}</h1>
-            </div> */}
-            <div className="bg-white py-24 sm:py-32">
-                <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                    <div className="mx-auto max-w-2xl lg:text-center">
-                        <h2>{formData?.formName}</h2>
+                <div className="mt-4 m-4 border p-4">
+                    <h1 className="text-title text-center font-semibold text-xl">{formData?.formName}</h1>
+                    <div className="flex justify-between">
+                        <span className="text-xs">Form number : {formData?.formNumber}</span>
+                        <span className="text-xs">Form type : {formData?.classification}</span>
+                    </div>
+
+                    <div className="mt-6">
+                        {formData?.itemsData.map((item: FormItem) => (
+                            <div>
+                                <div key={item.id} className="grid grid-cols-3 gap-4">
+                                    <div className="flex flex-col gap-4">
+                                        {
+                                            item.inputType == "text" &&
+                                            <Input className="mb-2.5"
+                                                value={item.inputValue}
+                                                type={item.inputType}
+                                                variant="flat"
+                                                size="sm"
+                                                label={item.itemName}
+                                                isRequired={item.inputRequire} />
+                                        }
+                                        {
+                                            item.inputType == "radio" && (
+                                                <RadioGroup
+                                                    size="sm"
+                                                    orientation="horizontal"
+                                                    label={item.itemName}
+                                                    color="secondary"
+                                                    className="mb-2"
+                                                    defaultValue={item.selected ? item.inputValue : ''}
+                                                >
+                                                    <Radio value={item.inputValue}>{item.inputValue}</Radio>
+                                                    <Radio value={item.inputValue}>{item.inputValue}</Radio>
+                                                </RadioGroup>
+                                            )
+                                        }
+                                        {
+                                            item.inputType == "date" && (
+                                                <DatePicker size="sm" label={item.itemName} className="max-w-[284px] mb-2" />
+                                            )
+                                        }
+                                    </div>
+                                    <div className="">2</div>
+                                    <div className="">3</div>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
