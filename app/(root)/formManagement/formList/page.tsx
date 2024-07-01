@@ -161,6 +161,7 @@ const Page: React.FC = () => {
     };
     const handleRowClick = (item: Form) => {
         console.log('Row clicked:', item);
+        dispatch(getFormDetail(item))
     };
 
     //open new form modal
@@ -201,7 +202,7 @@ const Page: React.FC = () => {
 
     ), [
         filterValue,
-        //statusFilter,
+        // statusFilter,
         visibleColumns,
         onSearchChange,
         onRowsPerPageChange,
@@ -342,15 +343,20 @@ const Page: React.FC = () => {
                         </TableRow>
                     ) : (
                         sortedItems.map((item) => (
-                            <TableRow key={item.id} onClick={() => handleRowClick(item)} className="cursor-pointer hover:bg-accent-hover">
+                            <TableRow onClick={() => handleRowClick(item)} className="cursor-pointer hover:bg-accent-hover">
                                 {headerColumns.map((column) => (
-                                    <TableCell key={column.uid}>{renderCell(item, column.uid as keyof Form)}</TableCell>
+
+                                    <TableCell key={column.uid}>
+                                        <Link key={item.id} href="/formManagement/requestApproval" passHref>
+                                            {renderCell(item, column.uid as keyof Form)}
+                                        </Link>
+
+                                    </TableCell>
                                 ))}
                             </TableRow>
                         ))
                     )}
                 </TableBody>
-
             </Table>
         </div>
     );

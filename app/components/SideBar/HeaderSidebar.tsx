@@ -104,7 +104,6 @@ function HeaderSidebar({ handleOpenArticle, isForm }: any) {
     }
 
     const [selectedKeys, setSelectedKeys] = React.useState<any>(new Set(["text"]));
-
     const selectedValue = React.useMemo(
         () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
         [selectedKeys]
@@ -116,8 +115,8 @@ function HeaderSidebar({ handleOpenArticle, isForm }: any) {
 
     return (
         <div className="p-2 mt-3 pl-1 flex justify-between">
-            <div className='flex items-center cursor-pointer w-full' onClick={handleClick}>
-                <Dropdown>
+            {/* <div className='flex items-center cursor-pointer w-full' onClick={handleClick}> */}
+                {/* <Dropdown>
                     <DropdownTrigger>
                         <Button
                             className="capitalize px-3 rounded-lg text-secondary bg-primary-50 w-36 flex justify-between"
@@ -147,14 +146,14 @@ function HeaderSidebar({ handleOpenArticle, isForm }: any) {
                         </DropdownItem>
                         <DropdownItem key="PUBLIC">Company</DropdownItem>
                     </DropdownMenu>
-                </Dropdown>
-                {/* <Button onClick={handleDrawerClose}>Open drawer</Button> */}
-            </div>
+                </Dropdown>  */}
+                 {/* <Button onClick={handleDrawerClose}>Open drawer</Button> */}
+            {/* </div> */}
 
             {
                 handleOpenArticle && (
-                    <div>
-                        <Button onClick={handleOpenArticle} className="bg-primary-50 text-secondary tooltip tooltip-secondary tooltip-left cursor-pointer" data-tip="New Article">
+                    <div style={{margin:"auto 38% auto 34%"}}>
+                        <Button onClick={handleOpenArticle} className="bg-primary-50 text-secondary tooltip tooltip-secondary tooltip-left cursor-pointer" data-tip="New Article" >
                             <Edit size={18} />
                         </Button>
                     </div>

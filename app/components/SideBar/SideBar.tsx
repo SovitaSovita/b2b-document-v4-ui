@@ -7,7 +7,7 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import { useState } from 'react';
 import { getArticleDetail } from '../../service/ArticleService';
 
-import { getArticle, isFavorite } from '../../service/Redux/articleDetailSlice';
+import { getArticle, getOptionData, isFavorite } from '../../service/Redux/articleDetailSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -17,20 +17,20 @@ import UpdateTagComponent from '../Modal/UpdateTagComponent';
 import { checkIsFavorite } from '../../service/FavouriteService';
 import DeleteTagComponent from '../Modal/DeleteTagComponent';
 import UpdateArticleModal from '../Modal/ArticleModal';
-import { Box, Drawer, Icon } from '@mui/material';
+import { Box, Drawer, FormControl, FormControlLabel, FormLabel, Icon, Radio, RadioGroup } from '@mui/material';
 import HeaderSidebar from './HeaderSidebar';
 import { RootState } from '@/app/service/Redux/store/store';
 import { getSession } from '@/app/utils/xhttp';
 import LoadingCustom from '../Material/Loading';
 import { Tooltip } from '@nextui-org/react';
-import { Building, MenuBoard, People, ProfileCircle } from 'iconsax-react';
+import { ArrowSwapHorizontal, Building, MenuBoard, People, ProfileCircle } from 'iconsax-react';
 import { useRouter } from 'next/navigation';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import EditorCustum from '../editor/EditorCustum';
 
 const drawerWidth = 320;
 
-function SideBar(props: any) {
+function SideBar(props: any,isForm :any) {
     const { ARTICLES, TAGS, FAVORITE }: MenuData = props
     const { isLoading, handleDrawerClose, openMainDrawer, toggleSideBar }: any = props
     const session: UserData = useSelector((state: RootState) => state?.article.session);
@@ -52,7 +52,10 @@ function SideBar(props: any) {
         setTagDeleteData(item)
         setOpenTags(true)
     }
+    
+    useEffect(()=>{
 
+    },[tagData])
 
     const handleOpenArticle = (e: any, title: "") => {
         setTagData(title);
@@ -87,19 +90,37 @@ function SideBar(props: any) {
 
     }
 
-    const [keyToDisplay, setKeyToDisplay] = useState("Me");
+    const [selectedKeys, setSelectedKeys] = useState('PRIVATE');
+    const [data, setData] = useState(null);
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        if (isForm) router.push("/")
+        else setAnchorEl(event.currentTarget);
+    };
+    //To select filter tag and article data for 3 option
+    const handleClickSelArticle = (optionSel: string) => {
+        if (optionSel == "DEPARTMENT") {
+            dispatch(getOptionData(optionSel));
+        }
+        else if (optionSel == "PRIVATE") {
+            dispatch(getOptionData(optionSel));
+        }
+        else if (optionSel == "PUBLIC") {
+            dispatch(getOptionData(optionSel));
+        }
+        else dispatch(getOptionData(optionSel));
+    }
+    useEffect(() => {
+        handleClickSelArticle(selectedKeys);
+    }, [selectedKeys])
+
     // open modal to insert or update article
     const [openArticle, setOpenArticle] = React.useState(false);
     const [openTagDelete, setopenTagDelete] = React.useState(false);
     // const handleOpenArticle = () => setOpenArticle(true);
     const [bg_color, setBg_color] = useState("");
     const router = useRouter()
-    console.log("openArticle", openArticle)
-
-    // function handleOpenArticle (){
-
-    // }
-
     return (
         <Box
             sx={{
@@ -115,40 +136,34 @@ function SideBar(props: any) {
                     zIndex: 40
                 },
             }}
-        // variant="persistent"
-        // anchor="left"
-        // open={openMainDrawer}
+        
         >
             <ul className="menu pb-0 menu-dropdown-show w-full text-base-content pt-0 font-Poppins">
                 <div className='sticky top-0 z-50 bg-primary'>
                     <HeaderSidebar handleOpenArticle={handleOpenArticle} isForm={false} />
 
-                    {/* <li className='mb-2 mt-4'>
+                    <li className='mb-2 mt-4'>
                         <details>
                             <summary className="border font-semibold text-[15px] font-mono">
-                                <People className='text-secondary text-[19px] mr-2' />
+                                <ArrowSwapHorizontal size={14} />
                                 Type
-                            </summary> 
-                            <ul>
-                                <label className="label cursor-pointer">
-                                    <input type="radio" name="radio-10" className="radio-xs checked:bg-blue-300"/>
-                                    <span className="label-text">Me</span>
-                                </label>  
-                            </ul>
-                            <ul>
-                                <label className="label cursor-pointer">
-                                    <input type="radio" name="radio-10" className="radio-xs checked:bg-blue-300"/>
-                                    <span className="label-text">Department</span>
-                                </label>  
-                            </ul>
-                            <ul>
-                                <label className="label cursor-pointer">
-                                    <input type="radio" name="radio-10" className="radio-xs checked:bg-blue-300"/>
-                                    <span className="label-text">Company</span>
-                                </label>  
-                            </ul>
+                            </summary>
+                            <FormControl component="fieldset" style={{ marginLeft: "20px" }} onClick={handleClick}>
+                                <FormLabel component="legend">Selection</FormLabel>
+                                <RadioGroup
+                                    aria-label="selection"
+                                    name="selection"
+                                    value={selectedKeys}
+                                    onChange={(e) => setSelectedKeys(e.target.value)}
+                                >
+                                    <FormControlLabel value="PRIVATE" control={<Radio />} label="Me" />
+                                    <FormControlLabel value="DEPARTMENT" control={<Radio />} label={session?.dvsn_NM || "Department"} />
+                                    <FormControlLabel value="PUBLIC" control={<Radio />} label="Company" />
+                                </RadioGroup>
+                            </FormControl>
+                            
                         </details >
-                    </li > */}
+                    </li >
                     {/* Favorite */}
                     <li className='mb-2 mt-4'>
                         <details>
