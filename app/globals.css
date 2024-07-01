@@ -327,3 +327,9 @@
 .menu :where(li > .menu-dropdown-toggle):after {
   /* display: none; */
 }
+
+/* custom table */
+.checkbox-custom {
+  --checkbox-bg-color-checked: #000;
+  /* Black color */
+}

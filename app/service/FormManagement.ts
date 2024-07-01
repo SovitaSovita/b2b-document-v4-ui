@@ -36,3 +36,21 @@ export const DeleteForm = async (id:number) => {
     }
 }
 
+export const listApproved = async (userId: string) => {
+    try {
+        const { data } = await ihttp.get(`requestform/listApproved?userId=${userId}`);
+        return data;
+    } catch (error) {
+        console.error('Error fetching approved list:', error);
+        throw new Error('Failed to fetch approved list');
+    }
+}
+export const getFormDetail = async (formId: number) => {
+    try {
+        const { data } = await ihttp.get(`form/getDetail?id=${formId}`);
+        return data;
+    } catch (error) {
+        throw new Error('Failed to fetch approved list');
+    }
+}
+
