@@ -51,110 +51,22 @@ const StyledMenu = styled((props: MenuProps) => (
     };
 });
 
-
 function HeaderSidebar({ handleOpenArticle, isForm }: any) {
 
     const dispatch = useDispatch();
-    const session: UserData = useSelector((state: RootState) => state?.article.session);
-
-    //const [activeItems, setActiveItem] = useState("PRIVATE");
-    const optionGETdata = useSelector((state: RootState) => state?.article.getOptionData);
     const router = useRouter()
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        if (isForm) router.push("/")
-        else setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    const [keyToDisplay, setKeyToDisplay] = useState("Me");
-    //To filter tag and article data for 3 option
-    const handleGetTagNArticle = (option: string) => {
-        if (option == "DEPARTMENT") {
-            setKeyToDisplay(session?.dvsn_NM)
-            dispatch(getOptionData(option));
-        }
-        else if (option == "PRIVATE") {
-            setKeyToDisplay("Me")
-            dispatch(getOptionData(option));
-        }
-        else if (option == "PUBLIC") {
-            setKeyToDisplay("Company")
-            dispatch(getOptionData(option));
-        }
-        else dispatch(getOptionData(option));
-
-        handleClose()
-    }
-
-    const splitString = (username: string) => {
-        if (username) {
-            const parts = username?.split(" ");
-            let result = ""
-            parts.forEach((part: string) => {
-                const firstLetter = part.charAt(0);
-                result += firstLetter;
-            });
-            return result;
-        }
-    }
-
-    const [selectedKeys, setSelectedKeys] = React.useState<any>(new Set(["text"]));
-    const selectedValue = React.useMemo(
-        () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
-        [selectedKeys]
-    );
-
-    useEffect(() => {
-        handleGetTagNArticle(selectedKeys?.anchorKey);
-    }, [selectedKeys])
 
     return (
         <div className="p-2 mt-3 pl-1 flex justify-between">
-            {/* <div className='flex items-center cursor-pointer w-full' onClick={handleClick}> */}
-                {/* <Dropdown>
-                    <DropdownTrigger>
-                        <Button
-                            className="capitalize px-3 rounded-lg text-secondary bg-primary-50 w-36 flex justify-between"
-                        >
-                            <span className='flex items-center'>
-                                {keyToDisplay === "Me" && <ProfileCircle className='text-secondary text-[19px] mr-2' />}
-                                {keyToDisplay === "Company" && <Building className='text-secondary text-[19px] mr-2' />}
-                                {(keyToDisplay != "Me" && keyToDisplay != "Company") && <People className='text-secondary text-[19px] mr-2' />}
-                                {keyToDisplay}
-                            </span>
-                            <span>
-                                <ArrowSwapHorizontal size={14} />
-                            </span>
-                        </Button>
-                    </DropdownTrigger>
-                    <DropdownMenu
-                        aria-label="Single selection example"
-                        variant="flat"
-                        disallowEmptySelection
-                        selectionMode="single"
-                        selectedKeys={selectedKeys}
-                        onSelectionChange={setSelectedKeys}
-                    >
-                        <DropdownItem key="PRIVATE">Me</DropdownItem>
-                        <DropdownItem key="DEPARTMENT">
-                            {session?.dvsn_NM}
-                        </DropdownItem>
-                        <DropdownItem key="PUBLIC">Company</DropdownItem>
-                    </DropdownMenu>
-                </Dropdown>  */}
-                 {/* <Button onClick={handleDrawerClose}>Open drawer</Button> */}
-            {/* </div> */}
-
             {
                 handleOpenArticle && (
-                    <div style={{margin:"auto 38% auto 34%"}}>
+                    <div style={{margin:"auto 19% auto 19%"}}>
                         <Button onClick={handleOpenArticle} className="bg-primary-50 text-secondary tooltip tooltip-secondary tooltip-left cursor-pointer" data-tip="New Article" >
                             <Edit size={18} />
+                            <span>Add New Article</span>
                         </Button>
                     </div>
                 )

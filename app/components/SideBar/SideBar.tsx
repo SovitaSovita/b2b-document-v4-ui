@@ -7,6 +7,8 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import { useState } from 'react';
 import { getArticleDetail } from '../../service/ArticleService';
 
+import '../../style/radio_checked.css';
+
 import { getArticle, getOptionData, isFavorite } from '../../service/Redux/articleDetailSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -27,6 +29,7 @@ import { ArrowSwapHorizontal, Building, MenuBoard, People, ProfileCircle } from 
 import { useRouter } from 'next/navigation';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import EditorCustum from '../editor/EditorCustum';
+import { jsx } from 'react/jsx-runtime';
 
 const drawerWidth = 320;
 
@@ -121,7 +124,10 @@ function SideBar(props: any,isForm :any) {
     // const handleOpenArticle = () => setOpenArticle(true);
     const [bg_color, setBg_color] = useState("");
     const router = useRouter()
+
+    
     return (
+       
         <Box
             sx={{
                 width: toggleSideBar,
@@ -191,7 +197,6 @@ function SideBar(props: any,isForm :any) {
                             )}
                         </details >
                     </li >
-
                     <div className="css-o2c9dn my-3"></div>
                 </div>
 

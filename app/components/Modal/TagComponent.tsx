@@ -15,8 +15,6 @@ function TagComponent({ open, setOpen, user, sendDataToParent, selectedValue, se
         setSelectedValue(parseInt(newInputValue));
     };
    
-    
-    
     const dispatch = useDispatch()
     const [inputVal, setInputVal] = useState<string>();
     const session: UserData = useSelector((state: RootState) => state?.article.session);

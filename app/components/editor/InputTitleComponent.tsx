@@ -61,21 +61,23 @@ function InputTitleComponent(props: any) {
         const value = e.target.value
         setTitle(value)
     }
-    useEffect(() => {
-    },[tagData])
+    
 
     const handleSelectChange = (event: any) => {
         const newValue = event.target.value
         setSelectedValue(newValue);
         if (newValue == 0) {
             getTagAndArticleFunction(null, 0, session?.userId);
+            console.log("session?.userId>>>",session?.userId)
         }
         if (newValue == 1) {
             getTagAndArticleFunction(null, 1, session?.userId);
+            
         }
         if (newValue == 2) {
             getTagAndArticleFunction(parseInt(session?.dvsn_CD, 10), 2, null);
         }
+        console.log("newValue>>",newValue);
     };
 
     const getTagAndArticleFunction = (dept_id: number | null, status: number, userId: string | null) => {
