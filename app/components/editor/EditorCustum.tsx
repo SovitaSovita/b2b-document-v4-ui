@@ -34,16 +34,16 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
   position: 'relative',
 }));
 
-export default function EditorCustum({ handleClose, session, articleData, handleViewArticle, tagUpdateData}: any) {
+export default function EditorCustum({ handleClose, session, articleData, handleViewArticle, tagUpdateData }: any) {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const optionGETdata = useSelector((state: RootState) => state?.article.getOptionData);
   const [inputVal, setInputVal] = useState("");
 
-  console.log("test1234",tagUpdateData)
-  useEffect(()=>{
-        
-  },[tagUpdateData])
+  console.log("test1234", tagUpdateData)
+  useEffect(() => {
+
+  }, [tagUpdateData])
 
 
   const [isErrorAlert, setIsErrorAlert] = useState({
@@ -57,7 +57,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
   const [title, setTitle] = useState("");
   const [tagValue, setTagValue] = React.useState<TagType | any>();
   const [selectedValue, setSelectedValue] = useState<number>(0); // Defaulting to "Public"
-    console.log("gaga123", tagData);
+  console.log("gaga123", tagData);
 
   const [isErrorInput, setIsErrorInput] = useState({
     error: false,
@@ -65,20 +65,20 @@ export default function EditorCustum({ handleClose, session, articleData, handle
   });
 
   useEffect(() => {
-    if(!articleData){
+    if (!articleData) {
       setSelectedValue(convertStringToStatus(optionGETdata))
     }
   }, [])
 
-  
-  
+
+
   const convertStringToStatus = (option: string) => {
     let status = 0;
     if (option === "PRIVATE") status = 0;
     else if (option === "PUBLIC") status = 1;
     else if (option === "DEPARTMENT") status = 2;
     return status;
-}
+  }
 
   const [isUpdateArticle, setIsUpdateArticle] = useState({
     open: false,
@@ -137,7 +137,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
     }
 
     if (articleData == null) {
-      const request = { 
+      const request = {
         "tag_id": tagValue?.id,
         "title": title,
         "content_body": content,
@@ -294,7 +294,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
               tagValue={tagUpdateData}
               setTagValue={setTagValue}
               selectedValue={selectedValue}
-              setSelectedValue={setSelectedValue}    
+              setSelectedValue={setSelectedValue}
               isLoading={isLoading}
             />
             <div className='px-6'>
@@ -308,5 +308,4 @@ export default function EditorCustum({ handleClose, session, articleData, handle
   )
 
 }
-
 

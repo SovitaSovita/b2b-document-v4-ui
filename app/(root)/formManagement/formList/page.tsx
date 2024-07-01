@@ -7,13 +7,15 @@ import LoadingCustom from '@/app/components/Material/Loading';
 import {
     Button, Card, CardBody, CardFooter, Chip,
     Pagination, SortDescriptor, Table, TableBody,
-    TableCell, TableColumn, TableHeader, TableRow
+    TableCell, TableColumn, TableHeader, TableRow,
+    useDisclosure
 } from "@nextui-org/react";
 import { getFormDetail } from '@/app/service/Redux/formDetailSlice';
 import Link from 'next/link';
 import getRandomColor from '@/app/utils/RandomColor';
 import '../../../style/card_style.css'
 import { Category, Clipboard, DocumentText, Element4, Grid5, HuobiToken, Task, UserSquare } from 'iconsax-react';
+import NewFormModal from '@/app/components/Modal/NewFormModal';
 interface Form {
     id: number;
     formName: string;
@@ -160,7 +162,11 @@ const Page: React.FC = () => {
     const handleRowClick = (item: Form) => {
         console.log('Row clicked:', item);
     };
+
+    //open new form modal
+    const { isOpen, onOpen, onClose }: any = useDisclosure();
     const handleNewFormClick = () => {
+        onOpen();
     };
 
     const handleViewTypeChange = (viewType: 'grid' | 'table') => {
@@ -354,7 +360,7 @@ const Page: React.FC = () => {
             <div className="flex justify-between items-center">
                 <div className="">
                     <Button
-                        onClick={handleNewFormClick}
+                        onPress={handleNewFormClick}
                         startContent={<Grid5 size={18} />}
                         className='rounded-lg' color='secondary'>
                         New Form
@@ -388,6 +394,8 @@ const Page: React.FC = () => {
                     viewType === 'grid' ? renderGrid() : renderTable()
                 )
             }
+
+            <NewFormModal isOpen={isOpen} onClose={onClose} />
         </div >
     );
 };
