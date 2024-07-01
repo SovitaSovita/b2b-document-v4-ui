@@ -39,30 +39,34 @@ function InputTitleComponent(props: any) {
     const [inputValue, setInputValue] = React.useState('');
     const dispatch = useDispatch()
     const optionGETdata = useSelector((state: RootState) => state?.article.getOptionData);
-
-
+    
     useEffect(() => {
         if (articleData) {
             setSelectedValue(convertStringToStatus(optionGETdata))
             setTitle(articleData?.title)
         }
-        console.log("twegewada",articleData);
     }, [])
+    useEffect(()=>{
+
+    },[tagData])
     
 
     const [openTag, setOpenTag] = React.useState(false);
+    
     const handleOpenTag = (va: any) => {
         setOpenTag(true);
+        
     }
     const onchange = (e: any) => {
         const value = e.target.value
         setTitle(value)
     }
+    useEffect(() => {
+    },[tagData])
 
     const handleSelectChange = (event: any) => {
         const newValue = event.target.value
         setSelectedValue(newValue);
-        console.log("testSelect",newValue)
         if (newValue == 0) {
             getTagAndArticleFunction(null, 0, session?.userId);
         }
@@ -95,7 +99,6 @@ function InputTitleComponent(props: any) {
     const handleChildData = (dataFromChild: any) => {
         setShowDefaultValue(true);
         setTagValue(dataFromChild);
-        console.log("VandaVanda:", dataFromChild?.status);
 
         if (dataFromChild?.status === 0) {
             setSelectedValue(0)
@@ -144,7 +147,7 @@ function InputTitleComponent(props: any) {
                                     <option value={1}>Public</option>
                                 </select>
                                 <Autocomplete
-                                    // value={showDefaultValue ? tagValue : null}
+                                    //  value={showDefaultValue ? tagValue : null}
                                     value={tagValue}
                                     onChange={(event: any, newValue: any | null) => {
                                         setTagValue(newValue);
@@ -169,6 +172,7 @@ function InputTitleComponent(props: any) {
                                     size="small"
                                     id="combo-box-demo"
                                     options={tagData}
+                                    
                                     inputValue={inputValue}
                                     sx={{ width: 300, mr: 2 }}
                                     renderInput={(params) => <TextField {...params} placeholder="Search Tag name" />}

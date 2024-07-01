@@ -34,15 +34,14 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
   position: 'relative',
 }));
 
-export default function EditorCustum({ handleClose, session, articleData, handleViewArticle, tagUpdateData}: any) {
+export default function EditorCustum({ handleClose, session, articleData, handleViewArticle, tagUpdateData,}: any) {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const optionGETdata = useSelector((state: RootState) => state?.article.getOptionData);
   const [inputVal, setInputVal] = useState("");
 
   console.log("test1234",tagUpdateData)
-  useEffect(()=>{
-        
+  useEffect(()=>{    
   },[tagUpdateData])
 
 
@@ -56,19 +55,23 @@ export default function EditorCustum({ handleClose, session, articleData, handle
   const [tagData, setTagData] = useState([]);
   const [title, setTitle] = useState("");
   const [tagValue, setTagValue] = React.useState<TagType | any>();
-  const [selectedValue, setSelectedValue] = useState<number>(0); // Defaulting to "Public"
-    console.log("gaga123", tagData);
+  const [selectedValue, setSelectedValue] = useState<number>(0); // Defaulting to "Private"
+    console.log("gaga123>>>>>", tagValue);
 
   const [isErrorInput, setIsErrorInput] = useState({
     error: false,
     label: "Enter Sub title",
   });
-
+ 
   useEffect(() => {
     if(!articleData){
       setSelectedValue(convertStringToStatus(optionGETdata))
     }
   }, [])
+
+  useEffect(()=>{
+    setTagValue
+  },[])
 
   
   
@@ -115,7 +118,6 @@ export default function EditorCustum({ handleClose, session, articleData, handle
       });
       return;
     }
-
     if (!tagValue && articleData == null) {
       setIsErrorAlert({
         ...isErrorAlert,
@@ -144,6 +146,7 @@ export default function EditorCustum({ handleClose, session, articleData, handle
         "file_article_id": "123",
         "status": selectedValue,
       }
+      console.log(tagValue?.id,"::tagValue?.id")
       setIsLoading(true)
       AddArticleBy(request).then((res: any) => {
         if (res.status == 200) {
@@ -179,7 +182,6 @@ export default function EditorCustum({ handleClose, session, articleData, handle
         "modifiedBy": session?.userId,
         "modified_date": formattedDate,
       }
-      console.log("vimean---", input)
       setIsLoading(true)
       UpdateArticle(input).then((rec: any) => {
         if (rec.status == 200) {
@@ -241,6 +243,10 @@ export default function EditorCustum({ handleClose, session, articleData, handle
       }
     }
   }, [session, optionGETdata])
+
+  useEffect(() => {
+
+  },[tagData])
 
   const getTagAndArticleFunction = (dept_id: number | null, status: number, userId: string | null) => {
     GetTagAndArticle(dept_id, status, userId).then((res: any) => {

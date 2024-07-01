@@ -13,11 +13,10 @@ function TagComponent({ open, setOpen, user, sendDataToParent, selectedValue, se
     const handleSelectChange = (event: any) => {
         const newInputValue = event.target.value;
         setSelectedValue(parseInt(newInputValue));
-        console.log("dadaw3",newInputValue);
     };
-
+   
     
-
+    
     const dispatch = useDispatch()
     const [inputVal, setInputVal] = useState<string>();
     const session: UserData = useSelector((state: RootState) => state?.article.session);
@@ -27,19 +26,15 @@ function TagComponent({ open, setOpen, user, sendDataToParent, selectedValue, se
         message: "",
         duration: 1600,
     });
-
     const handleClose = () => {
         setOpen(false)
     };
     
-
-
-
     const onChange = (e: any) => {
         const inputData = e.target.value;
         setInputVal(inputData);
     }
-
+   
     const handleSubmit = (e: any) => {
         e.preventDefault();
         const currentDate = new Date();
@@ -61,7 +56,7 @@ function TagComponent({ open, setOpen, user, sendDataToParent, selectedValue, se
                 status: selectedValue
             }
             SaveNewTag(request).then((res: any) => {
-                setInputVal("")
+                setInputVal('')
                 setIsErrorAlert({
                     ...isErrorAlert,
                     open: true,
