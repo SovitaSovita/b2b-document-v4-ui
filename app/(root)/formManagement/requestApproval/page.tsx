@@ -6,8 +6,9 @@ import { useRouter } from "next/navigation"
 import React, { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { DirectboxSend } from "iconsax-react";
-import EditorBlockNote from "@/app/components/About/EditorBlockNote";
-
+import dynamic from "next/dynamic";
+// import EditorBlockNote from "@/app/components/About/EditorBlockNote";
+const EditorBlockNote = dynamic(() => import('@/app/components/About/EditorBlockNote'), { ssr: false });
 function Page() {
     const formData: Rec = useSelector((state: RootState) => state.form.form)
     const router = useRouter();
