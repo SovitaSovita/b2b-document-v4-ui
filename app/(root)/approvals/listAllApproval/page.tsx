@@ -43,7 +43,7 @@ const columns = [
     { uid: "requestId", name: "Document No" },
     { uid: "formContent", name: "Title" },
     { uid: "requestFrom", name: "Writer" },
-    { uid: "requestTo", name: "Department" },
+    { uid: "requestTo", name: "Request To" },
     { uid: "requestDate", name: "Request Date" },
     { uid: "requestStatus", name: "Status" },
     // { uid: "actions", name: "Actions", sortable: false },
@@ -67,7 +67,7 @@ const ListApproval = ({ userId }: { userId: string }) => {
     useEffect(() => {
         const fetchApprovedRequests = async () => {
             try {
-                const data = await listApproved('sovita');
+                const data = await listApproved('sararuth');
                 setRequests(data.rec);
                 setError(null);
             } catch (error) {
@@ -77,7 +77,8 @@ const ListApproval = ({ userId }: { userId: string }) => {
             }
         };
         fetchApprovedRequests();
-    }, [userId]);
+
+    }, []);
 
     const headerColumns = useMemo(() => {
         if (visibleColumns === "all") return columns;
@@ -180,6 +181,7 @@ const ListApproval = ({ userId }: { userId: string }) => {
                 isHeaderSticky
                 bottomContent={bottomContent}
                 bottomContentPlacement="outside"
+                selectionMode="multiple" // Check box
                 color="secondary"
                 classNames={{
                     wrapper: "max-h-[382px]",
